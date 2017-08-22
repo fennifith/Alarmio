@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 
 import com.afollestad.aesthetic.Aesthetic;
+import com.afollestad.aesthetic.AutoSwitchMode;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 
@@ -72,6 +73,8 @@ public class Alarmio extends Application {
         int time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (((time < getDayStart() || time > getDayEnd()) && getActivityTheme() == THEME_DAY_NIGHT) || getActivityTheme() == THEME_NIGHT) {
             Aesthetic.get()
+                    .isDark(true)
+                    .lightStatusBarMode(AutoSwitchMode.OFF)
                     .colorPrimary(ContextCompat.getColor(this, R.color.colorNightPrimary))
                     .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
                     .colorNavigationBar(ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
@@ -82,6 +85,7 @@ public class Alarmio extends Application {
                     .apply();
         } else {
             Aesthetic.get()
+                    .lightStatusBarMode(AutoSwitchMode.ON)
                     .colorPrimary(ContextCompat.getColor(this, R.color.colorPrimary))
                     .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorPrimaryDark))
                     .colorNavigationBar(ContextCompat.getColor(this, R.color.colorPrimaryDark))

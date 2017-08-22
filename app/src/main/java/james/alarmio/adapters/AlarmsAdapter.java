@@ -2,6 +2,7 @@ package james.alarmio.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -21,6 +23,7 @@ import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
 import james.alarmio.utils.FormatUtils;
+import james.alarmio.views.DaySwitch;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
 
@@ -80,6 +83,60 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         holder.time.setText(FormatUtils.formatShort(context, alarm.time.getTime()));
 
+        holder.repeat.setOnCheckedChangeListener(null);
+        holder.repeat.setChecked(alarm.isRepeat());
+        holder.repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                AlarmData alarm = alarms.get(holder.getAdapterPosition());
+
+                for (int i = 0; i < 7; i++) {
+                    alarm.days[i] = b;
+                    ((DaySwitch) holder.days.getChildAt(i)).setChecked(b);
+                }
+
+                alarm.setDays(prefs, alarm.days);
+                holder.days.setVisibility(b ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        holder.days.setVisibility(alarm.isRepeat() ? View.VISIBLE : View.GONE);
+
+        DaySwitch.OnCheckedChangeListener listener = new DaySwitch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(DaySwitch daySwitch, boolean b) {
+                AlarmData alarm = alarms.get(holder.getAdapterPosition());
+                alarm.days[holder.days.indexOfChild(daySwitch)] = b;
+                alarm.setDays(prefs, alarm.days);
+            }
+        };
+
+        for (int i = 0; i < 7; i++) {
+            DaySwitch daySwitch = (DaySwitch) holder.days.getChildAt(i);
+            daySwitch.setChecked(alarm.days[i]);
+            daySwitch.setOnCheckedChangeListener(listener);
+
+            switch (i) {
+                case 0:
+                case 6:
+                    daySwitch.setText("S");
+                    break;
+                case 1:
+                    daySwitch.setText("M");
+                    break;
+                case 2:
+                case 4:
+                    daySwitch.setText("T");
+                    break;
+                case 3:
+                    daySwitch.setText("W");
+                    break;
+                case 5:
+                    daySwitch.setText("F");
+
+            }
+        }
+
         holder.ringtoneImage.setImageResource(alarm.isRingtone ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
         holder.ringtoneText.setText(alarm.getRingtoneName(context));
         holder.ringtone.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +195,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         private SwitchCompat enable;
         private TextView time;
         private View extra;
+        private AppCompatCheckBox repeat;
+        private LinearLayout days;
         private View ringtone;
         private ImageView ringtoneImage;
         private TextView ringtoneText;
@@ -151,6 +210,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             enable = view.findViewById(R.id.enable);
             time = view.findViewById(R.id.time);
             extra = view.findViewById(R.id.extra);
+            repeat = view.findViewById(R.id.repeat);
+            days = view.findViewById(R.id.days);
             ringtone = view.findViewById(R.id.ringtone);
             ringtoneImage = view.findViewById(R.id.ringtoneImage);
             ringtoneText = view.findViewById(R.id.ringtoneText);

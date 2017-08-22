@@ -69,7 +69,7 @@ public class AlarmData implements Parcelable {
         else return context.getString(R.string.title_alarm, id + 1);
     }
 
-    public boolean isSingleTime() {
+    public boolean isRepeat() {
         for (boolean day : days) {
             if (day)
                 return true;
@@ -134,7 +134,7 @@ public class AlarmData implements Parcelable {
 
     @Nullable
     public Calendar getNext() {
-        if (isEnabled && isSingleTime()) {
+        if (isEnabled) {
             Calendar now = Calendar.getInstance();
             Calendar next = Calendar.getInstance();
             next.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
@@ -143,36 +143,38 @@ public class AlarmData implements Parcelable {
             if (now.after(next))
                 next.add(Calendar.DATE, 1);
 
-            for (int i = 0; i < 7; i++) {
-                switch (next.get(Calendar.DAY_OF_WEEK)) {
-                    case Calendar.SUNDAY:
-                        if (!days[0])
-                            next.add(Calendar.DATE, 1);
-                        break;
-                    case Calendar.MONDAY:
-                        if (!days[1])
-                            next.add(Calendar.DATE, 1);
-                        break;
-                    case Calendar.TUESDAY:
-                        if (!days[2])
-                            next.add(Calendar.DATE, 1);
-                        break;
-                    case Calendar.WEDNESDAY:
-                        if (!days[3])
-                            next.add(Calendar.DATE, 1);
-                        break;
-                    case Calendar.THURSDAY:
-                        if (!days[4])
-                            next.add(Calendar.DATE, 1);
-                        break;
-                    case Calendar.FRIDAY:
-                        if (!days[5])
-                            next.add(Calendar.DATE, 1);
-                        break;
-                    case Calendar.SATURDAY:
-                        if (!days[6])
-                            next.add(Calendar.DATE, 1);
-                        break;
+            if (isRepeat()) {
+                for (int i = 0; i < 7; i++) {
+                    switch (next.get(Calendar.DAY_OF_WEEK)) {
+                        case Calendar.SUNDAY:
+                            if (!days[0])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                        case Calendar.MONDAY:
+                            if (!days[1])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                        case Calendar.TUESDAY:
+                            if (!days[2])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                        case Calendar.WEDNESDAY:
+                            if (!days[3])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                        case Calendar.THURSDAY:
+                            if (!days[4])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                        case Calendar.FRIDAY:
+                            if (!days[5])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                        case Calendar.SATURDAY:
+                            if (!days[6])
+                                next.add(Calendar.DATE, 1);
+                            break;
+                    }
                 }
             }
 
