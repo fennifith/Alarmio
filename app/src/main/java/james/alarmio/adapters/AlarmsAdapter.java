@@ -32,17 +32,17 @@ import james.alarmio.views.DaySwitch;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
 
-    private RecyclerView recyclerView;
+    private Context context;
     private SharedPreferences prefs;
     private AlarmManager manager;
     private List<AlarmData> alarms;
 
     private int expandedPosition = -1;
 
-    public AlarmsAdapter(RecyclerView recyclerView, SharedPreferences prefs, List<AlarmData> alarms) {
-        this.recyclerView = recyclerView;
+    public AlarmsAdapter(Context context, SharedPreferences prefs, List<AlarmData> alarms) {
+        this.context = context;
         this.prefs = prefs;
-        manager = (AlarmManager) recyclerView.getContext().getSystemService(Context.ALARM_SERVICE);
+        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         this.alarms = alarms;
     }
 
@@ -55,7 +55,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final boolean isExpanded = position == expandedPosition;
         AlarmData alarm = alarms.get(position);
-        Context context = holder.itemView.getContext();
 
         holder.name.setFocusable(isExpanded);
         holder.name.setEnabled(isExpanded);
@@ -65,7 +64,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         holder.name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -75,7 +73,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -84,7 +81,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         holder.enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                alarms.get(holder.getAdapterPosition()).setEnabled(compoundButton.getContext(), prefs, manager, b);
+                alarms.get(holder.getAdapterPosition()).setEnabled(context, prefs, manager, b);
             }
         });
 
@@ -95,20 +92,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
 
                 new TimePickerDialog(
-                        view.getContext(),
+                        context,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
                                 alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 alarm.time.set(Calendar.MINUTE, minute);
-                                alarm.setTime(prefs, alarm.time.getTimeInMillis());
-                                holder.time.setText(FormatUtils.formatShort(holder.time.getContext(), alarm.time.getTime()));
+                                alarm.setTime(context, prefs, manager, alarm.time.getTimeInMillis());
+                                holder.time.setText(FormatUtils.formatShort(context, alarm.time.getTime()));
                             }
                         },
                         alarm.time.get(Calendar.HOUR_OF_DAY),
                         alarm.time.get(Calendar.MINUTE),
-                        DateFormat.is24HourFormat(view.getContext())
+                        DateFormat.is24HourFormat(context)
                 ).show();
             }
         });

@@ -29,7 +29,7 @@ public class AlarmsFragment extends BasePagerFragment {
         View view = inflater.inflate(R.layout.fragment_alarms, container, false);
         recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        adapter = new AlarmsAdapter(recyclerView, getAlarmio().getPrefs(), getAlarmio().getAlarms());
+        adapter = new AlarmsAdapter(getContext(), getAlarmio().getPrefs(), getAlarmio().getAlarms());
         recyclerView.setAdapter(adapter);
 
         textColorPrimarySubscription = Aesthetic.get()
