@@ -1,5 +1,6 @@
 package james.alarmio.adapters;
 
+import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,6 +34,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     private RecyclerView recyclerView;
     private SharedPreferences prefs;
+    private AlarmManager manager;
     private List<AlarmData> alarms;
 
     private int expandedPosition = -1;
@@ -40,6 +42,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     public AlarmsAdapter(RecyclerView recyclerView, SharedPreferences prefs, List<AlarmData> alarms) {
         this.recyclerView = recyclerView;
         this.prefs = prefs;
+        manager = (AlarmManager) recyclerView.getContext().getSystemService(Context.ALARM_SERVICE);
         this.alarms = alarms;
     }
 
@@ -81,7 +84,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         holder.enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                alarms.get(holder.getAdapterPosition()).setEnabled(prefs, b);
+                alarms.get(holder.getAdapterPosition()).setEnabled(compoundButton.getContext(), prefs, manager, b);
             }
         });
 

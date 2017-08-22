@@ -61,6 +61,10 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (statusBarHeight < 0)
+                    statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
+
+                bottomSheet.setPadding(0, newState == BottomSheetBehavior.STATE_EXPANDED ? statusBarHeight : 0, 0, 0);
             }
 
             @Override

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="james.alarmio.permission.ALARM" />
 
     <application
         android:name=".Alarmio"
@@ -20,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".receivers.AlarmReceiver" />
     </application>
 
 </manifest>

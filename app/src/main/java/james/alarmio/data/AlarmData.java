@@ -18,6 +18,7 @@ import java.util.Locale;
 import io.reactivex.annotations.Nullable;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
+import james.alarmio.receivers.AlarmReceiver;
 
 public class AlarmData implements Parcelable {
 
@@ -93,14 +94,19 @@ public class AlarmData implements Parcelable {
         prefs.edit().putString(String.format(Locale.getDefault(), PREF_NAME, id), name).apply();
     }
 
-    public void setTime(SharedPreferences prefs, long timeMillis) {
+    public void setTime(Context context, SharedPreferences prefs, AlarmManager manager, long timeMillis) {
         time.setTimeInMillis(timeMillis);
         prefs.edit().putLong(String.format(Locale.getDefault(), PREF_TIME, id), timeMillis).apply();
+        if (isEnabled)
+            set(context, manager);
     }
 
-    public void setEnabled(SharedPreferences prefs, boolean isEnabled) {
+    public void setEnabled(Context context, SharedPreferences prefs, AlarmManager manager, boolean isEnabled) {
         this.isEnabled = isEnabled;
         prefs.edit().putBoolean(String.format(Locale.getDefault(), PREF_ENABLED, id), isEnabled).apply();
+        if (isEnabled)
+            set(context, manager);
+        else cancel(context, manager);
     }
 
     public void setDays(SharedPreferences prefs, boolean[] days) {
@@ -216,7 +222,9 @@ public class AlarmData implements Parcelable {
     }
 
     private PendingIntent getIntent(Context context) {
-        return PendingIntent.getBroadcast(context, id, new Intent(), PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(AlarmReceiver.EXTRA_ALARM_ID, id);
+        return PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     protected AlarmData(Parcel in) {
