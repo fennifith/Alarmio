@@ -1,11 +1,13 @@
 package james.alarmio.receivers;
 
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
 import james.alarmio.Alarmio;
+import james.alarmio.data.AlarmData;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -14,8 +16,12 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, "Alarm received!", Toast.LENGTH_SHORT).show();
-        int id = intent.getIntExtra(EXTRA_ALARM_ID, 0);
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Alarmio alarmio = (Alarmio) context.getApplicationContext();
-        Toast.makeText(context, alarmio.getAlarms().get(id).getName(context), Toast.LENGTH_SHORT).show();
+        AlarmData alarm = alarmio.getAlarms().get(intent.getIntExtra(EXTRA_ALARM_ID, 0));
+        if (alarm.isRepeat())
+            alarm.set(context, manager);
+        else alarm.setEnabled(context, alarmio.getPrefs(), manager, false);
+        Toast.makeText(context, alarm.getName(context), Toast.LENGTH_SHORT).show();
     }
 }

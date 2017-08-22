@@ -57,4 +57,54 @@
 
     </LinearLayout>
 
+    <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:fabs_menu_clickableOverlay="true">
+
+        <jahirfiquitiva.libs.fabsmenu.FABsMenu
+            android:id="@+id/fabsMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:clipChildren="false"
+            app:fab_expandDirection="up"
+            app:fab_labelsPosition="left"
+            app:fab_menuMargins="16dp"
+            app:fab_moreButtonBackgroundColor="?colorAccent"
+            app:fab_moreButtonPlusIcon="@drawable/ic_add"
+            app:fab_moreButtonRippleColor="?colorPrimary"
+            app:fab_moreButtonSize="normal">
+
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_alarm_add"
+                app:title="Alarm" />
+
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_timer"
+                app:title="Timer" />
+
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_stopwatch"
+                app:title="Stopwatch" />
+
+        </jahirfiquitiva.libs.fabsmenu.FABsMenu>
+
+    </jahirfiquitiva.libs.fabsmenu.FABsMenuLayout>
+
 </android.support.design.widget.CoordinatorLayout>

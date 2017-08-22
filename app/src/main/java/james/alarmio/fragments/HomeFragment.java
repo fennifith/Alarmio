@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
 
@@ -20,12 +21,13 @@ import java.util.TimeZone;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.views.PageIndicatorView;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpdateListener {
 
     private View view;
     private ViewPager viewPager;
@@ -35,6 +37,7 @@ public class HomeFragment extends BaseFragment {
     private View bottomSheet;
     private ImageView background;
     private View overlay;
+    private FABsMenu fabsMenu;
 
     private BottomSheetBehavior behavior;
 
@@ -51,6 +54,9 @@ public class HomeFragment extends BaseFragment {
         timeIndicator = view.findViewById(R.id.pageIndicator);
         background = view.findViewById(R.id.background);
         overlay = view.findViewById(R.id.overlay);
+        fabsMenu = view.findViewById(R.id.fabsMenu);
+
+        fabsMenu.setMenuUpdateListener(this);
 
         behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setHideable(false);
@@ -115,5 +121,20 @@ public class HomeFragment extends BaseFragment {
         timeIndicator.unsubscribe();
         colorPrimarySubscription.dispose();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onMenuClicked() {
+
+    }
+
+    @Override
+    public void onMenuExpanded() {
+        Toast.makeText(getContext(), "expanded", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onMenuCollapsed() {
+
     }
 }
