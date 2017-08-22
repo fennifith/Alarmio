@@ -15,27 +15,32 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.utils.FormatUtils;
 
-public class DigitalTimeView extends BaseSubscriptionView implements ViewTreeObserver.OnGlobalLayoutListener {
+public class DigitalClockView extends BaseSubscriptionView implements ViewTreeObserver.OnGlobalLayoutListener {
 
     private Paint paint;
 
+    private TimeZone timezone;
+
     private Disposable textColorPrimarySubscription;
 
-    public DigitalTimeView(Context context) {
+    public DigitalClockView(Context context) {
         this(context, null, 0);
     }
 
-    public DigitalTimeView(Context context, @Nullable AttributeSet attrs) {
+    public DigitalClockView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DigitalTimeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DigitalClockView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        timezone = TimeZone.getDefault();
+
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
@@ -45,6 +50,10 @@ public class DigitalTimeView extends BaseSubscriptionView implements ViewTreeObs
 
         new UpdateThread(this).start();
         getViewTreeObserver().addOnGlobalLayoutListener(this);
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = TimeZone.getTimeZone(timezone);
     }
 
     @Override
@@ -76,14 +85,17 @@ public class DigitalTimeView extends BaseSubscriptionView implements ViewTreeObs
 
     @Override
     protected void onDraw(Canvas canvas) {
+        TimeZone defaultZone = TimeZone.getDefault();
+        TimeZone.setDefault(timezone);
         canvas.drawText(FormatUtils.format(getContext(), Calendar.getInstance().getTime()), canvas.getWidth() / 2, (canvas.getHeight() - paint.ascent()) / 2, paint);
+        TimeZone.setDefault(defaultZone);
     }
 
     private static class UpdateThread extends Thread {
 
-        private WeakReference<DigitalTimeView> viewReference;
+        private WeakReference<DigitalClockView> viewReference;
 
-        private UpdateThread(DigitalTimeView view) {
+        private UpdateThread(DigitalClockView view) {
             viewReference = new WeakReference<>(view);
         }
 
@@ -99,7 +111,7 @@ public class DigitalTimeView extends BaseSubscriptionView implements ViewTreeObs
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        DigitalTimeView view = viewReference.get();
+                        DigitalClockView view = viewReference.get();
                         if (view != null)
                             view.invalidate();
                     }

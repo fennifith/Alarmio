@@ -13,8 +13,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
 import james.alarmio.utils.FormatUtils;
@@ -110,6 +113,18 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 notifyItemChanged(holder.getAdapterPosition());
             }
         });
+
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        holder.ringtoneImage.setColorFilter(integer);
+                        holder.vibrateImage.setColorFilter(integer);
+                        holder.expandImage.setColorFilter(integer);
+                    }
+                });
     }
 
     @Override

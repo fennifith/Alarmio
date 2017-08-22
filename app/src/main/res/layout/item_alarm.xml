@@ -49,7 +49,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:text="6:02"
             android:textColor="?android:textColorSecondary"
             android:textSize="42sp" />
 

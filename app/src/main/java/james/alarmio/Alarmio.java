@@ -77,7 +77,8 @@ public class Alarmio extends Application {
                     .colorNavigationBar(ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
                     .colorAccent(ContextCompat.getColor(this, R.color.colorNightAccent))
                     .colorWindowBackground(ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
-                    .textColorPrimary(Color.WHITE)
+                    .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
+                    .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
                     .apply();
         } else {
             Aesthetic.get()
@@ -86,7 +87,8 @@ public class Alarmio extends Application {
                     .colorNavigationBar(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                     .colorAccent(ContextCompat.getColor(this, R.color.colorAccent))
                     .colorWindowBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-                    .textColorPrimary(Color.BLACK)
+                    .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimary))
+                    .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondary))
                     .apply();
         }
     }

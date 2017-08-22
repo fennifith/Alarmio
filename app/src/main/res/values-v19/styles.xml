@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorNightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorNightPrimaryDark</item>
+        <item name="colorAccent">@color/colorNightAccent</item>
+        <item name="android:colorBackground">@color/colorNightPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorNightPrimaryDark</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+</resources>

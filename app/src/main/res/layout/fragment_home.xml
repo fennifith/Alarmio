@@ -4,10 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <james.alarmio.views.DigitalTimeView
-        android:id="@+id/digitalTime"
+    <FrameLayout
+        android:id="@+id/timeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/timePager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <james.alarmio.views.PageIndicatorView
+            android:id="@+id/pageIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="16dp" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/bottomSheet"

@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import io.reactivex.annotations.Nullable;
 import james.alarmio.R;
+import james.alarmio.activities.MainActivity;
 
 public class AlarmData implements Parcelable {
 
@@ -182,13 +183,34 @@ public class AlarmData implements Parcelable {
     }
 
     public void set(Context context, AlarmManager manager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            manager.setExact(AlarmManager.RTC_WAKEUP, getNext().getTimeInMillis(), getIntent(context));
-        else manager.set(AlarmManager.RTC_WAKEUP, getNext().getTimeInMillis(), getIntent(context));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            manager.setAlarmClock(
+                    new AlarmManager.AlarmClockInfo(
+                            getNext().getTimeInMillis(),
+                            PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0)
+                    ),
+                    getIntent(context)
+            );
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                manager.setExact(AlarmManager.RTC_WAKEUP, getNext().getTimeInMillis(), getIntent(context));
+            else
+                manager.set(AlarmManager.RTC_WAKEUP, getNext().getTimeInMillis(), getIntent(context));
+
+            Intent intent = new Intent("android.intent.action.ALARM_CHANGED");
+            intent.putExtra("alarmSet", true);
+            context.sendBroadcast(intent);
+        }
     }
 
     public void cancel(Context context, AlarmManager manager) {
         manager.cancel(getIntent(context));
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Intent intent = new Intent("android.intent.action.ALARM_CHANGED");
+            intent.putExtra("alarmSet", false);
+            context.sendBroadcast(intent);
+        }
     }
 
     private PendingIntent getIntent(Context context) {
