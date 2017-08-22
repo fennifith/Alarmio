@@ -116,14 +116,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
-
                 for (int i = 0; i < 7; i++) {
                     alarm.days[i] = b;
-                    ((DaySwitch) holder.days.getChildAt(i)).setChecked(b);
                 }
-
                 alarm.setDays(prefs, alarm.days);
-                holder.days.setVisibility(b ? View.VISIBLE : View.GONE);
+                notifyItemChanged(holder.getAdapterPosition());
             }
         });
 
