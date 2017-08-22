@@ -61,6 +61,13 @@ public class Alarmio extends Application {
         return alarms;
     }
 
+    public AlarmData newAlarm() {
+        AlarmData alarm = new AlarmData(alarms.size(), Calendar.getInstance());
+        alarms.add(alarm);
+        onAlarmsChanged();
+        return alarm;
+    }
+
     public void onAlarmsChanged() {
         prefs.edit().putInt(PREF_ALARM_LENGTH, alarms.size()).apply();
     }

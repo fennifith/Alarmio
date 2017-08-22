@@ -1,6 +1,10 @@
 package james.alarmio.fragments;
 
+import android.app.AlarmManager;
+import android.app.TimePickerDialog;
 import android.app.WallpaperManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,22 +12,26 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TimePicker;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import java.util.Calendar;
 import java.util.TimeZone;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
+import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
+import james.alarmio.data.AlarmData;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.views.PageIndicatorView;
 
@@ -37,11 +45,16 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
     private View bottomSheet;
     private ImageView background;
     private View overlay;
-    private FABsMenu fabsMenu;
+    private FABsMenu menu;
+    private TitleFAB stopwatchFab;
+    private TitleFAB timerFab;
+    private TitleFAB alarmFab;
 
     private BottomSheetBehavior behavior;
 
     private Disposable colorPrimarySubscription;
+    private Disposable colorAccentSubscription;
+    private Disposable textColorPrimarySubscription;
 
     @Nullable
     @Override
@@ -54,33 +67,38 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         timeIndicator = view.findViewById(R.id.pageIndicator);
         background = view.findViewById(R.id.background);
         overlay = view.findViewById(R.id.overlay);
-        fabsMenu = view.findViewById(R.id.fabsMenu);
+        menu = view.findViewById(R.id.fabsMenu);
+        stopwatchFab = view.findViewById(R.id.stopwatchFab);
+        timerFab = view.findViewById(R.id.timerFab);
+        alarmFab = view.findViewById(R.id.alarmFab);
 
-        fabsMenu.setMenuUpdateListener(this);
+        menu.setMenuUpdateListener(this);
 
         behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setHideable(false);
 
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
 
-            private int statusBarHeight = -1;
+                private int statusBarHeight = -1;
 
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (statusBarHeight < 0)
-                    statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    if (statusBarHeight < 0)
+                        statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
 
-                bottomSheet.setPadding(0, newState == BottomSheetBehavior.STATE_EXPANDED ? statusBarHeight : 0, 0, 0);
-            }
+                    bottomSheet.setPadding(0, newState == BottomSheetBehavior.STATE_EXPANDED ? statusBarHeight : 0, 0, 0);
+                }
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                if (statusBarHeight < 0)
-                    statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                    if (statusBarHeight < 0)
+                        statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
 
-                bottomSheet.setPadding(0, (int) (slideOffset * statusBarHeight), 0, 0);
-            }
-        });
+                    bottomSheet.setPadding(0, (int) (slideOffset * statusBarHeight), 0, 0);
+                }
+            });
+        }
 
         viewPager.setAdapter(new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new TimersFragment()));
         tabLayout.setupWithViewPager(viewPager);
@@ -113,6 +131,53 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                     }
                 });
 
+        colorAccentSubscription = Aesthetic.get()
+                .colorAccent()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        menu.getMenuButton().setBackgroundColor(integer);
+                        stopwatchFab.setBackgroundColor(integer);
+                        timerFab.setBackgroundColor(integer);
+                        alarmFab.setBackgroundColor(integer);
+                    }
+                });
+
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        stopwatchFab.setTitleTextColor(integer);
+                        timerFab.setTitleTextColor(integer);
+                        alarmFab.setTitleTextColor(integer);
+                    }
+                });
+
+        alarmFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar time = Calendar.getInstance();
+
+                new TimePickerDialog(
+                        getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                AlarmData alarm = getAlarmio().newAlarm();
+                                alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                alarm.time.set(Calendar.MINUTE, minute);
+                                alarm.setTime(getContext(), getAlarmio().getPrefs(), (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE), alarm.time.getTimeInMillis());
+
+                            }
+                        },
+                        time.get(Calendar.HOUR_OF_DAY),
+                        time.get(Calendar.MINUTE),
+                        DateFormat.is24HourFormat(getContext())
+                ).show();
+            }
+        });
+
         return view;
     }
 
@@ -120,17 +185,18 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
     public void onDestroyView() {
         timeIndicator.unsubscribe();
         colorPrimarySubscription.dispose();
+        colorAccentSubscription.dispose();
         super.onDestroyView();
     }
 
     @Override
     public void onMenuClicked() {
-
+        menu.toggle();
     }
 
     @Override
     public void onMenuExpanded() {
-        Toast.makeText(getContext(), "expanded", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

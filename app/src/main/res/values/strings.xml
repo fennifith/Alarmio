@@ -4,4 +4,7 @@
     <string name="title_none">None</string>
     <string name="title_vibrate">Vibrate</string>
     <string name="title_repeat">Repeat</string>
+    <string name="title_set_alarm">Alarm</string>
+    <string name="title_set_timer">Timer</string>
+    <string name="title_set_stopwatch">Stopwatch</string>
 </resources>

@@ -60,7 +60,8 @@
     <jahirfiquitiva.libs.fabsmenu.FABsMenuLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:fabs_menu_clickableOverlay="true">
+        app:fabs_menu_clickableOverlay="true"
+        app:fabs_menu_overlayColor="@android:color/transparent">
 
         <jahirfiquitiva.libs.fabsmenu.FABsMenu
             android:id="@+id/fabsMenu"
@@ -77,31 +78,34 @@
             app:fab_moreButtonSize="normal">
 
             <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="?colorAccent"
-                app:fabSize="mini"
-                app:rippleColor="?colorPrimary"
-                app:srcCompat="@drawable/ic_alarm_add"
-                app:title="Alarm" />
-
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="?colorAccent"
-                app:fabSize="mini"
-                app:rippleColor="?colorPrimary"
-                app:srcCompat="@drawable/ic_timer"
-                app:title="Timer" />
-
-            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:id="@+id/stopwatchFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="?colorAccent"
                 app:fabSize="mini"
                 app:rippleColor="?colorPrimary"
                 app:srcCompat="@drawable/ic_stopwatch"
-                app:title="Stopwatch" />
+                app:fab_title="@string/title_set_stopwatch" />
+
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:id="@+id/timerFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_timer"
+                app:fab_title="@string/title_set_timer" />
+
+            <jahirfiquitiva.libs.fabsmenu.TitleFAB
+                android:id="@+id/alarmFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?colorAccent"
+                app:fabSize="mini"
+                app:rippleColor="?colorPrimary"
+                app:srcCompat="@drawable/ic_alarm_add"
+                app:fab_title="@string/title_set_alarm" />
 
         </jahirfiquitiva.libs.fabsmenu.FABsMenu>
 
