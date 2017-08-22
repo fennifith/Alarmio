@@ -1,5 +1,6 @@
 package james.alarmio.adapters;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import java.util.Calendar;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
@@ -82,6 +86,29 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         });
 
         holder.time.setText(FormatUtils.formatShort(context, alarm.time.getTime()));
+        holder.time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlarmData alarm = alarms.get(holder.getAdapterPosition());
+
+                new TimePickerDialog(
+                        view.getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                AlarmData alarm = alarms.get(holder.getAdapterPosition());
+                                alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                alarm.time.set(Calendar.MINUTE, minute);
+                                alarm.setTime(prefs, alarm.time.getTimeInMillis());
+                                holder.time.setText(FormatUtils.formatShort(holder.time.getContext(), alarm.time.getTime()));
+                            }
+                        },
+                        alarm.time.get(Calendar.HOUR_OF_DAY),
+                        alarm.time.get(Calendar.MINUTE),
+                        DateFormat.is24HourFormat(view.getContext())
+                ).show();
+            }
+        });
 
         holder.repeat.setOnCheckedChangeListener(null);
         holder.repeat.setChecked(alarm.isRepeat());
