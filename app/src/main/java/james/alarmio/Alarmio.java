@@ -51,10 +51,6 @@ public class Alarmio extends Application {
         for (int id = 0; id < alarmLength; id++) {
             alarms.add(new AlarmData(id, this, prefs));
         }
-
-        alarms.add(new AlarmData(0, Calendar.getInstance()));
-        alarms.add(new AlarmData(1, Calendar.getInstance()));
-        alarms.add(new AlarmData(2, Calendar.getInstance()));
     }
 
     public List<AlarmData> getAlarms() {
@@ -64,11 +60,11 @@ public class Alarmio extends Application {
     public AlarmData newAlarm() {
         AlarmData alarm = new AlarmData(alarms.size(), Calendar.getInstance());
         alarms.add(alarm);
-        onAlarmsChanged();
+        onAlarmCountChanged();
         return alarm;
     }
 
-    public void onAlarmsChanged() {
+    public void onAlarmCountChanged() {
         prefs.edit().putInt(PREF_ALARM_LENGTH, alarms.size()).apply();
     }
 
@@ -77,8 +73,7 @@ public class Alarmio extends Application {
     }
 
     public void onActivityResume() {
-        int time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        if (((time < getDayStart() || time > getDayEnd()) && getActivityTheme() == THEME_DAY_NIGHT) || getActivityTheme() == THEME_NIGHT) {
+        if (isNight()) {
             Aesthetic.get()
                     .isDark(true)
                     .lightStatusBarMode(AutoSwitchMode.OFF)
@@ -102,6 +97,11 @@ public class Alarmio extends Application {
                     .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondary))
                     .apply();
         }
+    }
+
+    public boolean isNight() {
+        int time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        return ((time < getDayStart() || time > getDayEnd()) && getActivityTheme() == THEME_DAY_NIGHT) || getActivityTheme() == THEME_NIGHT;
     }
 
     public int getActivityTheme() {

@@ -50,6 +50,9 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
     private TitleFAB timerFab;
     private TitleFAB alarmFab;
 
+    private SimplePagerAdapter pagerAdapter;
+    private SimplePagerAdapter timeAdapter;
+
     private BottomSheetBehavior behavior;
 
     private Disposable colorPrimarySubscription;
@@ -100,14 +103,16 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             });
         }
 
-        viewPager.setAdapter(new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new TimersFragment()));
+        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new TimersFragment());
+        viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
         Bundle args = new Bundle();
         args.putString(ClockFragment.EXTRA_TIME_ZONE, TimeZone.getAvailableIDs()[0]);
         ClockFragment fragment = new ClockFragment();
         fragment.setArguments(args);
-        timePager.setAdapter(new SimplePagerAdapter(getChildFragmentManager(), new ClockFragment(), fragment));
+        timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), new ClockFragment(), fragment);
+        timePager.setAdapter(timeAdapter);
         timeIndicator.setViewPager(timePager);
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -164,11 +169,14 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
                                 AlarmData alarm = getAlarmio().newAlarm();
                                 alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 alarm.time.set(Calendar.MINUTE, minute);
-                                alarm.setTime(getContext(), getAlarmio().getPrefs(), (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE), alarm.time.getTimeInMillis());
+                                alarm.setTime(getContext(), getAlarmio().getPrefs(), manager, alarm.time.getTimeInMillis());
+                                alarm.setEnabled(getContext(), getAlarmio().getPrefs(), manager, true);
 
+                                pagerAdapter.getItem(0).notifyDataSetChanged();
                             }
                         },
                         time.get(Calendar.HOUR_OF_DAY),
@@ -201,6 +209,11 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
 
     @Override
     public void onMenuCollapsed() {
+
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
 
     }
 }

@@ -7,8 +7,8 @@
     <color name="textColorPrimary">#DE000000</color>
     <color name="textColorSecondary">#8A000000</color>
 
-    <color name="colorNightPrimary">#424242</color>
-    <color name="colorNightPrimaryDark">#212121</color>
+    <color name="colorNightPrimary">#212121</color>
+    <color name="colorNightPrimaryDark">#000000</color>
     <color name="colorNightAccent">#FF5252</color>
 
     <color name="textColorPrimaryNight">#FFFFFF</color>

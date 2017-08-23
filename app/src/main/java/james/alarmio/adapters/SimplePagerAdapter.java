@@ -1,6 +1,5 @@
 package james.alarmio.adapters;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
@@ -16,7 +15,7 @@ public class SimplePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public BasePagerFragment getItem(int position) {
         return fragments[position];
     }
 

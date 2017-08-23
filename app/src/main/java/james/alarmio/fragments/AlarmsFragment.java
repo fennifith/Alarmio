@@ -54,4 +54,8 @@ public class AlarmsFragment extends BasePagerFragment {
         return "Alarms";
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+    }
 }

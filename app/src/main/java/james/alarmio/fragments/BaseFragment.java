@@ -19,4 +19,7 @@ public abstract class BaseFragment extends Fragment {
     Alarmio getAlarmio() {
         return alarmio;
     }
+
+    public abstract void notifyDataSetChanged();
+
 }

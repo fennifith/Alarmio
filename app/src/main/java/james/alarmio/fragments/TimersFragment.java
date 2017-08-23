@@ -21,4 +21,9 @@ public class TimersFragment extends BasePagerFragment {
     public String getTitle() {
         return "Timers";
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+
+    }
 }
