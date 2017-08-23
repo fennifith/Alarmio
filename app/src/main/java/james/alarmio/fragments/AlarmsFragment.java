@@ -21,6 +21,7 @@ public class AlarmsFragment extends BasePagerFragment {
 
     private AlarmsAdapter adapter;
 
+    private Disposable colorForegroundSubscription;
     private Disposable textColorPrimarySubscription;
 
     @Nullable
@@ -31,6 +32,15 @@ public class AlarmsFragment extends BasePagerFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         adapter = new AlarmsAdapter(getContext(), getAlarmio().getPrefs(), getAlarmio().getAlarms());
         recyclerView.setAdapter(adapter);
+
+        colorForegroundSubscription = Aesthetic.get()
+                .colorCardViewBackground()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        adapter.setColorForeground(integer);
+                    }
+                });
 
         textColorPrimarySubscription = Aesthetic.get()
                 .textColorPrimary()
@@ -45,6 +55,7 @@ public class AlarmsFragment extends BasePagerFragment {
 
     @Override
     public void onDestroyView() {
+        colorForegroundSubscription.dispose();
         textColorPrimarySubscription.dispose();
         super.onDestroyView();
     }

@@ -183,6 +183,8 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                         time.get(Calendar.MINUTE),
                         DateFormat.is24HourFormat(getContext())
                 ).show();
+
+                menu.collapse();
             }
         });
 

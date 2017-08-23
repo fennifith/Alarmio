@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -27,6 +29,7 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
+import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.DaySwitch;
 
@@ -36,6 +39,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     private SharedPreferences prefs;
     private AlarmManager manager;
     private List<AlarmData> alarms;
+    private int colorForeground = Color.TRANSPARENT;
 
     private int expandedPosition = -1;
 
@@ -44,6 +48,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         this.prefs = prefs;
         manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         this.alarms = alarms;
+    }
+
+    public void setColorForeground(int colorForeground) {
+        this.colorForeground = colorForeground;
+        if (expandedPosition >= 0)
+            notifyItemChanged(expandedPosition);
     }
 
     @Override
@@ -182,6 +192,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         holder.extra.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.expandImage.animate().rotation(isExpanded ? 180 : 0);
+        holder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
+        ViewCompat.setElevation(holder.itemView, isExpanded ? ConversionUtils.dpToPx(2) : 0);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
