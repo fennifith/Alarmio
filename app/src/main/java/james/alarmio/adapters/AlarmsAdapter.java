@@ -204,8 +204,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
         int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
 
-        int somewhatTextColorPrimary = Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary));
-
         ColorStateList colorStateList = new ColorStateList(
                 states,
                 new int[]{
