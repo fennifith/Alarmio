@@ -94,6 +94,8 @@ public class Alarmio extends Application {
                     .colorWindowBackground(ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
                     .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
                     .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
+                    .textColorPrimaryInverse(ContextCompat.getColor(this, R.color.textColorPrimary))
+                    .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondary))
                     .apply();
         } else {
             Aesthetic.get()
@@ -106,6 +108,8 @@ public class Alarmio extends Application {
                     .colorWindowBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                     .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimary))
                     .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondary))
+                    .textColorPrimaryInverse(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
+                    .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
                     .apply();
         }
     }

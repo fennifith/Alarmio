@@ -15,7 +15,6 @@ import com.afollestad.aesthetic.Aesthetic;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import james.alarmio.utils.ColorUtils;
 import james.alarmio.utils.ConversionUtils;
 
 public class DaySwitch extends BaseSubscriptionView implements View.OnClickListener {
@@ -24,10 +23,13 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
     private Paint textPaint;
 
     private Disposable colorAccentSubscription;
-    private Disposable textColorSecondarySubscription;
+    private Disposable textColorPrimarySubscription;
+    private Disposable textColorPrimaryInverseSubscription;
 
     private float checked;
     private boolean isChecked;
+    private int textColorPrimary;
+    private int textColorPrimaryInverse;
     private String text;
     private OnCheckedChangeListener listener;
 
@@ -64,19 +66,7 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
     public void setChecked(boolean isChecked) {
         if (isChecked != this.isChecked) {
             this.isChecked = isChecked;
-            if (isChecked)
-                textPaint.setColor(ColorUtils.getPrimaryTextColor(getContext(), accentPaint.getColor()));
-            else {
-                Aesthetic.get()
-                        .textColorPrimary()
-                        .take(1)
-                        .subscribe(new Consumer<Integer>() {
-                            @Override
-                            public void accept(Integer integer) throws Exception {
-                                textPaint.setColor(integer);
-                            }
-                        });
-            }
+            textPaint.setColor(isChecked ? textColorPrimaryInverse : textColorPrimary);
 
             ValueAnimator animator = ValueAnimator.ofFloat(isChecked ? 0 : 1, isChecked ? 1 : 0);
             animator.setInterpolator(new DecelerateInterpolator());
@@ -111,14 +101,29 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
                     }
                 });
 
-        textColorSecondarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        if (!isChecked)
+                        textColorPrimary = integer;
+                        if (!isChecked) {
                             textPaint.setColor(integer);
-                        invalidate();
+                            invalidate();
+                        }
+                    }
+                });
+
+        textColorPrimaryInverseSubscription = Aesthetic.get()
+                .textColorPrimaryInverse()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        textColorPrimaryInverse = integer;
+                        if (isChecked) {
+                            textPaint.setColor(integer);
+                            invalidate();
+                        }
                     }
                 });
     }
@@ -126,7 +131,8 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
     @Override
     public void unsubscribe() {
         colorAccentSubscription.dispose();
-        textColorSecondarySubscription.dispose();
+        textColorPrimarySubscription.dispose();
+        textColorPrimaryInverseSubscription.dispose();
     }
 
     @Override
