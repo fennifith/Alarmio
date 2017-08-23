@@ -4,8 +4,11 @@ import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -21,12 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.Calendar;
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
 import james.alarmio.utils.ConversionUtils;
@@ -39,7 +39,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
     private SharedPreferences prefs;
     private AlarmManager manager;
     private List<AlarmData> alarms;
+    private int colorAccent = Color.WHITE;
     private int colorForeground = Color.TRANSPARENT;
+    private int textColorPrimary = Color.WHITE;
 
     private int expandedPosition = -1;
 
@@ -50,10 +52,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         this.alarms = alarms;
     }
 
+    public void setColorAccent(int colorAccent) {
+        this.colorAccent = colorAccent;
+        notifyDataSetChanged();
+    }
+
     public void setColorForeground(int colorForeground) {
         this.colorForeground = colorForeground;
         if (expandedPosition >= 0)
             notifyItemChanged(expandedPosition);
+    }
+
+    public void setTextColorPrimary(int colorTextPrimary) {
+        this.textColorPrimary = colorTextPrimary;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -190,6 +202,45 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             }
         });
 
+        int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
+
+        int somewhatTextColorPrimary = Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary));
+
+        ColorStateList colorStateList = new ColorStateList(
+                states,
+                new int[]{
+                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                        colorAccent
+                }
+        );
+
+        ColorStateList thumbStateList = new ColorStateList(
+                states,
+                new int[]{
+                        Color.argb(255, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                        colorAccent
+                }
+        );
+
+        ColorStateList trackStateList = new ColorStateList(
+                states,
+                new int[]{
+                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                        Color.argb(100, Color.red(colorAccent), Color.green(colorAccent), Color.blue(colorAccent))
+                }
+        );
+
+        CompoundButtonCompat.setButtonTintList(holder.enable, colorStateList);
+        CompoundButtonCompat.setButtonTintList(holder.repeat, colorStateList);
+
+        DrawableCompat.setTintList(DrawableCompat.wrap(holder.enable.getThumbDrawable()), thumbStateList);
+        DrawableCompat.setTintList(DrawableCompat.wrap(holder.enable.getTrackDrawable()), trackStateList);
+
+        holder.repeat.setTextColor(textColorPrimary);
+        holder.ringtoneImage.setColorFilter(textColorPrimary);
+        holder.vibrateImage.setColorFilter(textColorPrimary);
+        holder.expandImage.setColorFilter(textColorPrimary);
+
         holder.extra.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.expandImage.animate().rotation(isExpanded ? 180 : 0);
         holder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
@@ -206,18 +257,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 notifyItemChanged(holder.getAdapterPosition());
             }
         });
-
-        Aesthetic.get()
-                .textColorPrimary()
-                .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        holder.ringtoneImage.setColorFilter(integer);
-                        holder.vibrateImage.setColorFilter(integer);
-                        holder.expandImage.setColorFilter(integer);
-                    }
-                });
     }
 
     @Override
