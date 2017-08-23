@@ -14,7 +14,7 @@ public class ClockFragment extends BasePagerFragment {
 
     public static final String EXTRA_TIME_ZONE = "timezone";
 
-    private DigitalClockView timeView;
+    private DigitalClockView clockView;
     private TextView timezoneView;
 
     private String timezone;
@@ -23,12 +23,12 @@ public class ClockFragment extends BasePagerFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_clock, container, false);
-        timeView = view.findViewById(R.id.timeView);
+        clockView = view.findViewById(R.id.timeView);
         timezoneView = view.findViewById(R.id.timezone);
 
         if (getArguments() != null && getArguments().containsKey(EXTRA_TIME_ZONE)) {
             timezone = getArguments().getString(EXTRA_TIME_ZONE);
-            timeView.setTimezone(timezone);
+            clockView.setTimezone(timezone);
             timezoneView.setText(timezone);
         }
 
@@ -37,17 +37,12 @@ public class ClockFragment extends BasePagerFragment {
 
     @Override
     public void onDestroyView() {
-        timeView.unsubscribe();
+        clockView.unsubscribe();
         super.onDestroyView();
     }
 
     @Override
     public String getTitle() {
         return timezone;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-
     }
 }

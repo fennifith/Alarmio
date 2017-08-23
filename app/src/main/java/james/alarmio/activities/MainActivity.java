@@ -6,6 +6,7 @@ import com.afollestad.aesthetic.AestheticActivity;
 
 import james.alarmio.Alarmio;
 import james.alarmio.R;
+import james.alarmio.fragments.HomeFragment;
 
 public class MainActivity extends AestheticActivity {
 
@@ -16,6 +17,10 @@ public class MainActivity extends AestheticActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         alarmio = (Alarmio) getApplicationContext();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment, new HomeFragment())
+                .commit();
     }
 
     @Override

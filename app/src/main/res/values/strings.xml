@@ -7,4 +7,5 @@
     <string name="title_set_alarm">Alarm</string>
     <string name="title_set_timer">Timer</string>
     <string name="title_set_stopwatch">Stopwatch</string>
+    <string name="title_lap">Lap</string>
 </resources>

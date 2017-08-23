@@ -23,5 +23,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             alarm.set(context, manager);
         else alarm.setEnabled(context, alarmio.getPrefs(), manager, false);
         Toast.makeText(context, alarm.getName(context), Toast.LENGTH_SHORT).show();
+        alarmio.onAlarmsChanged();
     }
 }

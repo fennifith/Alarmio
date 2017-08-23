@@ -13,8 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:gravity="center_vertical"
             android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
@@ -41,7 +41,8 @@
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/enable"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:tag=":aesthetic_ignore" />
 
         </LinearLayout>
 
@@ -66,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:tag=":aesthetic_ignore"
                 android:text="@string/title_repeat" />
 
             <LinearLayout

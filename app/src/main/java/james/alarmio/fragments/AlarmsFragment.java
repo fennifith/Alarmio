@@ -77,7 +77,8 @@ public class AlarmsFragment extends BasePagerFragment {
     }
 
     @Override
-    public void notifyDataSetChanged() {
-        adapter.notifyDataSetChanged();
+    public void onAlarmsChanged() {
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 }

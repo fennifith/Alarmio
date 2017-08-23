@@ -8,17 +8,18 @@ import android.view.ViewGroup;
 
 import james.alarmio.R;
 
-public class TimersFragment extends BasePagerFragment {
+public class StopwatchFragment extends BaseFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_timers, container, false);
+        View view = inflater.inflate(R.layout.fragment_stopwatch, container, false);
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStack();
+            }
+        });
         return view;
-    }
-
-    @Override
-    public String getTitle() {
-        return "Timers";
     }
 }

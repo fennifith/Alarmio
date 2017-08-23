@@ -41,10 +41,13 @@ public class Alarmio extends Application {
 
     private List<AlarmData> alarms;
 
+    private List<AlarmioListener> listeners;
+
     @Override
     public void onCreate() {
         super.onCreate();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        listeners = new ArrayList<>();
 
         int alarmLength = prefs.getInt(PREF_ALARM_LENGTH, 0);
         alarms = new ArrayList<>();
@@ -62,6 +65,12 @@ public class Alarmio extends Application {
         alarms.add(alarm);
         onAlarmCountChanged();
         return alarm;
+    }
+
+    public void onAlarmsChanged() {
+        for (AlarmioListener listener : listeners) {
+            listener.onAlarmsChanged();
+        }
     }
 
     public void onAlarmCountChanged() {
@@ -138,6 +147,19 @@ public class Alarmio extends Application {
         }
 
         return sunsetCalculator;
+    }
+
+    public void addListener(AlarmioListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(AlarmioListener listener) {
+        listeners.remove(listener);
+    }
+
+    public interface AlarmioListener {
+        void onAlarmsChanged();
+
     }
 
 }

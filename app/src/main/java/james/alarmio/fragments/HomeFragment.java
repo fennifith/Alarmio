@@ -159,6 +159,25 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                     }
                 });
 
+        stopwatchFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu.collapseImmediately();
+                getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+                        .replace(R.id.fragment, new StopwatchFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        timerFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,7 +195,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                                 alarm.setTime(getContext(), getAlarmio().getPrefs(), manager, alarm.time.getTimeInMillis());
                                 alarm.setEnabled(getContext(), getAlarmio().getPrefs(), manager, true);
 
-                                pagerAdapter.getItem(0).notifyDataSetChanged();
+                                getAlarmio().onAlarmsChanged();
                             }
                         },
                         time.get(Calendar.HOUR_OF_DAY),
@@ -211,11 +230,6 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
 
     @Override
     public void onMenuCollapsed() {
-
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
 
     }
 }

@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import james.alarmio.Alarmio;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements Alarmio.AlarmioListener {
 
     private Alarmio alarmio;
 
@@ -14,12 +14,23 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         alarmio = (Alarmio) getContext().getApplicationContext();
+        alarmio.addListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        alarmio.removeListener(this);
+        super.onDestroy();
     }
 
     Alarmio getAlarmio() {
         return alarmio;
     }
 
-    public abstract void notifyDataSetChanged();
+    public void notifyDataSetChanged() {
+    }
 
+    @Override
+    public void onAlarmsChanged() {
+    }
 }
