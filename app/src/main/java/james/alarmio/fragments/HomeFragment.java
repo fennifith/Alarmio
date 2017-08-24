@@ -124,7 +124,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             }
         });
 
-        background.setImageDrawable(WallpaperManager.getInstance(getContext()).getDrawable());
+        background.setImageDrawable(WallpaperManager.getInstance(getContext()).getFastDrawable());
 
         colorPrimarySubscription = Aesthetic.get()
                 .colorPrimary()
