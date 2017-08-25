@@ -8,4 +8,5 @@
     <string name="title_set_timer">Timer</string>
     <string name="title_set_stopwatch">Stopwatch</string>
     <string name="title_lap">Lap</string>
+    <string name="title_stopwatch">Stopwatch</string>
 </resources>
