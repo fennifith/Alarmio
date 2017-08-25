@@ -34,15 +34,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <james.alarmio.views.ProgressTextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="34sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp" />
 
             <LinearLayout
                 android:id="@+id/laps"

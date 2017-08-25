@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;
+import james.alarmio.views.ProgressTextView;
 
 public class StopwatchFragment extends BaseFragment {
 
@@ -30,7 +31,7 @@ public class StopwatchFragment extends BaseFragment {
     private ImageView share;
     private TextView lap;
     private FloatingActionButton toggle;
-    private TextView time;
+    private ProgressTextView time;
     private LinearLayout lapsLayout;
 
     private Handler handler;
@@ -38,6 +39,8 @@ public class StopwatchFragment extends BaseFragment {
 
     private long startTime, pauseTime, stopTime;
     private List<Long> laps;
+    private long lastLapTime;
+    private long lastLapDiff;
     private boolean isRunning;
 
     private int textColorPrimary;
@@ -63,8 +66,10 @@ public class StopwatchFragment extends BaseFragment {
             @Override
             public void run() {
                 if (isRunning) {
-                    time.setText(formatMillis(System.currentTimeMillis() - startTime));
-                    handler.postDelayed(this, 60);
+                    long currentTime = System.currentTimeMillis() - startTime;
+                    time.setText(formatMillis(currentTime));
+                    time.setProgress(currentTime - (lastLapTime == 0 ? currentTime : lastLapTime));
+                    handler.postDelayed(this, 10);
                 } else time.setText(formatMillis(startTime == 0 ? 0 : stopTime - startTime));
             }
         };
@@ -82,6 +87,10 @@ public class StopwatchFragment extends BaseFragment {
                 handler.post(runnable);
                 laps.clear();
                 lapsLayout.removeAllViews();
+                lastLapTime = 0;
+                lastLapDiff = 0;
+                time.setMaxProgress(0);
+                time.setReferenceProgress(0);
                 reset.setVisibility(View.INVISIBLE);
                 lap.setVisibility(View.INVISIBLE);
                 share.setVisibility(View.GONE);
@@ -118,7 +127,12 @@ public class StopwatchFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 long lapTime = System.currentTimeMillis() - startTime;
-                laps.add(lapTime);
+                long lapDiff = lapTime - lastLapTime;
+                laps.add(lapDiff);
+                if (lastLapTime == 0)
+                    time.setMaxProgress(lapDiff);
+                else time.setReferenceProgress(lapDiff);
+                lastLapTime = lapTime;
 
                 LinearLayout layout = new LinearLayout(getContext());
 
@@ -157,7 +171,6 @@ public class StopwatchFragment extends BaseFragment {
                         reset.setColorFilter(integer);
                         lap.setTextColor(integer);
                         share.setColorFilter(integer);
-                        time.setTextColor(integer);
 
                         for (int i = 0; i < lapsLayout.getChildCount(); i++) {
                             LinearLayout layout = (LinearLayout) lapsLayout.getChildAt(i);
@@ -168,12 +181,14 @@ public class StopwatchFragment extends BaseFragment {
                     }
                 });
 
+        handler.post(runnable);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         textColorPrimarySubscription.dispose();
+        time.unsubscribe();
         super.onDestroyView();
     }
 
