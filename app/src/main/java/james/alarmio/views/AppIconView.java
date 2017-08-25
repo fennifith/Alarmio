@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -13,14 +14,12 @@ import android.graphics.RectF;
 import android.media.ThumbnailUtils;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import james.alarmio.R;
-import james.alarmio.utils.ImageUtils;
 
 public class AppIconView extends View {
 
@@ -54,6 +53,7 @@ public class AppIconView extends View {
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.parseColor("#3F51B5"));
+        paint.setDither(true);
 
         animator = ValueAnimator.ofFloat(bgScale, 0.8f);
         animator.setInterpolator(new OvershootInterpolator());
@@ -97,7 +97,9 @@ public class AppIconView extends View {
     }
 
     private Bitmap getBitmap(int size, @DrawableRes int resource) {
-        return ThumbnailUtils.extractThumbnail(ImageUtils.drawableToBitmap(ContextCompat.getDrawable(getContext(), resource)), size, size);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeResource(getResources(), resource, options), size, size);
     }
 
     private Matrix getFgMatrix(Bitmap bitmap) {
