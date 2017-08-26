@@ -57,7 +57,8 @@ public class StopwatchFragment extends BaseFragment {
     private List<Long> laps;
     private long lastLapTime;
     private boolean isRunning;
-    
+
+    private String notificationText;
     private NotificationManager notificationManager;
     private NotificationReceiver receiver;
 
@@ -90,8 +91,11 @@ public class StopwatchFragment extends BaseFragment {
                     String text = formatMillis(currentTime);
                     time.setText(text);
                     time.setProgress(currentTime - (lastLapTime == 0 ? currentTime : lastLapTime));
-                    if (text.endsWith("00"))
-                        notificationManager.notify(NOTIFICATION_ID, getNotification(text.substring(0, text.length() - 3)));
+                    text = text.substring(0, text.length() - 3);
+                    if (notificationText == null || !notificationText.equals(text)) {
+                        notificationManager.notify(NOTIFICATION_ID, getNotification(text));
+                        notificationText = text;
+                    }
                     handler.postDelayed(this, 10);
                 } else time.setText(formatMillis(startTime == 0 ? 0 : stopTime - startTime));
             }
@@ -197,7 +201,8 @@ public class StopwatchFragment extends BaseFragment {
             toggle.setImageResource(R.drawable.ic_play);
         }
 
-        notificationManager.notify(NOTIFICATION_ID, getNotification(formatMillis(System.currentTimeMillis() - startTime)));
+        notificationText = formatMillis(System.currentTimeMillis() - startTime);
+        notificationManager.notify(NOTIFICATION_ID, getNotification(notificationText));
     }
 
     private void lap() {
