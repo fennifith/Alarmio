@@ -176,11 +176,11 @@ public class ProgressTextView extends BaseSubscriptionView {
     protected void onDraw(Canvas canvas) {
         int size = Math.min(canvas.getWidth(), canvas.getHeight());
         int sidePadding = padding * 3;
-        canvas.drawCircle(size / 2, size / 2, (size / 2) - sidePadding, progress > maxProgress ? linePaint : backgroundPaint);
+        canvas.drawCircle(size / 2, size / 2, (size / 2) - sidePadding, progress > maxProgress && maxProgress > 0 ? linePaint : backgroundPaint);
 
         if (maxProgress > 0) {
-            float angle = (360 * progress / maxProgress);
-            float referenceAngle = (360 * referenceProgress / maxProgress);
+            float angle = (360f * progress / maxProgress);
+            float referenceAngle = (360f * referenceProgress / maxProgress);
 
             Path path = new Path();
             path.arcTo(new RectF(sidePadding, sidePadding, size - sidePadding, size - sidePadding), -90, angle, true);
