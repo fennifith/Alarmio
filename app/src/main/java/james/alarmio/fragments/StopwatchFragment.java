@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;
+import james.alarmio.activities.MainActivity;
 import james.alarmio.views.ProgressTextView;
 
 public class StopwatchFragment extends BaseFragment {
@@ -306,6 +307,7 @@ public class StopwatchFragment extends BaseFragment {
                 .setSmallIcon(R.drawable.ic_stopwatch_notification)
                 .setContentTitle(getString(R.string.title_stopwatch))
                 .setContentText(time)
+                .setContentIntent(PendingIntent.getActivity(getContext(), 0, new Intent(getContext(), MainActivity.class), 0))
                 .setDeleteIntent(PendingIntent.getBroadcast(getContext(), 0, new Intent(ACTION_RESET), 0))
                 .addAction(
                         isRunning ? R.drawable.ic_pause_notification : R.drawable.ic_play_notification,
