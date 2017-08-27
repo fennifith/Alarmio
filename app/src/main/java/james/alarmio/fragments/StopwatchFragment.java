@@ -245,18 +245,26 @@ public class StopwatchFragment extends BaseFragment {
         LinearLayout layout = new LinearLayout(getContext());
 
         TextView number = new TextView(getContext());
-        number.setText(String.valueOf(laps.size()));
+        number.setText(getString(R.string.title_lap_number, laps.size()));
         number.setTextColor(textColorPrimary);
         layout.addView(number);
 
-        TextView time = new TextView(getContext());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.weight = 1;
-        time.setLayoutParams(layoutParams);
-        time.setGravity(GravityCompat.END);
-        time.setText(formatMillis(lapTime));
-        time.setTextColor(textColorPrimary);
-        layout.addView(time);
+
+        TextView lap = new TextView(getContext());
+        lap.setLayoutParams(layoutParams);
+        lap.setGravity(GravityCompat.END);
+        lap.setText(getString(R.string.title_lap_time, formatMillis(lapDiff)));
+        lap.setTextColor(textColorPrimary);
+        layout.addView(lap);
+
+        TextView total = new TextView(getContext());
+        total.setLayoutParams(layoutParams);
+        total.setGravity(GravityCompat.END);
+        total.setText(getString(R.string.title_total_time, formatMillis(lapTime)));
+        total.setTextColor(textColorPrimary);
+        layout.addView(total);
 
         lapsLayout.addView(layout, 0);
     }
