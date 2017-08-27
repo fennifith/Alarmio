@@ -33,4 +33,8 @@ public abstract class BaseFragment extends Fragment implements Alarmio.AlarmioLi
     @Override
     public void onAlarmsChanged() {
     }
+
+    @Override
+    public void onTimersChanged() {
+    }
 }

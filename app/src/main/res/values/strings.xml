@@ -15,4 +15,6 @@
     <string name="title_lap_time">Lap: %s</string>
     <string name="title_total_time">Total: %s</string>
     <string name="title_share_results">Share Results…</string>
+    <string name="msg_delete_confirmation">Are you sure you want to delete %s?</string>
+    <string name="title_delete">Delete</string>
 </resources>

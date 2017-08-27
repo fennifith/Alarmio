@@ -64,6 +64,37 @@ public class AlarmData implements Parcelable {
         isRingtone = prefs.getBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), isRingtone);
     }
 
+    public void onIdChanged(int id, Context context, SharedPreferences prefs) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(String.format(Locale.getDefault(), PREF_NAME, id), getName(context));
+        editor.putLong(String.format(Locale.getDefault(), PREF_TIME, id), time.getTimeInMillis());
+        editor.putBoolean(String.format(Locale.getDefault(), PREF_ENABLED, id), isEnabled);
+        for (int i = 0; i < 7; i++) {
+            editor.putBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), days[i]);
+        }
+        editor.putBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
+        editor.putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), ringtone.toString());
+        editor.putBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), isRingtone);
+        editor.apply();
+
+        onRemove(prefs);
+        this.id = id;
+    }
+
+    public void onRemove(SharedPreferences prefs) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(String.format(Locale.getDefault(), PREF_NAME, id));
+        editor.remove(String.format(Locale.getDefault(), PREF_TIME, id));
+        editor.remove(String.format(Locale.getDefault(), PREF_ENABLED, id));
+        for (int i = 0; i < 7; i++) {
+            editor.remove(String.format(Locale.getDefault(), PREF_DAY, id, i));
+        }
+        editor.remove(String.format(Locale.getDefault(), PREF_VIBRATE, id));
+        editor.remove(String.format(Locale.getDefault(), PREF_RINGTONE, id));
+        editor.remove(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id));
+        editor.apply();
+    }
+
     public String getName(Context context) {
         if (name != null)
             return name;

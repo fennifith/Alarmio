@@ -3,12 +3,14 @@ package james.alarmio.adapters;
 import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.CompoundButtonCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -27,6 +29,7 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 import java.util.List;
 
+import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
 import james.alarmio.utils.ConversionUtils;
@@ -35,6 +38,7 @@ import james.alarmio.views.DaySwitch;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder> {
 
+    private Alarmio alarmio;
     private Context context;
     private SharedPreferences prefs;
     private AlarmManager manager;
@@ -45,10 +49,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
 
     private int expandedPosition = -1;
 
-    public AlarmsAdapter(Context context, SharedPreferences prefs, List<AlarmData> alarms) {
+    public AlarmsAdapter(Alarmio alarmio, Context context, SharedPreferences prefs, List<AlarmData> alarms) {
+        this.alarmio = alarmio;
         this.context = context;
         this.prefs = prefs;
-        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        manager = (AlarmManager) alarmio.getSystemService(Context.ALARM_SERVICE);
         this.alarms = alarms;
     }
 
@@ -82,7 +87,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         holder.name.setEnabled(isExpanded);
         holder.name.clearFocus();
 
-        holder.name.setText(alarm.getName(context));
+        holder.name.setText(alarm.getName(alarmio));
         holder.name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -103,11 +108,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         holder.enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                alarms.get(holder.getAdapterPosition()).setEnabled(context, prefs, manager, b);
+                alarms.get(holder.getAdapterPosition()).setEnabled(alarmio, prefs, manager, b);
             }
         });
 
-        holder.time.setText(FormatUtils.formatShort(context, alarm.time.getTime()));
+        holder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
         holder.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,13 +126,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
                                 alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 alarm.time.set(Calendar.MINUTE, minute);
-                                alarm.setTime(context, prefs, manager, alarm.time.getTimeInMillis());
-                                holder.time.setText(FormatUtils.formatShort(context, alarm.time.getTime()));
+                                alarm.setTime(alarmio, prefs, manager, alarm.time.getTimeInMillis());
+                                holder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
                             }
                         },
                         alarm.time.get(Calendar.HOUR_OF_DAY),
                         alarm.time.get(Calendar.MINUTE),
-                        DateFormat.is24HourFormat(context)
+                        DateFormat.is24HourFormat(alarmio)
                 ).show();
             }
         });
@@ -154,6 +159,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
                 alarm.days[holder.days.indexOfChild(daySwitch)] = b;
                 alarm.setDays(prefs, alarm.days);
+                if (!alarm.isRepeat())
+                    notifyItemChanged(holder.getAdapterPosition());
             }
         };
 
@@ -184,11 +191,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         }
 
         holder.ringtoneImage.setImageResource(alarm.isRingtone ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
-        holder.ringtoneText.setText(alarm.getRingtoneName(context));
+        holder.ringtoneText.setText(alarm.getRingtoneName(alarmio));
         holder.ringtone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
+                //TODO: select ringtone
             }
         });
 
@@ -199,6 +207,30 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
                 AlarmData alarm = alarms.get(holder.getAdapterPosition());
                 alarm.setVibrate(prefs, !alarm.isVibrate);
                 holder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
+            }
+        });
+
+        holder.delete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlarmData alarm = alarms.get(holder.getAdapterPosition());
+                new AlertDialog.Builder(context)
+                        .setMessage(alarmio.getString(R.string.msg_delete_confirmation, alarm.getName(alarmio)))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                alarmio.removeAlarm(alarms.get(holder.getAdapterPosition()));
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -235,6 +267,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         DrawableCompat.setTintList(DrawableCompat.wrap(holder.enable.getTrackDrawable()), trackStateList);
 
         holder.repeat.setTextColor(textColorPrimary);
+        holder.delete.setTextColor(textColorPrimary);
         holder.ringtoneImage.setColorFilter(textColorPrimary);
         holder.vibrateImage.setColorFilter(textColorPrimary);
         holder.expandImage.setColorFilter(textColorPrimary);
@@ -276,6 +309,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
         private View vibrate;
         private ImageView vibrateImage;
         private ImageView expandImage;
+        private TextView delete;
 
         public ViewHolder(View view) {
             super(view);
@@ -291,6 +325,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.ViewHolder
             vibrate = view.findViewById(R.id.vibrate);
             vibrateImage = view.findViewById(R.id.vibrateImage);
             expandImage = view.findViewById(R.id.expandImage);
+            delete = view.findViewById(R.id.delete);
         }
     }
 }

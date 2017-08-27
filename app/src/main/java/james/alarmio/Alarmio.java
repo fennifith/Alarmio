@@ -23,6 +23,7 @@ import java.util.TimeZone;
 
 import io.reactivex.annotations.Nullable;
 import james.alarmio.data.AlarmData;
+import james.alarmio.data.TimerData;
 
 public class Alarmio extends Application {
 
@@ -40,6 +41,7 @@ public class Alarmio extends Application {
     private SunriseSunsetCalculator sunsetCalculator;
 
     private List<AlarmData> alarms;
+    private List<TimerData> timers;
 
     private List<AlarmioListener> listeners;
 
@@ -48,9 +50,10 @@ public class Alarmio extends Application {
         super.onCreate();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         listeners = new ArrayList<>();
+        alarms = new ArrayList<>();
+        timers = new ArrayList<>();
 
         int alarmLength = prefs.getInt(PREF_ALARM_LENGTH, 0);
-        alarms = new ArrayList<>();
         for (int id = 0; id < alarmLength; id++) {
             alarms.add(new AlarmData(id, this, prefs));
         }
@@ -60,11 +63,32 @@ public class Alarmio extends Application {
         return alarms;
     }
 
+    public List<TimerData> getTimers() {
+        return timers;
+    }
+
     public AlarmData newAlarm() {
         AlarmData alarm = new AlarmData(alarms.size(), Calendar.getInstance());
         alarms.add(alarm);
         onAlarmCountChanged();
         return alarm;
+    }
+
+    public void removeAlarm(AlarmData alarm) {
+        alarm.onRemove(getPrefs());
+
+        int index = alarms.indexOf(alarm);
+        alarms.remove(index);
+        for (int i = index; i < alarms.size(); i++) {
+            alarms.get(i).onIdChanged(i, this, getPrefs());
+        }
+
+        onAlarmCountChanged();
+        onAlarmsChanged();
+    }
+
+    public void onAlarmCountChanged() {
+        prefs.edit().putInt(PREF_ALARM_LENGTH, alarms.size()).apply();
     }
 
     public void onAlarmsChanged() {
@@ -73,8 +97,21 @@ public class Alarmio extends Application {
         }
     }
 
-    public void onAlarmCountChanged() {
-        prefs.edit().putInt(PREF_ALARM_LENGTH, alarms.size()).apply();
+    public TimerData newTimer() {
+        TimerData timer = new TimerData(timers.size());
+        timers.add(timer);
+        return timer;
+    }
+
+    public void removeTimer(TimerData timer) {
+        timers.remove(timer);
+        onTimersChanged();
+    }
+
+    public void onTimersChanged() {
+        for (AlarmioListener listener : listeners) {
+            listener.onTimersChanged();
+        }
     }
 
     public SharedPreferences getPrefs() {
@@ -164,6 +201,7 @@ public class Alarmio extends Application {
     public interface AlarmioListener {
         void onAlarmsChanged();
 
+        void onTimersChanged();
     }
 
 }
