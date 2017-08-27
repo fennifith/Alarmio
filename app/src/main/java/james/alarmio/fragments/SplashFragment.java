@@ -12,6 +12,9 @@ import james.alarmio.views.AppIconView;
 
 public class SplashFragment extends BaseFragment implements Animator.AnimatorListener {
 
+    private boolean isFinished;
+    private boolean isVisible;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,16 +25,29 @@ public class SplashFragment extends BaseFragment implements Animator.AnimatorLis
     }
 
     @Override
+    public void onResume() {
+        isVisible = true;
+        if (isFinished)
+            finish();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        isVisible = false;
+        super.onPause();
+    }
+
+    @Override
     public void onAnimationStart(Animator animator) {
 
     }
 
     @Override
     public void onAnimationEnd(Animator animator) {
-        getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                .replace(R.id.fragment, new HomeFragment())
-                .commit();
+        isFinished = true;
+        if (isVisible)
+            finish();
     }
 
     @Override
@@ -42,5 +58,12 @@ public class SplashFragment extends BaseFragment implements Animator.AnimatorLis
     @Override
     public void onAnimationRepeat(Animator animator) {
 
+    }
+
+    private void finish() {
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.fragment, new HomeFragment())
+                .commit();
     }
 }

@@ -57,7 +57,7 @@ public class AppIconView extends View {
 
         animator = ValueAnimator.ofFloat(bgScale, 0.8f);
         animator.setInterpolator(new OvershootInterpolator());
-        animator.setDuration(2000);
+        animator.setDuration(1500);
         animator.setStartDelay(500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -70,7 +70,7 @@ public class AppIconView extends View {
 
         animator = ValueAnimator.ofFloat(rotation, 0);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.setDuration(3000);
+        animator.setDuration(2000);
         animator.setStartDelay(500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -84,7 +84,7 @@ public class AppIconView extends View {
 
         animator = ValueAnimator.ofFloat(bgRotation, 0);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.setDuration(5000);
+        animator.setDuration(3000);
         animator.setStartDelay(500);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
