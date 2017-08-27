@@ -103,7 +103,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             });
         }
 
-        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new TimersFragment());
+        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new SettingsFragment());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -164,7 +164,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             public void onClick(View view) {
                 menu.collapseImmediately();
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+                        .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
                         .replace(R.id.fragment, new StopwatchFragment())
                         .addToBackStack(null)
                         .commit();
@@ -174,15 +174,21 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         timerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                menu.collapseImmediately();
+                getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
+                        .replace(R.id.fragment, new TimerFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar time = Calendar.getInstance();
+                viewPager.setCurrentItem(0, false);
 
+                Calendar time = Calendar.getInstance();
                 new TimePickerDialog(
                         getContext(),
                         new TimePickerDialog.OnTimeSetListener() {
