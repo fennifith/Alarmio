@@ -122,6 +122,34 @@ public class StopwatchFragment extends BaseFragment {
             }
         });
 
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String time = formatMillis(stopTime - startTime);
+                StringBuilder content = new StringBuilder().append(getString(R.string.title_time, time)).append("\n");
+                long total = 0;
+                for (int i = laps.size() - 1; i >= 0; i--) {
+                    long lapTime = laps.get(i);
+                    total += lapTime;
+
+                    content.append(getString(R.string.title_lap_number, laps.size() - i))
+                            .append("    \t")
+                            .append(getString(R.string.title_lap_time, formatMillis(lapTime)))
+                            .append("    \t")
+                            .append(getString(R.string.title_total_time, formatMillis(total)));
+
+                    if (i > 0)
+                        content.append("\n");
+                }
+
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.title_stopwatch_share, getString(R.string.app_name), time));
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, content.toString());
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.title_share_results)));
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

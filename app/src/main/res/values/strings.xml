@@ -9,4 +9,10 @@
     <string name="title_set_stopwatch">Stopwatch</string>
     <string name="title_lap">Lap</string>
     <string name="title_stopwatch">Stopwatch</string>
+    <string name="title_stopwatch_share">%s Stopwatch: %s</string>
+    <string name="title_lap_number">#%d</string>
+    <string name="title_time">Time: %s</string>
+    <string name="title_lap_time">Lap: %s</string>
+    <string name="title_total_time">Total: %s</string>
+    <string name="title_share_results">Share Results…</string>
 </resources>
