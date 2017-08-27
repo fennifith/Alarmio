@@ -77,11 +77,13 @@ public class AlarmData implements Parcelable {
         editor.putBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), isRingtone);
         editor.apply();
 
-        onRemove(context, prefs);
+        onRemoved(context, prefs);
         this.id = id;
+        if (isEnabled)
+            set(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
     }
 
-    public void onRemove(Context context, SharedPreferences prefs) {
+    public void onRemoved(Context context, SharedPreferences prefs) {
         cancel(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
 
         SharedPreferences.Editor editor = prefs.edit();
