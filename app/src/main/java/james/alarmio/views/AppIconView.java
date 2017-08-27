@@ -52,7 +52,7 @@ public class AppIconView extends View {
         super(context, attrs, defStyleAttr);
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.parseColor("#3F51B5"));
+        paint.setColor(Color.parseColor("#212121"));
         paint.setDither(true);
 
         animator = ValueAnimator.ofFloat(bgScale, 0.8f);
@@ -127,7 +127,7 @@ public class AppIconView extends View {
         }
 
         Matrix matrix = new Matrix();
-        matrix.postScale(bgScale, bgScale, size / 2, size / 2);
+        matrix.postScale(bgScale * 0.942986f, bgScale * 0.942986f, size / 2, size / 2);
 
         Path path = new Path();
         this.path.transform(matrix, path);
