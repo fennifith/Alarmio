@@ -75,7 +75,7 @@ public class Alarmio extends Application {
     }
 
     public void removeAlarm(AlarmData alarm) {
-        alarm.onRemove(getPrefs());
+        alarm.onRemove(this, getPrefs());
 
         int index = alarms.indexOf(alarm);
         alarms.remove(index);
