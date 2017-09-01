@@ -27,13 +27,12 @@ import com.afollestad.aesthetic.Aesthetic;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
+import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.ProgressTextView;
 
 public class StopwatchFragment extends BaseFragment {
@@ -89,7 +88,7 @@ public class StopwatchFragment extends BaseFragment {
             public void run() {
                 if (isRunning) {
                     long currentTime = System.currentTimeMillis() - startTime;
-                    String text = formatMillis(currentTime);
+                    String text = FormatUtils.formatMillis(currentTime);
                     time.setText(text);
                     time.setProgress(currentTime - (lastLapTime == 0 ? currentTime : lastLapTime));
                     text = text.substring(0, text.length() - 3);
@@ -98,7 +97,8 @@ public class StopwatchFragment extends BaseFragment {
                         notificationText = text;
                     }
                     handler.postDelayed(this, 10);
-                } else time.setText(formatMillis(startTime == 0 ? 0 : stopTime - startTime));
+                } else
+                    time.setText(FormatUtils.formatMillis(startTime == 0 ? 0 : stopTime - startTime));
             }
         };
 
@@ -126,7 +126,7 @@ public class StopwatchFragment extends BaseFragment {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String time = formatMillis(stopTime - startTime);
+                String time = FormatUtils.formatMillis(stopTime - startTime);
                 StringBuilder content = new StringBuilder().append(getString(R.string.title_time, time)).append("\n");
                 long total = 0;
                 for (int i = laps.size() - 1; i >= 0; i--) {
@@ -135,9 +135,9 @@ public class StopwatchFragment extends BaseFragment {
 
                     content.append(getString(R.string.title_lap_number, laps.size() - i))
                             .append("    \t")
-                            .append(getString(R.string.title_lap_time, formatMillis(lapTime)))
+                            .append(getString(R.string.title_lap_time, FormatUtils.formatMillis(lapTime)))
                             .append("    \t")
-                            .append(getString(R.string.title_total_time, formatMillis(total)));
+                            .append(getString(R.string.title_total_time, FormatUtils.formatMillis(total)));
 
                     if (i > 0)
                         content.append("\n");
@@ -230,7 +230,7 @@ public class StopwatchFragment extends BaseFragment {
             toggle.setImageResource(R.drawable.ic_play);
         }
 
-        notificationText = formatMillis(System.currentTimeMillis() - startTime);
+        notificationText = FormatUtils.formatMillis(System.currentTimeMillis() - startTime);
         notificationManager.notify(NOTIFICATION_ID, getNotification(notificationText));
     }
 
@@ -256,14 +256,14 @@ public class StopwatchFragment extends BaseFragment {
         TextView lap = new TextView(getContext());
         lap.setLayoutParams(layoutParams);
         lap.setGravity(GravityCompat.END);
-        lap.setText(getString(R.string.title_lap_time, formatMillis(lapDiff)));
+        lap.setText(getString(R.string.title_lap_time, FormatUtils.formatMillis(lapDiff)));
         lap.setTextColor(textColorPrimary);
         layout.addView(lap);
 
         TextView total = new TextView(getContext());
         total.setLayoutParams(layoutParams);
         total.setGravity(GravityCompat.END);
-        total.setText(getString(R.string.title_total_time, formatMillis(lapTime)));
+        total.setText(getString(R.string.title_total_time, FormatUtils.formatMillis(lapTime)));
         total.setTextColor(textColorPrimary);
         layout.addView(total);
 
@@ -284,19 +284,6 @@ public class StopwatchFragment extends BaseFragment {
             getContext().unregisterReceiver(receiver);
         }
         super.onDestroy();
-    }
-
-    private String formatMillis(long millis) {
-        long hours = TimeUnit.MILLISECONDS.toHours(millis);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1);
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1);
-        long micros = TimeUnit.MILLISECONDS.toMicros(millis) % TimeUnit.SECONDS.toMicros(1) / 10000;
-
-        if (hours > 0)
-            return String.format(Locale.getDefault(), "%dh %02dm %02ds %02d", hours, minutes, seconds, micros);
-        else if (minutes > 0)
-            return String.format(Locale.getDefault(), "%dm %02ds %02d", minutes, seconds, micros);
-        else return String.format(Locale.getDefault(), "%ds %02d", seconds, micros);
     }
 
     private Notification getNotification(String time) {

@@ -6,6 +6,7 @@ import android.text.format.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class FormatUtils {
 
@@ -30,4 +31,16 @@ public class FormatUtils {
         return getShortFormat(context).format(time);
     }
 
+    public static String formatMillis(long millis) {
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1);
+        long micros = TimeUnit.MILLISECONDS.toMicros(millis) % TimeUnit.SECONDS.toMicros(1) / 10000;
+
+        if (hours > 0)
+            return String.format(Locale.getDefault(), "%dh %02dm %02ds %02d", hours, minutes, seconds, micros);
+        else if (minutes > 0)
+            return String.format(Locale.getDefault(), "%dm %02ds %02d", minutes, seconds, micros);
+        else return String.format(Locale.getDefault(), "%ds %02d", seconds, micros);
+    }
 }
