@@ -1,17 +1,21 @@
 package james.alarmio.dialogs;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import james.alarmio.Alarmio;
 import james.alarmio.R;
+import james.alarmio.data.TimerData;
+import james.alarmio.fragments.TimerFragment;
 
 public class TimerDialog extends AppCompatDialog implements View.OnClickListener {
 
@@ -21,10 +25,12 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
     private String input = "000000";
 
     private Alarmio alarmio;
+    private FragmentManager manager;
 
-    public TimerDialog(Context context) {
+    public TimerDialog(Context context, FragmentManager manager) {
         super(context);
         alarmio = (Alarmio) context.getApplicationContext();
+        this.manager = manager;
     }
 
     @Override
@@ -52,8 +58,24 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: start timer
-                dismiss();
+                if (Integer.parseInt(input) > 0) {
+                    TimerData timer = alarmio.newTimer();
+                    timer.setDuration(alarmio.getPrefs(), getMillis());
+                    timer.set(getContext(), alarmio.getPrefs(), ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)));
+
+                    Bundle args = new Bundle();
+                    args.putParcelable(TimerFragment.EXTRA_TIMER, timer);
+                    TimerFragment fragment = new TimerFragment();
+                    fragment.setArguments(args);
+
+                    manager.beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
+                            .replace(R.id.fragment, fragment)
+                            .addToBackStack(null)
+                            .commit();
+
+                    dismiss();
+                }
             }
         });
 
@@ -77,7 +99,6 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
 
     private String getTime() {
         int hours = Integer.parseInt(input.substring(0, 2));
-        Log.d(getClass().getName(), String.valueOf(hours));
         int minutes = Integer.parseInt(input.substring(2, 4));
         int seconds = Integer.parseInt(input.substring(4, 6));
 
@@ -86,6 +107,20 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
         if (hours > 0)
             return String.format(Locale.getDefault(), "%dh %02dm %02ds", hours, minutes, seconds);
         else return String.format(Locale.getDefault(), "%dm %02ds", minutes, seconds);
+    }
+
+    private long getMillis() {
+        long millis = 0;
+
+        int hours = Integer.parseInt(input.substring(0, 2));
+        int minutes = Integer.parseInt(input.substring(2, 4));
+        int seconds = Integer.parseInt(input.substring(4, 6));
+
+        millis += TimeUnit.HOURS.toMillis(hours);
+        millis += TimeUnit.MINUTES.toMillis(minutes);
+        millis += TimeUnit.SECONDS.toMillis(seconds);
+
+        return millis;
     }
 
     @Override

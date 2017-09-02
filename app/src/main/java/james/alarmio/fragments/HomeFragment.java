@@ -177,7 +177,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             public void onClick(View view) {
                 viewPager.setCurrentItem(0, false);
 
-                new TimerDialog(getContext()).show();
+                new TimerDialog(getContext(), getFragmentManager()).show();
                 menu.collapse();
             }
         });

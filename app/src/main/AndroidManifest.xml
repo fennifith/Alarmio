@@ -25,6 +25,7 @@
         </activity>
 
         <receiver android:name=".receivers.AlarmReceiver" />
+        <receiver android:name=".receivers.TimerReceiver" />
     </application>
 
 </manifest>
