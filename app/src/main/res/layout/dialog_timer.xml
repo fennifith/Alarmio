@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="400dp"
+    android:minWidth="300dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:tag=":aesthetic_ignore"
+            android:textAlignment="center"
+            android:textSize="32sp" />
+
+        <ImageView
+            android:id="@+id/backspace"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:tint="@android:color/white"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_backspace" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:columnCount="3"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:rowCount="4">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="1"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="2"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="3"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="4"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="5"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/six"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="6"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/seven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="7"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/eight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="8"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/nine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="9"
+            android:textSize="24sp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/zero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tag=":aesthetic_ignore"
+            android:text="0"
+            android:textSize="24sp" />
+
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="16dp"
+            android:tag=":aesthetic_ignore"
+            android:text="@android:string/cancel" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="16dp"
+            android:tag=":aesthetic_ignore"
+            android:text="@string/title_start_timer" />
+
+    </LinearLayout>
+
+</LinearLayout>

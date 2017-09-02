@@ -17,4 +17,5 @@
     <string name="title_share_results">Share Results…</string>
     <string name="msg_delete_confirmation">Are you sure you want to delete %s?</string>
     <string name="title_delete">Delete</string>
+    <string name="title_start_timer">Start Timer</string>
 </resources>

@@ -32,6 +32,7 @@ public class Alarmio extends Application {
     public static final String PREF_DAY_START = "dayStart";
     public static final String PREF_DAY_END = "dayEnd";
     public static final String PREF_ALARM_LENGTH = "alarmLength";
+    public static final String PREF_TIMER_LENGTH = "timerLength";
 
     public static final int THEME_DAY_NIGHT = 0;
     public static final int THEME_DAY = 1;
@@ -57,6 +58,11 @@ public class Alarmio extends Application {
         for (int id = 0; id < alarmLength; id++) {
             alarms.add(new AlarmData(id, this, prefs));
         }
+
+        int timerLength = prefs.getInt(PREF_TIMER_LENGTH, 0);
+        for (int id = 0; id < timerLength; id++) {
+            timers.add(new TimerData(id, prefs));
+        }
     }
 
     public List<AlarmData> getAlarms() {
@@ -75,7 +81,7 @@ public class Alarmio extends Application {
     }
 
     public void removeAlarm(AlarmData alarm) {
-        alarm.onRemove(this, getPrefs());
+        alarm.onRemoved(this, getPrefs());
 
         int index = alarms.indexOf(alarm);
         alarms.remove(index);
@@ -100,12 +106,25 @@ public class Alarmio extends Application {
     public TimerData newTimer() {
         TimerData timer = new TimerData(timers.size());
         timers.add(timer);
+        onTimerCountChanged();
         return timer;
     }
 
     public void removeTimer(TimerData timer) {
-        timers.remove(timer);
+        timer.onRemoved(this, getPrefs());
+
+        int index = timers.indexOf(timer);
+        timers.remove(index);
+        for (int i = index; i < timers.size(); i++) {
+            timers.get(i).onIdChanged(i, this, getPrefs());
+        }
+
+        onTimerCountChanged();
         onTimersChanged();
+    }
+
+    public void onTimerCountChanged() {
+        prefs.edit().putInt(PREF_TIMER_LENGTH, alarms.size()).apply();
     }
 
     public void onTimersChanged() {

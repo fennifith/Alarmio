@@ -32,6 +32,7 @@ import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
 import james.alarmio.data.AlarmData;
+import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.views.PageIndicatorView;
 
@@ -174,12 +175,10 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         timerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menu.collapseImmediately();
-                getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
-                        .replace(R.id.fragment, new TimerFragment())
-                        .addToBackStack(null)
-                        .commit();
+                viewPager.setCurrentItem(0, false);
+
+                new TimerDialog(getContext()).show();
+                menu.collapse();
             }
         });
 
