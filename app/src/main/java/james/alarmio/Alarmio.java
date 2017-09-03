@@ -61,7 +61,9 @@ public class Alarmio extends Application {
 
         int timerLength = prefs.getInt(PREF_TIMER_LENGTH, 0);
         for (int id = 0; id < timerLength; id++) {
-            timers.add(new TimerData(id, prefs));
+            TimerData timer = new TimerData(id, prefs);
+            if (timer.isSet())
+                timers.add(timer);
         }
     }
 

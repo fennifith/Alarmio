@@ -56,7 +56,8 @@ public class TimerFragment extends BaseFragment {
                         long remainingMillis = timer.getRemainingMillis();
                         String text = FormatUtils.formatMillis(remainingMillis);
                         time.setText(text);
-                        time.setProgress(remainingMillis);
+                        time.setProgress(timer.getDuration() - remainingMillis);
+                        //TODO: add notifications
                         text = text.substring(0, text.length() - 3);
                         handler.postDelayed(this, 10);
                     } else getFragmentManager().popBackStack();

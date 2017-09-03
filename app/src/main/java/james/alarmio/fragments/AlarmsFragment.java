@@ -19,7 +19,7 @@ public class AlarmsFragment extends BasePagerFragment {
 
     private RecyclerView recyclerView;
 
-    private AlarmsAdapter adapter;
+    private AlarmsAdapter alarmsAdapter;
 
     private Disposable colorAccentSubscription;
     private Disposable colorForegroundSubscription;
@@ -31,15 +31,15 @@ public class AlarmsFragment extends BasePagerFragment {
         View view = inflater.inflate(R.layout.fragment_alarms, container, false);
         recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        adapter = new AlarmsAdapter(getAlarmio(), getContext(), getAlarmio().getPrefs(), getAlarmio().getAlarms());
-        recyclerView.setAdapter(adapter);
+        alarmsAdapter = new AlarmsAdapter(getAlarmio(), getContext(), getFragmentManager());
+        recyclerView.setAdapter(alarmsAdapter);
 
         colorAccentSubscription = Aesthetic.get()
                 .colorAccent()
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        adapter.setColorAccent(integer);
+                        alarmsAdapter.setColorAccent(integer);
                     }
                 });
 
@@ -48,7 +48,7 @@ public class AlarmsFragment extends BasePagerFragment {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        adapter.setColorForeground(integer);
+                        alarmsAdapter.setColorForeground(integer);
                     }
                 });
 
@@ -57,7 +57,7 @@ public class AlarmsFragment extends BasePagerFragment {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        adapter.setTextColorPrimary(integer);
+                        alarmsAdapter.setTextColorPrimary(integer);
                     }
                 });
         return view;
@@ -78,7 +78,13 @@ public class AlarmsFragment extends BasePagerFragment {
 
     @Override
     public void onAlarmsChanged() {
-        if (adapter != null)
-            adapter.notifyDataSetChanged();
+        if (alarmsAdapter != null)
+            alarmsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onTimersChanged() {
+        if (alarmsAdapter != null)
+            alarmsAdapter.notifyDataSetChanged();
     }
 }
