@@ -98,7 +98,7 @@ public class TimerData implements Parcelable {
     private PendingIntent getIntent(Context context) {
         Intent intent = new Intent(context, TimerReceiver.class);
         intent.putExtra(TimerReceiver.EXTRA_TIMER_ID, id);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        return PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
