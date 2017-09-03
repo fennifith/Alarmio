@@ -2,13 +2,20 @@ package james.alarmio;
 
 import android.Manifest;
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -22,8 +29,11 @@ import java.util.List;
 import java.util.TimeZone;
 
 import io.reactivex.annotations.Nullable;
+import james.alarmio.activities.MainActivity;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.TimerData;
+import james.alarmio.receivers.TimerReceiver;
+import james.alarmio.utils.FormatUtils;
 
 public class Alarmio extends Application {
 
@@ -38,6 +48,9 @@ public class Alarmio extends Application {
     public static final int THEME_DAY = 1;
     public static final int THEME_NIGHT = 2;
 
+    public static final String NOTIFICATION_CHANNEL_STOPWATCH = "stopwatch";
+    public static final String NOTIFICATION_CHANNEL_TIMERS = "timers";
+
     private SharedPreferences prefs;
     private SunriseSunsetCalculator sunsetCalculator;
 
@@ -45,6 +58,13 @@ public class Alarmio extends Application {
     private List<TimerData> timers;
 
     private List<AlarmioListener> listeners;
+
+    private NotificationManager notificationManager;
+    private int timerNotifications;
+
+    private Handler handler;
+    private Runnable runnable;
+    private boolean isRunning;
 
     @Override
     public void onCreate() {
@@ -65,6 +85,72 @@ public class Alarmio extends Application {
             if (timer.isSet())
                 timers.add(timer);
         }
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (timers.size() > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        notificationManager.createNotificationChannel(new NotificationChannel(NOTIFICATION_CHANNEL_TIMERS, "Timers", NotificationManager.IMPORTANCE_DEFAULT));
+
+                        for (int i = 0; i < timers.size(); i++) {
+                            String time = FormatUtils.formatMillis(timers.get(i).getRemainingMillis());
+                            time = time.substring(0, time.length() - 3);
+
+                            notificationManager.notify(i, new NotificationCompat.Builder(Alarmio.this, NOTIFICATION_CHANNEL_TIMERS)
+                                    .setSmallIcon(R.drawable.ic_timer_notification)
+                                    .setContentTitle(getString(R.string.title_set_timer))
+                                    .setContentText(time)
+                                    .setContentIntent(PendingIntent.getActivity(Alarmio.this, 0, new Intent(Alarmio.this, MainActivity.class).putExtra(TimerReceiver.EXTRA_TIMER_ID, i), 0))
+                                    .setGroup(NOTIFICATION_CHANNEL_TIMERS)
+                                    .build()
+                            );
+                        }
+
+                        for (int i = timers.size(); i < timerNotifications; i++) {
+                            notificationManager.cancel(i);
+                        }
+                    } else {
+                        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+                        for (TimerData timer : timers) {
+                            String time = FormatUtils.formatMillis(timer.getRemainingMillis());
+                            time = time.substring(0, time.length() - 3);
+                            inboxStyle.addLine(time);
+                        }
+
+                        Intent intent = new Intent(Alarmio.this, MainActivity.class);
+                        if (timers.size() == 1)
+                            intent.putExtra(TimerReceiver.EXTRA_TIMER_ID, 0);
+
+                        notificationManager.notify(247, new NotificationCompat.Builder(Alarmio.this, NOTIFICATION_CHANNEL_TIMERS)
+                                .setSmallIcon(R.drawable.ic_timer_notification)
+                                .setContentTitle(getString(R.string.title_set_timer))
+                                .setContentText("")
+                                .setContentIntent(PendingIntent.getActivity(Alarmio.this, 0, intent, 0))
+                                .setStyle(inboxStyle)
+                                .build()
+                        );
+                    }
+
+                    timerNotifications = timers.size();
+
+                    handler.postDelayed(runnable, 1000);
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        for (int i = 0; i < timerNotifications; i++) {
+                            notificationManager.cancel(i);
+                        }
+
+                        timerNotifications = 0;
+                    } else notificationManager.cancel(247);
+                }
+            }
+        };
+
+        handler.post(runnable);
     }
 
     public List<AlarmData> getAlarms() {
@@ -133,6 +219,11 @@ public class Alarmio extends Application {
         for (AlarmioListener listener : listeners) {
             listener.onTimersChanged();
         }
+    }
+
+    public void onTimerStarted() {
+        handler.removeCallbacks(runnable);
+        handler.post(runnable);
     }
 
     public SharedPreferences getPrefs() {

@@ -62,6 +62,7 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
                     TimerData timer = alarmio.newTimer();
                     timer.setDuration(alarmio.getPrefs(), getMillis());
                     timer.set(getContext(), alarmio.getPrefs(), ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)));
+                    alarmio.onTimerStarted();
 
                     Bundle args = new Bundle();
                     args.putParcelable(TimerFragment.EXTRA_TIMER, timer);
