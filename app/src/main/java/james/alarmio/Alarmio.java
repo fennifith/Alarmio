@@ -129,7 +129,7 @@ public class Alarmio extends Application {
                                 .setSmallIcon(R.drawable.ic_timer_notification)
                                 .setContentTitle(getString(R.string.title_set_timer))
                                 .setContentText("")
-                                .setContentIntent(PendingIntent.getActivity(Alarmio.this, 0, intent, 0))
+                                .setContentIntent(PendingIntent.getActivity(Alarmio.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT))
                                 .setStyle(inboxStyle)
                                 .build()
                         );
