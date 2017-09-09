@@ -26,8 +26,10 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         alarmio = (Alarmio) getApplicationContext();
 
         if (savedInstanceState == null) {
+            fragment = new SplashFragment();
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment, new SplashFragment())
+                    .add(R.id.fragment, fragment)
                     .commit();
         } else {
             if (fragment == null)
