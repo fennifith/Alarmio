@@ -30,6 +30,7 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
 import james.alarmio.utils.FormatUtils;
@@ -288,9 +289,9 @@ public class StopwatchFragment extends BaseFragment {
 
     private Notification getNotification(String time) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(new NotificationChannel("stopwatch", getContext().getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_DEFAULT));
+            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_STOPWATCH, getContext().getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_DEFAULT));
 
-        return new NotificationCompat.Builder(getContext(), "stopwatch")
+        return new NotificationCompat.Builder(getContext(), Alarmio.NOTIFICATION_CHANNEL_STOPWATCH)
                 .setSmallIcon(R.drawable.ic_stopwatch_notification)
                 .setContentTitle(getString(R.string.title_stopwatch))
                 .setContentText(time)

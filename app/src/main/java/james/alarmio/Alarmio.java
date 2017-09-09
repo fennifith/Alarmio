@@ -64,7 +64,6 @@ public class Alarmio extends Application {
 
     private Handler handler;
     private Runnable runnable;
-    private boolean isRunning;
 
     @Override
     public void onCreate() {
