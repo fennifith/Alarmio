@@ -288,6 +288,20 @@ public class Alarmio extends Application {
     }
 
     @Nullable
+    public Integer getSunrise() {
+        if (getSunsetCalculator() != null)
+            return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
+        else return null;
+    }
+
+    @Nullable
+    public Integer getSunset() {
+        if (getSunsetCalculator() != null)
+            return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
+        else return null;
+    }
+
+    @Nullable
     private SunriseSunsetCalculator getSunsetCalculator() {
         if (sunsetCalculator == null && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             try {
