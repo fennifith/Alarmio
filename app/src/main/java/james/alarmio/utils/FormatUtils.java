@@ -12,7 +12,7 @@ public class FormatUtils {
 
     private static final String FORMAT_12H = "h:mm:ss";
     private static final String FORMAT_24H = "HH:mm:ss";
-    private static final String FORMAT_12H_SHORT = "h:mm";
+    private static final String FORMAT_12H_SHORT = "h:mm a";
     private static final String FORMAT_24H_SHORT = "HH:mm";
 
     public static SimpleDateFormat getFormat(Context context) {

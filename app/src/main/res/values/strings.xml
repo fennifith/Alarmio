@@ -19,4 +19,6 @@
     <string name="title_delete">Delete</string>
     <string name="title_start_timer">Start Timer</string>
     <string name="title_auto">Auto</string>
+    <string name="title_sunrise">Sunrise</string>
+    <string name="title_sunset">Sunset</string>
 </resources>

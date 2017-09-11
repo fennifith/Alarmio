@@ -40,6 +40,7 @@ public class SunriseView extends View implements View.OnTouchListener {
 
     private Alarmio alarmio;
     private SharedPreferences prefs;
+    private SunriseListener listener;
 
     private Disposable colorAccentSubscription;
     private Disposable textColorPrimarySubscription;
@@ -107,6 +108,10 @@ public class SunriseView extends View implements View.OnTouchListener {
     public void unsubscribe() {
         textColorPrimarySubscription.dispose();
         colorAccentSubscription.dispose();
+    }
+
+    public void setListener(SunriseListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -194,15 +199,23 @@ public class SunriseView extends View implements View.OnTouchListener {
                     prefs.edit().putInt(Alarmio.PREF_DAY_START, Math.round(dayStart)).apply();
                     invalidate();
                     alarmio.onActivityResume();
+                    if (listener != null)
+                        listener.onSunriseChanged(Math.round(dayStart), Math.round(dayEnd));
                 } else if (movingEnd) {
                     movingEnd = false;
                     float dayEnd = Math.max((float) Math.round(horizontalDistance * 24), dayStart + 1);
                     prefs.edit().putInt(Alarmio.PREF_DAY_END, Math.round(dayEnd)).apply();
                     invalidate();
                     alarmio.onActivityResume();
+                    if (listener != null)
+                        listener.onSunriseChanged(Math.round(dayStart), Math.round(dayEnd));
                 }
                 break;
         }
         return false;
+    }
+
+    public interface SunriseListener {
+        void onSunriseChanged(int sunrise, int sunset);
     }
 }
