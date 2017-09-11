@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="12dp">
 
-            <james.alarmio.utils.SunriseView
+            <james.alarmio.views.SunriseView
                 android:id="@+id/sunriseView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />

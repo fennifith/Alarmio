@@ -1,4 +1,4 @@
-package james.alarmio.utils;
+package james.alarmio.views;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

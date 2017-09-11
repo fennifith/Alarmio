@@ -30,7 +30,7 @@ import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.utils.FormatUtils;
-import james.alarmio.utils.SunriseView;
+import james.alarmio.views.SunriseView;
 
 public class SettingsFragment extends BasePagerFragment implements SunriseView.SunriseListener {
 
