@@ -21,4 +21,11 @@
     <string name="title_auto">Auto</string>
     <string name="title_sunrise">Sunrise</string>
     <string name="title_sunset">Sunset</string>
+    <string name="title_theme">Theme</string>
+    <string name="title_appearance">Appearance</string>
+    <string-array name="array_themes">
+        <item>Schedule</item>
+        <item>Day</item>
+        <item>Night</item>
+    </string-array>
 </resources>

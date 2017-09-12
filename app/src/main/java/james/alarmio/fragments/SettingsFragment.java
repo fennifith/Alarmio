@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -13,9 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -34,6 +38,7 @@ import james.alarmio.views.SunriseView;
 
 public class SettingsFragment extends BasePagerFragment implements SunriseView.SunriseListener {
 
+    private AppCompatSpinner themeSpinner;
     private AppCompatCheckBox sunriseAutoSwitch;
     private FrameLayout sunriseLayout;
     private TextView sunriseTextView;
@@ -43,15 +48,20 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
     private SharedPreferences prefs;
 
     private Disposable colorAccentSubscription;
+    private Disposable colorForegroundSubscription;
     private Disposable textColorPrimarySubscription;
+    private Disposable textColorSecondarySubscription;
 
     private int colorAccent;
+    private int colorForeground;
     private int textColorPrimary;
+    private int textColorSecondary;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        themeSpinner = view.findViewById(R.id.themeSpinner);
         sunriseAutoSwitch = view.findViewById(R.id.sunriseAutoSwitch);
         sunriseLayout = view.findViewById(R.id.sunriseLayout);
         sunriseTextView = view.findViewById(R.id.sunriseTextView);
@@ -59,6 +69,25 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
         sunriseView = view.findViewById(R.id.sunriseView);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        themeSpinner.setAdapter(ArrayAdapter.createFromResource(getContext(), R.array.array_themes, R.layout.support_simple_spinner_dropdown_item));
+        int theme = getAlarmio().getActivityTheme();
+        themeSpinner.setSelection(theme);
+        sunriseAutoSwitch.setVisibility(theme == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
+        sunriseLayout.setVisibility(theme == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
+        themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                prefs.edit().putInt(Alarmio.PREF_THEME, i).apply();
+                sunriseAutoSwitch.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
+                sunriseLayout.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
+                getAlarmio().onActivityResume();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         sunriseAutoSwitch.setChecked(getAlarmio().isDayAuto());
         sunriseAutoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -89,6 +118,16 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
                     }
                 });
 
+        colorForegroundSubscription = Aesthetic.get()
+                .colorCardViewBackground()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        colorForeground = integer;
+                        invalidate();
+                    }
+                });
+
         textColorPrimarySubscription = Aesthetic.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
@@ -99,10 +138,23 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
                     }
                 });
 
+        textColorSecondarySubscription = Aesthetic.get()
+                .textColorSecondary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        textColorSecondary = integer;
+                        invalidate();
+                    }
+                });
+
         return view;
     }
 
     private void invalidate() {
+        themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
+        themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
+
         int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
 
         ColorStateList colorStateList = new ColorStateList(
@@ -121,7 +173,9 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
     public void onDestroyView() {
         if (sunriseView != null) {
             colorAccentSubscription.dispose();
+            colorForegroundSubscription.dispose();
             textColorPrimarySubscription.dispose();
+            textColorSecondarySubscription.dispose();
             sunriseView.unsubscribe();
         }
         super.onDestroyView();
