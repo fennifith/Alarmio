@@ -27,5 +27,6 @@
         <item>Schedule</item>
         <item>Day</item>
         <item>Night</item>
+        <item>Amoled</item>
     </string-array>
 </resources>

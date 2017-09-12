@@ -47,6 +47,7 @@ public class Alarmio extends Application {
     public static final int THEME_DAY_NIGHT = 0;
     public static final int THEME_DAY = 1;
     public static final int THEME_NIGHT = 2;
+    public static final int THEME_AMOLED = 3;
 
     public static final String NOTIFICATION_CHANNEL_STOPWATCH = "stopwatch";
     public static final String NOTIFICATION_CHANNEL_TIMERS = "timers";
@@ -246,19 +247,36 @@ public class Alarmio extends Application {
                     .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondary))
                     .apply();
         } else {
-            Aesthetic.get()
-                    .lightStatusBarMode(AutoSwitchMode.ON)
-                    .colorPrimary(ContextCompat.getColor(this, R.color.colorPrimary))
-                    .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorPrimaryDark))
-                    .colorNavigationBar(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-                    .colorAccent(ContextCompat.getColor(this, R.color.colorAccent))
-                    .colorCardViewBackground(ContextCompat.getColor(this, R.color.colorForeground))
-                    .colorWindowBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-                    .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimary))
-                    .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondary))
-                    .textColorPrimaryInverse(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
-                    .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
-                    .apply();
+            int theme = getActivityTheme();
+            if (theme == THEME_DAY || theme == THEME_DAY_NIGHT) {
+                Aesthetic.get()
+                        .lightStatusBarMode(AutoSwitchMode.ON)
+                        .colorPrimary(ContextCompat.getColor(this, R.color.colorPrimary))
+                        .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                        .colorNavigationBar(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                        .colorAccent(ContextCompat.getColor(this, R.color.colorAccent))
+                        .colorCardViewBackground(ContextCompat.getColor(this, R.color.colorForeground))
+                        .colorWindowBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                        .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimary))
+                        .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondary))
+                        .textColorPrimaryInverse(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
+                        .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
+                        .apply();
+            } else if (theme == THEME_AMOLED) {
+                Aesthetic.get()
+                        .lightStatusBarMode(AutoSwitchMode.OFF)
+                        .colorPrimary(Color.BLACK)
+                        .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : Color.BLACK)
+                        .colorNavigationBar(Color.BLACK)
+                        .colorAccent(Color.WHITE)
+                        .colorCardViewBackground(Color.BLACK)
+                        .colorWindowBackground(Color.BLACK)
+                        .textColorPrimary(Color.WHITE)
+                        .textColorSecondary(Color.WHITE)
+                        .textColorPrimaryInverse(Color.BLACK)
+                        .textColorSecondaryInverse(Color.BLACK)
+                        .apply();
+            }
         }
     }
 
