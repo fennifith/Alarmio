@@ -3,9 +3,9 @@ package james.alarmio.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import james.alarmio.Alarmio;
+import james.alarmio.activities.AlarmActivity;
 import james.alarmio.data.TimerData;
 
 public class TimerReceiver extends BroadcastReceiver {
@@ -14,10 +14,12 @@ public class TimerReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Timer received!", Toast.LENGTH_SHORT).show();
-
         Alarmio alarmio = (Alarmio) context.getApplicationContext();
         TimerData timer = alarmio.getTimers().get(intent.getIntExtra(EXTRA_TIMER_ID, 0));
         alarmio.removeTimer(timer);
+
+        Intent ringer = new Intent(context, AlarmActivity.class);
+        ringer.putExtra(AlarmActivity.EXTRA_TIMER, timer);
+        context.startActivity(ringer);
     }
 }
