@@ -23,9 +23,7 @@ import james.alarmio.R;
 
 public class AppIconView extends View {
 
-    private Bitmap bgSecondsBitmap;
-    private Bitmap bgMinutesBitmap;
-    private Bitmap bgHoursBitmap;
+    private Bitmap bgBitmap;
     private Bitmap fgSecondsBitmap;
     private Bitmap fgMinutesBitmap;
     private Bitmap fgHoursBitmap;
@@ -114,9 +112,7 @@ public class AppIconView extends View {
         int size = Math.min(canvas.getWidth(), canvas.getHeight());
         if (this.size != size || fgBitmap == null || path == null) {
             this.size = size;
-            bgSecondsBitmap = getBitmap(size, R.mipmap.ic_launcher_bg_seconds);
-            bgMinutesBitmap = getBitmap(size, R.mipmap.ic_launcher_bg_minutes);
-            bgHoursBitmap = getBitmap(size, R.mipmap.ic_launcher_bg_hours);
+            bgBitmap = getBitmap(size, R.mipmap.ic_launcher_bg);
             fgSecondsBitmap = getBitmap(size, R.mipmap.ic_launcher_fg_seconds);
             fgMinutesBitmap = getBitmap(size, R.mipmap.ic_launcher_fg_minutes);
             fgHoursBitmap = getBitmap(size, R.mipmap.ic_launcher_fg_hours);
@@ -133,20 +129,10 @@ public class AppIconView extends View {
         this.path.transform(matrix, path);
         canvas.drawPath(path, paint);
 
-        matrix = getFgMatrix(bgSecondsBitmap);
-        matrix.postRotate(bgRotation * 360);
-        matrix.postTranslate(bgSecondsBitmap.getWidth() / 2, bgSecondsBitmap.getHeight() / 2);
-        canvas.drawBitmap(bgSecondsBitmap, matrix, paint);
-
-        matrix = getFgMatrix(bgMinutesBitmap);
-        matrix.postRotate(bgRotation * 240);
-        matrix.postTranslate(bgMinutesBitmap.getWidth() / 2, bgMinutesBitmap.getHeight() / 2);
-        canvas.drawBitmap(bgMinutesBitmap, matrix, paint);
-
-        matrix = getFgMatrix(bgHoursBitmap);
+        matrix = getFgMatrix(bgBitmap);
         matrix.postRotate(bgRotation * 120);
-        matrix.postTranslate(bgHoursBitmap.getWidth() / 2, bgHoursBitmap.getHeight() / 2);
-        canvas.drawBitmap(bgHoursBitmap, matrix, paint);
+        matrix.postTranslate(bgBitmap.getWidth() / 2, bgBitmap.getHeight() / 2);
+        canvas.drawBitmap(bgBitmap, matrix, paint);
 
         matrix = getFgMatrix(fgSecondsBitmap);
         matrix.postRotate(-rotation * 720);
