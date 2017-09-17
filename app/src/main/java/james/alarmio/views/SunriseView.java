@@ -165,10 +165,10 @@ public class SunriseView extends View implements View.OnTouchListener {
 
         Path path = new Path();
         path.moveTo(start, scaleY);
-        path.rQuadTo(interval2, scaleY, interval2 * 2, 0);
-        path.rQuadTo(interval, -scaleY, interval * 2, 0);
-        path.rQuadTo(interval2, scaleY, interval2 * 2, 0);
-        path.rQuadTo(interval, -scaleY, interval * 2, 0);
+        path.rQuadTo(interval2, scaleY * ((interval2 / interval + 1) / 2), interval2 * 2, 0);
+        path.rQuadTo(interval, -scaleY * ((interval / interval2 + 1) / 2), interval * 2, 0);
+        path.rQuadTo(interval2, scaleY * ((interval2 / interval + 1) / 2), interval2 * 2, 0);
+        path.rQuadTo(interval, -scaleY * ((interval / interval2 + 1) / 2), interval * 2, 0);
 
         canvas.clipPath(path);
         canvas.drawRect(0, 0, (int) scaleX * hour, (int) scaleY, paint);
