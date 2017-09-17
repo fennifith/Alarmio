@@ -3,7 +3,6 @@ package james.alarmio.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
@@ -89,10 +88,11 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                snooze.setVisibility(View.VISIBLE);
+                dismiss.setVisibility(View.VISIBLE);
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float x = motionEvent.getRawX() - (view.getWidth() / 2);
-                Log.d("Move", String.valueOf(x));
                 view.setX(x);
                 boolean snoozeSelected = x <= snooze.getX() + snooze.getWidth();
                 boolean dismissSelected = x >= dismiss.getX() - dismiss.getWidth();
@@ -105,12 +105,15 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 view.animate().x(firstX).start();
+                snooze.setVisibility(View.INVISIBLE);
+                dismiss.setVisibility(View.INVISIBLE);
                 if (this.snoozeSelected) {
                     snooze.setPressed(false);
+                    view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } else if (this.dismissSelected) {
                     dismiss.setPressed(false);
+                    view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     finish();
                 }
                 break;
