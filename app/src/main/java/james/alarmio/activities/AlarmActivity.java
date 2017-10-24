@@ -1,6 +1,7 @@
 package james.alarmio.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.HapticFeedbackConstants;
@@ -17,6 +18,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
+import james.alarmio.data.AlarmData;
+import james.alarmio.data.TimerData;
+import james.alarmio.utils.FormatUtils;
 
 public class AlarmActivity extends AestheticActivity implements View.OnTouchListener {
 
@@ -34,6 +38,14 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     private boolean snoozeSelected;
     private boolean dismissSelected;
     private float firstX;
+
+    private boolean isAlarm;
+    private long triggerTime;
+    private AlarmData alarm;
+    private TimerData timer;
+
+    private Handler handler;
+    private Runnable runnable;
 
     private Disposable textColorPrimarySubscription;
 
@@ -67,6 +79,25 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                 fab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+
+        isAlarm = getIntent().hasExtra(EXTRA_ALARM);
+        if (isAlarm) {
+            alarm = getIntent().getParcelableExtra(EXTRA_ALARM);
+        } else if (getIntent().hasExtra(EXTRA_TIMER)) {
+            timer = getIntent().getParcelableExtra(EXTRA_TIMER);
+        } else finish();
+
+        triggerTime = System.currentTimeMillis();
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                String text = FormatUtils.formatMillis(System.currentTimeMillis() - triggerTime);
+                time.setText(String.format("-%s", text.substring(0, text.length() - 3)));
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(runnable);
     }
 
     @Override
@@ -81,6 +112,8 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         if (textColorPrimarySubscription != null) {
             textColorPrimarySubscription.dispose();
         }
+        if (handler != null)
+            handler.removeCallbacks(runnable);
     }
 
     @Override
@@ -88,7 +121,8 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                snooze.setVisibility(View.VISIBLE);
+                if (isAlarm)
+                    snooze.setVisibility(View.VISIBLE);
                 dismiss.setVisibility(View.VISIBLE);
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -108,7 +142,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                 view.animate().x(firstX).start();
                 snooze.setVisibility(View.INVISIBLE);
                 dismiss.setVisibility(View.INVISIBLE);
-                if (this.snoozeSelected) {
+                if (this.snoozeSelected && isAlarm && alarm != null) {
                     snooze.setPressed(false);
                     view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } else if (this.dismissSelected) {
