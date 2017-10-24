@@ -26,6 +26,8 @@
 
         <activity android:name=".activities.AlarmActivity" />
 
+        <service android:name=".services.StopwatchService" />
+
         <receiver android:name=".receivers.AlarmReceiver" />
         <receiver android:name=".receivers.TimerReceiver" />
     </application>
