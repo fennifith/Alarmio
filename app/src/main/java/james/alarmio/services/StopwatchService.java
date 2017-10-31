@@ -168,8 +168,8 @@ public class StopwatchService extends Service {
                 .setSmallIcon(R.drawable.ic_stopwatch_notification)
                 .setContentTitle(getString(R.string.title_stopwatch))
                 .setContentText(time)
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0))
-                .setDeleteIntent(PendingIntent.getBroadcast(this, 0, new Intent(ACTION_RESET), 0))
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class).putExtra(MainActivity.EXTRA_FRAGMENT, MainActivity.FRAGMENT_STOPWATCH), 0))
+                .setDeleteIntent(PendingIntent.getBroadcast(this, 0, new Intent(ACTION_RESET).setPackage(getPackageName()), 0))
                 .addAction(
                         isRunning ? R.drawable.ic_pause_notification : R.drawable.ic_play_notification,
                         isRunning ? "Pause" : "Play",

@@ -39,6 +39,12 @@ public class SplashFragment extends BaseFragment implements Animator.AnimatorLis
     }
 
     @Override
+    public void onDestroyView() {
+        isVisible = false;
+        super.onDestroyView();
+    }
+
+    @Override
     public void onAnimationStart(Animator animator) {
 
     }
