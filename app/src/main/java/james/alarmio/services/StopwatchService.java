@@ -123,8 +123,8 @@ public class StopwatchService extends Service {
         laps.clear();
         lastLapTime = 0;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-            stopForeground(STOP_FOREGROUND_REMOVE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+            stopForeground(true);
 
         if (listener != null)
             listener.onReset();
