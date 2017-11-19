@@ -68,6 +68,7 @@ public class StopwatchService extends Service {
                         startForeground(NOTIFICATION_ID, getNotification(text));
                         notificationText = text;
                     }
+                    handler.removeCallbacks(this);
                     handler.postDelayed(this, 10);
                 } else if (listener != null) {
                     long time = startTime == 0 ? 0 : stopTime - startTime;

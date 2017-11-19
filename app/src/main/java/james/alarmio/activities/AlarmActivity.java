@@ -1,5 +1,6 @@
 package james.alarmio.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -114,6 +115,12 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         }
         if (handler != null)
             handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        finish();
+        startActivity(new Intent(intent));
     }
 
     @Override

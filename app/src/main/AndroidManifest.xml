@@ -24,9 +24,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.AlarmActivity" />
+        <activity
+            android:name=".activities.AlarmActivity"
+            android:launchMode="singleInstance" />
 
         <service android:name=".services.StopwatchService" />
+        <service android:name=".services.TimerService" />
 
         <receiver android:name=".receivers.AlarmReceiver" />
         <receiver android:name=".receivers.TimerReceiver" />
