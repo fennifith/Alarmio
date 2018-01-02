@@ -1,6 +1,7 @@
 package james.alarmio.fragments;
 
 import android.Manifest;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -15,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.afollestad.aesthetic.Aesthetic;
 
@@ -107,6 +110,54 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
 
         sunriseView.setListener(this);
         onSunriseChanged(getAlarmio().getDayStart(), getAlarmio().getDayEnd());
+
+        sunriseTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new TimePickerDialog(
+                        getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                int dayEnd = getAlarmio().getDayEnd();
+                                if (hourOfDay < dayEnd) {
+                                    prefs.edit().putInt(Alarmio.PREF_DAY_START, hourOfDay).apply();
+                                    sunriseView.invalidate();
+                                    onSunriseChanged(hourOfDay, dayEnd);
+                                    getAlarmio().onActivityResume();
+                                }
+                            }
+                        },
+                        getAlarmio().getDayStart(),
+                        0,
+                        DateFormat.is24HourFormat(getContext())
+                ).show();
+            }
+        });
+
+        sunsetTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new TimePickerDialog(
+                        getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                int dayStart = getAlarmio().getDayStart();
+                                if (hourOfDay > dayStart) {
+                                    prefs.edit().putInt(Alarmio.PREF_DAY_END, hourOfDay).apply();
+                                    sunriseView.invalidate();
+                                    onSunriseChanged(dayStart, hourOfDay);
+                                    getAlarmio().onActivityResume();
+                                }
+                            }
+                        },
+                        getAlarmio().getDayEnd(),
+                        0,
+                        DateFormat.is24HourFormat(getContext())
+                ).show();
+            }
+        });
 
         colorAccentSubscription = Aesthetic.get()
                 .colorAccent()

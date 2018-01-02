@@ -172,6 +172,7 @@ public class Alarmio extends Application {
             int theme = getActivityTheme();
             if (theme == THEME_DAY || theme == THEME_DAY_NIGHT) {
                 Aesthetic.get()
+                        .isDark(false)
                         .lightStatusBarMode(AutoSwitchMode.ON)
                         .colorPrimary(ContextCompat.getColor(this, R.color.colorPrimary))
                         .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorPrimaryDark))
@@ -186,6 +187,7 @@ public class Alarmio extends Application {
                         .apply();
             } else if (theme == THEME_AMOLED) {
                 Aesthetic.get()
+                        .isDark(true)
                         .lightStatusBarMode(AutoSwitchMode.OFF)
                         .colorPrimary(Color.BLACK)
                         .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : Color.BLACK)
@@ -215,12 +217,18 @@ public class Alarmio extends Application {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && prefs.getBoolean(PREF_DAY_AUTO, true);
     }
 
+    /**
+     * @return the hour of the start of the day (24h), as specified by the user
+     */
     public int getDayStart() {
         if (isDayAuto() && getSunsetCalculator() != null)
             return getSunsetCalculator().getOfficialSunriseCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
         else return prefs.getInt(PREF_DAY_START, 6);
     }
 
+    /**
+     * @return the hour of the end of the day (24h), as specified by the user
+     */
     public int getDayEnd() {
         if (isDayAuto() && getSunsetCalculator() != null)
             return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
