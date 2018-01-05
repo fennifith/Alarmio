@@ -39,6 +39,7 @@ import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.TimerData;
+import james.alarmio.dialogs.SoundChooserDialog;
 import james.alarmio.receivers.TimerReceiver;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
@@ -257,7 +258,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    //TODO: select ringtone
+                    SoundChooserDialog dialog = new SoundChooserDialog();
+                    dialog.show(fragmentManager, "SoundChooserDialog");
                 }
             });
 

@@ -21,4 +21,9 @@
         <item name="android:windowBackground">@color/colorNightPrimaryDark</item>
     </style>
 
+    <style name="SlideDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_up_sheet</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down_sheet</item>
+    </style>
+
 </resources>
