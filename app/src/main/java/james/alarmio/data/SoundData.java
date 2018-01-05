@@ -1,5 +1,11 @@
 package james.alarmio.data;
 
+import android.media.AudioAttributes;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
+
 import io.reactivex.annotations.Nullable;
 import james.alarmio.Alarmio;
 
@@ -10,6 +16,8 @@ public class SoundData {
 
     private String name;
     private String url;
+
+    private Ringtone ringtone;
 
     public SoundData(String name, String url) {
         this.name = name;
@@ -25,19 +33,44 @@ public class SoundData {
     }
 
     public void play(Alarmio alarmio) {
+        if (url.startsWith("content://")) {
+            if (ringtone == null) {
+                ringtone = RingtoneManager.getRingtone(alarmio, Uri.parse(url));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ringtone.setAudioAttributes(new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .build());
+                }
+            }
 
+            alarmio.playRingtone(ringtone);
+        }
     }
 
-    public void pause(Alarmio alarmio) {
-
+    public void stop(Alarmio alarmio) {
+        if (ringtone != null)
+            ringtone.stop();
     }
 
     public void preview(Alarmio alarmio) {
+        if (url.startsWith("content://")) {
+            if (ringtone == null) {
+                ringtone = RingtoneManager.getRingtone(alarmio, Uri.parse(url));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ringtone.setAudioAttributes(new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build());
+                }
+            }
 
+            alarmio.playRingtone(ringtone);
+        }
     }
 
-    public void isPlaying() {
-
+    public boolean isPlaying() {
+        if (ringtone != null)
+            return ringtone.isPlaying();
+        else return false;
     }
 
     @Override

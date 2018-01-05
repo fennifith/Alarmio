@@ -1,6 +1,7 @@
 package james.alarmio.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
 import james.alarmio.data.SoundData;
@@ -79,6 +81,10 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserFr
         RingtoneSoundChooserFragment ringtoneFragment = new RingtoneSoundChooserFragment();
         RadioSoundChooserFragment radioFragment = new RadioSoundChooserFragment();
 
+        alarmFragment.setListener(this);
+        ringtoneFragment.setListener(this);
+        radioFragment.setListener(this);
+
         viewPager.setAdapter(new SimplePagerAdapter(getChildFragmentManager(), alarmFragment, ringtoneFragment, radioFragment));
         tabLayout.setupWithViewPager(viewPager);
         return view;
@@ -102,4 +108,11 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserFr
         dismiss();
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        if (view != null)
+            ((Alarmio) view.getContext().getApplicationContext()).stopCurrentSound();
+    }
 }
