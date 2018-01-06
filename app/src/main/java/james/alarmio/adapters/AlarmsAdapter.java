@@ -21,6 +21,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -280,6 +281,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     alarm.setVibrate(prefs, !alarm.isVibrate);
                     alarmHolder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
+                    if (alarm.isVibrate)
+                        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 }
             });
 
