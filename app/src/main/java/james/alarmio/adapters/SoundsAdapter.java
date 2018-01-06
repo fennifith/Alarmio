@@ -42,47 +42,68 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        SoundData sound = sounds.get(position);
-        holder.title.setText(sound.getName());
-        holder.icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                SoundData sound = sounds.get(position);
-                if (sound.isPlaying()) {
-                    sound.stop(alarmio);
-                    currentlyPlaying = -1;
-                } else {
-                    sound.preview(alarmio);
-
-                    if (currentlyPlaying >= 0) {
-                        sounds.get(currentlyPlaying).stop(alarmio);
-                        notifyItemChanged(currentlyPlaying);
-                    }
-
-                    currentlyPlaying = position;
-                }
-
-                notifyItemChanged(position);
-            }
-        });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null)
-                    listener.onSoundChosen(sounds.get(holder.getAdapterPosition()));
-            }
-        });
-
         Observable<Integer> textColor;
         Observable<Integer> backgroundColor;
-        if (sound.isPlaying()) {
-            textColor = Aesthetic.get().colorPrimary();
-            backgroundColor = Aesthetic.get().textColorPrimary();
-        } else {
+
+        if (position == 0) {
+            holder.title.setText(R.string.title_sound_none);
+            holder.icon.setOnClickListener(null);
+            holder.icon.setImageResource(R.drawable.ic_ringtone_disabled);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onSoundChosen(null);
+                }
+            });
+
             textColor = Aesthetic.get().textColorPrimary();
             backgroundColor = Aesthetic.get().colorPrimary();
+        } else {
+            SoundData sound = sounds.get(position - 1);
+            holder.title.setText(sound.getName());
+            holder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
+                    SoundData sound = sounds.get(position - 1);
+                    if (sound.isPlaying()) {
+                        sound.stop(alarmio);
+                        currentlyPlaying = -1;
+                    } else {
+                        sound.preview(alarmio);
+
+                        if (currentlyPlaying >= 0) {
+                            sounds.get(currentlyPlaying - 1).stop(alarmio);
+                            notifyItemChanged(currentlyPlaying);
+                        }
+
+                        currentlyPlaying = position;
+                    }
+
+                    notifyItemChanged(position);
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onSoundChosen(sounds.get(holder.getAdapterPosition() - 1));
+                }
+            });
+
+            if (sound.isPlaying()) {
+                holder.icon.setImageResource(R.drawable.ic_pause);
+
+                textColor = Aesthetic.get().colorPrimary();
+                backgroundColor = Aesthetic.get().textColorPrimary();
+            } else {
+                holder.icon.setImageResource(R.drawable.ic_play);
+
+                textColor = Aesthetic.get().textColorPrimary();
+                backgroundColor = Aesthetic.get().colorPrimary();
+            }
         }
 
         textColor.take(1).subscribe(new Consumer<Integer>() {
@@ -103,7 +124,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return sounds.size();
+        return sounds.size() + 1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

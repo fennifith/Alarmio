@@ -35,7 +35,6 @@ public class AlarmData implements Parcelable {
     public boolean[] days = new boolean[7];
     public boolean isVibrate = true;
     public SoundData sound;
-    public boolean isRingtone = true;
 
     public AlarmData(int id, Calendar time) {
         this.id = id;
@@ -65,7 +64,6 @@ public class AlarmData implements Parcelable {
         }
         editor.putBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
         editor.putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString());
-        editor.putBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), isRingtone);
         editor.apply();
 
         onRemoved(context, prefs);
@@ -150,9 +148,15 @@ public class AlarmData implements Parcelable {
 
     public void setSound(SharedPreferences prefs, SoundData sound) {
         this.sound = sound;
-        prefs.edit()
-                .putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString())
-                .apply();
+        if (sound != null) {
+            prefs.edit()
+                    .putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString())
+                    .apply();
+        } else {
+            prefs.edit()
+                    .remove(String.format(Locale.getDefault(), PREF_RINGTONE, id))
+                    .apply();
+        }
     }
 
     @Nullable

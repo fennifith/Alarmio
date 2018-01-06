@@ -256,7 +256,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             }
 
             alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
-            alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : "None");
+            alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : context.getString(R.string.title_sound_none));
             alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -315,7 +315,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             ColorStateList colorStateList = new ColorStateList(
                     states,
                     new int[]{
-                            Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                            Color.argb(100, 128, 128, 128),
                             colorAccent
                     }
             );
@@ -323,7 +323,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             ColorStateList thumbStateList = new ColorStateList(
                     states,
                     new int[]{
-                            Color.argb(255, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                            Color.argb(255, 128, 128, 128),
                             colorAccent
                     }
             );
@@ -331,7 +331,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             ColorStateList trackStateList = new ColorStateList(
                     states,
                     new int[]{
-                            Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                            Color.argb(100, 128, 128, 128),
                             Color.argb(100, Color.red(colorAccent), Color.green(colorAccent), Color.blue(colorAccent))
                     }
             );

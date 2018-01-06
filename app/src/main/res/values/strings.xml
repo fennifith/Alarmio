@@ -23,6 +23,7 @@
     <string name="title_sunset">Sunset</string>
     <string name="title_theme">Theme</string>
     <string name="title_appearance">Appearance</string>
+    <string name="title_sound_none">None</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>
