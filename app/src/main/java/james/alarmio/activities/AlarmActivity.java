@@ -1,19 +1,26 @@
 package james.alarmio.activities;
 
+import android.app.AlarmManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.afollestad.aesthetic.AestheticActivity;
+
+import java.util.Date;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -49,6 +56,9 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     private Runnable runnable;
 
     private Disposable textColorPrimarySubscription;
+    private Disposable isDarkSubscription;
+
+    private boolean isDark;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +82,15 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                     }
                 });
 
+        isDarkSubscription = Aesthetic.get()
+                .isDark()
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        isDark = aBoolean;
+                    }
+                });
+
         fab.setOnTouchListener(this);
         fab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -87,6 +106,8 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         } else if (getIntent().hasExtra(EXTRA_TIMER)) {
             timer = getIntent().getParcelableExtra(EXTRA_TIMER);
         } else finish();
+
+        date.setText(FormatUtils.format(new Date(), FormatUtils.FORMAT_DATE + ", " + FormatUtils.getShortFormat(this)));
 
         triggerTime = System.currentTimeMillis();
         handler = new Handler();
@@ -110,8 +131,9 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (textColorPrimarySubscription != null) {
+        if (textColorPrimarySubscription != null && isDarkSubscription != null) {
             textColorPrimarySubscription.dispose();
+            isDarkSubscription.dispose();
         }
         if (handler != null)
             handler.removeCallbacks(runnable);
@@ -151,6 +173,36 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                 dismiss.setVisibility(View.INVISIBLE);
                 if (this.snoozeSelected && isAlarm && alarm != null) {
                     snooze.setPressed(false);
+
+                    final int[] minutes = new int[]{2, 5, 10, 20, 30, 60};
+                    CharSequence[] names = new CharSequence[minutes.length + 1];
+                    for (int i = 0; i < minutes.length; i++) {
+                        names[i] = FormatUtils.formatUnit(AlarmActivity.this, minutes[i]);
+                    }
+
+                    names[minutes.length] = getString(R.string.title_snooze_custom);
+
+                    new AlertDialog.Builder(AlarmActivity.this, isDark ? R.style.Theme_AppCompat_Dialog_Alert : R.style.Theme_AppCompat_Light_Dialog_Alert)
+                            .setTitle(R.string.title_snooze)
+                            .setItems(names, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (which < minutes.length) {
+                                        Date time = alarm.snooze(AlarmActivity.this, (AlarmManager) getSystemService(Context.ALARM_SERVICE), minutes[which]);
+                                        Toast.makeText(AlarmActivity.this, String.format(getString(R.string.msg_snoozed_until), FormatUtils.formatShort(AlarmActivity.this, time)), Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        //TODO: select time
+                                    }
+                                }
+                            })
+                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
                     view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } else if (this.dismissSelected) {
                     dismiss.setPressed(false);

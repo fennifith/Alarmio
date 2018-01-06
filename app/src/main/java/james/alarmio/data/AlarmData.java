@@ -11,6 +11,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import io.reactivex.annotations.Nullable;
@@ -211,20 +212,33 @@ public class AlarmData implements Parcelable {
         return null;
     }
 
-    public void set(Context context, AlarmManager manager) {
+    public Date set(Context context, AlarmManager manager) {
+        Calendar nextTime = getNext();
+        setAlarm(context, manager, nextTime.getTimeInMillis());
+        return nextTime.getTime();
+    }
+
+    public Date snooze(Context context, AlarmManager manager, int offsetMinutes) {
+        Calendar nextTime = Calendar.getInstance();
+        nextTime.add(Calendar.MINUTE, offsetMinutes);
+        setAlarm(context, manager, nextTime.getTimeInMillis());
+        return nextTime.getTime();
+    }
+
+    private void setAlarm(Context context, AlarmManager manager, long timeMillis) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             manager.setAlarmClock(
                     new AlarmManager.AlarmClockInfo(
-                            getNext().getTimeInMillis(),
+                            timeMillis,
                             PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0)
                     ),
                     getIntent(context)
             );
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                manager.setExact(AlarmManager.RTC_WAKEUP, getNext().getTimeInMillis(), getIntent(context));
+                manager.setExact(AlarmManager.RTC_WAKEUP, timeMillis, getIntent(context));
             else
-                manager.set(AlarmManager.RTC_WAKEUP, getNext().getTimeInMillis(), getIntent(context));
+                manager.set(AlarmManager.RTC_WAKEUP, timeMillis, getIntent(context));
 
             Intent intent = new Intent("android.intent.action.ALARM_CHANGED");
             intent.putExtra("alarmSet", true);

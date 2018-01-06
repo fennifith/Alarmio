@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import james.alarmio.Alarmio;
 import james.alarmio.activities.AlarmActivity;
@@ -22,7 +21,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (alarm.isRepeat())
             alarm.set(context, manager);
         else alarm.setEnabled(context, alarmio.getPrefs(), manager, false);
-        Toast.makeText(context, alarm.getName(context), Toast.LENGTH_SHORT).show();
         alarmio.onAlarmsChanged();
 
         Intent ringer = new Intent(context, AlarmActivity.class);

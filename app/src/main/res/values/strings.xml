@@ -24,6 +24,14 @@
     <string name="title_theme">Theme</string>
     <string name="title_appearance">Appearance</string>
     <string name="title_sound_none">None</string>
+    <string name="title_snooze">Snooze</string>
+    <string name="word_minute">minute</string>
+    <string name="word_minutes">minutes</string>
+    <string name="word_hour">hour</string>
+    <string name="word_hours">hours</string>
+    <string name="word_join">and</string>
+    <string name="title_snooze_custom">Custom…</string>
+    <string name="msg_snoozed_until">Snoozed until %s</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>
