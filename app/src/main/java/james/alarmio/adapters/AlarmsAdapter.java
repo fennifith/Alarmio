@@ -38,8 +38,10 @@ import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
 import james.alarmio.data.AlarmData;
+import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.dialogs.SoundChooserDialog;
+import james.alarmio.fragments.SoundChooserFragment;
 import james.alarmio.receivers.TimerReceiver;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
@@ -252,14 +254,22 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             }
 
-            alarmHolder.ringtoneImage.setImageResource(alarm.isRingtone ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
-            alarmHolder.ringtoneText.setText(alarm.getRingtoneName(alarmio));
+            alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+            alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : "None");
             alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     SoundChooserDialog dialog = new SoundChooserDialog();
-                    dialog.show(fragmentManager, "SoundChooserDialog");
+                    dialog.setListener(new SoundChooserFragment.Listener() {
+                        @Override
+                        public void onSoundChosen(SoundData sound) {
+                            int position = alarmHolder.getAdapterPosition();
+                            AlarmData alarm = getAlarm(position);
+                            alarm.setSound(prefs, sound);
+                            notifyItemChanged(position);
+                        }
+                    });
+                    dialog.show(fragmentManager, null);
                 }
             });
 

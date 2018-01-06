@@ -78,11 +78,11 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
         Observable<Integer> textColor;
         Observable<Integer> backgroundColor;
         if (sound.isPlaying()) {
-            textColor = Aesthetic.get().colorWindowBackground();
+            textColor = Aesthetic.get().colorPrimary();
             backgroundColor = Aesthetic.get().textColorPrimary();
         } else {
             textColor = Aesthetic.get().textColorPrimary();
-            backgroundColor = Aesthetic.get().colorWindowBackground();
+            backgroundColor = Aesthetic.get().colorPrimary();
         }
 
         textColor.take(1).subscribe(new Consumer<Integer>() {

@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcel;
@@ -36,13 +34,12 @@ public class AlarmData implements Parcelable {
     public boolean isEnabled = true;
     public boolean[] days = new boolean[7];
     public boolean isVibrate = true;
-    public Uri ringtone;
+    public SoundData sound;
     public boolean isRingtone = true;
 
     public AlarmData(int id, Calendar time) {
         this.id = id;
         this.time = time;
-        ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
     }
 
     public AlarmData(int id, Context context, SharedPreferences prefs) {
@@ -55,13 +52,7 @@ public class AlarmData implements Parcelable {
             days[i] = prefs.getBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), false);
         }
         isVibrate = prefs.getBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
-        try {
-            ringtone = Uri.parse(prefs.getString(String.format(Locale.getDefault(), PREF_RINGTONE, id), ""));
-        } catch (Exception e) {
-            ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        }
-
-        isRingtone = prefs.getBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), isRingtone);
+        sound = SoundData.fromString(prefs.getString(String.format(Locale.getDefault(), PREF_RINGTONE, id), ""));
     }
 
     public void onIdChanged(int id, Context context, SharedPreferences prefs) {
@@ -73,7 +64,7 @@ public class AlarmData implements Parcelable {
             editor.putBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), days[i]);
         }
         editor.putBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
-        editor.putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), ringtone.toString());
+        editor.putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString());
         editor.putBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), isRingtone);
         editor.apply();
 
@@ -114,16 +105,6 @@ public class AlarmData implements Parcelable {
         return false;
     }
 
-    public Ringtone getRingtone(Context context) {
-        return RingtoneManager.getRingtone(context, ringtone);
-    }
-
-    public String getRingtoneName(Context context) {
-        if (isRingtone)
-            return getRingtone(context).getTitle(context);
-        else return context.getString(R.string.title_none);
-    }
-
     public void setName(SharedPreferences prefs, String name) {
         this.name = name;
         prefs.edit().putString(String.format(Locale.getDefault(), PREF_NAME, id), name).apply();
@@ -159,18 +140,19 @@ public class AlarmData implements Parcelable {
         prefs.edit().putBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate).apply();
     }
 
-    public void setRingtone(SharedPreferences prefs, Uri ringtone) {
-        this.ringtone = ringtone;
-        isRingtone = true;
-        prefs.edit()
-                .putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), ringtone.toString())
-                .putBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), true)
-                .apply();
+    public boolean hasSound() {
+        return sound != null;
     }
 
-    public void clearRingtone(SharedPreferences prefs) {
-        isRingtone = false;
-        prefs.edit().putBoolean(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id), false).apply();
+    public SoundData getSound() {
+        return sound;
+    }
+
+    public void setSound(SharedPreferences prefs, SoundData sound) {
+        this.sound = sound;
+        prefs.edit()
+                .putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString())
+                .apply();
     }
 
     @Nullable
@@ -270,7 +252,7 @@ public class AlarmData implements Parcelable {
         isEnabled = in.readByte() != 0;
         days = in.createBooleanArray();
         isVibrate = in.readByte() != 0;
-        ringtone = in.readParcelable(Uri.class.getClassLoader());
+        sound = in.readParcelable(Uri.class.getClassLoader());
     }
 
     @Override
@@ -281,7 +263,7 @@ public class AlarmData implements Parcelable {
         dest.writeByte((byte) (isEnabled ? 1 : 0));
         dest.writeBooleanArray(days);
         dest.writeByte((byte) (isVibrate ? 1 : 0));
-        dest.writeParcelable(ringtone, flags);
+        dest.writeParcelable(sound, flags);
     }
 
     @Override

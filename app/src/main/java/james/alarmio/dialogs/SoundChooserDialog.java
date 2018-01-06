@@ -42,7 +42,7 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserFr
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
 
         colorWindowBackgroundSubscription = Aesthetic.get()
-                .colorWindowBackground()
+                .colorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {

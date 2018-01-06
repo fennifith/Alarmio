@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.LocationManager;
+import android.media.Ringtone;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
@@ -46,6 +47,8 @@ public class Alarmio extends Application {
 
     private SharedPreferences prefs;
     private SunriseSunsetCalculator sunsetCalculator;
+
+    private Ringtone currentRingtone;
 
     private List<AlarmData> alarms;
     private List<TimerData> timers;
@@ -261,6 +264,31 @@ public class Alarmio extends Application {
         }
 
         return sunsetCalculator;
+    }
+
+    public boolean isRingtonePlaying() {
+        return currentRingtone != null && currentRingtone.isPlaying();
+    }
+
+    public Ringtone getCurrentRingtone() {
+        return currentRingtone;
+    }
+
+    public void playRingtone(Ringtone ringtone) {
+        if (!ringtone.isPlaying()) {
+            ringtone.play();
+        }
+
+        if (isRingtonePlaying() && !currentRingtone.equals(ringtone)) {
+            currentRingtone.stop();
+        }
+
+        currentRingtone = ringtone;
+    }
+
+    public void stopCurrentSound() {
+        if (isRingtonePlaying())
+            currentRingtone.stop();
     }
 
     public void addListener(AlarmioListener listener) {

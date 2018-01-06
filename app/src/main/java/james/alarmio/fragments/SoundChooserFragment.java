@@ -10,6 +10,10 @@ public abstract class SoundChooserFragment extends BasePagerFragment {
         this.listener = listener;
     }
 
+    Listener getListener() {
+        return listener;
+    }
+
     public void onSoundChosen(SoundData sound) {
         if (listener != null)
             listener.onSoundChosen(sound);
