@@ -4,8 +4,12 @@ import android.app.AlarmManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +17,7 @@ import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +47,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     private FloatingActionButton fab;
 
     private Alarmio alarmio;
+    private Vibrator vibrator;
 
     private boolean snoozeSelected;
     private boolean dismissSelected;
@@ -54,6 +60,8 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
 
     private Handler handler;
     private Runnable runnable;
+    private boolean isWoken;
+    private PowerManager.WakeLock wakeLock;
 
     private Disposable textColorPrimarySubscription;
     private Disposable isDarkSubscription;
@@ -103,11 +111,15 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         isAlarm = getIntent().hasExtra(EXTRA_ALARM);
         if (isAlarm) {
             alarm = getIntent().getParcelableExtra(EXTRA_ALARM);
+            if (alarm.hasSound())
+                alarm.getSound().play(alarmio);
         } else if (getIntent().hasExtra(EXTRA_TIMER)) {
             timer = getIntent().getParcelableExtra(EXTRA_TIMER);
         } else finish();
 
         date.setText(FormatUtils.format(new Date(), FormatUtils.FORMAT_DATE + ", " + FormatUtils.getShortFormat(this)));
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         triggerTime = System.currentTimeMillis();
         handler = new Handler();
@@ -116,10 +128,33 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
             public void run() {
                 String text = FormatUtils.formatMillis(System.currentTimeMillis() - triggerTime);
                 time.setText(String.format("-%s", text.substring(0, text.length() - 3)));
+
+                if (alarm != null) {
+                    if (alarm.isVibrate && !isWoken) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                        else vibrator.vibrate(500);
+                    }
+
+                    if (alarm.hasSound() && !alarm.getSound().isPlaying()) {
+                        alarm.getSound().play(alarmio);
+                    }
+                }
+
                 handler.postDelayed(this, 1000);
             }
         };
         handler.post(runnable);
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -135,8 +170,12 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
             textColorPrimarySubscription.dispose();
             isDarkSubscription.dispose();
         }
+
         if (handler != null)
             handler.removeCallbacks(runnable);
+
+        if (alarm != null && alarm.hasSound() && alarm.getSound().isPlaying())
+            alarm.getSound().stop(alarmio);
     }
 
     @Override
@@ -183,7 +222,6 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                     names[minutes.length] = getString(R.string.title_snooze_custom);
 
                     new AlertDialog.Builder(AlarmActivity.this, isDark ? R.style.Theme_AppCompat_Dialog_Alert : R.style.Theme_AppCompat_Light_Dialog_Alert)
-                            .setTitle(R.string.title_snooze)
                             .setItems(names, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -203,6 +241,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                                 }
                             })
                             .show();
+
                     view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } else if (this.dismissSelected) {
                     dismiss.setPressed(false);

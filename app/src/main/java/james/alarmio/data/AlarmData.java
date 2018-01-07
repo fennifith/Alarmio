@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -270,7 +269,8 @@ public class AlarmData implements Parcelable {
         isEnabled = in.readByte() != 0;
         days = in.createBooleanArray();
         isVibrate = in.readByte() != 0;
-        sound = in.readParcelable(Uri.class.getClassLoader());
+        if (in.readByte() == 1)
+            sound = SoundData.fromString(in.readString());
     }
 
     @Override
@@ -281,7 +281,9 @@ public class AlarmData implements Parcelable {
         dest.writeByte((byte) (isEnabled ? 1 : 0));
         dest.writeBooleanArray(days);
         dest.writeByte((byte) (isVibrate ? 1 : 0));
-        dest.writeParcelable(sound, flags);
+        dest.writeByte((byte) (sound != null ? 1 : 0));
+        if (sound != null)
+            dest.writeString(sound.toString());
     }
 
     @Override
