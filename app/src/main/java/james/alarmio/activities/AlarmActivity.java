@@ -136,7 +136,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                         else vibrator.vibrate(500);
                     }
 
-                    if (alarm.hasSound() && !alarm.getSound().isPlaying()) {
+                    if (alarm.hasSound() && !alarm.getSound().isPlaying(alarmio)) {
                         alarm.getSound().play(alarmio);
                     }
                 }
@@ -174,7 +174,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         if (handler != null)
             handler.removeCallbacks(runnable);
 
-        if (alarm != null && alarm.hasSound() && alarm.getSound().isPlaying())
+        if (alarm != null && alarm.hasSound() && alarm.getSound().isPlaying(alarmio))
             alarm.getSound().stop(alarmio);
     }
 

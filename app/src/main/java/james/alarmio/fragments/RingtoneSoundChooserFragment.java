@@ -20,6 +20,8 @@ import james.alarmio.data.SoundData;
 
 public class RingtoneSoundChooserFragment extends SoundChooserFragment {
 
+    private SoundsAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class RingtoneSoundChooserFragment extends SoundChooserFragment {
             } while (cursor.moveToNext());
         }
 
-        SoundsAdapter adapter = new SoundsAdapter(getAlarmio(), sounds);
+        adapter = new SoundsAdapter(getAlarmio(), sounds);
         adapter.setListener(getListener());
         recyclerView.setAdapter(adapter);
 

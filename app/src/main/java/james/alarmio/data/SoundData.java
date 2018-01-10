@@ -6,13 +6,14 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
+import com.google.android.exoplayer2.C;
+
 import io.reactivex.annotations.Nullable;
 import james.alarmio.Alarmio;
 
 public class SoundData {
 
     private static final String SEPARATOR = ":AlarmioSoundData:";
-    private static final int PREVIEW_DURATION = 5000;
 
     private String name;
     private String url;
@@ -49,12 +50,17 @@ public class SoundData {
             }
 
             alarmio.playRingtone(ringtone);
+        } else {
+            alarmio.playStream(url, new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
+                    .setUsage(C.USAGE_ALARM)
+                    .build());
         }
     }
 
     public void stop(Alarmio alarmio) {
         if (ringtone != null)
             ringtone.stop();
+        else alarmio.stopStream();
     }
 
     public void preview(Alarmio alarmio) {
@@ -69,13 +75,17 @@ public class SoundData {
             }
 
             alarmio.playRingtone(ringtone);
+        } else {
+            alarmio.playStream(url, new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
+                    .setUsage(C.USAGE_MEDIA)
+                    .build());
         }
     }
 
-    public boolean isPlaying() {
+    public boolean isPlaying(Alarmio alarmio) {
         if (ringtone != null)
             return ringtone.isPlaying();
-        else return false;
+        else return alarmio.isPlayingStream(url);
     }
 
     @Override

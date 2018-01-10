@@ -9,12 +9,27 @@ import android.graphics.Color;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.media.Ringtone;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.afollestad.aesthetic.AutoSwitchMode;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.audio.AudioAttributes;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 
@@ -28,7 +43,7 @@ import james.alarmio.data.AlarmData;
 import james.alarmio.data.TimerData;
 import james.alarmio.services.TimerService;
 
-public class Alarmio extends Application {
+public class Alarmio extends Application implements Player.EventListener {
 
     public static final String PREF_THEME = "theme";
     public static final String PREF_DAY_AUTO = "dayAuto";
@@ -55,6 +70,10 @@ public class Alarmio extends Application {
 
     private List<AlarmioListener> listeners;
 
+    private SimpleExoPlayer player;
+    private HlsMediaSource.Factory mediaSourceFactory;
+    private String currentStream;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -62,6 +81,12 @@ public class Alarmio extends Application {
         listeners = new ArrayList<>();
         alarms = new ArrayList<>();
         timers = new ArrayList<>();
+
+        player = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
+        player.addListener(this);
+
+        DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoplayer2example"), null);
+        mediaSourceFactory = new HlsMediaSource.Factory(dataSourceFactory);
 
         int alarmLength = prefs.getInt(PREF_ALARM_LENGTH, 0);
         for (int id = 0; id < alarmLength; id++) {
@@ -276,19 +301,38 @@ public class Alarmio extends Application {
 
     public void playRingtone(Ringtone ringtone) {
         if (!ringtone.isPlaying()) {
+            stopCurrentSound();
             ringtone.play();
-        }
-
-        if (isRingtonePlaying() && !currentRingtone.equals(ringtone)) {
-            currentRingtone.stop();
         }
 
         currentRingtone = ringtone;
     }
 
+    public void playStream(String url) {
+        stopCurrentSound();
+        player.prepare(mediaSourceFactory.createMediaSource(Uri.parse(url)));
+        player.setPlayWhenReady(true);
+    }
+
+    public void playStream(String url, AudioAttributes attributes) {
+        player.stop();
+        player.setAudioAttributes(attributes);
+        playStream(url);
+    }
+
+    public void stopStream() {
+        player.stop();
+    }
+
+    public boolean isPlayingStream(String url) {
+        return currentStream != null && currentStream.equals(url);
+    }
+
     public void stopCurrentSound() {
         if (isRingtonePlaying())
             currentRingtone.stop();
+
+        stopStream();
     }
 
     public void addListener(AlarmioListener listener) {
@@ -297,6 +341,68 @@ public class Alarmio extends Application {
 
     public void removeListener(AlarmioListener listener) {
         listeners.remove(listener);
+    }
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest) {
+    }
+
+    @Override
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+    }
+
+    @Override
+    public void onLoadingChanged(boolean isLoading) {
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+        switch (playbackState) {
+            case Player.STATE_BUFFERING:
+            case Player.STATE_READY:
+                break;
+            default:
+                currentStream = null;
+                break;
+        }
+    }
+
+    @Override
+    public void onRepeatModeChanged(int repeatMode) {
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+        currentStream = null;
+        switch (error.type) {
+            case ExoPlaybackException.TYPE_RENDERER:
+                error.getRendererException().printStackTrace();
+                break;
+            case ExoPlaybackException.TYPE_SOURCE:
+                error.getSourceException().printStackTrace();
+                break;
+            case ExoPlaybackException.TYPE_UNEXPECTED:
+                error.getUnexpectedException().printStackTrace();
+                break;
+        }
+
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPositionDiscontinuity(int reason) {
+    }
+
+    @Override
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+    }
+
+    @Override
+    public void onSeekProcessed() {
     }
 
     public interface AlarmioListener {

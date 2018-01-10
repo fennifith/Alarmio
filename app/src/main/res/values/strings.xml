@@ -32,6 +32,13 @@
     <string name="word_join">and</string>
     <string name="title_snooze_custom">Custom…</string>
     <string name="msg_snoozed_until">Snoozed until %s</string>
+    <string name="title_radio_test">Test</string>
+    <string name="title_radio_create">Create</string>
+    <string name="msg_radio_create">Create a new Radio</string>
+    <string name="msg_radio_url">Paste an \'.m3u8\' Radio URL here...</string>
+    <string name="msg_radio_previous">Choose a Previously Used Radio</string>
+    <string name="title_radio_stop">Stop</string>
+    <string name="title_radio">Radio</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>

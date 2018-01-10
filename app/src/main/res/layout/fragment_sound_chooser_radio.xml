@@ -15,7 +15,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
-            android:text="Create a new Radio"
+            android:text="@string/msg_radio_create"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp" />
 
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:hint="Paste an '.m3u8' Radio URL here..." />
+            android:hint="@string/msg_radio_url" />
 
         <TextView
             android:id="@+id/errorText"
@@ -38,14 +38,33 @@
             android:textSize="12sp"
             android:visibility="gone" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/createRadio"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Create" />
+            android:orientation="horizontal"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_gravity="end">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/testRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/title_radio_test" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/createRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:text="@string/title_radio_create" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -53,7 +72,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
-            android:text="Choose a Previously Used Radio"
+            android:text="@string/msg_radio_previous"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp" />
 

@@ -67,7 +67,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
                     SoundData sound = sounds.get(position - 1);
-                    if (sound.isPlaying()) {
+                    if (sound.isPlaying(alarmio)) {
                         sound.stop(alarmio);
                         currentlyPlaying = -1;
                     } else {
@@ -93,7 +93,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                 }
             });
 
-            if (sound.isPlaying()) {
+            if (sound.isPlaying(alarmio)) {
                 holder.icon.setImageResource(R.drawable.ic_pause);
 
                 textColor = Aesthetic.get().colorPrimary();
