@@ -312,6 +312,7 @@ public class Alarmio extends Application implements Player.EventListener {
         stopCurrentSound();
         player.prepare(mediaSourceFactory.createMediaSource(Uri.parse(url)));
         player.setPlayWhenReady(true);
+        currentStream = url;
     }
 
     public void playStream(String url, AudioAttributes attributes) {
@@ -322,6 +323,7 @@ public class Alarmio extends Application implements Player.EventListener {
 
     public void stopStream() {
         player.stop();
+        currentStream = null;
     }
 
     public boolean isPlayingStream(String url) {
@@ -378,19 +380,23 @@ public class Alarmio extends Application implements Player.EventListener {
     @Override
     public void onPlayerError(ExoPlaybackException error) {
         currentStream = null;
+        Exception exception;
         switch (error.type) {
             case ExoPlaybackException.TYPE_RENDERER:
-                error.getRendererException().printStackTrace();
+                exception = error.getRendererException();
                 break;
             case ExoPlaybackException.TYPE_SOURCE:
-                error.getSourceException().printStackTrace();
+                exception = error.getSourceException();
                 break;
             case ExoPlaybackException.TYPE_UNEXPECTED:
-                error.getUnexpectedException().printStackTrace();
+                exception = error.getUnexpectedException();
                 break;
+            default:
+                return;
         }
 
-        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+        exception.printStackTrace();
+        Toast.makeText(this, exception.getClass().getName() + ": " + exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
