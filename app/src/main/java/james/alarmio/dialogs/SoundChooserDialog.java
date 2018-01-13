@@ -25,11 +25,11 @@ import james.alarmio.data.SoundData;
 import james.alarmio.fragments.AlarmSoundChooserFragment;
 import james.alarmio.fragments.RadioSoundChooserFragment;
 import james.alarmio.fragments.RingtoneSoundChooserFragment;
-import james.alarmio.fragments.SoundChooserFragment;
+import james.alarmio.interfaces.SoundChooserListener;
 
-public class SoundChooserDialog extends DialogFragment implements SoundChooserFragment.Listener {
+public class SoundChooserDialog extends DialogFragment implements SoundChooserListener {
 
-    private SoundChooserFragment.Listener listener;
+    private SoundChooserListener listener;
     private View view;
 
     private Disposable colorWindowBackgroundSubscription;
@@ -96,7 +96,7 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserFr
         colorWindowBackgroundSubscription.dispose();
     }
 
-    public void setListener(SoundChooserFragment.Listener listener) {
+    public void setListener(SoundChooserListener listener) {
         this.listener = listener;
     }
 

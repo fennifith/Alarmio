@@ -18,7 +18,7 @@ import james.alarmio.R;
 import james.alarmio.adapters.SoundsAdapter;
 import james.alarmio.data.SoundData;
 
-public class RingtoneSoundChooserFragment extends SoundChooserFragment {
+public class RingtoneSoundChooserFragment extends BaseSoundChooserFragment {
 
     private SoundsAdapter adapter;
 
@@ -41,7 +41,7 @@ public class RingtoneSoundChooserFragment extends SoundChooserFragment {
         }
 
         adapter = new SoundsAdapter(getAlarmio(), sounds);
-        adapter.setListener(getListener());
+        adapter.setListener(this);
         recyclerView.setAdapter(adapter);
 
         return view;

@@ -16,7 +16,7 @@ import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.SoundData;
-import james.alarmio.fragments.SoundChooserFragment;
+import james.alarmio.interfaces.SoundChooserListener;
 
 public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder> {
 
@@ -24,14 +24,14 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
     private List<SoundData> sounds;
     private int currentlyPlaying = -1;
 
-    private SoundChooserFragment.Listener listener;
+    private SoundChooserListener listener;
 
     public SoundsAdapter(Alarmio alarmio, List<SoundData> sounds) {
         this.alarmio = alarmio;
         this.sounds = sounds;
     }
 
-    public void setListener(SoundChooserFragment.Listener listener) {
+    public void setListener(SoundChooserListener listener) {
         this.listener = listener;
     }
 

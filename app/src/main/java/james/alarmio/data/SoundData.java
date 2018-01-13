@@ -104,4 +104,8 @@ public class SoundData {
         return null;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return (obj != null && obj instanceof SoundData && ((SoundData) obj).url.equals(url));
+    }
 }

@@ -1,9 +1,12 @@
 package james.alarmio.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +16,64 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import james.alarmio.R;
+import james.alarmio.adapters.SoundsAdapter;
 import james.alarmio.data.SoundData;
 
-public class RadioSoundChooserFragment extends SoundChooserFragment {
+public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
+
+    private static final String SEPARATOR = ":AlarmioRadioSound:";
+    private static final String PREF_RADIOS = "previousRadios";
 
     private EditText radioUrlEditText;
     private AppCompatButton testRadio;
     private SoundData currentSound;
 
+    private SharedPreferences prefs;
+    private List<SoundData> sounds;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sound_chooser_radio, container, false);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         radioUrlEditText = view.findViewById(R.id.radioUrl);
         TextView errorTextView = view.findViewById(R.id.errorText);
         RecyclerView recycler = view.findViewById(R.id.recycler);
         testRadio = view.findViewById(R.id.testRadio);
+
+        List<String> previousRadios = new ArrayList<>(prefs.getStringSet(PREF_RADIOS, new HashSet<String>()));
+        Collections.sort(previousRadios, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                try {
+                    return Integer.parseInt(o1.split(SEPARATOR)[0]) - Integer.parseInt(o2.split(SEPARATOR)[0]);
+                } catch (NumberFormatException e) {
+                    return 0;
+                }
+            }
+        });
+
+        sounds = new ArrayList<>();
+        for (String string : previousRadios) {
+            String url = string.split(SEPARATOR)[1];
+            sounds.add(new SoundData(url, url));
+        }
+
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        SoundsAdapter adapter = new SoundsAdapter(getAlarmio(), sounds);
+        adapter.setListener(this);
+        recycler.setAdapter(adapter);
 
         testRadio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +107,21 @@ public class RadioSoundChooserFragment extends SoundChooserFragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onSoundChosen(SoundData sound) {
+        super.onSoundChosen(sound);
+
+        if (!sounds.contains(sound))
+            sounds.add(sound);
+
+        Set<String> radios = new HashSet<>();
+        for (int i = 0; i < sounds.size(); i++) {
+            radios.add(i + SEPARATOR + sounds.get(i).getUrl());
+        }
+
+        prefs.edit().putStringSet(PREF_RADIOS, radios).apply();
     }
 
     @Override

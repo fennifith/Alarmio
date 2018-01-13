@@ -42,7 +42,7 @@ import james.alarmio.data.AlarmData;
 import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.dialogs.SoundChooserDialog;
-import james.alarmio.fragments.SoundChooserFragment;
+import james.alarmio.interfaces.SoundChooserListener;
 import james.alarmio.receivers.TimerReceiver;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
@@ -261,7 +261,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     SoundChooserDialog dialog = new SoundChooserDialog();
-                    dialog.setListener(new SoundChooserFragment.Listener() {
+                    dialog.setListener(new SoundChooserListener() {
                         @Override
                         public void onSoundChosen(SoundData sound) {
                             int position = alarmHolder.getAdapterPosition();
