@@ -113,17 +113,19 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
     public void onSoundChosen(SoundData sound) {
         super.onSoundChosen(sound);
 
-        if (sounds.contains(sound))
-            sounds.remove(sound);
+        if (sound != null) {
+            if (sounds.contains(sound))
+                sounds.remove(sound);
 
-        sounds.add(0, sound);
+            sounds.add(0, sound);
 
-        Set<String> radios = new HashSet<>();
-        for (int i = 0; i < sounds.size(); i++) {
-            radios.add(i + SEPARATOR + sounds.get(i).getUrl());
+            Set<String> radios = new HashSet<>();
+            for (int i = 0; i < sounds.size(); i++) {
+                radios.add(i + SEPARATOR + sounds.get(i).getUrl());
+            }
+
+            prefs.edit().putStringSet(PREF_RADIOS, radios).apply();
         }
-
-        prefs.edit().putStringSet(PREF_RADIOS, radios).apply();
     }
 
     @Override
