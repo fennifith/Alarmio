@@ -36,6 +36,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
+import james.alarmio.data.PreferenceData;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.SunriseView;
 
@@ -81,7 +82,7 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
         themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                prefs.edit().putInt(Alarmio.PREF_THEME, i).apply();
+                PreferenceData.THEME.setValue(getContext(), i);
                 sunriseAutoSwitch.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
                 sunriseLayout.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
                 getAlarmio().onActivityResume();
@@ -96,7 +97,7 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
         sunriseAutoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                prefs.edit().putBoolean(Alarmio.PREF_DAY_AUTO, b).apply();
+                PreferenceData.DAY_AUTO.setValue(getContext(), b);
                 if (b && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 954);
                     sunriseAutoSwitch.setChecked(false);
@@ -121,7 +122,7 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                                 int dayEnd = getAlarmio().getDayEnd();
                                 if (hourOfDay < dayEnd) {
-                                    prefs.edit().putInt(Alarmio.PREF_DAY_START, hourOfDay).apply();
+                                    PreferenceData.DAY_START.setValue(getContext(), hourOfDay);
                                     sunriseView.invalidate();
                                     onSunriseChanged(hourOfDay, dayEnd);
                                     getAlarmio().onActivityResume();
@@ -145,7 +146,7 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                                 int dayStart = getAlarmio().getDayStart();
                                 if (hourOfDay > dayStart) {
-                                    prefs.edit().putInt(Alarmio.PREF_DAY_END, hourOfDay).apply();
+                                    PreferenceData.DAY_END.setValue(getContext(), hourOfDay);
                                     sunriseView.invalidate();
                                     onSunriseChanged(dayStart, hourOfDay);
                                     getAlarmio().onActivityResume();

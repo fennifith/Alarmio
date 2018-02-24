@@ -40,17 +40,11 @@ import java.util.TimeZone;
 
 import io.reactivex.annotations.Nullable;
 import james.alarmio.data.AlarmData;
+import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
 import james.alarmio.services.TimerService;
 
 public class Alarmio extends Application implements Player.EventListener {
-
-    public static final String PREF_THEME = "theme";
-    public static final String PREF_DAY_AUTO = "dayAuto";
-    public static final String PREF_DAY_START = "dayStart";
-    public static final String PREF_DAY_END = "dayEnd";
-    public static final String PREF_ALARM_LENGTH = "alarmLength";
-    public static final String PREF_TIMER_LENGTH = "timerLength";
 
     public static final int THEME_DAY_NIGHT = 0;
     public static final int THEME_DAY = 1;
@@ -88,12 +82,12 @@ public class Alarmio extends Application implements Player.EventListener {
         DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoplayer2example"), null);
         mediaSourceFactory = new HlsMediaSource.Factory(dataSourceFactory);
 
-        int alarmLength = prefs.getInt(PREF_ALARM_LENGTH, 0);
+        int alarmLength = PreferenceData.ALARM_LENGTH.getValue(this);
         for (int id = 0; id < alarmLength; id++) {
             alarms.add(new AlarmData(id, this, prefs));
         }
 
-        int timerLength = prefs.getInt(PREF_TIMER_LENGTH, 0);
+        int timerLength = PreferenceData.TIMER_LENGTH.getValue(this);
         for (int id = 0; id < timerLength; id++) {
             TimerData timer = new TimerData(id, prefs);
             if (timer.isSet())
@@ -133,7 +127,7 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public void onAlarmCountChanged() {
-        prefs.edit().putInt(PREF_ALARM_LENGTH, alarms.size()).apply();
+        PreferenceData.ALARM_LENGTH.setValue(this, alarms.size());
     }
 
     public void onAlarmsChanged() {
@@ -163,7 +157,7 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public void onTimerCountChanged() {
-        prefs.edit().putInt(PREF_TIMER_LENGTH, alarms.size()).apply();
+        PreferenceData.TIMER_LENGTH.setValue(this, alarms.size());
     }
 
     public void onTimersChanged() {
@@ -238,11 +232,11 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public int getActivityTheme() {
-        return prefs.getInt(PREF_THEME, THEME_DAY_NIGHT);
+        return PreferenceData.THEME.getValue(this);
     }
 
     public boolean isDayAuto() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && prefs.getBoolean(PREF_DAY_AUTO, true);
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && (boolean) PreferenceData.DAY_AUTO.getValue(this);
     }
 
     /**
@@ -251,7 +245,7 @@ public class Alarmio extends Application implements Player.EventListener {
     public int getDayStart() {
         if (isDayAuto() && getSunsetCalculator() != null)
             return getSunsetCalculator().getOfficialSunriseCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
-        else return prefs.getInt(PREF_DAY_START, 6);
+        else return PreferenceData.DAY_START.getValue(this);
     }
 
     /**
@@ -260,7 +254,7 @@ public class Alarmio extends Application implements Player.EventListener {
     public int getDayEnd() {
         if (isDayAuto() && getSunsetCalculator() != null)
             return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
-        else return prefs.getInt(PREF_DAY_END, 18);
+        else return PreferenceData.DAY_END.getValue(this);
     }
 
     @Nullable

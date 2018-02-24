@@ -21,6 +21,7 @@ import java.util.Calendar;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
+import james.alarmio.data.PreferenceData;
 
 public class SunriseView extends View implements View.OnTouchListener {
 
@@ -196,7 +197,7 @@ public class SunriseView extends View implements View.OnTouchListener {
                 if (movingStart) {
                     movingStart = false;
                     float dayStart = Math.min((float) Math.round(horizontalDistance * 24), dayEnd - 1);
-                    prefs.edit().putInt(Alarmio.PREF_DAY_START, Math.round(dayStart)).apply();
+                    PreferenceData.DAY_START.setValue(getContext(), Math.round(dayStart));
                     invalidate();
                     alarmio.onActivityResume();
                     if (listener != null)
@@ -204,7 +205,7 @@ public class SunriseView extends View implements View.OnTouchListener {
                 } else if (movingEnd) {
                     movingEnd = false;
                     float dayEnd = Math.max((float) Math.round(horizontalDistance * 24), dayStart + 1);
-                    prefs.edit().putInt(Alarmio.PREF_DAY_END, Math.round(dayEnd)).apply();
+                    PreferenceData.DAY_END.setValue(getContext(), Math.round(dayEnd));
                     invalidate();
                     alarmio.onActivityResume();
                     if (listener != null)

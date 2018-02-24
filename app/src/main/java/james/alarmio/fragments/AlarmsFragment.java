@@ -28,8 +28,7 @@ public class AlarmsFragment extends BasePagerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_alarms, container, false);
-        recyclerView = view.findViewById(R.id.recycler);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_alarms, container, false);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         alarmsAdapter = new AlarmsAdapter(getAlarmio(), getContext(), getFragmentManager());
         recyclerView.setAdapter(alarmsAdapter);
@@ -60,7 +59,7 @@ public class AlarmsFragment extends BasePagerFragment {
                         alarmsAdapter.setTextColorPrimary(integer);
                     }
                 });
-        return view;
+        return recyclerView;
     }
 
     @Override

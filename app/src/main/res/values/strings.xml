@@ -42,6 +42,12 @@
     <string name="title_time_zones">Time Zones</string>
     <string name="title_behavior">Behavior</string>
     <string name="title_default_ringtone">Default Ringtone</string>
+    <string name="title_sleep_reminder">Sleep Reminder</string>
+    <string name="desc_sleep_reminder">Send a notification reminding you to go to sleep a certain time before your alarm rings if you\'re using your phone.</string>
+    <string name="title_sleep_reminder_time">Sleep Reminder Time</string>
+    <string name="desc_sleep_reminder_time">%1$d hours before</string>
+    <string name="title_slow_wake_up">Slow Wake-up</string>
+    <string name="desc_slow_wake_up">Gradually increase brightness and volume when an alarm is ringing.</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>

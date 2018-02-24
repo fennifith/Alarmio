@@ -91,7 +91,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                     if (statusBarHeight < 0)
                         statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
 
-                    bottomSheet.setPadding(0, newState == BottomSheetBehavior.STATE_EXPANDED ? statusBarHeight : 0, 0, 0);
+                    bottomSheet.setPadding(0, newState == BottomSheetBehavior.STATE_COLLAPSED ? 0 : statusBarHeight, 0, 0);
                 }
 
                 @Override
