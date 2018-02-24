@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,8 +54,8 @@
             android:id="@+id/sunriseAutoSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
             android:tag=":aesthetic_ignore"
             android:text="@string/title_auto" />
 
@@ -130,6 +131,84 @@
             </LinearLayout>
 
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/title_time_zones"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/addTimeZone"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_add"
+                android:background="?selectableItemBackgroundBorderless"
+                android:scaleType="centerInside"
+                android:tint="?android:textColorPrimary" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timeZones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:textColorPrimary"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:text="@string/title_behavior" />
+
+        <LinearLayout
+            android:id="@+id/defaultRingtone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:background="?selectableItemBackground"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/title_default_ringtone"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/defaultRingtoneName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/title_sound_none"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -39,6 +39,9 @@
     <string name="msg_radio_previous">Choose a Previously Used Radio</string>
     <string name="title_radio_stop">Stop</string>
     <string name="title_radio">Radio</string>
+    <string name="title_time_zones">Time Zones</string>
+    <string name="title_behavior">Behavior</string>
+    <string name="title_default_ringtone">Default Ringtone</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>
