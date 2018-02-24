@@ -89,6 +89,12 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        alarmio.stopCurrentSound();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         alarmio.onActivityResume();
