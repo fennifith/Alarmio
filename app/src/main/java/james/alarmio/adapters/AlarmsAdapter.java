@@ -1,6 +1,5 @@
 package james.alarmio.adapters;
 
-import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -28,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -47,6 +45,7 @@ import james.alarmio.receivers.TimerReceiver;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.DaySwitch;
+import james.alarmio.views.ProgressLineView;
 
 public class AlarmsAdapter extends RecyclerView.Adapter {
 
@@ -112,11 +111,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                         TimerData timer = getTimer(timerHolder.getAdapterPosition());
                         String text = FormatUtils.formatMillis(timer.getRemainingMillis());
                         timerHolder.time.setText(text.substring(0, text.length() - 3));
-                        timerHolder.progress.setMax((int) timer.getDuration());
-                        ObjectAnimator animator = ObjectAnimator.ofInt(timerHolder.progress, "progress", timerHolder.progress.getProgress(), (int) (timer.getDuration() - timer.getRemainingMillis()));
-                        animator.setDuration(1000);
-                        animator.start();
-
+                        timerHolder.progress.update(1 - ((float) timer.getRemainingMillis() / timer.getDuration()));
                         timerHolder.handler.postDelayed(this, 1000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -392,7 +387,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
         private TextView time;
         private ImageView stop;
-        private ProgressBar progress;
+        private ProgressLineView progress;
 
         public TimerViewHolder(View itemView) {
             super(itemView);
