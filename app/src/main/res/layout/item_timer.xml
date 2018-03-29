@@ -35,6 +35,6 @@
     <james.alarmio.views.ProgressLineView
         android:id="@+id/progress"
         android:layout_width="match_parent"
-        android:layout_height="1dip" />
+        android:layout_height="2dip" />
 
 </LinearLayout>
