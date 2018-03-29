@@ -41,7 +41,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+        app:layout_behavior="james.alarmio.utils.ScrollableBottomSheetBehavior">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"

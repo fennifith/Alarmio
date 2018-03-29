@@ -16,6 +16,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,14 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
     private TextView sunriseTextView;
     private TextView sunsetTextView;
     private SunriseView sunriseView;
+    private View timeZoneAddView;
+    private RecyclerView timeZonesView;
+    private View defaultRingtoneView;
+    private TextView defaultRingtoneTextView;
+    private SwitchCompat sleepReminderView;
+    private View sleepReminderTimeView;
+    private TextView sleepReminderTimeTextView;
+    private SwitchCompat slowWakeUpView;
 
     private SharedPreferences prefs;
 
@@ -71,6 +81,13 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
         sunriseTextView = view.findViewById(R.id.sunriseTextView);
         sunsetTextView = view.findViewById(R.id.sunsetTextView);
         sunriseView = view.findViewById(R.id.sunriseView);
+        timeZoneAddView = view.findViewById(R.id.addTimeZone);
+        timeZonesView = view.findViewById(R.id.timeZones);
+        defaultRingtoneView = view.findViewById(R.id.defaultRingtone);
+        defaultRingtoneTextView = view.findViewById(R.id.defaultRingtoneName);
+        sleepReminderView = view.findViewById(R.id.sleepReminderSwitch);
+        sleepReminderTimeView = view.findViewById(R.id.sleepReminderTime);
+        sleepReminderTimeTextView = view.findViewById(R.id.sleepReminderTimeDesc);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -157,6 +174,22 @@ public class SettingsFragment extends BasePagerFragment implements SunriseView.S
                         0,
                         DateFormat.is24HourFormat(getContext())
                 ).show();
+            }
+        });
+
+        if (PreferenceData.SLEEP_REMINDER.getValue(getContext())) {
+            sleepReminderView.setChecked(true);
+            sleepReminderTimeView.setVisibility(View.VISIBLE);
+        } else {
+            sleepReminderView.setChecked(false);
+            sleepReminderTimeView.setVisibility(View.GONE);
+        }
+
+        sleepReminderView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                PreferenceData.SLEEP_REMINDER.setValue(getContext(), b);
+                sleepReminderTimeView.setVisibility(b ? View.VISIBLE : View.GONE);
             }
         });
 

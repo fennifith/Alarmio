@@ -88,10 +88,14 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
 
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (statusBarHeight < 0)
-                        statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
+                    if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                        bottomSheet.setPadding(0, 0, 0, 0);
+                    else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                        if (statusBarHeight < 0)
+                            statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
 
-                    bottomSheet.setPadding(0, newState == BottomSheetBehavior.STATE_COLLAPSED ? 0 : statusBarHeight, 0, 0);
+                        bottomSheet.setPadding(0, statusBarHeight, 0, 0);
+                    }
                 }
 
                 @Override
