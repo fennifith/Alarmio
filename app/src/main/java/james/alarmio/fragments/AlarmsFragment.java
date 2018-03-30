@@ -28,7 +28,7 @@ public class AlarmsFragment extends BasePagerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_alarms, container, false);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         alarmsAdapter = new AlarmsAdapter(getAlarmio(), getContext(), getFragmentManager());
         recyclerView.setAdapter(alarmsAdapter);
