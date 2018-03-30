@@ -55,7 +55,7 @@ public class FormatUtils {
         long hours = TimeUnit.MINUTES.toHours(minutes);
         minutes %= TimeUnit.HOURS.toMinutes(1);
         if (hours > 0)
-            return String.format(Locale.getDefault(), "%d " + context.getString(hours > 1 ? R.string.word_hours : R.string.word_hour) + (minutes > 0 ? " " + context.getString(R.string.word_join) + " %02d" + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute) : ""), hours, minutes);
+            return String.format(Locale.getDefault(), "%d " + context.getString(hours > 1 ? R.string.word_hours : R.string.word_hour) + (minutes > 0 ? " " + context.getString(R.string.word_join) + " %02d " + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute) : ""), hours, minutes);
         else
             return String.format(Locale.getDefault(), "%d " + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute), minutes);
     }
