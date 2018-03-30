@@ -55,6 +55,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
     private SimplePagerAdapter timeAdapter;
 
     private BottomSheetBehavior behavior;
+    private boolean shouldCollapseBack;
 
     private Disposable colorPrimarySubscription;
     private Disposable colorAccentSubscription;
@@ -111,6 +112,26 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new SettingsFragment());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() > 0) {
+                    shouldCollapseBack = behavior.getState() != BottomSheetBehavior.STATE_EXPANDED;
+                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else if (shouldCollapseBack) {
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    shouldCollapseBack = false;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
         Bundle args = new Bundle();
         args.putString(ClockFragment.EXTRA_TIME_ZONE, TimeZone.getAvailableIDs()[0]);
