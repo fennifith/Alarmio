@@ -1,6 +1,10 @@
 package james.alarmio.data.preference;
 
 import android.app.TimePickerDialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.format.DateFormat;
@@ -12,9 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.Calendar;
 import java.util.Date;
 
+import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
@@ -118,6 +125,53 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                 ).show();
             }
         });
+
+        Aesthetic.get()
+                .colorAccent()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(final Integer colorAccent) throws Exception {
+                        Aesthetic.get()
+                                .textColorPrimary()
+                                .take(1)
+                                .subscribe(new Consumer<Integer>() {
+                                    @Override
+                                    public void accept(Integer textColorPrimary) throws Exception {
+                                        ColorStateList colorStateList = new ColorStateList(
+                                                new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
+                                                new int[]{
+                                                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                                                        colorAccent
+                                                }
+                                        );
+
+                                        CompoundButtonCompat.setButtonTintList(holder.sunriseAutoSwitch, colorStateList);
+                                        holder.sunriseAutoSwitch.setTextColor(textColorPrimary);
+                                    }
+                                });
+                    }
+                });
+
+        Aesthetic.get()
+                .textColorSecondary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer textColorSecondary) throws Exception {
+                        holder.themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
+                    }
+                });
+
+        Aesthetic.get()
+                .colorCardViewBackground()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer colorForeground) throws Exception {
+                        holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
+                    }
+                });
     }
 
     public static class ViewHolder extends BasePreferenceData.ViewHolder {

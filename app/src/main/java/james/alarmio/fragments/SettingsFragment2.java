@@ -240,10 +240,8 @@ public class SettingsFragment2 extends BasePagerFragment implements SunriseView.
         themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
         themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
 
-        int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
-
         ColorStateList colorStateList = new ColorStateList(
-                states,
+                new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
                 new int[]{
                         Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
                         colorAccent

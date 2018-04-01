@@ -1,6 +1,9 @@
 package james.alarmio.data.preference;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.annotation.StringRes;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -29,7 +35,7 @@ public class BooleanPreferenceData extends BasePreferenceData<BooleanPreferenceD
     }
 
     @Override
-    public void bindViewHolder(ViewHolder holder) {
+    public void bindViewHolder(final ViewHolder holder) {
         holder.title.setText(title);
         holder.description.setText(description);
         holder.toggle.setOnCheckedChangeListener(null);
@@ -42,6 +48,33 @@ public class BooleanPreferenceData extends BasePreferenceData<BooleanPreferenceD
                 preference.setValue(compoundButton.getContext(), b);
             }
         });
+
+        Aesthetic.get()
+                .colorAccent()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(final Integer colorAccent) throws Exception {
+                        Aesthetic.get()
+                                .textColorPrimary()
+                                .take(1)
+                                .subscribe(new Consumer<Integer>() {
+                                    @Override
+                                    public void accept(Integer textColorPrimary) throws Exception {
+                                        ColorStateList colorStateList = new ColorStateList(
+                                                new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
+                                                new int[]{
+                                                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                                                        colorAccent
+                                                }
+                                        );
+
+                                        CompoundButtonCompat.setButtonTintList(holder.toggle, colorStateList);
+                                        holder.toggle.setTextColor(textColorPrimary);
+                                    }
+                                });
+                    }
+                });
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {

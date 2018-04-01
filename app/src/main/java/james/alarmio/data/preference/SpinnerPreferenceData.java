@@ -1,5 +1,7 @@
 package james.alarmio.data.preference;
 
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -29,7 +34,7 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
     }
 
     @Override
-    public void bindViewHolder(ViewHolder holder) {
+    public void bindViewHolder(final ViewHolder holder) {
         holder.title.setText(title);
         holder.spinner.setAdapter(ArrayAdapter.createFromResource(holder.itemView.getContext(), options, R.layout.support_simple_spinner_dropdown_item));
 
@@ -48,6 +53,26 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
 
             }
         });
+
+        Aesthetic.get()
+                .textColorSecondary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer textColorSecondary) throws Exception {
+                        holder.spinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
+                    }
+                });
+
+        Aesthetic.get()
+                .colorCardViewBackground()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer colorForeground) throws Exception {
+                        holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
+                    }
+                });
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {
