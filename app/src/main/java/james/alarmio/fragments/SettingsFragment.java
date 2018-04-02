@@ -9,9 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.adapters.PreferenceAdapter;
 import james.alarmio.data.PreferenceData;
@@ -19,11 +23,14 @@ import james.alarmio.data.preference.BasePreferenceData;
 import james.alarmio.data.preference.BooleanPreferenceData;
 import james.alarmio.data.preference.ThemePreferenceData;
 
-public class SettingsFragment extends BasePagerFragment {
+public class SettingsFragment extends BasePagerFragment implements Consumer {
 
     private RecyclerView recyclerView;
 
     private PreferenceAdapter preferenceAdapter;
+
+    private Disposable colorPrimarySubscription;
+    private Disposable textColorPrimarySubscription;
 
     @Nullable
     @Override
@@ -37,7 +44,22 @@ public class SettingsFragment extends BasePagerFragment {
         )));
         recyclerView.setAdapter(preferenceAdapter);
 
+        colorPrimarySubscription = Aesthetic.get()
+                .colorPrimary()
+                .subscribe(this);
+
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(this);
+
         return recyclerView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        colorPrimarySubscription.dispose();
+        textColorPrimarySubscription.dispose();
     }
 
     @Override
@@ -52,4 +74,9 @@ public class SettingsFragment extends BasePagerFragment {
             preferenceAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void accept(Object o) throws Exception {
+        if (preferenceAdapter != null)
+            preferenceAdapter.notifyDataSetChanged();
+    }
 }
