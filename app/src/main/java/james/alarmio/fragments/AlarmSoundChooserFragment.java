@@ -49,4 +49,9 @@ public class AlarmSoundChooserFragment extends BaseSoundChooserFragment {
     public String getTitle() {
         return "Alarms";
     }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }

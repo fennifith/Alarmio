@@ -405,10 +405,18 @@ public class Alarmio extends Application implements Player.EventListener {
     public void onSeekProcessed() {
     }
 
+    public void requestPermissions(String... permissions) {
+        for (AlarmioListener listener : listeners) {
+            listener.onPermissionsRequested(permissions);
+        }
+    }
+
     public interface AlarmioListener {
         void onAlarmsChanged();
 
         void onTimersChanged();
+
+        void onPermissionsRequested(String... permissions);
     }
 
 }

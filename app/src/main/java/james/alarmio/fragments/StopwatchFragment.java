@@ -236,4 +236,9 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
     public void onServiceDisconnected(ComponentName componentName) {
         service = null;
     }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }

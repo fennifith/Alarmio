@@ -79,4 +79,9 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
         if (preferenceAdapter != null)
             preferenceAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }

@@ -2,6 +2,7 @@ package james.alarmio.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -16,7 +17,7 @@ import james.alarmio.fragments.StopwatchFragment;
 import james.alarmio.fragments.TimerFragment;
 import james.alarmio.receivers.TimerReceiver;
 
-public class MainActivity extends AestheticActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AestheticActivity implements FragmentManager.OnBackStackChangedListener, Alarmio.AlarmioListener {
 
     public static final String EXTRA_FRAGMENT = "james.alarmio.MainActivity.EXTRA_FRAGMENT";
     public static final int FRAGMENT_TIMER = 0;
@@ -30,6 +31,7 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         alarmio = (Alarmio) getApplicationContext();
+        alarmio.addListener(this);
 
         if (savedInstanceState == null) {
             fragment = new SplashFragment();
@@ -84,6 +86,13 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (alarmio != null)
+            alarmio.removeListener(this);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(new Bundle());
     }
@@ -103,5 +112,20 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     @Override
     public void onBackStackChanged() {
         fragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+    }
+
+    @Override
+    public void onAlarmsChanged() {
+
+    }
+
+    @Override
+    public void onTimersChanged() {
+
+    }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+        ActivityCompat.requestPermissions(this, permissions, 0);
     }
 }

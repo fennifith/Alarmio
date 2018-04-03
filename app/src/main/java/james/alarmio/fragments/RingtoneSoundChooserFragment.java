@@ -51,4 +51,9 @@ public class RingtoneSoundChooserFragment extends BaseSoundChooserFragment {
     public String getTitle() {
         return "Ringtones";
     }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }

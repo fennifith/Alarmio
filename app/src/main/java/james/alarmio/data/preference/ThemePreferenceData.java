@@ -1,9 +1,12 @@
 package james.alarmio.data.preference;
 
+import android.Manifest;
 import android.app.TimePickerDialog;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -60,7 +64,6 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             }
         });
 
-
         final SunriseView.SunriseListener listener = new SunriseView.SunriseListener() {
             @Override
             public void onSunriseChanged(int sunrise, int sunset) {
@@ -75,54 +78,76 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                 holder.sunsetTextView.setText(FormatUtils.formatShort(holder.getContext(), new Date(sunsetCalendar.getTimeInMillis())));
             }
         };
+
+        holder.sunriseAutoSwitch.setOnCheckedChangeListener(null);
+        holder.sunriseAutoSwitch.setChecked(holder.getAlarmio().isDayAuto());
+        holder.sunriseAutoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                PreferenceData.DAY_AUTO.setValue(holder.getContext(), b);
+                if (b && ContextCompat.checkSelfPermission(holder.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    holder.getAlarmio().requestPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
+                    holder.sunriseAutoSwitch.setChecked(false);
+                } else {
+                    holder.sunriseView.invalidate();
+                    listener.onSunriseChanged(holder.getAlarmio().getDayStart(), holder.getAlarmio().getDayEnd());
+                }
+                holder.getAlarmio().onActivityResume();
+            }
+        });
+
         holder.sunriseView.setListener(listener);
         listener.onSunriseChanged(holder.getAlarmio().getDayStart(), holder.getAlarmio().getDayEnd());
 
         holder.sunriseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TimePickerDialog(
-                        view.getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                                int dayEnd = holder.getAlarmio().getDayEnd();
-                                if (hourOfDay < dayEnd) {
-                                    PreferenceData.DAY_START.setValue(holder.getContext(), hourOfDay);
-                                    holder.sunriseView.invalidate();
-                                    listener.onSunriseChanged(hourOfDay, dayEnd);
-                                    holder.getAlarmio().onActivityResume();
+                if (!holder.getAlarmio().isDayAuto()) {
+                    new TimePickerDialog(
+                            view.getContext(),
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                    int dayEnd = holder.getAlarmio().getDayEnd();
+                                    if (hourOfDay < dayEnd) {
+                                        PreferenceData.DAY_START.setValue(holder.getContext(), hourOfDay);
+                                        holder.sunriseView.invalidate();
+                                        listener.onSunriseChanged(hourOfDay, dayEnd);
+                                        holder.getAlarmio().onActivityResume();
+                                    }
                                 }
-                            }
-                        },
-                        holder.getAlarmio().getDayStart(),
-                        0,
-                        DateFormat.is24HourFormat(holder.getContext())
-                ).show();
+                            },
+                            holder.getAlarmio().getDayStart(),
+                            0,
+                            DateFormat.is24HourFormat(holder.getContext())
+                    ).show();
+                }
             }
         });
 
         holder.sunsetTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TimePickerDialog(
-                        view.getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                                int dayStart = holder.getAlarmio().getDayStart();
-                                if (hourOfDay > dayStart) {
-                                    PreferenceData.DAY_END.setValue(holder.getContext(), hourOfDay);
-                                    holder.sunriseView.invalidate();
-                                    listener.onSunriseChanged(dayStart, hourOfDay);
-                                    holder.getAlarmio().onActivityResume();
+                if (!holder.getAlarmio().isDayAuto()) {
+                    new TimePickerDialog(
+                            view.getContext(),
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                    int dayStart = holder.getAlarmio().getDayStart();
+                                    if (hourOfDay > dayStart) {
+                                        PreferenceData.DAY_END.setValue(holder.getContext(), hourOfDay);
+                                        holder.sunriseView.invalidate();
+                                        listener.onSunriseChanged(dayStart, hourOfDay);
+                                        holder.getAlarmio().onActivityResume();
+                                    }
                                 }
-                            }
-                        },
-                        holder.getAlarmio().getDayEnd(),
-                        0,
-                        DateFormat.is24HourFormat(holder.getContext())
-                ).show();
+                            },
+                            holder.getAlarmio().getDayEnd(),
+                            0,
+                            DateFormat.is24HourFormat(holder.getContext())
+                    ).show();
+                }
             }
         });
 

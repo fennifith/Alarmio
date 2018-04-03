@@ -262,4 +262,9 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
     public void onMenuCollapsed() {
 
     }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }

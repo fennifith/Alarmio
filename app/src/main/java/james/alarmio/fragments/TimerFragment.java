@@ -101,4 +101,9 @@ public class TimerFragment extends BaseFragment {
         time.unsubscribe();
         super.onDestroyView();
     }
+
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }

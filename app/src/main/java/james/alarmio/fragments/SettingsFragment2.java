@@ -275,6 +275,11 @@ public class SettingsFragment2 extends BasePagerFragment implements SunriseView.
     }
 
     @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 954) {

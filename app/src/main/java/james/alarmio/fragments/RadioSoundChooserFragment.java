@@ -133,4 +133,8 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
         return "Radio";
     }
 
+    @Override
+    public void onPermissionsRequested(String... permissions) {
+
+    }
 }
