@@ -21,6 +21,7 @@ import james.alarmio.adapters.PreferenceAdapter;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.data.preference.BasePreferenceData;
 import james.alarmio.data.preference.BooleanPreferenceData;
+import james.alarmio.data.preference.RingtonePreferenceData;
 import james.alarmio.data.preference.ThemePreferenceData;
 
 public class SettingsFragment extends BasePagerFragment implements Consumer {
@@ -39,6 +40,7 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         preferenceAdapter = new PreferenceAdapter(new ArrayList<BasePreferenceData>(Arrays.asList(
                 new ThemePreferenceData(),
+                new RingtonePreferenceData(PreferenceData.DEFAULT_RINGTONE, R.string.title_default_ringtone),
                 new BooleanPreferenceData(PreferenceData.SLEEP_REMINDER, R.string.title_sleep_reminder, R.string.desc_sleep_reminder),
                 new BooleanPreferenceData(PreferenceData.SLOW_WAKE_UP, R.string.title_slow_wake_up, R.string.desc_slow_wake_up)
         )));
@@ -80,8 +82,4 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
             preferenceAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

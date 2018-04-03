@@ -28,7 +28,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.android.support:design:27.0.2'
     compile 'com.android.support:gridlayout-v7:27.0.2'
-    compile 'com.afollestad:aesthetic:0.4.6'
+    compile 'com.afollestad:aesthetic:0.4.7'
     compile 'me.jahirfiquitiva:FABsMenu:1.0.4'
     compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
     compile 'com.google.android.exoplayer:exoplayer-core:2.6.1'
