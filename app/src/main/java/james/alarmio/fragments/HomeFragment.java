@@ -263,8 +263,4 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
 
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

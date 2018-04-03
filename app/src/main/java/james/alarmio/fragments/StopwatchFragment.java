@@ -237,8 +237,4 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
         service = null;
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

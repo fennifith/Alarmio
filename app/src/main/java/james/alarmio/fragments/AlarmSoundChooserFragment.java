@@ -50,8 +50,4 @@ public class AlarmSoundChooserFragment extends BaseSoundChooserFragment {
         return "Alarms";
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

@@ -12,6 +12,7 @@ import android.media.Ringtone;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ public class Alarmio extends Application implements Player.EventListener {
     private List<TimerData> timers;
 
     private List<AlarmioListener> listeners;
+    private ActivityListener listener;
 
     private SimpleExoPlayer player;
     private HlsMediaSource.Factory mediaSourceFactory;
@@ -339,6 +341,10 @@ public class Alarmio extends Application implements Player.EventListener {
         listeners.remove(listener);
     }
 
+    public void setListener(ActivityListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onTimelineChanged(Timeline timeline, Object manifest) {
     }
@@ -406,17 +412,26 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public void requestPermissions(String... permissions) {
-        for (AlarmioListener listener : listeners) {
-            listener.onPermissionsRequested(permissions);
-        }
+        if (listener != null)
+            listener.requestPermissions(permissions);
+    }
+
+    public FragmentManager getFragmentManager() {
+        if (listener != null)
+            return listener.gettFragmentManager();
+        else return null;
     }
 
     public interface AlarmioListener {
         void onAlarmsChanged();
 
         void onTimersChanged();
+    }
 
-        void onPermissionsRequested(String... permissions);
+    public interface ActivityListener {
+        void requestPermissions(String... permissions);
+
+        FragmentManager gettFragmentManager(); //help
     }
 
 }

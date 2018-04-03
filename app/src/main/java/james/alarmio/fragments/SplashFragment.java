@@ -72,9 +72,4 @@ public class SplashFragment extends BaseFragment implements Animator.AnimatorLis
                 .replace(R.id.fragment, new HomeFragment())
                 .commit();
     }
-
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

@@ -87,8 +87,4 @@ public class AlarmsFragment extends BasePagerFragment {
             alarmsAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

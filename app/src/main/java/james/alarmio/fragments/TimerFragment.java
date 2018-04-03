@@ -102,8 +102,4 @@ public class TimerFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }

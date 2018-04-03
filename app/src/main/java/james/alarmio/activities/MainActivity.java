@@ -17,7 +17,7 @@ import james.alarmio.fragments.StopwatchFragment;
 import james.alarmio.fragments.TimerFragment;
 import james.alarmio.receivers.TimerReceiver;
 
-public class MainActivity extends AestheticActivity implements FragmentManager.OnBackStackChangedListener, Alarmio.AlarmioListener {
+public class MainActivity extends AestheticActivity implements FragmentManager.OnBackStackChangedListener, Alarmio.ActivityListener {
 
     public static final String EXTRA_FRAGMENT = "james.alarmio.MainActivity.EXTRA_FRAGMENT";
     public static final int FRAGMENT_TIMER = 0;
@@ -31,7 +31,7 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         alarmio = (Alarmio) getApplicationContext();
-        alarmio.addListener(this);
+        alarmio.setListener(this);
 
         if (savedInstanceState == null) {
             fragment = new SplashFragment();
@@ -89,7 +89,7 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     protected void onDestroy() {
         super.onDestroy();
         if (alarmio != null)
-            alarmio.removeListener(this);
+            alarmio.setListener(null);
     }
 
     @Override
@@ -115,17 +115,12 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     }
 
     @Override
-    public void onAlarmsChanged() {
-
-    }
-
-    @Override
-    public void onTimersChanged() {
-
-    }
-
-    @Override
-    public void onPermissionsRequested(String... permissions) {
+    public void requestPermissions(String... permissions) {
         ActivityCompat.requestPermissions(this, permissions, 0);
+    }
+
+    @Override
+    public FragmentManager gettFragmentManager() {
+        return getSupportFragmentManager();
     }
 }

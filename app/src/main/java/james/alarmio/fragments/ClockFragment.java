@@ -46,8 +46,4 @@ public class ClockFragment extends BasePagerFragment {
         return timezone;
     }
 
-    @Override
-    public void onPermissionsRequested(String... permissions) {
-
-    }
 }
