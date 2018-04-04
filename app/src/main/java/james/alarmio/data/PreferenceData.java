@@ -117,7 +117,7 @@ public enum PreferenceData {
         String name = getName(args);
 
         if (value == null)
-            editor.remove(name + (defaultValue instanceof Object[] ? "-length" : ""));
+            editor.remove(name + (defaultValue != null && defaultValue instanceof Object[] ? "-length" : ""));
         else if (value instanceof Object[]) {
             Object[] array = (Object[]) value;
 
