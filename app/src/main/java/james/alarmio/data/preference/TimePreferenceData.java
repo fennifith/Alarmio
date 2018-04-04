@@ -39,6 +39,7 @@ public class TimePreferenceData extends CustomPreferenceData {
             public void onTimeChosen(int hours, int minutes, int seconds) {
                 minutes += TimeUnit.HOURS.toMinutes(hours);
                 preference.setValue(holder.getContext(), minutes);
+                bindViewHolder(holder);
             }
         });
         dialog.show();
