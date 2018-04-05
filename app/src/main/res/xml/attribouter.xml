@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<about>
+    <appInfo repo="TheAndroidMaster/Alarmio" />
+    <contributors repo="TheAndroidMaster/Alarmio">
+
+    </contributors>
+    <licenses>
+        <project repo="afollestad/aesthetic" />
+        <project repo="jahirfiquitiva/FABsMenu" />
+        <project repo="mikereedell/sunrisesunsetlib-java" />
+        <project repo="google/ExoPlayer" />
+    </licenses>
+</about>

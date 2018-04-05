@@ -49,6 +49,7 @@
     <string name="title_slow_wake_up">Slow Wake-up</string>
     <string name="desc_slow_wake_up">Gradually increase brightness and volume when an alarm is ringing.</string>
     <string name="title_slow_wake_up_time">Slow Wake-up Duration</string>
+    <string name="title_about">About &amp; OSS Licenses</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>

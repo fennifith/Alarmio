@@ -16,13 +16,13 @@ public class RingtonePreferenceData extends CustomPreferenceData {
     }
 
     @Override
-    String getValueName(ViewHolder holder) {
+    public String getValueName(ViewHolder holder) {
         String sound = preference.getValue(holder.getContext(), "");
         return sound != null && sound.length() > 0 ? SoundData.fromString(sound).getName() : holder.getContext().getString(R.string.title_sound_none);
     }
 
     @Override
-    void onClick(final ViewHolder holder) {
+    public void onClick(final ViewHolder holder) {
         SoundChooserDialog dialog = new SoundChooserDialog();
         dialog.setListener(new SoundChooserListener() {
             @Override

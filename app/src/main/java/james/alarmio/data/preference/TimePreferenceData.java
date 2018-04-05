@@ -16,7 +16,7 @@ public class TimePreferenceData extends CustomPreferenceData {
     }
 
     @Override
-    String getValueName(ViewHolder holder) {
+    public String getValueName(ViewHolder holder) {
         int minutes = preference.getValue(holder.getContext());
         int hours = (int) TimeUnit.MINUTES.toHours(minutes);
         minutes %= TimeUnit.HOURS.toMinutes(1);
@@ -27,7 +27,7 @@ public class TimePreferenceData extends CustomPreferenceData {
     }
 
     @Override
-    void onClick(final ViewHolder holder) {
+    public void onClick(final ViewHolder holder) {
         int minutes = preference.getValue(holder.getContext());
         int hours = (int) TimeUnit.MINUTES.toHours(minutes);
         minutes %= TimeUnit.HOURS.toMinutes(1);

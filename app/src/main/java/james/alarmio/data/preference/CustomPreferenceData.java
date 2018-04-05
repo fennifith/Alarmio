@@ -15,9 +15,9 @@ public abstract class CustomPreferenceData extends BasePreferenceData<CustomPref
         this.name = name;
     }
 
-    abstract String getValueName(ViewHolder holder);
+    public abstract String getValueName(ViewHolder holder);
 
-    abstract void onClick(ViewHolder holder);
+    public abstract void onClick(ViewHolder holder);
 
     @Override
     public ViewHolder getViewHolder(LayoutInflater inflater, ViewGroup parent) {
