@@ -3,6 +3,7 @@ package james.alarmio.dialogs;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,7 +60,9 @@ public class TimeChooserDialog extends AppCompatDialog implements View.OnClickLi
         findViewById(R.id.nine).setOnClickListener(this);
         findViewById(R.id.zero).setOnClickListener(this);
 
-        findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
+        AppCompatButton startButton = findViewById(R.id.start);
+        startButton.setText(android.R.string.ok);
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Integer.parseInt(input) > 0) {
