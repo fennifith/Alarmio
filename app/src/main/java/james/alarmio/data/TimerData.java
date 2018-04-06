@@ -4,19 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Locale;
-
 import james.alarmio.receivers.TimerReceiver;
 
 public class TimerData implements Parcelable {
-
-    private static final String PREF_DURATION = "timerDuration%d";
-    private static final String PREF_END_TIME = "timerEndTime%d";
 
     private int id;
     private long duration = 600000;
@@ -26,10 +20,10 @@ public class TimerData implements Parcelable {
         this.id = id;
     }
 
-    public TimerData(int id, SharedPreferences prefs) {
+    public TimerData(int id, Context context) {
         this.id = id;
-        duration = prefs.getLong(String.format(Locale.getDefault(), PREF_DURATION, id), duration);
-        endTime = prefs.getLong(String.format(Locale.getDefault(), PREF_END_TIME, id), 0);
+        duration = PreferenceData.TIMER_DURATION.getSpecificValue(context, id);
+        endTime = PreferenceData.TIMER_END_TIME.getSpecificValue(context, id);
     }
 
     protected TimerData(Parcel in) {
@@ -50,17 +44,19 @@ public class TimerData implements Parcelable {
         }
     };
 
-    public void onIdChanged(int id, Context context, SharedPreferences prefs) {
-        prefs.edit().putLong(String.format(Locale.getDefault(), PREF_DURATION, id), duration).putLong(String.format(Locale.getDefault(), PREF_END_TIME, id), endTime).apply();
-        onRemoved(context, prefs);
+    public void onIdChanged(int id, Context context) {
+        PreferenceData.TIMER_DURATION.setValue(context, duration, id);
+        PreferenceData.TIMER_END_TIME.setValue(context, endTime, id);
+        onRemoved(context);
         this.id = id;
         if (isSet())
-            set(context, prefs, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
+            set(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
     }
 
-    public void onRemoved(Context context, SharedPreferences prefs) {
-        cancel(context, prefs, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
-        prefs.edit().remove(String.format(Locale.getDefault(), PREF_DURATION, id)).remove(String.format(Locale.getDefault(), PREF_END_TIME, id)).apply();
+    public void onRemoved(Context context) {
+        cancel(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
+        PreferenceData.TIMER_DURATION.setValue(context, null, id);
+        PreferenceData.TIMER_END_TIME.setValue(context, null, id);
     }
 
     public boolean isSet() {
@@ -75,24 +71,25 @@ public class TimerData implements Parcelable {
         return duration;
     }
 
-    public void setDuration(SharedPreferences prefs, long duration) {
+    public void setDuration(long duration, Context context) {
         this.duration = duration;
-        prefs.edit().putLong(String.format(Locale.getDefault(), PREF_DURATION, id), duration).apply();
+        PreferenceData.TIMER_DURATION.setValue(context, duration, id);
     }
 
-    public void set(Context context, SharedPreferences prefs, AlarmManager manager) {
+    public void set(Context context, AlarmManager manager) {
         endTime = System.currentTimeMillis() + duration;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             manager.setExact(AlarmManager.RTC_WAKEUP, endTime, getIntent(context));
         else manager.set(AlarmManager.RTC_WAKEUP, endTime, getIntent(context));
 
-        prefs.edit().putLong(String.format(Locale.getDefault(), PREF_END_TIME, id), endTime).apply();
+        PreferenceData.TIMER_END_TIME.setValue(context, endTime, id);
     }
 
-    public void cancel(Context context, SharedPreferences prefs, AlarmManager manager) {
+    public void cancel(Context context, AlarmManager manager) {
         endTime = 0;
         manager.cancel(getIntent(context));
-        prefs.edit().putLong(String.format(Locale.getDefault(), PREF_END_TIME, id), endTime).apply();
+
+        PreferenceData.TIMER_END_TIME.setValue(context, endTime, id);
     }
 
     private PendingIntent getIntent(Context context) {

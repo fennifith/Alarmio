@@ -25,7 +25,9 @@ public enum PreferenceData {
     ALARM_ENABLED("%d/ALARM_ENABLED", true),
     ALARM_DAY_ENABLED("%1$d/ALARM_DAY/%2$d/ENABLED", false),
     ALARM_VIBRATE("%d/ALARM_VIBRATE", true),
-    ALARM_SOUND("%d/ALARM_SOUND", "");
+    ALARM_SOUND("%d/ALARM_SOUND", ""),
+    TIMER_DURATION("%d/TIMER_DURATION", 600000),
+    TIMER_END_TIME("%d/TIMER_END_TIME", 0);
 
     private String name;
     private Object defaultValue;
