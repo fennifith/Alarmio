@@ -19,7 +19,13 @@ public enum PreferenceData {
     SLEEP_REMINDER(true),
     SLEEP_REMINDER_TIME(420), //minutes
     SLOW_WAKE_UP(true),
-    SLOW_WAKE_UP_TIME(5); //minutes
+    SLOW_WAKE_UP_TIME(5), //minutes
+    ALARM_NAME("%d/ALARM_NAME", null),
+    ALARM_TIME("%d/ALARM_TIME", 0),
+    ALARM_ENABLED("%d/ALARM_ENABLED", true),
+    ALARM_DAY_ENABLED("%1$d/ALARM_DAY/%2$d/ENABLED", false),
+    ALARM_VIBRATE("%d/ALARM_VIBRATE", true),
+    ALARM_SOUND("%d/ALARM_SOUND", "");
 
     private String name;
     private Object defaultValue;
@@ -34,7 +40,7 @@ public enum PreferenceData {
         defaultValue = value;
     }
 
-    public String getName(@Nullable String... args) {
+    public String getName(@Nullable Object... args) {
         if (args != null && args.length > 0)
             return String.format(name, (Object[]) args);
         else return name;
@@ -56,11 +62,11 @@ public enum PreferenceData {
         return getSpecificOverriddenValue(context, defaultValue, (String[]) null);
     }
 
-    public <T> T getSpecificValue(Context context, @Nullable String... args) {
+    public <T> T getSpecificValue(Context context, @Nullable Object... args) {
         return getSpecificOverriddenValue(context, (T) getDefaultValue(), args);
     }
 
-    public <T> T getSpecificOverriddenValue(Context context, @Nullable T defaultValue, @Nullable String... args) {
+    public <T> T getSpecificOverriddenValue(Context context, @Nullable T defaultValue, @Nullable Object... args) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String name = getName(args);
         T type = defaultValue != null ? defaultValue : (T) getDefaultValue();
@@ -112,7 +118,7 @@ public enum PreferenceData {
         setValue(context, value, (String[]) null);
     }
 
-    public <T> void setValue(Context context, @Nullable T value, @Nullable String... args) {
+    public <T> void setValue(Context context, @Nullable T value, @Nullable Object... args) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         String name = getName(args);
 

@@ -4,14 +4,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import io.reactivex.annotations.Nullable;
 import james.alarmio.R;
@@ -26,7 +24,6 @@ public class AlarmData implements Parcelable {
     private static final String PREF_DAY = "alarmDay%d-%d";
     private static final String PREF_VIBRATE = "alarmVibrate%d";
     private static final String PREF_RINGTONE = "alarmRingtone%d";
-    private static final String PREF_RINGTONE_ENABLED = "alarmRingtoneEnabled%d";
 
     private int id;
     public String name;
@@ -41,51 +38,46 @@ public class AlarmData implements Parcelable {
         this.time = time;
     }
 
-    public AlarmData(int id, Context context, SharedPreferences prefs) {
+    public AlarmData(int id, Context context) {
         this.id = id;
-        name = prefs.getString(String.format(Locale.getDefault(), PREF_NAME, id), getName(context));
+        name = PreferenceData.ALARM_NAME.getSpecificOverriddenValue(context, getName(context), id);
         time = Calendar.getInstance();
-        time.setTimeInMillis(prefs.getLong(String.format(Locale.getDefault(), PREF_TIME, id), 0));
-        isEnabled = prefs.getBoolean(String.format(Locale.getDefault(), PREF_ENABLED, id), isEnabled);
+        time.setTimeInMillis((int) PreferenceData.ALARM_TIME.getSpecificValue(context, id));
+        isEnabled = PreferenceData.ALARM_ENABLED.getSpecificValue(context, id);
         for (int i = 0; i < 7; i++) {
-            days[i] = prefs.getBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), false);
+            days[i] = PreferenceData.ALARM_DAY_ENABLED.getSpecificValue(context, id, i);
         }
-        isVibrate = prefs.getBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
-        sound = SoundData.fromString(prefs.getString(String.format(Locale.getDefault(), PREF_RINGTONE, id), PreferenceData.DEFAULT_RINGTONE.getValue(context, "")));
+        isVibrate = PreferenceData.ALARM_VIBRATE.getSpecificValue(context, id);
+        sound = SoundData.fromString(PreferenceData.ALARM_SOUND.getSpecificOverriddenValue(context, PreferenceData.DEFAULT_RINGTONE.getValue(context, ""), id));
     }
 
-    public void onIdChanged(int id, Context context, SharedPreferences prefs) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(String.format(Locale.getDefault(), PREF_NAME, id), getName(context));
-        editor.putLong(String.format(Locale.getDefault(), PREF_TIME, id), time.getTimeInMillis());
-        editor.putBoolean(String.format(Locale.getDefault(), PREF_ENABLED, id), isEnabled);
+    public void onIdChanged(int id, Context context) {
+        PreferenceData.ALARM_NAME.setValue(context, getName(context), id);
+        PreferenceData.ALARM_TIME.setValue(context, (int) time.getTimeInMillis(), id);
+        PreferenceData.ALARM_ENABLED.setValue(context, isEnabled, id);
         for (int i = 0; i < 7; i++) {
-            editor.putBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), days[i]);
+            PreferenceData.ALARM_DAY_ENABLED.setValue(context, days[i], id, i);
         }
-        editor.putBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
-        editor.putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString());
-        editor.apply();
+        PreferenceData.ALARM_VIBRATE.setValue(context, isVibrate, id);
+        PreferenceData.ALARM_SOUND.setValue(context, sound.toString(), id);
 
-        onRemoved(context, prefs);
+        onRemoved(context);
         this.id = id;
         if (isEnabled)
             set(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
     }
 
-    public void onRemoved(Context context, SharedPreferences prefs) {
+    public void onRemoved(Context context) {
         cancel(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
 
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(String.format(Locale.getDefault(), PREF_NAME, id));
-        editor.remove(String.format(Locale.getDefault(), PREF_TIME, id));
-        editor.remove(String.format(Locale.getDefault(), PREF_ENABLED, id));
+        PreferenceData.ALARM_NAME.setValue(context, null, id);
+        PreferenceData.ALARM_TIME.setValue(context, null, id);
+        PreferenceData.ALARM_ENABLED.setValue(context, null, id);
         for (int i = 0; i < 7; i++) {
-            editor.remove(String.format(Locale.getDefault(), PREF_DAY, id, i));
+            PreferenceData.ALARM_DAY_ENABLED.setValue(context, null, id, i);
         }
-        editor.remove(String.format(Locale.getDefault(), PREF_VIBRATE, id));
-        editor.remove(String.format(Locale.getDefault(), PREF_RINGTONE, id));
-        editor.remove(String.format(Locale.getDefault(), PREF_RINGTONE_ENABLED, id));
-        editor.apply();
+        PreferenceData.ALARM_VIBRATE.setValue(context, null, id);
+        PreferenceData.ALARM_SOUND.setValue(context, null, id);
     }
 
     public String getName(Context context) {
@@ -103,39 +95,37 @@ public class AlarmData implements Parcelable {
         return false;
     }
 
-    public void setName(SharedPreferences prefs, String name) {
+    public void setName(Context context, String name) {
         this.name = name;
-        prefs.edit().putString(String.format(Locale.getDefault(), PREF_NAME, id), name).apply();
+        PreferenceData.ALARM_NAME.setValue(context, name, id);
     }
 
-    public void setTime(Context context, SharedPreferences prefs, AlarmManager manager, long timeMillis) {
+    public void setTime(Context context, AlarmManager manager, long timeMillis) {
         time.setTimeInMillis(timeMillis);
-        prefs.edit().putLong(String.format(Locale.getDefault(), PREF_TIME, id), timeMillis).apply();
+        PreferenceData.ALARM_TIME.setValue(context, (int) timeMillis, id);
         if (isEnabled)
             set(context, manager);
     }
 
-    public void setEnabled(Context context, SharedPreferences prefs, AlarmManager manager, boolean isEnabled) {
+    public void setEnabled(Context context, AlarmManager manager, boolean isEnabled) {
         this.isEnabled = isEnabled;
-        prefs.edit().putBoolean(String.format(Locale.getDefault(), PREF_ENABLED, id), isEnabled).apply();
+        PreferenceData.ALARM_ENABLED.setValue(context, isEnabled, id);
         if (isEnabled)
             set(context, manager);
         else cancel(context, manager);
     }
 
-    public void setDays(SharedPreferences prefs, boolean[] days) {
+    public void setDays(Context context, boolean[] days) {
         this.days = days;
 
-        SharedPreferences.Editor editor = prefs.edit();
         for (int i = 0; i < 7; i++) {
-            editor.putBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), days[i]);
+            PreferenceData.ALARM_DAY_ENABLED.setValue(context, days[i], id, i);
         }
-        editor.apply();
     }
 
-    public void setVibrate(SharedPreferences prefs, boolean isVibrate) {
+    public void setVibrate(Context context, boolean isVibrate) {
         this.isVibrate = isVibrate;
-        prefs.edit().putBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate).apply();
+        PreferenceData.ALARM_VIBRATE.setValue(context, isVibrate, id);
     }
 
     public boolean hasSound() {
@@ -146,17 +136,9 @@ public class AlarmData implements Parcelable {
         return sound;
     }
 
-    public void setSound(SharedPreferences prefs, SoundData sound) {
+    public void setSound(Context context, SoundData sound) {
         this.sound = sound;
-        if (sound != null) {
-            prefs.edit()
-                    .putString(String.format(Locale.getDefault(), PREF_RINGTONE, id), sound.toString())
-                    .apply();
-        } else {
-            prefs.edit()
-                    .remove(String.format(Locale.getDefault(), PREF_RINGTONE, id))
-                    .apply();
-        }
+        PreferenceData.ALARM_SOUND.setValue(context, sound != null ? sound.toString() : null, id);
     }
 
     @Nullable
