@@ -18,13 +18,6 @@ import james.alarmio.receivers.AlarmReceiver;
 
 public class AlarmData implements Parcelable {
 
-    private static final String PREF_NAME = "alarmName%d";
-    private static final String PREF_TIME = "alarmTime%d";
-    private static final String PREF_ENABLED = "alarmEnabled%d";
-    private static final String PREF_DAY = "alarmDay%d-%d";
-    private static final String PREF_VIBRATE = "alarmVibrate%d";
-    private static final String PREF_RINGTONE = "alarmRingtone%d";
-
     private int id;
     public String name;
     public Calendar time;
