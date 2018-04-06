@@ -51,7 +51,7 @@ public class AlarmData implements Parcelable {
             days[i] = prefs.getBoolean(String.format(Locale.getDefault(), PREF_DAY, id, i), false);
         }
         isVibrate = prefs.getBoolean(String.format(Locale.getDefault(), PREF_VIBRATE, id), isVibrate);
-        sound = SoundData.fromString(prefs.getString(String.format(Locale.getDefault(), PREF_RINGTONE, id), ""));
+        sound = SoundData.fromString(prefs.getString(String.format(Locale.getDefault(), PREF_RINGTONE, id), PreferenceData.DEFAULT_RINGTONE.getValue(context, "")));
     }
 
     public void onIdChanged(int id, Context context, SharedPreferences prefs) {
