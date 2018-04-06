@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
+    android:paddingBottom="12dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    android:paddingTop="8dp">
+    android:paddingTop="12dp">
 
     <TextView
         android:id="@+id/name"
