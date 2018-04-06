@@ -155,7 +155,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    getAlarm(alarmHolder.getAdapterPosition()).setName(prefs, alarmHolder.name.getText().toString());
+                    getAlarm(alarmHolder.getAdapterPosition()).setName(alarmio, alarmHolder.name.getText().toString());
                 }
 
                 @Override
@@ -168,7 +168,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             alarmHolder.enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    getAlarm(alarmHolder.getAdapterPosition()).setEnabled(alarmio, prefs, alarmManager, b);
+                    getAlarm(alarmHolder.getAdapterPosition()).setEnabled(alarmio, alarmManager, b);
                 }
             });
 
@@ -186,7 +186,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                                     alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                     alarm.time.set(Calendar.MINUTE, minute);
-                                    alarm.setTime(alarmio, prefs, alarmManager, alarm.time.getTimeInMillis());
+                                    alarm.setTime(alarmio, alarmManager, alarm.time.getTimeInMillis());
                                     alarmHolder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
                                 }
                             },
@@ -206,7 +206,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     for (int i = 0; i < 7; i++) {
                         alarm.days[i] = b;
                     }
-                    alarm.setDays(prefs, alarm.days);
+                    alarm.setDays(alarmio, alarm.days);
                     notifyItemChanged(alarmHolder.getAdapterPosition());
                 }
             });
@@ -218,7 +218,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 public void onCheckedChanged(DaySwitch daySwitch, boolean b) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     alarm.days[alarmHolder.days.indexOfChild(daySwitch)] = b;
-                    alarm.setDays(prefs, alarm.days);
+                    alarm.setDays(alarmio, alarm.days);
                     if (!alarm.isRepeat())
                         notifyItemChanged(alarmHolder.getAdapterPosition());
                 }
@@ -261,7 +261,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                         public void onSoundChosen(SoundData sound) {
                             int position = alarmHolder.getAdapterPosition();
                             AlarmData alarm = getAlarm(position);
-                            alarm.setSound(prefs, sound);
+                            alarm.setSound(alarmio, sound);
                             notifyItemChanged(position);
                         }
                     });
@@ -274,7 +274,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    alarm.setVibrate(prefs, !alarm.isVibrate);
+                    alarm.setVibrate(context, !alarm.isVibrate);
                     alarmHolder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
                     if (alarm.isVibrate)
                         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);

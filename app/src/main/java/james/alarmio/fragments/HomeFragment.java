@@ -222,8 +222,8 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                                 AlarmData alarm = getAlarmio().newAlarm();
                                 alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 alarm.time.set(Calendar.MINUTE, minute);
-                                alarm.setTime(getContext(), getAlarmio().getPrefs(), manager, alarm.time.getTimeInMillis());
-                                alarm.setEnabled(getContext(), getAlarmio().getPrefs(), manager, true);
+                                alarm.setTime(getContext(), manager, alarm.time.getTimeInMillis());
+                                alarm.setEnabled(getContext(), manager, true);
 
                                 getAlarmio().onAlarmsChanged();
                             }

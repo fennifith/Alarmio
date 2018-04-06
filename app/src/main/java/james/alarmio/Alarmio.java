@@ -86,12 +86,12 @@ public class Alarmio extends Application implements Player.EventListener {
 
         int alarmLength = PreferenceData.ALARM_LENGTH.getValue(this);
         for (int id = 0; id < alarmLength; id++) {
-            alarms.add(new AlarmData(id, this, prefs));
+            alarms.add(new AlarmData(id, this));
         }
 
         int timerLength = PreferenceData.TIMER_LENGTH.getValue(this);
         for (int id = 0; id < timerLength; id++) {
-            TimerData timer = new TimerData(id, prefs);
+            TimerData timer = new TimerData(id, this);
             if (timer.isSet())
                 timers.add(timer);
         }
@@ -116,12 +116,12 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public void removeAlarm(AlarmData alarm) {
-        alarm.onRemoved(this, getPrefs());
+        alarm.onRemoved(this);
 
         int index = alarms.indexOf(alarm);
         alarms.remove(index);
         for (int i = index; i < alarms.size(); i++) {
-            alarms.get(i).onIdChanged(i, this, getPrefs());
+            alarms.get(i).onIdChanged(i, this);
         }
 
         onAlarmCountChanged();
@@ -146,12 +146,12 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public void removeTimer(TimerData timer) {
-        timer.onRemoved(this, getPrefs());
+        timer.onRemoved(this);
 
         int index = timers.indexOf(timer);
         timers.remove(index);
         for (int i = index; i < timers.size(); i++) {
-            timers.get(i).onIdChanged(i, this, getPrefs());
+            timers.get(i).onIdChanged(i, this);
         }
 
         onTimerCountChanged();

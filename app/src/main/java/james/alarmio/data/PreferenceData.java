@@ -57,11 +57,11 @@ public enum PreferenceData {
     }
 
     public <T> T getValue(Context context) {
-        return getSpecificOverriddenValue(context, (T) getDefaultValue(), (String[]) null);
+        return getSpecificOverriddenValue(context, (T) getDefaultValue(), (Object[]) null);
     }
 
     public <T> T getValue(Context context, @Nullable T defaultValue) {
-        return getSpecificOverriddenValue(context, defaultValue, (String[]) null);
+        return getSpecificOverriddenValue(context, defaultValue, (Object[]) null);
     }
 
     public <T> T getSpecificValue(Context context, @Nullable Object... args) {
@@ -117,7 +117,7 @@ public enum PreferenceData {
     }
 
     public <T> void setValue(Context context, @Nullable T value) {
-        setValue(context, value, (String[]) null);
+        setValue(context, value, (Object[]) null);
     }
 
     public <T> void setValue(Context context, @Nullable T value, @Nullable Object... args) {

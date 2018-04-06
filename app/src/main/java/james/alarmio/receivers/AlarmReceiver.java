@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         AlarmData alarm = alarmio.getAlarms().get(intent.getIntExtra(EXTRA_ALARM_ID, 0));
         if (alarm.isRepeat())
             alarm.set(context, manager);
-        else alarm.setEnabled(context, alarmio.getPrefs(), manager, false);
+        else alarm.setEnabled(alarmio, manager, false);
         alarmio.onAlarmsChanged();
 
         Intent ringer = new Intent(context, AlarmActivity.class);
