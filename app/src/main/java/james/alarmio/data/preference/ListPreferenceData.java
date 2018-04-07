@@ -1,13 +1,19 @@
 package james.alarmio.data.preference;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -52,6 +58,17 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
                 removeItem(holder);
             }
         });
+
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        holder.add.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
+                        holder.remove.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
+                    }
+                });
     }
 
     public final String[] getItems(Context context) {
@@ -94,7 +111,7 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
 
         private TextView title;
         private RecyclerView recycler;
-        private View add, remove;
+        private ImageView add, remove;
 
         public ViewHolder(View v) {
             super(v);
