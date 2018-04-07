@@ -70,6 +70,7 @@ public class TimeZoneChooserDialog extends AppCompatDialog {
         });
 
         TimeZonesAdapter adapter = new TimeZonesAdapter(timeZones);
+        adapter.setIgnoreAesthetic(true);
         adapter.setOnClickListener(new TimeZonesAdapter.OnClickListener() {
             @Override
             public void onClick(String timeZone) {
