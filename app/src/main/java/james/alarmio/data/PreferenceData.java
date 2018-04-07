@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
-import java.util.Calendar;
+import java.util.TimeZone;
 
 import james.alarmio.Alarmio;
 
@@ -16,7 +16,7 @@ public enum PreferenceData {
     DAY_END(18), //hours
     ALARM_LENGTH(0),
     TIMER_LENGTH(0),
-    TIME_ZONES(new String[]{Calendar.getInstance().getTimeZone().getID()}),
+    TIME_ZONES(new String[]{TimeZone.getDefault().getID()}),
     DEFAULT_RINGTONE(null),
     SLEEP_REMINDER(true),
     SLEEP_REMINDER_TIME(420), //minutes
