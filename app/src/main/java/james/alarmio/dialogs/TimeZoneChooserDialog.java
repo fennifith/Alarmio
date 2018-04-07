@@ -31,7 +31,7 @@ public class TimeZoneChooserDialog extends AppCompatDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_time_zone);
+        setContentView(R.layout.dialog_time_zone_chooser);
 
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
