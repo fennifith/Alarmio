@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import james.alarmio.adapters.TimeZonesAdapter;
 import james.alarmio.data.PreferenceData;
+import james.alarmio.dialogs.TimeZoneChooserDialog;
 
 public class TimeZonesPreferenceData extends ListPreferenceData {
 
@@ -21,7 +22,14 @@ public class TimeZonesPreferenceData extends ListPreferenceData {
     }
 
     @Override
-    void requestAddItem(ViewHolder holder) {
-
+    void requestAddItem(final ViewHolder holder) {
+        TimeZoneChooserDialog dialog = new TimeZoneChooserDialog(holder.getContext());
+        dialog.setListener(new TimeZoneChooserDialog.OnTimeZoneListener() {
+            @Override
+            public void onTimeZoneChosen(String timeZone) {
+                addItem(holder, timeZone);
+            }
+        });
+        dialog.show();
     }
 }

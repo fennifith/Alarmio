@@ -18,9 +18,15 @@ import james.alarmio.R;
 public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.ViewHolder> {
 
     private List<String> timeZones;
+    private OnClickListener listener;
 
     public TimeZonesAdapter(List<String> timeZones) {
         this.timeZones = timeZones;
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.listener = listener;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -30,10 +36,19 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         TimeZone timeZone = TimeZone.getTimeZone(timeZones.get(position));
-        holder.time.setText(new SimpleDateFormat("ZZZZ", Locale.getDefault()).format(Calendar.getInstance(timeZone, Locale.getDefault()).getTime()));
+        holder.time.setText(new SimpleDateFormat("ZZZZ", Locale.getDefault()).format(Calendar.getInstance(timeZone).getTime()));
         holder.title.setText(timeZone.getDisplayName(Locale.getDefault()));
+        if (listener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onClick(timeZones.get(holder.getAdapterPosition()));
+                }
+            });
+        }
     }
 
     @Override
@@ -51,6 +66,10 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
             time = v.findViewById(R.id.time);
             title = v.findViewById(R.id.title);
         }
+    }
+
+    public interface OnClickListener {
+        void onClick(String timeZone);
     }
 
 }
