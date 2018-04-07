@@ -23,7 +23,6 @@ import android.widget.TimePicker;
 import com.afollestad.aesthetic.Aesthetic;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -32,6 +31,7 @@ import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
 import james.alarmio.data.AlarmData;
+import james.alarmio.data.PreferenceData;
 import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.views.PageIndicatorView;
@@ -133,11 +133,17 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             }
         });
 
-        Bundle args = new Bundle();
-        args.putString(ClockFragment.EXTRA_TIME_ZONE, TimeZone.getAvailableIDs()[0]);
-        ClockFragment fragment = new ClockFragment();
-        fragment.setArguments(args);
-        timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), new ClockFragment(), fragment);
+        String[] timeZones = PreferenceData.TIME_ZONES.getValue(getContext());
+        ClockFragment[] clockFragments = new ClockFragment[timeZones.length];
+        for (int i = 0; i < timeZones.length; i++) {
+            Bundle args = new Bundle();
+            args.putString(ClockFragment.EXTRA_TIME_ZONE, timeZones[i]);
+            ClockFragment fragment = new ClockFragment();
+            fragment.setArguments(args);
+            clockFragments[i] = fragment;
+        }
+
+        timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), clockFragments);
         timePager.setAdapter(timeAdapter);
         timeIndicator.setViewPager(timePager);
 

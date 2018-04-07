@@ -32,7 +32,7 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
 
     @Override
     public void bindViewHolder(final ViewHolder holder) {
-        String[] items = preference.getValue(holder.getContext());
+        String[] items = getItems(holder.getContext());
 
         holder.title.setText(title);
         holder.recycler.setLayoutManager(new LinearLayoutManager(holder.getContext()));
@@ -54,6 +54,10 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
         });
     }
 
+    public final String[] getItems(Context context) {
+        return preference.getValue(context);
+    }
+
     /**
      * adds an item to the end of the list
      *
@@ -61,7 +65,7 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
      * @param item   the item to add
      */
     public final void addItem(ViewHolder holder, String item) {
-        String[] items = preference.getValue(holder.getContext());
+        String[] items = getItems(holder.getContext());
         String[] newItems = new String[items.length + 1];
         System.arraycopy(items, 0, newItems, 0, items.length);
         newItems[items.length] = item;
@@ -76,7 +80,7 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
      * @param holder the ViewHolder containing the RecyclerView
      */
     public final void removeItem(ViewHolder holder) {
-        String[] items = preference.getValue(holder.getContext());
+        String[] items = getItems(holder.getContext());
         if (items.length > 1) {
             String[] newItems = new String[items.length - 1];
             System.arraycopy(items, 0, newItems, 0, items.length - 1);

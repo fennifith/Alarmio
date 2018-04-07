@@ -19,6 +19,7 @@ import james.alarmio.adapters.TimeZonesAdapter;
 public class TimeZoneChooserDialog extends AppCompatDialog {
 
     private OnTimeZoneListener listener;
+    private String[] excludedIds;
 
     public TimeZoneChooserDialog(Context context) {
         super(context);
@@ -26,6 +27,10 @@ public class TimeZoneChooserDialog extends AppCompatDialog {
 
     public void setListener(OnTimeZoneListener listener) {
         this.listener = listener;
+    }
+
+    public void excludeTimeZones(String... ids) {
+        excludedIds = ids;
     }
 
     @Override
@@ -40,6 +45,13 @@ public class TimeZoneChooserDialog extends AppCompatDialog {
         for (String id1 : TimeZone.getAvailableIDs()) {
             boolean isFine = true;
             for (String id2 : timeZones) {
+                if (TimeZone.getTimeZone(id1).getRawOffset() == TimeZone.getTimeZone(id2).getRawOffset()) {
+                    isFine = false;
+                    break;
+                }
+            }
+
+            for (String id2 : excludedIds) {
                 if (TimeZone.getTimeZone(id1).getRawOffset() == TimeZone.getTimeZone(id2).getRawOffset()) {
                     isFine = false;
                     break;
