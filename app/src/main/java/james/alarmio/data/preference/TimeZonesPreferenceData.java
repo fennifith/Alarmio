@@ -24,6 +24,7 @@ public class TimeZonesPreferenceData extends ListPreferenceData {
     @Override
     void requestAddItem(final ViewHolder holder) {
         TimeZoneChooserDialog dialog = new TimeZoneChooserDialog(holder.getContext());
+        dialog.excludeTimeZones(getItems(holder.getContext()));
         dialog.setListener(new TimeZoneChooserDialog.OnTimeZoneListener() {
             @Override
             public void onTimeZoneChosen(String timeZone) {
