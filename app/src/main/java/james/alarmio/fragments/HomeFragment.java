@@ -118,9 +118,12 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                 if (tab.getPosition() > 0) {
                     shouldCollapseBack = behavior.getState() != BottomSheetBehavior.STATE_EXPANDED;
                     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else if (shouldCollapseBack) {
-                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    shouldCollapseBack = false;
+                } else {
+                    setClockFragments();
+                    if (shouldCollapseBack) {
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        shouldCollapseBack = false;
+                    }
                 }
             }
 
@@ -133,19 +136,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             }
         });
 
-        String[] timeZones = PreferenceData.TIME_ZONES.getValue(getContext());
-        ClockFragment[] clockFragments = new ClockFragment[timeZones.length];
-        for (int i = 0; i < timeZones.length; i++) {
-            Bundle args = new Bundle();
-            args.putString(ClockFragment.EXTRA_TIME_ZONE, timeZones[i]);
-            ClockFragment fragment = new ClockFragment();
-            fragment.setArguments(args);
-            clockFragments[i] = fragment;
-        }
-
-        timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), clockFragments);
-        timePager.setAdapter(timeAdapter);
-        timeIndicator.setViewPager(timePager);
+        setClockFragments();
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -244,6 +235,24 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         });
 
         return view;
+    }
+
+    private void setClockFragments() {
+        if (timePager != null && timeIndicator != null) {
+            String[] timeZones = PreferenceData.TIME_ZONES.getValue(getContext());
+            ClockFragment[] clockFragments = new ClockFragment[timeZones.length];
+            for (int i = 0; i < timeZones.length; i++) {
+                Bundle args = new Bundle();
+                args.putString(ClockFragment.EXTRA_TIME_ZONE, timeZones[i]);
+                ClockFragment fragment = new ClockFragment();
+                fragment.setArguments(args);
+                clockFragments[i] = fragment;
+            }
+
+            timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), clockFragments);
+            timePager.setAdapter(timeAdapter);
+            timeIndicator.setViewPager(timePager);
+        }
     }
 
     @Override
