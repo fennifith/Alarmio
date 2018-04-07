@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import james.alarmio.R;
-import james.alarmio.utils.FormatUtils;
 
 public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.ViewHolder> {
 
@@ -32,7 +32,7 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TimeZone timeZone = TimeZone.getTimeZone(timeZones.get(position));
-        holder.time.setText(FormatUtils.formatUnit(holder.itemView.getContext(), (int) TimeUnit.HOURS.toMinutes(timeZone.getRawOffset())));
+        holder.time.setText(new SimpleDateFormat("ZZZZ", Locale.getDefault()).format(Calendar.getInstance(timeZone, Locale.getDefault()).getTime()));
         holder.title.setText(timeZone.getDisplayName(Locale.getDefault()));
     }
 
