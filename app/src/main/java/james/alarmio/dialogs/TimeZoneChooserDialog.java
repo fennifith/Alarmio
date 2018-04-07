@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.TimeZone;
 
 import james.alarmio.R;
@@ -34,7 +36,28 @@ public class TimeZoneChooserDialog extends AppCompatDialog {
         RecyclerView recycler = findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        TimeZonesAdapter adapter = new TimeZonesAdapter(new ArrayList<>(Arrays.asList(TimeZone.getAvailableIDs())));
+        List<String> timeZones = new ArrayList<>();
+        for (String id1 : TimeZone.getAvailableIDs()) {
+            boolean isFine = true;
+            for (String id2 : timeZones) {
+                if (TimeZone.getTimeZone(id1).getRawOffset() == TimeZone.getTimeZone(id2).getRawOffset()) {
+                    isFine = false;
+                    break;
+                }
+            }
+
+            if (isFine)
+                timeZones.add(id1);
+        }
+
+        Collections.sort(timeZones, new Comparator<String>() {
+            @Override
+            public int compare(String id1, String id2) {
+                return TimeZone.getTimeZone(id1).getRawOffset() - TimeZone.getTimeZone(id2).getRawOffset();
+            }
+        });
+
+        TimeZonesAdapter adapter = new TimeZonesAdapter(timeZones);
         adapter.setOnClickListener(new TimeZonesAdapter.OnClickListener() {
             @Override
             public void onClick(String timeZone) {

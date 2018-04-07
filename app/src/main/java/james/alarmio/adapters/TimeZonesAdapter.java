@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import james.alarmio.R;
 
@@ -38,7 +37,16 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         TimeZone timeZone = TimeZone.getTimeZone(timeZones.get(position));
-        holder.time.setText(new SimpleDateFormat("ZZZZ", Locale.getDefault()).format(Calendar.getInstance(timeZone).getTime()));
+
+        int offsetMillis = timeZone.getRawOffset();
+        holder.time.setText(String.format(
+                Locale.getDefault(),
+                "GMT%s%02d:%02d",
+                offsetMillis >= 0 ? "+" : "",
+                TimeUnit.MILLISECONDS.toHours(offsetMillis),
+                TimeUnit.MILLISECONDS.toMinutes(Math.abs(offsetMillis)) % TimeUnit.HOURS.toMinutes(1)
+        ));
+
         holder.title.setText(timeZone.getDisplayName(Locale.getDefault()));
         if (listener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
