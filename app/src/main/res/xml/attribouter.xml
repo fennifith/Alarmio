@@ -2,12 +2,54 @@
 <about>
     <appInfo repo="TheAndroidMaster/Alarmio" />
     <contributors repo="TheAndroidMaster/Alarmio">
+        <contributor
+            name="James Fenn"
+            bio="Android developer. Writes Java, C, and HTML. PHP confuses me."
+            blog="https://jfenn.me/"
+            login="TheAndroidMaster"
+            position="1"
+            task="^Developer" />
 
+        <contributor
+            name="Justin Kruit"
+            avatar="https://avatars1.githubusercontent.com/u/1642830"
+            bio="A lazy person that doesn\'t even put enough effort into life to write his own GitHub bio."
+            blog="https://justinkruit.com/"
+            login="justinkruit"
+            position="2"
+            task="^Inspiration &amp; Laziness" />
+
+        <contributor
+            name="Vukašin Anđelković"
+            avatar="https://lh3.googleusercontent.com/peV9PQ_0orI866TX6-rt9YowJ1pxiAmEWVrxHwHFA9go34zBXqK-rLwqBIfNNprLMhzHCrk8jtZUGlo"
+            bio="Makes things and stuff. Creator of Candycons, PixBit, Cubllow, and Wafer."
+            blog="https://play.google.com/store/apps/dev?id=6941105890231522296"
+            login="zavukodlak"
+            position="3"
+            task="^Design Feedback" />
     </contributors>
     <licenses>
-        <project repo="afollestad/aesthetic" />
-        <project repo="jahirfiquitiva/FABsMenu" />
-        <project repo="mikereedell/sunrisesunsetlib-java" />
-        <project repo="google/ExoPlayer" />
+        <project
+            description="A fast and easy to use plug-and-play dynamic theme engine. Powered by Rx, for Android apps."
+            license="apache-2.0"
+            repo="afollestad/aesthetic" />
+
+        <project
+            description="A simple library to use a menu of FloatingActionButtons from Design Support Library that follow Material Design Guidelines."
+            license="apache-2.0"
+            repo="jahirfiquitiva/FABsMenu"
+            title="^FABs Menu" />
+
+        <project
+            description="Library for computing the sunrise/sunset from GPS coordinates and a date, in Java."
+            license="apache-2.0"
+            repo="mikereedell/sunrisesunsetlib-java"
+            title="^Sunrise Sunset Lib" />
+
+        <project
+            description="An extensible media player for Android."
+            license="apache-2.0"
+            repo="google/ExoPlayer" />
+
     </licenses>
 </about>
