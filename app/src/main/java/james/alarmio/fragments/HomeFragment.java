@@ -217,9 +217,12 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                                 AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
                                 AlarmData alarm = getAlarmio().newAlarm();
-                                alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                alarm.time.set(Calendar.MINUTE, minute);
-                                alarm.setTime(getContext(), manager, alarm.time.getTimeInMillis());
+
+                                Calendar time = Calendar.getInstance();
+                                time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                time.set(Calendar.MINUTE, minute);
+
+                                alarm.setTime(getContext(), manager, time.getTimeInMillis());
                                 alarm.setEnabled(getContext(), manager, true);
 
                                 getAlarmio().onAlarmsChanged();
