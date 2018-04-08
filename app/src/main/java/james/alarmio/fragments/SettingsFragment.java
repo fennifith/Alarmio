@@ -61,7 +61,12 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
 
                     @Override
                     public void onClick(ViewHolder holder) {
-                        Attribouter.from(holder.getContext()).show();
+                        Attribouter attribouter = Attribouter.from(getContext());
+                        int githubAuthKey = getResources().getIdentifier("githubAuthKey", "drawable", getContext().getPackageName());
+                        if (githubAuthKey != 0)
+                            attribouter = attribouter.withGitHubToken(getString(githubAuthKey));
+
+                        attribouter.show();
                     }
                 }
         )));
