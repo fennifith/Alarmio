@@ -23,7 +23,7 @@ public enum PreferenceData {
     SLOW_WAKE_UP(true),
     SLOW_WAKE_UP_TIME(5), //minutes
     ALARM_NAME("%d/ALARM_NAME", null),
-    ALARM_TIME("%d/ALARM_TIME", 0),
+    ALARM_TIME("%d/ALARM_TIME", (long) 0),
     ALARM_ENABLED("%d/ALARM_ENABLED", true),
     ALARM_DAY_ENABLED("%1$d/ALARM_DAY/%2$d/ENABLED", false),
     ALARM_VIBRATE("%d/ALARM_VIBRATE", true),
@@ -106,6 +106,8 @@ public enum PreferenceData {
             try {
                 if (type instanceof Boolean)
                     return (T) new Boolean(prefs.getBoolean(name, (Boolean) defaultValue));
+                else if (type instanceof Long)
+                    return (T) new Long(prefs.getLong(name, (Long) defaultValue));
                 else if (type instanceof Integer)
                     return (T) new Integer(prefs.getInt(name, (Integer) defaultValue));
                 else if (type instanceof String)
@@ -146,6 +148,8 @@ public enum PreferenceData {
         } else {
             if (value instanceof Boolean)
                 editor.putBoolean(name, (Boolean) value);
+            else if (value instanceof Long)
+                editor.putLong(name, (Long) value);
             else if (value instanceof Integer)
                 editor.putInt(name, (Integer) value);
             else if (value instanceof String)

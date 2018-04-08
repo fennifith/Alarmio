@@ -20,6 +20,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -184,8 +185,10 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                                 @Override
                                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+                                    Log.d("TIME", alarm.time.getTimeInMillis() + "");
                                     alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                     alarm.time.set(Calendar.MINUTE, minute);
+                                    Log.d("TIME", hourOfDay + ":" + minute + " setting time " + alarm.time.getTimeInMillis());
                                     alarm.setTime(alarmio, alarmManager, alarm.time.getTimeInMillis());
                                     alarmHolder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
                                 }
