@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.afollestad.aesthetic.Aesthetic;
 
@@ -77,7 +76,6 @@ public class ProgressLineView extends BaseSubscriptionView {
     }
 
     public void update(float progress) {
-        Log.d("THIS", "updated: " + progress + ", " + drawnProgress);
         this.progress = progress;
         postInvalidate();
     }

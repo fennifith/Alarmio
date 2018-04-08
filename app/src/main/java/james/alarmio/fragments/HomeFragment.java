@@ -13,7 +13,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -218,11 +217,9 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                                 AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
                                 AlarmData alarm = getAlarmio().newAlarm();
-                                Log.d("TIME", alarm.time.getTimeInMillis() + "");
+
                                 alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 alarm.time.set(Calendar.MINUTE, minute);
-
-                                Log.d("TIME", hourOfDay + ":" + minute + " setting time " + alarm.time.getTimeInMillis());
 
                                 alarm.setTime(getContext(), manager, alarm.time.getTimeInMillis());
                                 alarm.setEnabled(getContext(), manager, true);

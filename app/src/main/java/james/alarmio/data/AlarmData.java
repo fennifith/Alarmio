@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +36,6 @@ public class AlarmData implements Parcelable {
         name = PreferenceData.ALARM_NAME.getSpecificOverriddenValue(context, getName(context), id);
         time = Calendar.getInstance();
         time.setTimeInMillis((long) PreferenceData.ALARM_TIME.getSpecificValue(context, id));
-        Log.d("TIME1", "getting time " + time.getTimeInMillis());
         isEnabled = PreferenceData.ALARM_ENABLED.getSpecificValue(context, id);
         for (int i = 0; i < 7; i++) {
             days[i] = PreferenceData.ALARM_DAY_ENABLED.getSpecificValue(context, id, i);
@@ -97,7 +95,6 @@ public class AlarmData implements Parcelable {
 
     public void setTime(Context context, AlarmManager manager, long timeMillis) {
         time.setTimeInMillis(timeMillis);
-        Log.d("TIME1", "setting time " + timeMillis);
         PreferenceData.ALARM_TIME.setValue(context, timeMillis, id);
         if (isEnabled)
             set(context, manager);
