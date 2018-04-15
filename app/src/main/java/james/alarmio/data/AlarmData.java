@@ -10,11 +10,13 @@ import android.os.Parcelable;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.annotations.Nullable;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
 import james.alarmio.receivers.AlarmReceiver;
+import james.alarmio.services.SleepReminderService;
 
 public class AlarmData implements Parcelable {
 
@@ -200,6 +202,13 @@ public class AlarmData implements Parcelable {
             intent.putExtra("alarmSet", true);
             context.sendBroadcast(intent);
         }
+
+        manager.set(AlarmManager.RTC_WAKEUP,
+                timeMillis - TimeUnit.MINUTES.toMillis((int) PreferenceData.SLEEP_REMINDER_TIME.getValue(context)),
+                PendingIntent.getService(context, 0, new Intent(context, SleepReminderService.class), 0));
+
+        if (PreferenceData.SLEEP_REMINDER.getValue(context))
+            context.startService(new Intent(context, SleepReminderService.class));
     }
 
     public void cancel(Context context, AlarmManager manager) {

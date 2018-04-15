@@ -31,6 +31,7 @@
             android:name=".activities.AlarmActivity"
             android:launchMode="singleInstance" />
 
+        <service android:name=".services.SleepReminderService" />
         <service android:name=".services.StopwatchService" />
         <service android:name=".services.TimerService" />
 

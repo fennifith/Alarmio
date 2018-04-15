@@ -32,7 +32,9 @@ import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
+import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
+import james.alarmio.services.SleepReminderService;
 import james.alarmio.utils.FormatUtils;
 
 public class AlarmActivity extends AestheticActivity implements View.OnTouchListener {
@@ -145,6 +147,9 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
             }
         };
         handler.post(runnable);
+
+        if (PreferenceData.SLEEP_REMINDER.getValue(this))
+            startService(new Intent(this, SleepReminderService.class));
     }
 
     @Override

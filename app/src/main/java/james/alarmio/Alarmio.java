@@ -43,6 +43,7 @@ import io.reactivex.annotations.Nullable;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
+import james.alarmio.services.SleepReminderService;
 import james.alarmio.services.TimerService;
 
 public class Alarmio extends Application implements Player.EventListener {
@@ -98,6 +99,9 @@ public class Alarmio extends Application implements Player.EventListener {
 
         if (timerLength > 0)
             startService(new Intent(this, TimerService.class));
+
+        if (PreferenceData.SLEEP_REMINDER.getValue(this))
+            startService(new Intent(this, SleepReminderService.class));
     }
 
     public List<AlarmData> getAlarms() {
