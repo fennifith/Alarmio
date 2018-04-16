@@ -152,7 +152,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
 
                     if (isSlowWake) {
                         WindowManager.LayoutParams params = getWindow().getAttributes();
-                        params.screenBrightness = Math.max(0.01f, Math.min(1f, (float) (elapsedMillis / slowWakeMillis)));
+                        params.screenBrightness = Math.max(0.01f, Math.min(1f, (float) elapsedMillis / slowWakeMillis));
                         getWindow().setAttributes(params);
                         getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
                     }
