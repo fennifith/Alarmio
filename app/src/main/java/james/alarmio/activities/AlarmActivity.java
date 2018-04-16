@@ -26,6 +26,7 @@ import com.afollestad.aesthetic.Aesthetic;
 import com.afollestad.aesthetic.AestheticActivity;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -56,9 +57,12 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     private float firstX;
 
     private boolean isAlarm;
-    private long triggerTime;
+    private long triggerMillis;
     private AlarmData alarm;
     private TimerData timer;
+
+    private boolean isSlowWake;
+    private long slowWakeMillis;
 
     private Handler handler;
     private Runnable runnable;
@@ -110,6 +114,9 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
             }
         });
 
+        isSlowWake = PreferenceData.SLOW_WAKE_UP.getValue(this);
+        slowWakeMillis = TimeUnit.MINUTES.toMillis((int) PreferenceData.SLOW_WAKE_UP_TIME.getValue(this));
+
         isAlarm = getIntent().hasExtra(EXTRA_ALARM);
         if (isAlarm) {
             alarm = getIntent().getParcelableExtra(EXTRA_ALARM);
@@ -123,12 +130,13 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        triggerTime = System.currentTimeMillis();
+        triggerMillis = System.currentTimeMillis();
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                String text = FormatUtils.formatMillis(System.currentTimeMillis() - triggerTime);
+                long elapsedMillis = System.currentTimeMillis() - triggerMillis;
+                String text = FormatUtils.formatMillis(elapsedMillis);
                 time.setText(String.format("-%s", text.substring(0, text.length() - 3)));
 
                 if (alarm != null) {
@@ -140,6 +148,13 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
 
                     if (alarm.hasSound() && !alarm.getSound().isPlaying(alarmio)) {
                         alarm.getSound().play(alarmio);
+                    }
+
+                    if (isSlowWake) {
+                        WindowManager.LayoutParams params = getWindow().getAttributes();
+                        params.screenBrightness = Math.max(0.01f, Math.min(1f, (float) (elapsedMillis / slowWakeMillis)));
+                        getWindow().setAttributes(params);
+                        getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
                     }
                 }
 
