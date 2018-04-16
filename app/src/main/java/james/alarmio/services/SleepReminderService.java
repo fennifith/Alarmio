@@ -93,14 +93,20 @@ public class SleepReminderService extends Service {
     public static AlarmData getNextWakeAlarm(Alarmio alarmio) {
         Calendar nextNoon = Calendar.getInstance();
         nextNoon.set(Calendar.HOUR_OF_DAY, 12);
-        while (nextNoon.before(Calendar.getInstance()))
+        if (nextNoon.before(Calendar.getInstance()))
             nextNoon.set(Calendar.DAY_OF_YEAR, nextNoon.get(Calendar.DAY_OF_YEAR) + 1);
+        else return null;
+
+        Calendar nextDay = Calendar.getInstance();
+        nextDay.set(Calendar.HOUR_OF_DAY, 0);
+        while (nextDay.before(Calendar.getInstance()))
+            nextDay.set(Calendar.DAY_OF_YEAR, nextDay.get(Calendar.DAY_OF_YEAR) + 1);
 
         List<AlarmData> alarms = alarmio.getAlarms();
         AlarmData nextAlarm = null;
         for (AlarmData alarm : alarms) {
             Calendar next = alarm.getNext();
-            if (alarm.isEnabled && next.before(nextNoon) && (nextAlarm == null || nextAlarm.getNext().after(next)))
+            if (alarm.isEnabled && next.before(nextNoon) && next.after(nextDay) && (nextAlarm == null || nextAlarm.getNext().after(next)))
                 nextAlarm = alarm;
         }
 
