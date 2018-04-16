@@ -78,11 +78,15 @@ public class TimerData implements Parcelable {
 
     public void set(Context context, AlarmManager manager) {
         endTime = System.currentTimeMillis() + duration;
+        setAlarm(context, manager);
+
+        PreferenceData.TIMER_END_TIME.setValue(context, endTime, id);
+    }
+
+    public void setAlarm(Context context, AlarmManager manager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             manager.setExact(AlarmManager.RTC_WAKEUP, endTime, getIntent(context));
         else manager.set(AlarmManager.RTC_WAKEUP, endTime, getIntent(context));
-
-        PreferenceData.TIMER_END_TIME.setValue(context, endTime, id);
     }
 
     public void cancel(Context context, AlarmManager manager) {
