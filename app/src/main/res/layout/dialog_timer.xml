@@ -3,41 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="400dp"
-    android:minWidth="300dp"
+    android:minWidth="350dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:animateLayoutChanges="true"
+        android:layout_marginBottom="24dp"
+        android:background="#30000000"
         android:orientation="horizontal"
         android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
         android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:tag=":aesthetic_ignore"
+            tools:text="0m 00s"
             android:textAlignment="center"
             android:textSize="32sp" />
 
         <ImageView
             android:id="@+id/backspace"
-            android:layout_width="42dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="42dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"
             android:tint="@android:color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_backspace" />
 
     </LinearLayout>
@@ -192,6 +195,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginTop="24dp"
         android:gravity="end"
         android:orientation="horizontal"
         android:padding="16dp">
