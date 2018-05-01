@@ -20,7 +20,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.afollestad.aesthetic.AestheticActivity;
@@ -35,6 +34,7 @@ import james.alarmio.R;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
+import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.utils.FormatUtils;
 
@@ -246,11 +246,21 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (which < minutes.length) {
-                                        Date time = alarm.snooze(AlarmActivity.this, (AlarmManager) getSystemService(Context.ALARM_SERVICE), minutes[which]);
-                                        Toast.makeText(AlarmActivity.this, String.format(getString(R.string.msg_snoozed_until), FormatUtils.formatShort(AlarmActivity.this, time)), Toast.LENGTH_LONG).show();
+                                        TimerData timer = alarmio.newTimer();
+                                        timer.setDuration(TimeUnit.MINUTES.toMillis(minutes[which]), alarmio);
+                                        timer.set(alarmio, ((AlarmManager) AlarmActivity.this.getSystemService(Context.ALARM_SERVICE)));
+                                        alarmio.onTimerStarted();
+
                                         finish();
                                     } else {
-                                        //TODO: select time
+                                        TimerDialog timerDialog = new TimerDialog(AlarmActivity.this, getSupportFragmentManager());
+                                        timerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialog) {
+                                                finish();
+                                            }
+                                        });
+                                        timerDialog.show();
                                     }
                                 }
                             })
