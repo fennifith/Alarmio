@@ -171,7 +171,7 @@
                         android:layout_height="24dp"
                         android:scaleType="centerInside"
                         android:tint="?android:textColorPrimary"
-                        app:srcCompat="@drawable/ic_vibrate" />
+                        app:srcCompat="@drawable/ic_vibrate_to_none" />
 
                     <TextView
                         android:layout_width="wrap_content"

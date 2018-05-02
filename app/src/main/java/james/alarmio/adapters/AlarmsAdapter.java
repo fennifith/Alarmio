@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
@@ -269,13 +270,16 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            alarmHolder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
+            AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
+            alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
             alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                     alarm.setVibrate(context, !alarm.isVibrate);
-                    alarmHolder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
+                    AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
+                    alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+                    vibrateDrawable.start();
                     if (alarm.isVibrate)
                         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 }
