@@ -9,12 +9,12 @@
             android:viewportHeight="24">
             <path
                 android:name="strike_thru_path"
-                android:pathData="M 2 4.27 L 3.27 3 L 3.27 3 L 2 4.27 Z"
+                android:pathData="M 19.73 22 L 21 20.73 L 3.27 3 L 2 4.27 Z"
                 android:fillColor="#ff000000"
                 android:strokeWidth="1" />
             <clip-path
                 android:name="strike_thru_mask"
-                android:pathData="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 3.27 3 L 4.54 1.73 Z" />
+                android:pathData="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 21 20.73 L 22.27 19.46 Z" />
             <path
                 android:name="vibrate_path"
                 android:pathData="M 0 15 L 2 15 L 2 9 L 0 9 L 0 15 Z M 3 17 L 5 17 L 5 7 L 3 7 L 3 17 Z M 22 9 L 22 15 L 24 15 L 24 9 L 22 9 Z M 19 17 L 21 17 L 21 7 L 19 7 L 19 17 Z M 16.5 3 L 7.5 3 C 6.67 3 6 3.67 6 4.5 L 6 19.5 C 6 20.33 6.67 21 7.5 21 L 16.5 21 C 17.33 21 18 20.33 18 19.5 L 18 4.5 C 18 3.67 17.33 3 16.5 3 Z M 16 19 L 8 19 L 8 5 L 16 5 L 16 19 Z"
@@ -26,8 +26,8 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="pathData"
-                android:startOffset="4"
-                android:duration="486"
+                android:startOffset="10"
+                android:duration="230"
                 android:valueFrom="M 19.73 22 L 21 20.73 L 3.27 3 L 2 4.27 Z"
                 android:valueTo="M 2 4.27 L 3.27 3 L 3.27 3 L 2 4.27 Z"
                 android:valueType="pathType"
@@ -38,23 +38,11 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="pathData"
-                android:startOffset="4"
-                android:duration="486"
+                android:startOffset="10"
+                android:duration="230"
                 android:valueFrom="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 21 20.73 L 22.27 19.46 Z"
                 android:valueTo="M 0 0 L 24 0 L 24 24 L 0 24 L 0 0 Z M 4.54 1.73 L 3.27 3 L 3.27 3 L 4.54 1.73 Z"
                 android:valueType="pathType"
-                android:interpolator="@android:interpolator/fast_out_slow_in" />
-        </aapt:attr>
-    </target>
-    <target android:name="visibilitystrike">
-        <aapt:attr name="android:animation">
-            <objectAnimator
-                android:propertyName="alpha"
-                android:startOffset="4"
-                android:duration="486"
-                android:valueFrom="0.333"
-                android:valueTo="1"
-                android:valueType="floatType"
                 android:interpolator="@android:interpolator/fast_out_slow_in" />
         </aapt:attr>
     </target>

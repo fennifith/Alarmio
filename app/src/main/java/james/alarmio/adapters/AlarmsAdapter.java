@@ -272,6 +272,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
             AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
             alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+            alarmHolder.vibrateImage.setAlpha(alarm.isVibrate ? 1 : 0.333f);
             alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -279,6 +280,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     alarm.setVibrate(context, !alarm.isVibrate);
                     AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
                     alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+                    alarmHolder.vibrateImage.animate().alpha(alarm.isVibrate ? 1 : 0.333f).setDuration(250).start();
                     vibrateDrawable.start();
                     if (alarm.isVibrate)
                         view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
