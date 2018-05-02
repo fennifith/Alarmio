@@ -252,6 +252,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             }
 
             alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+            alarmHolder.ringtoneImage.setAlpha(alarm.hasSound() ? 1 : 0.333f);
             alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : context.getString(R.string.title_sound_none));
             alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
                 @Override
