@@ -1,5 +1,9 @@
 package james.alarmio.adapters;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +15,6 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
@@ -42,13 +45,9 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Observable<Integer> textColor;
-        Observable<Integer> backgroundColor;
-
         if (position == 0) {
             holder.title.setText(R.string.title_sound_none);
             holder.icon.setOnClickListener(null);
-            holder.icon.setImageResource(R.drawable.ic_ringtone_disabled);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,8 +56,8 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                 }
             });
 
-            textColor = Aesthetic.get().textColorPrimary();
-            backgroundColor = Aesthetic.get().colorPrimary();
+            setPlaying(holder, false, false);
+            holder.icon.setImageResource(R.drawable.ic_ringtone_disabled);
         } else {
             SoundData sound = sounds.get(position - 1);
             holder.title.setText(sound.getName());
@@ -67,7 +66,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
                     SoundData sound = sounds.get(position - 1);
-                    if (sound.isPlaying(alarmio)) {
+                    if (sound.isPlaying(alarmio) || currentlyPlaying == position) {
                         sound.stop(alarmio);
                         currentlyPlaying = -1;
                     } else {
@@ -81,7 +80,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                         currentlyPlaying = position;
                     }
 
-                    notifyItemChanged(position);
+                    setPlaying(holder, currentlyPlaying == position, true);
                 }
             });
 
@@ -93,33 +92,60 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                 }
             });
 
-            if (sound.isPlaying(alarmio)) {
-                holder.icon.setImageResource(R.drawable.ic_pause);
+            setPlaying(holder, sound.isPlaying(alarmio), false);
+        }
+    }
 
-                textColor = Aesthetic.get().colorPrimary();
-                backgroundColor = Aesthetic.get().textColorPrimary();
-            } else {
-                holder.icon.setImageResource(R.drawable.ic_play);
+    private void setPlaying(final ViewHolder holder, final boolean isPlaying, final boolean isAnimated) {
+        (isPlaying ? Aesthetic.get().colorPrimary() : Aesthetic.get().textColorPrimary()).take(1).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                if (isAnimated) {
+                    ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), holder.title.getTextColors().getDefaultColor(), integer);
+                    animator.setDuration(300);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            int color = (int) valueAnimator.getAnimatedValue();
+                            holder.title.setTextColor(color);
+                            holder.icon.setColorFilter(color);
+                        }
+                    });
+                    animator.start();
+                } else {
+                    holder.title.setTextColor(integer);
+                    holder.icon.setColorFilter(integer);
+                }
+            }
+        });
 
-                textColor = Aesthetic.get().textColorPrimary();
-                backgroundColor = Aesthetic.get().colorPrimary();
+        Aesthetic.get().textColorPrimary().take(1).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                if (isAnimated) {
+                    ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isPlaying ? Color.TRANSPARENT : integer, isPlaying ? integer : Color.TRANSPARENT);
+                    animator.setDuration(300);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            holder.itemView.setBackgroundColor((int) valueAnimator.getAnimatedValue());
+                        }
+                    });
+                    animator.start();
+                } else holder.itemView.setBackgroundColor(isPlaying ? integer : Color.TRANSPARENT);
+            }
+        });
+
+        if (isAnimated) {
+            AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(alarmio, isPlaying ? R.drawable.ic_play_to_pause : R.drawable.ic_pause_to_play);
+            if (drawable != null) {
+                holder.icon.setImageDrawable(drawable);
+                drawable.start();
+                return;
             }
         }
 
-        textColor.take(1).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                holder.title.setTextColor(integer);
-                holder.icon.setColorFilter(integer);
-            }
-        });
-
-        backgroundColor.take(1).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                holder.itemView.setBackgroundColor(integer);
-            }
-        });
+        holder.icon.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
     }
 
     @Override
