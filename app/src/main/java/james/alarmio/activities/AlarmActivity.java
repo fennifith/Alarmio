@@ -191,6 +191,10 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
             isDarkSubscription.dispose();
         }
 
+        stopAnnoyingness();
+    }
+
+    private void stopAnnoyingness() {
         if (handler != null)
             handler.removeCallbacks(runnable);
 
@@ -241,6 +245,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
 
                     names[minutes.length] = getString(R.string.title_snooze_custom);
 
+                    stopAnnoyingness();
                     new AlertDialog.Builder(AlarmActivity.this, isDark ? R.style.Theme_AppCompat_Dialog_Alert : R.style.Theme_AppCompat_Light_Dialog_Alert)
                             .setItems(names, new DialogInterface.OnClickListener() {
                                 @Override
