@@ -22,8 +22,16 @@ public class TimerData implements Parcelable {
 
     public TimerData(int id, Context context) {
         this.id = id;
-        duration = PreferenceData.TIMER_DURATION.getSpecificValue(context, id);
-        endTime = PreferenceData.TIMER_END_TIME.getSpecificValue(context, id);
+        try {
+            duration = PreferenceData.TIMER_DURATION.getSpecificValue(context, id);
+        } catch (ClassCastException e) {
+            duration = (int) PreferenceData.TIMER_DURATION.getSpecificValue(context, id);
+        }
+        try {
+            endTime = PreferenceData.TIMER_END_TIME.getSpecificValue(context, id);
+        } catch (ClassCastException e) {
+            endTime = (int) PreferenceData.TIMER_END_TIME.getSpecificValue(context, id);
+        }
     }
 
     protected TimerData(Parcel in) {
