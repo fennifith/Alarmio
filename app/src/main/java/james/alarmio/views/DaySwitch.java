@@ -5,9 +5,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -21,6 +23,7 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
 
     private Paint accentPaint;
     private Paint textPaint;
+    private Paint clippedTextPaint;
 
     private Disposable colorAccentSubscription;
     private Disposable textColorPrimarySubscription;
@@ -55,6 +58,11 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
         textPaint.setTextSize(ConversionUtils.dpToPx(18));
         textPaint.setTextAlign(Paint.Align.CENTER);
 
+        clippedTextPaint = new Paint();
+        clippedTextPaint.setAntiAlias(true);
+        clippedTextPaint.setTextSize(ConversionUtils.dpToPx(18));
+        clippedTextPaint.setTextAlign(Paint.Align.CENTER);
+
         subscribe();
     }
 
@@ -69,7 +77,9 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
             textPaint.setColor(isChecked ? textColorPrimaryInverse : textColorPrimary);
 
             ValueAnimator animator = ValueAnimator.ofFloat(isChecked ? 0 : 1, isChecked ? 1 : 0);
-            animator.setInterpolator(new DecelerateInterpolator());
+            if (isChecked)
+                animator.setInterpolator(new DecelerateInterpolator());
+            else animator.setInterpolator(new AnticipateOvershootInterpolator());
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -107,10 +117,8 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
                     @Override
                     public void accept(Integer integer) throws Exception {
                         textColorPrimary = integer;
-                        if (!isChecked) {
-                            textPaint.setColor(integer);
-                            invalidate();
-                        }
+                        textPaint.setColor(integer);
+                        invalidate();
                     }
                 });
 
@@ -120,10 +128,8 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
                     @Override
                     public void accept(Integer integer) throws Exception {
                         textColorPrimaryInverse = integer;
-                        if (isChecked) {
-                            textPaint.setColor(integer);
-                            invalidate();
-                        }
+                        clippedTextPaint.setColor(integer);
+                        invalidate();
                     }
                 });
     }
@@ -139,9 +145,21 @@ public class DaySwitch extends BaseSubscriptionView implements View.OnClickListe
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int size = ConversionUtils.dpToPx(18);
-        canvas.drawCircle(canvas.getWidth() / 2, canvas.getHeight() / 2, checked * size, accentPaint);
+
         if (text != null)
             canvas.drawText(text, canvas.getWidth() / 2, ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)), textPaint);
+
+        Path circlePath = new Path();
+        circlePath.addCircle(canvas.getWidth() / 2, canvas.getHeight() / 2, checked * size, Path.Direction.CW);
+        circlePath.close();
+
+        canvas.drawPath(circlePath, accentPaint);
+
+        if (text != null) {
+            canvas.drawText(text, canvas.getWidth() / 2, ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)), textPaint);
+            canvas.clipPath(circlePath);
+            canvas.drawText(text, canvas.getWidth() / 2, ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)), clippedTextPaint);
+        }
     }
 
     @Override
