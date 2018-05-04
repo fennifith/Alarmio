@@ -147,6 +147,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             alarmHolder.name.setFocusable(isExpanded);
             alarmHolder.name.setEnabled(isExpanded);
             alarmHolder.name.clearFocus();
+            alarmHolder.nameUnderline.setBackgroundColor(isExpanded ? textColorPrimary : Color.TRANSPARENT);
 
             alarmHolder.name.setText(alarm.getName(alarmio));
             alarmHolder.name.addTextChangedListener(new TextWatcher() {
@@ -198,6 +199,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
+            alarmHolder.indicators.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+
+            alarmHolder.repeatIndicator.setAlpha(alarm.isRepeat() ? 1 : 0.333f);
             alarmHolder.repeat.setOnCheckedChangeListener(null);
             alarmHolder.repeat.setChecked(alarm.isRepeat());
             alarmHolder.repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -251,6 +255,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             }
 
+            alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
             alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
             alarmHolder.ringtoneImage.setAlpha(alarm.hasSound() ? 1 : 0.333f);
             alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : context.getString(R.string.title_sound_none));
@@ -271,6 +276,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
+            alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
             AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
             alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
             alarmHolder.vibrateImage.setAlpha(alarm.isVibrate ? 1 : 0.333f);
@@ -288,6 +294,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
+            alarmHolder.expandImage.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             alarmHolder.delete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
             alarmHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -349,9 +356,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             alarmHolder.ringtoneImage.setColorFilter(textColorPrimary);
             alarmHolder.vibrateImage.setColorFilter(textColorPrimary);
             alarmHolder.expandImage.setColorFilter(textColorPrimary);
+            alarmHolder.repeatIndicator.setColorFilter(textColorPrimary);
+            alarmHolder.soundIndicator.setColorFilter(textColorPrimary);
+            alarmHolder.vibrateIndicator.setColorFilter(textColorPrimary);
 
             alarmHolder.extra.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-            alarmHolder.expandImage.animate().rotation(isExpanded ? 180 : 0);
             alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
             ViewCompat.setElevation(alarmHolder.itemView, isExpanded ? ConversionUtils.dpToPx(2) : 0);
 
@@ -407,6 +416,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
+        private View nameUnderline;
         private SwitchCompat enable;
         private TextView time;
         private View extra;
@@ -419,10 +429,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
         private ImageView vibrateImage;
         private ImageView expandImage;
         private TextView delete;
+        private View indicators;
+        private ImageView repeatIndicator;
+        private ImageView soundIndicator;
+        private ImageView vibrateIndicator;
 
         public AlarmViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
+            nameUnderline = itemView.findViewById(R.id.underline);
             enable = itemView.findViewById(R.id.enable);
             time = itemView.findViewById(R.id.time);
             extra = itemView.findViewById(R.id.extra);
@@ -435,6 +450,10 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             vibrateImage = itemView.findViewById(R.id.vibrateImage);
             expandImage = itemView.findViewById(R.id.expandImage);
             delete = itemView.findViewById(R.id.delete);
+            indicators = itemView.findViewById(R.id.indicators);
+            repeatIndicator = itemView.findViewById(R.id.repeatIndicator);
+            soundIndicator = itemView.findViewById(R.id.soundIndicator);
+            vibrateIndicator = itemView.findViewById(R.id.vibrateIndicator);
         }
     }
 }

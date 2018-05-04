@@ -22,21 +22,21 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
                     android:background="@null"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
@@ -52,8 +52,8 @@
                 <View
                     android:id="@+id/underline"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="4dp"
                     android:layout_height="1dip"
+                    android:layout_marginTop="4dp"
                     android:background="@color/textColorSecondaryNight" />
 
             </LinearLayout>
@@ -62,8 +62,8 @@
                 android:id="@+id/enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
                 android:tag=":aesthetic_ignore" />
 
         </LinearLayout>
@@ -95,12 +95,11 @@
             <LinearLayout
                 android:id="@+id/days"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp">
+                android:gravity="center_vertical"
+                android:paddingRight="16dp">
 
                 <james.alarmio.views.DaySwitch
                     android:layout_width="0dp"
@@ -142,9 +141,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="18dp"
-                android:layout_marginTop="18dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
@@ -157,10 +155,10 @@
                         android:id="@+id/ringtone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:minWidth="72dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_gravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
+                        android:minWidth="72dp"
                         android:orientation="vertical">
 
                         <ImageView
@@ -196,11 +194,11 @@
                     <LinearLayout
                         android:id="@+id/vibrate"
                         android:layout_width="wrap_content"
-                        android:minWidth="72dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:gravity="center"
+                        android:minWidth="72dp"
                         android:orientation="vertical">
 
                         <ImageView
@@ -233,17 +231,19 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_height="56dp">
 
             <TextView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start|center_vertical"
-                android:background="?attr/selectableItemBackground"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:text="@string/title_delete"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -253,8 +253,10 @@
 
             <ImageView
                 android:id="@+id/expandImage"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_gravity="start|center_vertical"
                 android:scaleType="centerInside"
                 android:tint="?android:textColorPrimary"
@@ -264,15 +266,15 @@
                 android:id="@+id/indicators"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:layout_gravity="end|center_vertical">
+                android:layout_gravity="end|center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/repeatIndicator"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
                     android:tint="?android:textColorPrimary"
@@ -280,8 +282,8 @@
 
                 <ImageView
                     android:id="@+id/soundIndicator"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
                     android:tint="?android:textColorPrimary"
@@ -289,8 +291,8 @@
 
                 <ImageView
                     android:id="@+id/vibrateIndicator"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
                     android:tint="?android:textColorPrimary"
