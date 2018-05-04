@@ -16,32 +16,54 @@
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
 
-            <EditText
-                android:id="@+id/name"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ellipsize="end"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
-                android:hint="@string/title_alarm"
-                android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="@string/title_alarm"
+                    android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/underline"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_height="1dip"
+                    android:background="@color/textColorSecondaryNight" />
+
+            </LinearLayout>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:tag=":aesthetic_ignore" />
 
         </LinearLayout>
@@ -233,10 +255,48 @@
                 android:id="@+id/expandImage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="center"
+                android:layout_gravity="start|center_vertical"
                 android:scaleType="centerInside"
                 android:tint="?android:textColorPrimary"
                 app:srcCompat="@drawable/ic_expand" />
+
+            <LinearLayout
+                android:id="@+id/indicators"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_gravity="end|center_vertical">
+
+                <ImageView
+                    android:id="@+id/repeatIndicator"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:tint="?android:textColorPrimary"
+                    app:srcCompat="@drawable/ic_repeat" />
+
+                <ImageView
+                    android:id="@+id/soundIndicator"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:tint="?android:textColorPrimary"
+                    app:srcCompat="@drawable/ic_sound" />
+
+                <ImageView
+                    android:id="@+id/vibrateIndicator"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    android:tint="?android:textColorPrimary"
+                    app:srcCompat="@drawable/ic_vibrate" />
+
+            </LinearLayout>
 
         </FrameLayout>
 
