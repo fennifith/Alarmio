@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,70 +13,31 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="12dp"
             android:paddingRight="12dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/time"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@null"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:hint="@string/title_alarm"
-                    android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/underline"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginTop="4dp"
-                    android:background="@color/textColorSecondaryNight" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                tools:text="0:00"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="42sp" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
                 android:tag=":aesthetic_ignore" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="42sp" />
 
         <LinearLayout
             android:id="@+id/extra"
@@ -96,9 +58,9 @@
                 android:id="@+id/days"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:gravity="center_vertical"
                 android:paddingRight="16dp">
 
                 <james.alarmio.views.DaySwitch
@@ -142,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
@@ -165,6 +128,7 @@
                             android:id="@+id/ringtoneImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_marginBottom="4dp"
                             android:scaleType="centerInside"
                             android:tint="?android:textColorPrimary"
                             app:srcCompat="@drawable/ic_ringtone_disabled" />
@@ -206,6 +170,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:scaleType="centerInside"
+                            android:layout_marginBottom="4dp"
                             android:tint="?android:textColorPrimary"
                             app:srcCompat="@drawable/ic_vibrate_to_none" />
 
@@ -229,11 +194,58 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:layout_height="56dp">
+            android:paddingRight="8dp">
+
+            <ImageView
+                android:id="@+id/expandImage"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start|center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:scaleType="centerInside"
+                android:tint="?android:textColorPrimary"
+                app:srcCompat="@drawable/ic_expand" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:hint="@string/title_alarm_name"
+                    android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/underline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/textColorSecondaryNight" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/delete"
@@ -242,34 +254,25 @@
                 android:layout_gravity="start|center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="@string/title_delete"
+                android:paddingBottom="4dp"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="?android:textColorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/expandImage"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:layout_gravity="start|center_vertical"
-                android:scaleType="centerInside"
-                android:tint="?android:textColorPrimary"
-                app:srcCompat="@drawable/ic_expand" />
-
             <LinearLayout
                 android:id="@+id/indicators"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:layout_gravity="end|center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:orientation="horizontal">
+                android:paddingRight="8dp">
 
                 <ImageView
                     android:id="@+id/repeatIndicator"
@@ -300,7 +303,7 @@
 
             </LinearLayout>
 
-        </FrameLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

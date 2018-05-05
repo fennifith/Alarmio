@@ -147,7 +147,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             alarmHolder.name.setFocusable(isExpanded);
             alarmHolder.name.setEnabled(isExpanded);
             alarmHolder.name.clearFocus();
-            alarmHolder.nameUnderline.setBackgroundColor(isExpanded ? textColorPrimary : Color.TRANSPARENT);
+            alarmHolder.nameUnderline.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
             alarmHolder.name.setText(alarm.getName(alarmio));
             alarmHolder.name.addTextChangedListener(new TextWatcher() {
@@ -294,7 +294,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            alarmHolder.expandImage.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+            alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
             alarmHolder.delete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
             alarmHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
