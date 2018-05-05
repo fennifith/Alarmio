@@ -49,8 +49,8 @@
                 android:id="@+id/repeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:tag=":aesthetic_ignore"
                 android:text="@string/title_repeat" />
 
@@ -60,8 +60,8 @@
                 android:layout_height="56dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
 
                 <james.alarmio.views.DaySwitch
                     android:layout_width="0dp"
@@ -106,8 +106,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -230,6 +230,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/title_alarm_name"
+                    android:paddingBottom="4dp"
                     android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
                     android:lines="1"
                     android:maxLines="1"
@@ -242,7 +243,6 @@
                     android:id="@+id/underline"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginTop="4dp"
                     android:background="@color/textColorSecondaryNight" />
 
             </LinearLayout>
