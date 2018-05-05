@@ -43,7 +43,7 @@ public class AlarmData implements Parcelable {
             days[i] = PreferenceData.ALARM_DAY_ENABLED.getSpecificValue(context, id, i);
         }
         isVibrate = PreferenceData.ALARM_VIBRATE.getSpecificValue(context, id);
-        sound = SoundData.fromString(PreferenceData.ALARM_SOUND.getSpecificOverriddenValue(context, PreferenceData.DEFAULT_RINGTONE.getValue(context, ""), id));
+        sound = SoundData.fromString(PreferenceData.ALARM_SOUND.getSpecificOverriddenValue(context, PreferenceData.DEFAULT_ALARM_RINGTONE.getValue(context, ""), id));
     }
 
     public void onIdChanged(int id, Context context) {
@@ -176,13 +176,6 @@ public class AlarmData implements Parcelable {
         return nextTime.getTime();
     }
 
-    public Date snooze(Context context, AlarmManager manager, int offsetMinutes) {
-        Calendar nextTime = Calendar.getInstance();
-        nextTime.add(Calendar.MINUTE, offsetMinutes);
-        setAlarm(context, manager, nextTime.getTimeInMillis());
-        return nextTime.getTime();
-    }
-
     private void setAlarm(Context context, AlarmManager manager, long timeMillis) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             manager.setAlarmClock(
@@ -240,16 +233,16 @@ public class AlarmData implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeLong(time.getTimeInMillis());
-        dest.writeByte((byte) (isEnabled ? 1 : 0));
-        dest.writeBooleanArray(days);
-        dest.writeByte((byte) (isVibrate ? 1 : 0));
-        dest.writeByte((byte) (sound != null ? 1 : 0));
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeLong(time.getTimeInMillis());
+        parcel.writeByte((byte) (isEnabled ? 1 : 0));
+        parcel.writeBooleanArray(days);
+        parcel.writeByte((byte) (isVibrate ? 1 : 0));
+        parcel.writeByte((byte) (sound != null ? 1 : 0));
         if (sound != null)
-            dest.writeString(sound.toString());
+            parcel.writeString(sound.toString());
     }
 
     @Override

@@ -41,7 +41,8 @@
     <string name="title_radio">Radio</string>
     <string name="title_time_zones">Time Zones</string>
     <string name="title_behavior">Behavior</string>
-    <string name="title_default_ringtone">Default Ringtone</string>
+    <string name="title_default_alarm_ringtone">Default Alarm Ringtone</string>
+    <string name="title_default_timer_ringtone">Default Timer Ringtone</string>
     <string name="title_sleep_reminder">Sleep Reminder</string>
     <string name="desc_sleep_reminder">Send a notification reminding you to go to sleep a certain time before your alarm rings if you\'re using your phone.</string>
     <string name="title_sleep_reminder_time">Sleep Reminder Time</string>

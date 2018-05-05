@@ -17,7 +17,8 @@ public enum PreferenceData {
     ALARM_LENGTH(0),
     TIMER_LENGTH(0),
     TIME_ZONES(new String[]{TimeZone.getDefault().getID()}),
-    DEFAULT_RINGTONE(null),
+    DEFAULT_ALARM_RINGTONE(null),
+    DEFAULT_TIMER_RINGTONE(null),
     SLEEP_REMINDER(true),
     SLEEP_REMINDER_TIME(420), //minutes
     SLOW_WAKE_UP(true),
@@ -29,7 +30,9 @@ public enum PreferenceData {
     ALARM_VIBRATE("%d/ALARM_VIBRATE", true),
     ALARM_SOUND("%d/ALARM_SOUND", ""),
     TIMER_DURATION("%d/TIMER_DURATION", 600000),
-    TIMER_END_TIME("%d/TIMER_END_TIME", 0);
+    TIMER_END_TIME("%d/TIMER_END_TIME", 0),
+    TIMER_VIBRATE("%d/TIMER_VIBRATE", true),
+    TIMER_SOUND("%d/TIMER_SOUND", "");
 
     private String name;
     private Object defaultValue;

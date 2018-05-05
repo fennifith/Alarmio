@@ -48,7 +48,8 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
         preferenceAdapter = new PreferenceAdapter(new ArrayList<BasePreferenceData>(Arrays.asList(
                 new ThemePreferenceData(),
                 new TimeZonesPreferenceData(PreferenceData.TIME_ZONES, R.string.title_time_zones),
-                new RingtonePreferenceData(PreferenceData.DEFAULT_RINGTONE, R.string.title_default_ringtone),
+                new RingtonePreferenceData(PreferenceData.DEFAULT_ALARM_RINGTONE, R.string.title_default_alarm_ringtone),
+                new RingtonePreferenceData(PreferenceData.DEFAULT_TIMER_RINGTONE, R.string.title_default_timer_ringtone),
                 new BooleanPreferenceData(PreferenceData.SLEEP_REMINDER, R.string.title_sleep_reminder, R.string.desc_sleep_reminder),
                 new TimePreferenceData(PreferenceData.SLEEP_REMINDER_TIME, R.string.title_sleep_reminder_time),
                 new BooleanPreferenceData(PreferenceData.SLOW_WAKE_UP, R.string.title_slow_wake_up, R.string.desc_slow_wake_up),
