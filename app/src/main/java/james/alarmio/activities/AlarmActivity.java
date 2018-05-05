@@ -33,6 +33,7 @@ import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
+import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.services.SleepReminderService;
@@ -60,6 +61,8 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     private long triggerMillis;
     private AlarmData alarm;
     private TimerData timer;
+    private SoundData sound;
+    private boolean isVibrate;
 
     private boolean isSlowWake;
     private long slowWakeMillis;
@@ -120,10 +123,14 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         isAlarm = getIntent().hasExtra(EXTRA_ALARM);
         if (isAlarm) {
             alarm = getIntent().getParcelableExtra(EXTRA_ALARM);
+            isVibrate = alarm.isVibrate;
             if (alarm.hasSound())
-                alarm.getSound().play(alarmio);
+                sound = alarm.getSound();
         } else if (getIntent().hasExtra(EXTRA_TIMER)) {
             timer = getIntent().getParcelableExtra(EXTRA_TIMER);
+            isVibrate = timer.isVibrate;
+            if (timer.hasSound())
+                sound = timer.getSound();
         } else finish();
 
         date.setText(FormatUtils.format(new Date(), FormatUtils.FORMAT_DATE + ", " + FormatUtils.getShortFormat(this)));
@@ -139,29 +146,29 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                 String text = FormatUtils.formatMillis(elapsedMillis);
                 time.setText(String.format("-%s", text.substring(0, text.length() - 3)));
 
-                if (alarm != null) {
-                    if (alarm.isVibrate && !isWoken) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                        else vibrator.vibrate(500);
-                    }
+                if (isVibrate) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                    else vibrator.vibrate(500);
+                }
 
-                    if (alarm.hasSound() && !alarm.getSound().isPlaying(alarmio)) {
-                        alarm.getSound().play(alarmio);
-                    }
+                if (sound != null && !sound.isPlaying(alarmio))
+                    sound.play(alarmio);
 
-                    if (isSlowWake) {
-                        WindowManager.LayoutParams params = getWindow().getAttributes();
-                        params.screenBrightness = Math.max(0.01f, Math.min(1f, (float) elapsedMillis / slowWakeMillis));
-                        getWindow().setAttributes(params);
-                        getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
-                    }
+                if (alarm != null && isSlowWake) {
+                    WindowManager.LayoutParams params = getWindow().getAttributes();
+                    params.screenBrightness = Math.max(0.01f, Math.min(1f, (float) elapsedMillis / slowWakeMillis));
+                    getWindow().setAttributes(params);
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
                 }
 
                 handler.postDelayed(this, 1000);
             }
         };
         handler.post(runnable);
+
+        if (sound != null)
+            sound.play(alarmio);
 
         if (PreferenceData.SLEEP_REMINDER.getValue(this))
             startService(new Intent(this, SleepReminderService.class));
@@ -198,8 +205,8 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         if (handler != null)
             handler.removeCallbacks(runnable);
 
-        if (alarm != null && alarm.hasSound() && alarm.getSound().isPlaying(alarmio))
-            alarm.getSound().stop(alarmio);
+        if (sound != null && sound.isPlaying(alarmio))
+            sound.stop(alarmio);
     }
 
     @Override
@@ -213,8 +220,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                if (isAlarm)
-                    snooze.setVisibility(View.VISIBLE);
+                snooze.setVisibility(View.VISIBLE);
                 dismiss.setVisibility(View.VISIBLE);
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -234,7 +240,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                 view.animate().x(firstX).start();
                 snooze.setVisibility(View.INVISIBLE);
                 dismiss.setVisibility(View.INVISIBLE);
-                if (this.snoozeSelected && isAlarm && alarm != null) {
+                if (this.snoozeSelected) {
                     snooze.setPressed(false);
 
                     final int[] minutes = new int[]{2, 5, 10, 20, 30, 60};
