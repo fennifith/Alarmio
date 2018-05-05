@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,13 +58,14 @@ public class TimerFragment extends BaseFragment {
                 if (isRunning) {
                     if (timer.isSet()) {
                         long remainingMillis = timer.getRemainingMillis();
-                        String text = FormatUtils.formatMillis(remainingMillis);
-                        time.setText(text);
+                        time.setText(FormatUtils.formatMillis(remainingMillis));
                         time.setProgress(timer.getDuration() - remainingMillis);
-                        //TODO: add notifications
-                        text = text.substring(0, text.length() - 3);
                         handler.postDelayed(this, 10);
-                    } else getFragmentManager().popBackStack();
+                    } else {
+                        FragmentManager manager = getFragmentManager();
+                        if (manager != null)
+                            manager.popBackStack();
+                    }
                 }
             }
         };
