@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import james.alarmio.Alarmio;
 import james.alarmio.R;
+import james.alarmio.data.PreferenceData;
 import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.fragments.TimerFragment;
@@ -41,6 +42,7 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
         super(context);
         alarmio = (Alarmio) context.getApplicationContext();
         this.manager = manager;
+        ringtone = SoundData.fromString(PreferenceData.DEFAULT_TIMER_RINGTONE.getValue(context, ""));
     }
 
     @Override
@@ -68,6 +70,13 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
         findViewById(R.id.eight).setOnClickListener(this);
         findViewById(R.id.nine).setOnClickListener(this);
         findViewById(R.id.zero).setOnClickListener(this);
+
+        ringtoneImage.setImageResource(ringtone != null ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+        ringtoneImage.setAlpha(ringtone != null ? 1f : 0.333f);
+
+        if (ringtone != null)
+            ringtoneText.setText(ringtone.getName());
+        else ringtoneText.setText(R.string.title_sound_none);
 
         findViewById(R.id.ringtone).setOnClickListener(new View.OnClickListener() {
             @Override
