@@ -257,6 +257,7 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), clockFragments);
             timePager.setAdapter(timeAdapter);
             timeIndicator.setViewPager(timePager);
+            timeIndicator.setVisibility(clockFragments.length > 1 ? View.VISIBLE : View.GONE);
         }
     }
 
