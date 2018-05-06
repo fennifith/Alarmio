@@ -52,7 +52,7 @@
     <string name="title_slow_wake_up_time">Slow Wake-up Duration</string>
     <string name="title_about">About &amp; OSS Licenses</string>
     <string name="title_choose_time_zone">Choose a Time Zone</string>
-    <string name="msg_sleep_reminder">Your next alarm will ring %s from now. To get your selected amount of sleep, you should go to bed now.</string>
+    <string name="msg_sleep_reminder">Your next alarm will ring approximately %s from now. To get your specified amount of sleep in the settings menu, you should go to bed now.</string>
     <string name="title_alarm_name">Alarm Name</string>
     <string-array name="array_themes">
         <item>Schedule</item>
