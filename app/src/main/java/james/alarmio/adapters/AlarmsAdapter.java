@@ -216,83 +216,85 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            alarmHolder.days.setVisibility(alarm.isRepeat() ? View.VISIBLE : View.GONE);
+            if (isExpanded) {
+                alarmHolder.days.setVisibility(alarm.isRepeat() ? View.VISIBLE : View.GONE);
 
-            DaySwitch.OnCheckedChangeListener listener = new DaySwitch.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(DaySwitch daySwitch, boolean b) {
-                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    alarm.days[alarmHolder.days.indexOfChild(daySwitch)] = b;
-                    alarm.setDays(alarmio, alarm.days);
-                    if (!alarm.isRepeat())
-                        notifyItemChanged(alarmHolder.getAdapterPosition());
+                DaySwitch.OnCheckedChangeListener listener = new DaySwitch.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(DaySwitch daySwitch, boolean b) {
+                        AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+                        alarm.days[alarmHolder.days.indexOfChild(daySwitch)] = b;
+                        alarm.setDays(alarmio, alarm.days);
+                        if (!alarm.isRepeat())
+                            notifyItemChanged(alarmHolder.getAdapterPosition());
+                    }
+                };
+
+                for (int i = 0; i < 7; i++) {
+                    DaySwitch daySwitch = (DaySwitch) alarmHolder.days.getChildAt(i);
+                    daySwitch.setChecked(alarm.days[i]);
+                    daySwitch.setOnCheckedChangeListener(listener);
+
+                    switch (i) {
+                        case 0:
+                        case 6:
+                            daySwitch.setText("S");
+                            break;
+                        case 1:
+                            daySwitch.setText("M");
+                            break;
+                        case 2:
+                        case 4:
+                            daySwitch.setText("T");
+                            break;
+                        case 3:
+                            daySwitch.setText("W");
+                            break;
+                        case 5:
+                            daySwitch.setText("F");
+
+                    }
                 }
-            };
 
-            for (int i = 0; i < 7; i++) {
-                DaySwitch daySwitch = (DaySwitch) alarmHolder.days.getChildAt(i);
-                daySwitch.setChecked(alarm.days[i]);
-                daySwitch.setOnCheckedChangeListener(listener);
+                alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
+                alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+                alarmHolder.ringtoneImage.setAlpha(alarm.hasSound() ? 1 : 0.333f);
+                alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : context.getString(R.string.title_sound_none));
+                alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SoundChooserDialog dialog = new SoundChooserDialog();
+                        dialog.setListener(new SoundChooserListener() {
+                            @Override
+                            public void onSoundChosen(SoundData sound) {
+                                int position = alarmHolder.getAdapterPosition();
+                                AlarmData alarm = getAlarm(position);
+                                alarm.setSound(alarmio, sound);
+                                notifyItemChanged(position);
+                            }
+                        });
+                        dialog.show(fragmentManager, null);
+                    }
+                });
 
-                switch (i) {
-                    case 0:
-                    case 6:
-                        daySwitch.setText("S");
-                        break;
-                    case 1:
-                        daySwitch.setText("M");
-                        break;
-                    case 2:
-                    case 4:
-                        daySwitch.setText("T");
-                        break;
-                    case 3:
-                        daySwitch.setText("W");
-                        break;
-                    case 5:
-                        daySwitch.setText("F");
-
-                }
+                alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
+                AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
+                alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+                alarmHolder.vibrateImage.setAlpha(alarm.isVibrate ? 1 : 0.333f);
+                alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+                        alarm.setVibrate(context, !alarm.isVibrate);
+                        AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
+                        alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+                        alarmHolder.vibrateImage.animate().alpha(alarm.isVibrate ? 1 : 0.333f).setDuration(250).start();
+                        vibrateDrawable.start();
+                        if (alarm.isVibrate)
+                            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    }
+                });
             }
-
-            alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
-            alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
-            alarmHolder.ringtoneImage.setAlpha(alarm.hasSound() ? 1 : 0.333f);
-            alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : context.getString(R.string.title_sound_none));
-            alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SoundChooserDialog dialog = new SoundChooserDialog();
-                    dialog.setListener(new SoundChooserListener() {
-                        @Override
-                        public void onSoundChosen(SoundData sound) {
-                            int position = alarmHolder.getAdapterPosition();
-                            AlarmData alarm = getAlarm(position);
-                            alarm.setSound(alarmio, sound);
-                            notifyItemChanged(position);
-                        }
-                    });
-                    dialog.show(fragmentManager, null);
-                }
-            });
-
-            alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
-            AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
-            alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
-            alarmHolder.vibrateImage.setAlpha(alarm.isVibrate ? 1 : 0.333f);
-            alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    alarm.setVibrate(context, !alarm.isVibrate);
-                    AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(context, alarm.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
-                    alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
-                    alarmHolder.vibrateImage.animate().alpha(alarm.isVibrate ? 1 : 0.333f).setDuration(250).start();
-                    vibrateDrawable.start();
-                    if (alarm.isVibrate)
-                        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                }
-            });
 
             alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
             alarmHolder.delete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
