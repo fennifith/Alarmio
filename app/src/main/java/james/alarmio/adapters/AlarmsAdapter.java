@@ -369,6 +369,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             alarmHolder.repeatIndicator.setColorFilter(textColorPrimary);
             alarmHolder.soundIndicator.setColorFilter(textColorPrimary);
             alarmHolder.vibrateIndicator.setColorFilter(textColorPrimary);
+            alarmHolder.nameUnderline.setBackgroundColor(textColorPrimary);
 
             int visibility = isExpanded ? View.VISIBLE : View.GONE;
             if (visibility != alarmHolder.extra.getVisibility()) {
