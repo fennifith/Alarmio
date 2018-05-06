@@ -46,9 +46,6 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (container != null)
-            container.removeAllViews();
-
         View view = inflater.inflate(R.layout.fragment_stopwatch, container, false);
         back = view.findViewById(R.id.back);
         reset = view.findViewById(R.id.reset);

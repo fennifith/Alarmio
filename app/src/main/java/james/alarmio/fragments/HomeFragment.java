@@ -64,9 +64,6 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (container != null)
-            container.removeAllViews();
-
         view = inflater.inflate(R.layout.fragment_home, container, false);
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);

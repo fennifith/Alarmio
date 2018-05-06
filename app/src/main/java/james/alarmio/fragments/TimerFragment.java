@@ -39,9 +39,6 @@ public class TimerFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (container != null)
-            container.removeAllViews();
-
         View view = inflater.inflate(R.layout.fragment_timer, container, false);
         back = view.findViewById(R.id.back);
         time = view.findViewById(R.id.time);
