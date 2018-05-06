@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <about>
-    <appInfo repo="TheAndroidMaster/Alarmio" />
+    <appInfo repo="TheAndroidMaster/Alarmio">
+        <link
+            id="github"
+            url="https://jfenn.me/redirects/?t=github&amp;d=Alarmio" />
+    </appInfo>
     <contributors repo="TheAndroidMaster/Alarmio">
         <contributor
             name="James Fenn"
@@ -8,7 +12,18 @@
             blog="https://jfenn.me/"
             login="TheAndroidMaster"
             position="1"
-            task="^Developer" />
+            task="^Developer">
+
+            <link
+                id="github"
+                url="https://jfenn.me/redirects/?t=github" />
+
+            <link
+                name="Twitter"
+                icon="@drawable/ic_twitter"
+                url="https://jfenn.me/redirects/?t=twitter" />
+
+        </contributor>
 
         <contributor
             name="Justin Kruit"
@@ -20,13 +35,43 @@
             task="^Inspiration &amp; Laziness" />
 
         <contributor
+            name="Eduardo Pratti"
+            avatar="https://lh3.googleusercontent.com/qQw25pogbHUtvu5PUSX4X5YJgPLv2amu2PMWn7Uw3MlMIO9Pb-AwavOPf-mEEbwYsODr440WHHHhb_w=s768-rw-no"
+            bio="UI / UX designer focusing on Android, illustrator, and a charismatic seal."
+            blog="https://pratti.design/"
+            position="3"
+            task="Design Feedback">
+
+            <link
+                name="Google+"
+                icon="@drawable/ic_gplus"
+                url="https://plus.google.com/+EduardoPratti" />
+
+            <link
+                name="Twitter"
+                icon="@drawable/ic_twitter"
+                url="https://twitter.com/edpratti" />
+
+        </contributor>
+
+        <contributor
             name="Vukašin Anđelković"
             avatar="https://lh3.googleusercontent.com/peV9PQ_0orI866TX6-rt9YowJ1pxiAmEWVrxHwHFA9go34zBXqK-rLwqBIfNNprLMhzHCrk8jtZUGlo"
             bio="Makes things and stuff. Creator of Candycons, PixBit, Cubllow, and Wafer."
-            blog="https://play.google.com/store/apps/dev?id=6941105890231522296"
             login="zavukodlak"
-            position="3"
-            task="^Design Feedback" />
+            task="^More Design Feedback">
+
+            <link
+                name="Google Play"
+                icon="@drawable/ic_gplay"
+                url="https://play.google.com/store/apps/dev?id=6941105890231522296" />
+
+            <link
+                name="Twitter"
+                icon="@drawable/ic_twitter"
+                url="https://twitter.com/zavukodlak" />
+
+        </contributor>
     </contributors>
     <licenses>
         <project

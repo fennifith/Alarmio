@@ -40,5 +40,5 @@ dependencies {
     compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
     compile 'com.google.android.exoplayer:exoplayer-core:2.7.3'
     compile 'com.google.android.exoplayer:exoplayer-hls:2.7.3'
-    compile 'me.jfenn:attribouter:0.0.4'
+    compile 'me.jfenn:attribouter:0.0.5'
 }
