@@ -15,7 +15,7 @@ public class TimerData implements Parcelable {
     private int id;
     private long duration = 600000;
     private long endTime;
-    public boolean isVibrate;
+    public boolean isVibrate = true;
     public SoundData sound;
 
     public TimerData(int id) {
@@ -38,27 +38,6 @@ public class TimerData implements Parcelable {
         isVibrate = PreferenceData.TIMER_VIBRATE.getSpecificValue(context, id);
         sound = SoundData.fromString(PreferenceData.TIMER_SOUND.getSpecificOverriddenValue(context, PreferenceData.DEFAULT_TIMER_RINGTONE.getValue(context, ""), id));
     }
-
-    protected TimerData(Parcel in) {
-        id = in.readInt();
-        duration = in.readLong();
-        endTime = in.readLong();
-        isVibrate = in.readByte() != 0;
-        if (in.readByte() == 1)
-            sound = SoundData.fromString(in.readString());
-    }
-
-    public static final Creator<TimerData> CREATOR = new Creator<TimerData>() {
-        @Override
-        public TimerData createFromParcel(Parcel in) {
-            return new TimerData(in);
-        }
-
-        @Override
-        public TimerData[] newArray(int size) {
-            return new TimerData[size];
-        }
-    };
 
     public void onIdChanged(int id, Context context) {
         PreferenceData.TIMER_DURATION.setValue(context, duration, id);
@@ -155,4 +134,25 @@ public class TimerData implements Parcelable {
         if (sound != null)
             parcel.writeString(sound.toString());
     }
+
+    protected TimerData(Parcel in) {
+        id = in.readInt();
+        duration = in.readLong();
+        endTime = in.readLong();
+        isVibrate = in.readByte() != 0;
+        if (in.readByte() == 1)
+            sound = SoundData.fromString(in.readString());
+    }
+
+    public static final Creator<TimerData> CREATOR = new Creator<TimerData>() {
+        @Override
+        public TimerData createFromParcel(Parcel in) {
+            return new TimerData(in);
+        }
+
+        @Override
+        public TimerData[] newArray(int size) {
+            return new TimerData[size];
+        }
+    };
 }
