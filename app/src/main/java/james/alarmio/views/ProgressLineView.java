@@ -53,6 +53,7 @@ public class ProgressLineView extends BaseSubscriptionView {
                     @Override
                     public void accept(Integer integer) throws Exception {
                         linePaint.setColor(integer);
+                        linePaint.setAlpha(100);
                         postInvalidate();
                     }
                 });
@@ -63,7 +64,7 @@ public class ProgressLineView extends BaseSubscriptionView {
                     @Override
                     public void accept(Integer integer) throws Exception {
                         backgroundPaint.setColor(integer);
-                        backgroundPaint.setAlpha(50);
+                        backgroundPaint.setAlpha(30);
                         postInvalidate();
                     }
                 });
