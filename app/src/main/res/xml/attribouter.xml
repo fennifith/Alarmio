@@ -74,6 +74,7 @@
         </contributor>
     </contributors>
     <licenses>
+
         <project
             description="A fast and easy to use plug-and-play dynamic theme engine. Powered by Rx, for Android apps."
             license="apache-2.0"
@@ -95,6 +96,26 @@
             description="An extensible media player for Android."
             license="apache-2.0"
             repo="google/ExoPlayer" />
+
+        <project
+            description="^A library for composing asynchronous and event-based programs using observable sequences for the Java VM."
+            license="apache-2.0"
+            repo="ReactiveX/RxJava" />
+
+        <project
+            description="^RxJava bindings for Android."
+            license="apache-2.0"
+            repo="ReactiveX/RxAndroid" />
+
+        <project
+            description="^Reactive SharedPreferences for Android."
+            license="apache-2.0"
+            repo="f2prateek/rx-preferences" />
+
+        <project
+            description="^A Material Design progress bar with a consistent appearance back to Android 4.0."
+            license="apache-2.0"
+            repo="DreaminginCodeZH/MaterialProgressBar/" />
 
     </licenses>
 </about>
