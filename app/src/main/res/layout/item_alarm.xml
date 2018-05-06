@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:animateLayoutChanges="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +24,13 @@
             <TextView
                 android:id="@+id/time"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-                tools:text="0:00"
                 android:textColor="?android:textColorSecondary"
-                android:textSize="42sp" />
+                android:textSize="42sp"
+                tools:text="0:00" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/enable"
@@ -43,6 +44,7 @@
             android:id="@+id/extra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -103,8 +105,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">
@@ -169,8 +171,8 @@
                             android:id="@+id/vibrateImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:scaleType="centerInside"
                             android:layout_marginBottom="4dp"
+                            android:scaleType="centerInside"
                             android:tint="?android:textColorPrimary"
                             app:srcCompat="@drawable/ic_vibrate_to_none" />
 
@@ -230,10 +232,11 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:hint="@string/title_alarm_name"
-                    android:paddingBottom="4dp"
                     android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
                     android:lines="1"
                     android:maxLines="1"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:singleLine="true"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="16sp"
@@ -243,6 +246,7 @@
                     android:id="@+id/underline"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
+                    android:layout_marginBottom="4dp"
                     android:background="@color/textColorSecondaryNight" />
 
             </LinearLayout>
@@ -254,10 +258,10 @@
                 android:layout_gravity="start|center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
+                android:paddingBottom="4dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="@string/title_delete"
-                android:paddingBottom="4dp"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="?android:textColorPrimary"
@@ -268,11 +272,11 @@
                 android:id="@+id/indicators"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:visibility="gone"
                 android:layout_gravity="end|center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp">
+                android:paddingRight="8dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/repeatIndicator"

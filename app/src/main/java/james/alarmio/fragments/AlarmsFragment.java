@@ -30,7 +30,7 @@ public class AlarmsFragment extends BasePagerFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        alarmsAdapter = new AlarmsAdapter(getAlarmio(), getContext(), getFragmentManager());
+        alarmsAdapter = new AlarmsAdapter(getAlarmio(), recyclerView, getFragmentManager());
         recyclerView.setAdapter(alarmsAdapter);
 
         colorAccentSubscription = Aesthetic.get()
