@@ -1,11 +1,5 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
-
     <style name="AttribouterTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -21,6 +15,7 @@
         <item name="android:textColorTertiaryInverse">@color/attribouter_textColorTertiaryInverse
         </item>
 
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 
