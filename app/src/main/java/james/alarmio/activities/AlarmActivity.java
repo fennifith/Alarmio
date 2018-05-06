@@ -35,7 +35,7 @@ import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
-import james.alarmio.dialogs.TimerDialog;
+import james.alarmio.dialogs.TimeChooserDialog;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.utils.FormatUtils;
 
@@ -259,15 +259,27 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                                     if (which < minutes.length) {
                                         TimerData timer = alarmio.newTimer();
                                         timer.setDuration(TimeUnit.MINUTES.toMillis(minutes[which]), alarmio);
+                                        timer.setVibrate(AlarmActivity.this, isVibrate);
+                                        timer.setSound(AlarmActivity.this, sound);
                                         timer.set(alarmio, ((AlarmManager) AlarmActivity.this.getSystemService(Context.ALARM_SERVICE)));
                                         alarmio.onTimerStarted();
 
                                         finish();
                                     } else {
-                                        TimerDialog timerDialog = new TimerDialog(AlarmActivity.this, getSupportFragmentManager());
-                                        timerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        TimeChooserDialog timerDialog = new TimeChooserDialog(AlarmActivity.this);
+                                        timerDialog.setListener(new TimeChooserDialog.OnTimeChosenListener() {
                                             @Override
-                                            public void onDismiss(DialogInterface dialog) {
+                                            public void onTimeChosen(int hours, int minutes, int seconds) {
+                                                TimerData timer = alarmio.newTimer();
+                                                timer.setVibrate(AlarmActivity.this, isVibrate);
+                                                timer.setSound(AlarmActivity.this, sound);
+                                                timer.setDuration(TimeUnit.HOURS.toMillis(hours)
+                                                                + TimeUnit.MINUTES.toMillis(minutes)
+                                                                + TimeUnit.SECONDS.toMillis(seconds),
+                                                        alarmio);
+
+                                                timer.set(alarmio, ((AlarmManager) getSystemService(Context.ALARM_SERVICE)));
+                                                alarmio.onTimerStarted();
                                                 finish();
                                             }
                                         });
