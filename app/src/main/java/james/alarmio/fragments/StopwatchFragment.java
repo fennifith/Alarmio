@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,7 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
                     service.reset();
             }
         });
+        reset.setClickable(false);
 
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,15 +164,30 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
     @Override
     public void onStateChanged(boolean isRunning) {
         if (isRunning) {
-            reset.setVisibility(View.INVISIBLE);
+            reset.setClickable(false);
+            reset.animate().alpha(0).start();
             lap.setVisibility(View.VISIBLE);
             share.setVisibility(View.GONE);
-            toggle.setImageResource(R.drawable.ic_pause);
+
+            AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.ic_play_to_pause);
+            if (drawable != null) {
+                toggle.setImageDrawable(drawable);
+                drawable.start();
+            } else toggle.setImageResource(R.drawable.ic_pause);
         } else {
-            reset.setVisibility(View.VISIBLE);
+            if (service.getLastLapTime() > 0) {
+                reset.setClickable(true);
+                reset.animate().alpha(1).start();
+                share.setVisibility(View.VISIBLE);
+            } else share.setVisibility(View.INVISIBLE);
+
             lap.setVisibility(View.GONE);
-            share.setVisibility(View.VISIBLE);
-            toggle.setImageResource(R.drawable.ic_play);
+
+            AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.ic_pause_to_play);
+            if (drawable != null) {
+                toggle.setImageDrawable(drawable);
+                drawable.start();
+            } else toggle.setImageResource(R.drawable.ic_play);
         }
     }
 
@@ -179,7 +196,8 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
         lapsLayout.removeAllViews();
         time.setMaxProgress(0);
         time.setReferenceProgress(0);
-        reset.setVisibility(View.INVISIBLE);
+        reset.setClickable(false);
+        reset.setAlpha(0f);
         lap.setVisibility(View.INVISIBLE);
         share.setVisibility(View.GONE);
     }
