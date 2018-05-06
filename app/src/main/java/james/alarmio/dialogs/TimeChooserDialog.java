@@ -40,7 +40,7 @@ public class TimeChooserDialog extends AppCompatDialog implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_timer);
+        setContentView(R.layout.dialog_time_chooser);
 
         time = findViewById(R.id.time);
         backspace = findViewById(R.id.backspace);

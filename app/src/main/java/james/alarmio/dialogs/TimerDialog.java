@@ -3,6 +3,7 @@ package james.alarmio.dialogs;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialog;
 import android.view.View;
@@ -14,10 +15,19 @@ import java.util.concurrent.TimeUnit;
 
 import james.alarmio.Alarmio;
 import james.alarmio.R;
+import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.fragments.TimerFragment;
+import james.alarmio.interfaces.SoundChooserListener;
 
 public class TimerDialog extends AppCompatDialog implements View.OnClickListener {
+
+    private ImageView ringtoneImage;
+    private TextView ringtoneText;
+    private ImageView vibrateImage;
+
+    private SoundData ringtone;
+    private boolean isVibrate = true;
 
     private TextView time;
     private ImageView backspace;
@@ -38,6 +48,10 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_timer);
 
+        ringtoneImage = findViewById(R.id.ringtoneImage);
+        ringtoneText = findViewById(R.id.ringtoneText);
+        vibrateImage = findViewById(R.id.vibrateImage);
+
         time = findViewById(R.id.time);
         backspace = findViewById(R.id.backspace);
 
@@ -55,12 +69,50 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
         findViewById(R.id.nine).setOnClickListener(this);
         findViewById(R.id.zero).setOnClickListener(this);
 
+        findViewById(R.id.ringtone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoundChooserDialog dialog = new SoundChooserDialog();
+                dialog.setListener(new SoundChooserListener() {
+                    @Override
+                    public void onSoundChosen(SoundData sound) {
+                        ringtone = sound;
+                        ringtoneImage.setImageResource(sound != null ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+                        ringtoneImage.setAlpha(sound != null ? 1f : 0.333f);
+
+                        if (sound != null)
+                            ringtoneText.setText(sound.getName());
+                        else ringtoneText.setText(R.string.title_sound_none);
+                    }
+                });
+                dialog.show(manager, "");
+            }
+        });
+
+        findViewById(R.id.vibrate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isVibrate = !isVibrate;
+
+                AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(v.getContext(), isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
+                if (drawable != null) {
+                    vibrateImage.setImageDrawable(drawable);
+                    drawable.start();
+                } else
+                    vibrateImage.setImageResource(isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
+
+                vibrateImage.animate().alpha(isVibrate ? 1f : 0.333f).start();
+            }
+        });
+
         findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Integer.parseInt(input) > 0) {
                     TimerData timer = alarmio.newTimer();
                     timer.setDuration(getMillis(), alarmio);
+                    timer.setVibrate(view.getContext(), isVibrate);
+                    timer.setSound(view.getContext(), ringtone);
                     timer.set(alarmio, ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)));
                     alarmio.onTimerStarted();
 

@@ -3,199 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:minHeight="400dp"
+    android:minHeight="512dp"
     android:minWidth="350dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <include
+        layout="@layout/content_numpad"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:animateLayoutChanges="true"
-        android:layout_marginBottom="24dp"
-        android:background="#30000000"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="16dp">
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:tag=":aesthetic_ignore"
-            tools:text="0m 00s"
-            android:textAlignment="center"
-            android:textSize="32sp" />
+    <LinearLayout
+        android:id="@+id/ringtone"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <ImageView
-            android:id="@+id/backspace"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="42dp"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:id="@+id/ringtoneImage"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:alpha="0.333"
             android:scaleType="centerInside"
-            android:tint="@android:color/white"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_backspace" />
+            android:tint="?android:textColorPrimary"
+            app:srcCompat="@drawable/ic_ringtone_disabled" />
+
+        <TextView
+            android:id="@+id/ringtoneText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:tag=":aesthetic_ignore"
+            android:text="@string/title_sound_none"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:scaleType="centerInside"
+            android:tint="?android:textColorPrimary"
+            app:srcCompat="@drawable/ic_expand" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/vibrate"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_height="56dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <ImageView
+            android:id="@+id/vibrateImage"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:scaleType="centerInside"
+            android:tint="?android:textColorPrimary"
+            app:srcCompat="@drawable/ic_vibrate" />
 
         <TextView
-            android:id="@+id/one"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:tag=":aesthetic_ignore"
-            android:text="1"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/two"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="2"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/three"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="3"
-            android:textSize="32sp" />
+            android:text="@string/title_vibrate"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/four"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="4"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/five"
-            android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="5"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/six"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="6"
-            android:textSize="32sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/seven"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="7"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/eight"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="8"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/nine"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tag=":aesthetic_ignore"
-            android:text="9"
-            android:textSize="32sp" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/zero"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="24dp"
-        android:gravity="center"
-        android:layout_marginRight="24dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:tag=":aesthetic_ignore"
-        android:text="0"
-        android:textSize="32sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginTop="24dp"
         android:gravity="end"
         android:orientation="horizontal"
         android:padding="16dp">
