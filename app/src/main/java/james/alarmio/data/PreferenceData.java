@@ -11,6 +11,8 @@ import james.alarmio.Alarmio;
 
 public enum PreferenceData {
     THEME(Alarmio.THEME_DAY_NIGHT),
+    BACKGROUND_IMAGE("https://jfenn.me/images/headers/snowytrees.jpg"),
+    RINGING_BACKGROUND_IMAGE(true),
     DAY_AUTO(true),
     DAY_START(6), //hours TODO: change to minutes
     DAY_END(18), //hours

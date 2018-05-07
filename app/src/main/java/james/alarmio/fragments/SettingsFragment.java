@@ -23,6 +23,7 @@ import james.alarmio.data.PreferenceData;
 import james.alarmio.data.preference.BasePreferenceData;
 import james.alarmio.data.preference.BooleanPreferenceData;
 import james.alarmio.data.preference.CustomPreferenceData;
+import james.alarmio.data.preference.ImageFilePreferenceData;
 import james.alarmio.data.preference.RingtonePreferenceData;
 import james.alarmio.data.preference.ThemePreferenceData;
 import james.alarmio.data.preference.TimePreferenceData;
@@ -47,6 +48,8 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
 
         preferenceAdapter = new PreferenceAdapter(new ArrayList<BasePreferenceData>(Arrays.asList(
                 new ThemePreferenceData(),
+                new ImageFilePreferenceData(PreferenceData.BACKGROUND_IMAGE, R.string.title_background_image),
+                new BooleanPreferenceData(PreferenceData.RINGING_BACKGROUND_IMAGE, R.string.title_ringing_background_image, R.string.desc_ringing_background_image),
                 new TimeZonesPreferenceData(PreferenceData.TIME_ZONES, R.string.title_time_zones),
                 new RingtonePreferenceData(PreferenceData.DEFAULT_ALARM_RINGTONE, R.string.title_default_alarm_ringtone),
                 new RingtonePreferenceData(PreferenceData.DEFAULT_TIMER_RINGTONE, R.string.title_default_timer_ringtone),

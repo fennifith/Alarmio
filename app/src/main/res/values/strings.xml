@@ -54,6 +54,9 @@
     <string name="title_choose_time_zone">Choose a Time Zone</string>
     <string name="msg_sleep_reminder">Your next alarm will ring approximately %s from now. To get your specified amount of sleep in the settings menu, you should go to bed now.</string>
     <string name="title_alarm_name">Alarm Name</string>
+    <string name="title_background_image">Background Image</string>
+    <string name="title_ringing_background_image">Show Background Image On Alarms/Timers</string>
+    <string name="desc_ringing_background_image">Whether to display the background image when an alarm or timer is ringing.</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>

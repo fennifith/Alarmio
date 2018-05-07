@@ -33,6 +33,10 @@
             android:name=".activities.AlarmActivity"
             android:launchMode="singleTask" />
 
+        <activity
+            android:name=".activities.FileChooserActivity"
+            android:theme="@style/AppTheme.Transparent" />
+
         <service android:name=".services.SleepReminderService" />
         <service android:name=".services.StopwatchService" />
         <service android:name=".services.TimerService" />
