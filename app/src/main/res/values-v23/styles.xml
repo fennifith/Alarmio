@@ -7,13 +7,9 @@
         <item name="android:textColorPrimary">@color/attribouter_textColorPrimary</item>
         <item name="android:textColorSecondary">@color/attribouter_textColorSecondary</item>
         <item name="android:textColorTertiary">@color/attribouter_textColorTertiary</item>
-        <item name="android:textColorPrimaryInverse">@color/attribouter_textColorPrimaryInverse
-        </item>
-        <item name="android:textColorSecondaryInverse">
-            @color/attribouter_textColorSecondaryInverse
-        </item>
-        <item name="android:textColorTertiaryInverse">@color/attribouter_textColorTertiaryInverse
-        </item>
+        <item name="android:textColorPrimaryInverse">@color/attribouter_textColorPrimaryInverse</item>
+        <item name="android:textColorSecondaryInverse">@color/attribouter_textColorSecondaryInverse</item>
+        <item name="android:textColorTertiaryInverse">@color/attribouter_textColorTertiaryInverse</item>
 
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
