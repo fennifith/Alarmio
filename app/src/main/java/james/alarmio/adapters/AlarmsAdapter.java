@@ -305,11 +305,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 });
             } else {
                 alarmHolder.repeatIndicator.setAlpha(alarm.isRepeat() ? 1 : 0.333f);
-                alarmHolder.repeatIndicator.setImageResource(alarm.isRepeat() ? R.drawable.ic_repeat : R.drawable.ic_repeat_none);
                 alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
-                alarmHolder.soundIndicator.setImageResource(alarm.hasSound() ? R.drawable.ic_sound : R.drawable.ic_sound_none);
                 alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
-                alarmHolder.vibrateIndicator.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_vibrate_none);
             }
 
             alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
