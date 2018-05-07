@@ -19,6 +19,7 @@ public class TimerReceiver extends BroadcastReceiver {
         alarmio.removeTimer(timer);
 
         Intent ringer = new Intent(context, AlarmActivity.class);
+        ringer.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ringer.putExtra(AlarmActivity.EXTRA_TIMER, timer);
         context.startActivity(ringer);
     }

@@ -24,6 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmio.onAlarmsChanged();
 
         Intent ringer = new Intent(context, AlarmActivity.class);
+        ringer.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ringer.putExtra(AlarmActivity.EXTRA_ALARM, alarm);
         context.startActivity(ringer);
     }
