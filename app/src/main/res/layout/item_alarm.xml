@@ -132,7 +132,8 @@
                             android:layout_height="24dp"
                             android:layout_marginBottom="4dp"
                             android:scaleType="centerInside"
-                            android:tint="?android:textColorPrimary"
+                            tools:tint="@color/textColorPrimaryNight"
+                            tools:alpha="0.333"
                             app:srcCompat="@drawable/ic_ringtone_disabled" />
 
                         <TextView
@@ -173,7 +174,7 @@
                             android:layout_height="24dp"
                             android:layout_marginBottom="4dp"
                             android:scaleType="centerInside"
-                            android:tint="?android:textColorPrimary"
+                            tools:tint="@color/textColorPrimaryNight"
                             app:srcCompat="@drawable/ic_vibrate_to_none" />
 
                         <TextView
@@ -212,7 +213,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:scaleType="centerInside"
-                android:tint="?android:textColorPrimary"
+                tools:tint="@color/textColorPrimaryNight"
                 app:srcCompat="@drawable/ic_expand" />
 
             <LinearLayout
@@ -276,7 +277,8 @@
                 android:orientation="horizontal"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/repeatIndicator"
@@ -284,7 +286,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    android:tint="?android:textColorPrimary"
+                    tools:tint="@color/textColorPrimaryNight"
+                    tools:alpha="0.333"
                     app:srcCompat="@drawable/ic_repeat" />
 
                 <ImageView
@@ -293,7 +296,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    android:tint="?android:textColorPrimary"
+                    tools:tint="@color/textColorPrimaryNight"
+                    tools:alpha="0.333"
                     app:srcCompat="@drawable/ic_sound" />
 
                 <ImageView
@@ -302,7 +306,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    android:tint="?android:textColorPrimary"
+                    tools:tint="@color/textColorPrimaryNight"
                     app:srcCompat="@drawable/ic_vibrate" />
 
             </LinearLayout>

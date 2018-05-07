@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:keepScreenOn="true">
+    android:keepScreenOn="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,7 +52,8 @@
             android:layout_marginStart="16dp"
             android:scaleType="centerInside"
             android:visibility="invisible"
-            app:srcCompat="@drawable/ic_snooze" />
+            app:srcCompat="@drawable/ic_snooze"
+            tools:tint="@color/textColorPrimaryNight" />
 
         <ImageView
             android:id="@+id/dismiss"
@@ -62,7 +64,8 @@
             android:layout_marginStart="16dp"
             android:scaleType="centerInside"
             android:visibility="invisible"
-            app:srcCompat="@drawable/ic_close" />
+            app:srcCompat="@drawable/ic_close"
+            tools:tint="@color/textColorPrimaryNight" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
