@@ -43,7 +43,7 @@ public class TimerData implements Parcelable {
         PreferenceData.TIMER_DURATION.setValue(context, duration, id);
         PreferenceData.TIMER_END_TIME.setValue(context, endTime, id);
         PreferenceData.TIMER_VIBRATE.setValue(context, isVibrate, id);
-        PreferenceData.TIMER_SOUND.setValue(context, sound.toString(), id);
+        PreferenceData.TIMER_SOUND.setValue(context, sound != null ? sound.toString() : null, id);
         onRemoved(context);
         this.id = id;
         if (isSet())

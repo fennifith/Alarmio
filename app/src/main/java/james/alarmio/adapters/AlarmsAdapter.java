@@ -315,7 +315,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    new AlertDialog.Builder(alarmio)
+                    new AlertDialog.Builder(view.getContext())
                             .setMessage(alarmio.getString(R.string.msg_delete_confirmation, alarm.getName(alarmio)))
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override

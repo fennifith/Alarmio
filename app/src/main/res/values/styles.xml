@@ -3,6 +3,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
         <item name="colorAccent">@android:color/white</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryNight</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryNight</item>
     </style>
 
     <style name="AppTheme.Day" parent="Theme.AppCompat.Light.NoActionBar">
@@ -11,6 +16,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/colorPrimaryDark</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryNight</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryNight</item>
     </style>
 
     <style name="AppTheme.Night" parent="@style/AppTheme">
@@ -19,6 +29,11 @@
         <item name="colorAccent">@color/colorNightAccent</item>
         <item name="android:colorBackground">@color/colorNightPrimaryDark</item>
         <item name="android:windowBackground">@color/colorNightPrimaryDark</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimaryNight</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryNight</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimary</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
     </style>
 
     <style name="AppTheme.Transparent" parent="Theme.AppCompat.NoActionBar">

@@ -38,7 +38,7 @@ import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.views.PageIndicatorView;
 
-public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpdateListener {
+public class HomeFragment extends BaseFragment {
 
     private View view;
     private ViewPager viewPager;
@@ -78,8 +78,6 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         stopwatchFab = view.findViewById(R.id.stopwatchFab);
         timerFab = view.findViewById(R.id.timerFab);
         alarmFab = view.findViewById(R.id.alarmFab);
-
-        menu.setMenuUpdateListener(this);
 
         behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setHideable(false);
@@ -157,6 +155,10 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                         bottomSheet.setBackgroundColor(integer);
                         overlay.setBackgroundColor(integer);
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
                 });
 
         colorAccentSubscription = Aesthetic.get()
@@ -169,6 +171,10 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                         timerFab.setBackgroundColor(integer);
                         alarmFab.setBackgroundColor(integer);
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
                 });
 
         textColorPrimarySubscription = Aesthetic.get()
@@ -179,6 +185,10 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                         stopwatchFab.setTitleTextColor(integer);
                         timerFab.setTitleTextColor(integer);
                         alarmFab.setTitleTextColor(integer);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                     }
                 });
 
@@ -273,21 +283,6 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
         colorPrimarySubscription.dispose();
         colorAccentSubscription.dispose();
         super.onDestroyView();
-    }
-
-    @Override
-    public void onMenuClicked() {
-        menu.toggle();
-    }
-
-    @Override
-    public void onMenuExpanded() {
-
-    }
-
-    @Override
-    public void onMenuCollapsed() {
-
     }
 
 }

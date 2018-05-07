@@ -48,13 +48,13 @@ public class AlarmData implements Parcelable {
 
     public void onIdChanged(int id, Context context) {
         PreferenceData.ALARM_NAME.setValue(context, getName(context), id);
-        PreferenceData.ALARM_TIME.setValue(context, time.getTimeInMillis(), id);
+        PreferenceData.ALARM_TIME.setValue(context, time != null ? time.getTimeInMillis() : null, id);
         PreferenceData.ALARM_ENABLED.setValue(context, isEnabled, id);
         for (int i = 0; i < 7; i++) {
             PreferenceData.ALARM_DAY_ENABLED.setValue(context, days[i], id, i);
         }
         PreferenceData.ALARM_VIBRATE.setValue(context, isVibrate, id);
-        PreferenceData.ALARM_SOUND.setValue(context, sound.toString(), id);
+        PreferenceData.ALARM_SOUND.setValue(context, sound != null ? sound.toString() : null, id);
 
         onRemoved(context);
         this.id = id;
