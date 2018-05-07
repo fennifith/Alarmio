@@ -188,7 +188,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
 
                     new TimePickerDialog(
-                            alarmio,
+                            view.getContext(),
                             new TimePickerDialog.OnTimeSetListener() {
                                 @Override
                                 public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
