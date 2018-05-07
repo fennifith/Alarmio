@@ -2,8 +2,8 @@ package james.alarmio.fragments;
 
 import android.app.AlarmManager;
 import android.app.TimePickerDialog;
-import android.app.WallpaperManager;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,9 +19,12 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
+import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.Calendar;
 
 import io.reactivex.disposables.Disposable;
@@ -147,7 +150,15 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             }
         });
 
-        background.setImageDrawable(WallpaperManager.getInstance(getContext()).getFastDrawable());
+        String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(getContext());
+        if (backgroundUrl != null && backgroundUrl.length() > 0) {
+            if (backgroundUrl.startsWith("http"))
+                Glide.with(getContext()).load(backgroundUrl).into(background);
+            else if (backgroundUrl.contains("://"))
+                Glide.with(getContext()).load(Uri.parse(backgroundUrl)).into(background);
+            else Glide.with(getContext()).load(new File(backgroundUrl)).into(background);
+        }
+        Toast.makeText(getContext(), (String) PreferenceData.BACKGROUND_IMAGE.getValue(getContext()), Toast.LENGTH_SHORT).show();
 
         colorPrimarySubscription = Aesthetic.get()
                 .colorPrimary()
