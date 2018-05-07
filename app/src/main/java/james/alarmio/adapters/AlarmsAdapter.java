@@ -207,24 +207,22 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             });
 
             alarmHolder.indicators.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
-
-            alarmHolder.repeatIndicator.setAlpha(alarm.isRepeat() ? 1 : 0.333f);
-            alarmHolder.repeat.setOnCheckedChangeListener(null);
-            alarmHolder.repeat.setChecked(alarm.isRepeat());
-            alarmHolder.repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    for (int i = 0; i < 7; i++) {
-                        alarm.days[i] = b;
-                    }
-                    alarm.setDays(alarmio, alarm.days);
-                    TransitionManager.beginDelayedTransition(recycler);
-                    notifyDataSetChanged();
-                }
-            });
-
             if (isExpanded) {
+                alarmHolder.repeat.setOnCheckedChangeListener(null);
+                alarmHolder.repeat.setChecked(alarm.isRepeat());
+                alarmHolder.repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+                        for (int i = 0; i < 7; i++) {
+                            alarm.days[i] = b;
+                        }
+                        alarm.setDays(alarmio, alarm.days);
+                        TransitionManager.beginDelayedTransition(recycler);
+                        notifyDataSetChanged();
+                    }
+                });
+
                 alarmHolder.days.setVisibility(alarm.isRepeat() ? View.VISIBLE : View.GONE);
 
                 DaySwitch.OnCheckedChangeListener listener = new DaySwitch.OnCheckedChangeListener() {
@@ -264,7 +262,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     }
                 }
 
-                alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
                 alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
                 alarmHolder.ringtoneImage.setAlpha(alarm.hasSound() ? 1 : 0.333f);
                 alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : alarmio.getString(R.string.title_sound_none));
@@ -285,7 +282,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     }
                 });
 
-                alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
                 AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(alarmio, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
                 alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
                 alarmHolder.vibrateImage.setAlpha(alarm.isVibrate ? 1 : 0.333f);
@@ -302,6 +298,10 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     }
                 });
+            } else {
+                alarmHolder.repeatIndicator.setAlpha(alarm.isRepeat() ? 1 : 0.333f);
+                alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
+                alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
             }
 
             alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
