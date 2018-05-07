@@ -149,15 +149,6 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             }
         });
 
-        String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(getContext());
-        if (backgroundUrl != null && backgroundUrl.length() > 0) {
-            if (backgroundUrl.startsWith("http"))
-                Glide.with(getContext()).load(backgroundUrl).into(background);
-            else if (backgroundUrl.contains("://"))
-                Glide.with(getContext()).load(Uri.parse(backgroundUrl)).into(background);
-            else Glide.with(getContext()).load(new File(backgroundUrl)).into(background);
-        }
-
         colorPrimarySubscription = Aesthetic.get()
                 .colorPrimary()
                 .subscribe(new Consumer<Integer>() {
@@ -264,6 +255,15 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
             timePager.setAdapter(timeAdapter);
             timeIndicator.setViewPager(timePager);
             timeIndicator.setVisibility(clockFragments.length > 1 ? View.VISIBLE : View.GONE);
+        }
+
+        String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(getContext());
+        if (backgroundUrl != null && backgroundUrl.length() > 0) {
+            if (backgroundUrl.startsWith("http"))
+                Glide.with(getContext()).load(backgroundUrl).into(background);
+            else if (backgroundUrl.contains("://"))
+                Glide.with(getContext()).load(Uri.parse(backgroundUrl)).into(background);
+            else Glide.with(getContext()).load(new File(backgroundUrl)).into(background);
         }
     }
 
