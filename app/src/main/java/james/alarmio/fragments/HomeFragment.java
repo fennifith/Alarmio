@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.bumptech.glide.Glide;
@@ -158,7 +157,6 @@ public class HomeFragment extends BaseFragment implements FABsMenu.OnFABsMenuUpd
                 Glide.with(getContext()).load(Uri.parse(backgroundUrl)).into(background);
             else Glide.with(getContext()).load(new File(backgroundUrl)).into(background);
         }
-        Toast.makeText(getContext(), (String) PreferenceData.BACKGROUND_IMAGE.getValue(getContext()), Toast.LENGTH_SHORT).show();
 
         colorPrimarySubscription = Aesthetic.get()
                 .colorPrimary()
