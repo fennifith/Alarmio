@@ -290,18 +290,26 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     public void onClick(View view) {
                         AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                         alarm.setVibrate(alarmio, !alarm.isVibrate);
+
                         AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(alarmio, alarm.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
-                        alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+                        if (vibrateDrawable != null) {
+                            alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
+                            vibrateDrawable.start();
+                        } else
+                            alarmHolder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_vibrate_none);
+
                         alarmHolder.vibrateImage.animate().alpha(alarm.isVibrate ? 1 : 0.333f).setDuration(250).start();
-                        vibrateDrawable.start();
                         if (alarm.isVibrate)
                             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     }
                 });
             } else {
                 alarmHolder.repeatIndicator.setAlpha(alarm.isRepeat() ? 1 : 0.333f);
+                alarmHolder.repeatIndicator.setImageResource(alarm.isRepeat() ? R.drawable.ic_repeat : R.drawable.ic_repeat_none);
                 alarmHolder.soundIndicator.setAlpha(alarm.hasSound() ? 1 : 0.333f);
+                alarmHolder.soundIndicator.setImageResource(alarm.hasSound() ? R.drawable.ic_sound : R.drawable.ic_sound_none);
                 alarmHolder.vibrateIndicator.setAlpha(alarm.isVibrate ? 1 : 0.333f);
+                alarmHolder.vibrateIndicator.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_vibrate_none);
             }
 
             alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
