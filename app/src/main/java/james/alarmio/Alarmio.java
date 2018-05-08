@@ -100,8 +100,7 @@ public class Alarmio extends Application implements Player.EventListener {
         if (timerLength > 0)
             startService(new Intent(this, TimerService.class));
 
-        if (PreferenceData.SLEEP_REMINDER.getValue(this))
-            startService(new Intent(this, SleepReminderService.class));
+        SleepReminderService.refreshSleepTime(this);
     }
 
     public List<AlarmData> getAlarms() {

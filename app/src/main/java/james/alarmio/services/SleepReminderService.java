@@ -57,30 +57,25 @@ public class SleepReminderService extends Service {
     }
 
     public void refreshState() {
-        if ((boolean) PreferenceData.SLEEP_REMINDER.getValue(this) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? powerManager.isInteractive() : powerManager.isScreenOn())) {
-            AlarmData nextAlarm = getNextWakeAlarm(alarmio);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? powerManager.isInteractive() : powerManager.isScreenOn()) {
+            AlarmData nextAlarm = getSleepyAlarm(alarmio);
             if (nextAlarm != null) {
-                Calendar nextTrigger = (Calendar) nextAlarm.getNext().clone();
-                nextTrigger.set(Calendar.MINUTE, nextTrigger.get(Calendar.MINUTE) - (int) PreferenceData.SLEEP_REMINDER_TIME.getValue(this));
+                NotificationCompat.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    if (manager != null)
+                        manager.createNotificationChannel(new NotificationChannel("sleepReminder", getString(R.string.title_sleep_reminder), NotificationManager.IMPORTANCE_DEFAULT));
 
-                if (Calendar.getInstance().after(nextTrigger)) {
-                    NotificationCompat.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                        if (manager != null)
-                            manager.createNotificationChannel(new NotificationChannel("sleepReminder", getString(R.string.title_sleep_reminder), NotificationManager.IMPORTANCE_DEFAULT));
+                    builder = new NotificationCompat.Builder(this, "sleepReminder");
+                } else builder = new NotificationCompat.Builder(this);
 
-                        builder = new NotificationCompat.Builder(this, "sleepReminder");
-                    } else builder = new NotificationCompat.Builder(this);
-
-                    startForeground(540, builder.setContentTitle(getString(R.string.title_sleep_reminder))
-                            .setContentText(String.format(getString(R.string.msg_sleep_reminder),
-                                    FormatUtils.formatUnit(this, (int) TimeUnit.MILLISECONDS.toMinutes(nextAlarm.getNext().getTimeInMillis() - System.currentTimeMillis()))))
-                            .setSmallIcon(R.drawable.ic_notification_sleep)
-                            .setPriority(NotificationCompat.PRIORITY_LOW)
-                            .build());
-                    return;
-                }
+                startForeground(540, builder.setContentTitle(getString(R.string.title_sleep_reminder))
+                        .setContentText(String.format(getString(R.string.msg_sleep_reminder),
+                                FormatUtils.formatUnit(this, (int) TimeUnit.MILLISECONDS.toMinutes(nextAlarm.getNext().getTimeInMillis() - System.currentTimeMillis()))))
+                        .setSmallIcon(R.drawable.ic_notification_sleep)
+                        .setPriority(NotificationCompat.PRIORITY_LOW)
+                        .build());
+                return;
             }
         }
 
@@ -90,6 +85,23 @@ public class SleepReminderService extends Service {
         stopForeground(true);
     }
 
+    @Nullable
+    public static AlarmData getSleepyAlarm(Alarmio alarmio) {
+        if (PreferenceData.SLEEP_REMINDER.getValue(alarmio)) {
+            AlarmData nextAlarm = getNextWakeAlarm(alarmio);
+            if (nextAlarm != null) {
+                Calendar nextTrigger = (Calendar) nextAlarm.getNext().clone();
+                nextTrigger.set(Calendar.MINUTE, nextTrigger.get(Calendar.MINUTE) - (int) PreferenceData.SLEEP_REMINDER_TIME.getValue(alarmio));
+
+                if (Calendar.getInstance().after(nextTrigger))
+                    return nextAlarm;
+            }
+        }
+
+        return null;
+    }
+
+    @Nullable
     public static AlarmData getNextWakeAlarm(Alarmio alarmio) {
         Calendar nextNoon = Calendar.getInstance();
         nextNoon.set(Calendar.HOUR_OF_DAY, 12);
@@ -117,6 +129,24 @@ public class SleepReminderService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    /**
+     * To be called whenever an alarm is changed, might change, or when time might have
+     * unexpectedly leaped forwards.
+     */
+    public static void refreshSleepTime(Context context) {
+        Alarmio alarmio;
+        if (context instanceof Alarmio)
+            alarmio = (Alarmio) context;
+        else alarmio = (Alarmio) context.getApplicationContext();
+
+        if (getSleepyAlarm(alarmio) != null) {
+            Intent intent = new Intent(alarmio, SleepReminderService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                alarmio.startForegroundService(intent);
+            else alarmio.startService(intent);
+        }
     }
 
     private static class ScreenReceiver extends BroadcastReceiver {

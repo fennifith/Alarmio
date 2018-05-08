@@ -170,8 +170,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         if (sound != null)
             sound.play(alarmio);
 
-        if (PreferenceData.SLEEP_REMINDER.getValue(this))
-            startService(new Intent(this, SleepReminderService.class));
+        SleepReminderService.refreshSleepTime(alarmio);
     }
 
     @Override

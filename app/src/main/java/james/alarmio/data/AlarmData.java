@@ -200,8 +200,7 @@ public class AlarmData implements Parcelable {
                 timeMillis - TimeUnit.MINUTES.toMillis((int) PreferenceData.SLEEP_REMINDER_TIME.getValue(context)),
                 PendingIntent.getService(context, 0, new Intent(context, SleepReminderService.class), 0));
 
-        if (PreferenceData.SLEEP_REMINDER.getValue(context))
-            context.startService(new Intent(context, SleepReminderService.class));
+        SleepReminderService.refreshSleepTime(context);
     }
 
     public void cancel(Context context, AlarmManager manager) {
