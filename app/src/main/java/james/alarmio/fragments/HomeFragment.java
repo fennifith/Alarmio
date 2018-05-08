@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
+import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
 import james.alarmio.data.AlarmData;
@@ -62,6 +64,7 @@ public class HomeFragment extends BaseFragment {
     private Disposable colorPrimarySubscription;
     private Disposable colorAccentSubscription;
     private Disposable textColorPrimarySubscription;
+    private Disposable textColorPrimaryInverseSubscription;
 
     @Nullable
     @Override
@@ -155,10 +158,6 @@ public class HomeFragment extends BaseFragment {
                         bottomSheet.setBackgroundColor(integer);
                         overlay.setBackgroundColor(integer);
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                    }
                 });
 
         colorAccentSubscription = Aesthetic.get()
@@ -166,14 +165,17 @@ public class HomeFragment extends BaseFragment {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        menu.getMenuButton().setBackgroundColor(integer);
+                        menu.setMenuButtonColor(integer);
+
+                        int color = ContextCompat.getColor(getContext(), getAlarmio().getActivityTheme() == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
+                        menu.getMenuButton().setColorFilter(color);
+                        stopwatchFab.setColorFilter(color);
+                        timerFab.setColorFilter(color);
+                        alarmFab.setColorFilter(color);
+
                         stopwatchFab.setBackgroundColor(integer);
                         timerFab.setBackgroundColor(integer);
                         alarmFab.setBackgroundColor(integer);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
                     }
                 });
 
@@ -186,9 +188,16 @@ public class HomeFragment extends BaseFragment {
                         timerFab.setTitleTextColor(integer);
                         alarmFab.setTitleTextColor(integer);
                     }
-                }, new Consumer<Throwable>() {
+                });
+
+        textColorPrimaryInverseSubscription = Aesthetic.get()
+                .textColorPrimaryInverse()
+                .subscribe(new Consumer<Integer>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void accept(Integer integer) throws Exception {
+                        alarmFab.setTitleBackgroundColor(integer);
+                        stopwatchFab.setTitleBackgroundColor(integer);
+                        timerFab.setTitleBackgroundColor(integer);
                     }
                 });
 
@@ -282,6 +291,8 @@ public class HomeFragment extends BaseFragment {
         timeIndicator.unsubscribe();
         colorPrimarySubscription.dispose();
         colorAccentSubscription.dispose();
+        textColorPrimarySubscription.dispose();
+        textColorPrimaryInverseSubscription.dispose();
         super.onDestroyView();
     }
 
