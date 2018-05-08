@@ -2,17 +2,19 @@ package james.alarmio.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 
-public class TimeChooserDialog extends AppCompatDialog implements View.OnClickListener {
+public class TimeChooserDialog extends AestheticDialog implements View.OnClickListener {
 
     private TextView time;
     private ImageView backspace;
@@ -84,6 +86,16 @@ public class TimeChooserDialog extends AppCompatDialog implements View.OnClickLi
                 dismiss();
             }
         });
+
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        backspace.setColorFilter(integer);
+                    }
+                });
     }
 
     private void input(String character) {

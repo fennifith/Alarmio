@@ -5,14 +5,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatDialog;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
@@ -21,7 +24,7 @@ import james.alarmio.data.TimerData;
 import james.alarmio.fragments.TimerFragment;
 import james.alarmio.interfaces.SoundChooserListener;
 
-public class TimerDialog extends AppCompatDialog implements View.OnClickListener {
+public class TimerDialog extends AestheticDialog implements View.OnClickListener {
 
     private ImageView ringtoneImage;
     private TextView ringtoneText;
@@ -111,6 +114,9 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
                     vibrateImage.setImageResource(isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
 
                 vibrateImage.animate().alpha(isVibrate ? 1f : 0.333f).start();
+
+                if (isVibrate)
+                    v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
         });
 
@@ -147,6 +153,18 @@ public class TimerDialog extends AppCompatDialog implements View.OnClickListener
                 dismiss();
             }
         });
+
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        ringtoneImage.setColorFilter(integer);
+                        vibrateImage.setColorFilter(integer);
+                        backspace.setColorFilter(integer);
+                    }
+                });
     }
 
     private void input(String character) {

@@ -16,7 +16,6 @@ import android.view.WindowManager;
 
 import com.afollestad.aesthetic.Aesthetic;
 
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
@@ -32,25 +31,10 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
     private SoundChooserListener listener;
     private View view;
 
-    private Disposable colorWindowBackgroundSubscription;
-
-    private int colorWindowBackground;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
-
-        colorWindowBackgroundSubscription = Aesthetic.get()
-                .colorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        colorWindowBackground = integer;
-                        if (view != null)
-                            view.setBackgroundColor(integer);
-                    }
-                });
     }
 
     @Override
@@ -72,7 +56,16 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_sound_chooser, container, false);
-        view.setBackgroundColor(colorWindowBackground);
+
+        Aesthetic.get()
+                .colorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        view.setBackgroundColor(integer);
+                    }
+                });
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager viewPager = view.findViewById(R.id.viewPager);
@@ -88,12 +81,6 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
         viewPager.setAdapter(new SimplePagerAdapter(getChildFragmentManager(), alarmFragment, ringtoneFragment, radioFragment));
         tabLayout.setupWithViewPager(viewPager);
         return view;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        colorWindowBackgroundSubscription.dispose();
     }
 
     public void setListener(SoundChooserListener listener) {

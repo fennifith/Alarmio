@@ -2,7 +2,6 @@ package james.alarmio.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +15,7 @@ import java.util.TimeZone;
 import james.alarmio.R;
 import james.alarmio.adapters.TimeZonesAdapter;
 
-public class TimeZoneChooserDialog extends AppCompatDialog {
+public class TimeZoneChooserDialog extends AestheticDialog {
 
     private OnTimeZoneListener listener;
     private String[] excludedIds;
@@ -70,7 +69,6 @@ public class TimeZoneChooserDialog extends AppCompatDialog {
         });
 
         TimeZonesAdapter adapter = new TimeZonesAdapter(timeZones);
-        adapter.setIgnoreAesthetic(true);
         adapter.setOnClickListener(new TimeZonesAdapter.OnClickListener() {
             @Override
             public void onClick(String timeZone) {

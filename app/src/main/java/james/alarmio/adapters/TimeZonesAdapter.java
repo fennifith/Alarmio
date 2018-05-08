@@ -18,7 +18,6 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
 
     private List<String> timeZones;
     private OnClickListener listener;
-    private boolean ignoreAesthetic;
 
     public TimeZonesAdapter(List<String> timeZones) {
         this.timeZones = timeZones;
@@ -29,20 +28,10 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
         notifyDataSetChanged();
     }
 
-    public void setIgnoreAesthetic(boolean ignoreAesthetic) {
-        this.ignoreAesthetic = ignoreAesthetic;
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(ignoreAesthetic ? R.layout.item_time_zone_aesthetic_ignore : R.layout.item_time_zone, parent, false));
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return ignoreAesthetic ? 1 : 0;
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_time_zone, parent, false));
     }
 
     @Override

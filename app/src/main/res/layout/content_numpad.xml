@@ -24,7 +24,6 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:textAlignment="center"
             android:textSize="32sp"
             tools:text="0m 00s" />
@@ -59,7 +58,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="1"
             android:textSize="32sp" />
 
@@ -70,7 +68,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="2"
             android:textSize="32sp" />
 
@@ -81,7 +78,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="3"
             android:textSize="32sp" />
 
@@ -103,7 +99,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="4"
             android:textSize="32sp" />
 
@@ -114,7 +109,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="5"
             android:textSize="32sp" />
 
@@ -125,7 +119,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="6"
             android:textSize="32sp" />
 
@@ -147,7 +140,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="7"
             android:textSize="32sp" />
 
@@ -158,7 +150,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="8"
             android:textSize="32sp" />
 
@@ -169,7 +160,6 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:tag=":aesthetic_ignore"
             android:text="9"
             android:textSize="32sp" />
 
@@ -185,7 +175,6 @@
         android:layout_weight="1"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:gravity="center"
-        android:tag=":aesthetic_ignore"
         android:text="0"
         android:textSize="32sp" />
 
