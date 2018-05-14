@@ -1,7 +1,6 @@
 package james.alarmio.fragments;
 
 import android.app.AlarmManager;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
@@ -13,13 +12,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.TimePicker;
 
 import com.afollestad.aesthetic.Aesthetic;
 import com.bumptech.glide.Glide;
@@ -36,6 +33,7 @@ import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
+import james.alarmio.dialogs.TimePickerDialog;
 import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.views.PageIndicatorView;
@@ -228,12 +226,10 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View view) {
                 viewPager.setCurrentItem(0, false);
 
-                Calendar time = Calendar.getInstance();
-                new TimePickerDialog(
-                        getContext(),
-                        new TimePickerDialog.OnTimeSetListener() {
+                new TimePickerDialog(getContext())
+                        .setListener(new james.alarmio.dialogs.TimePickerDialog.OnTimeChosenListener() {
                             @Override
-                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                            public void onTimeChosen(int hourOfDay, int minute) {
                                 AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
                                 AlarmData alarm = getAlarmio().newAlarm();
 
@@ -245,11 +241,8 @@ public class HomeFragment extends BaseFragment {
 
                                 getAlarmio().onAlarmsChanged();
                             }
-                        },
-                        time.get(Calendar.HOUR_OF_DAY),
-                        time.get(Calendar.MINUTE),
-                        DateFormat.is24HourFormat(getContext())
-                ).show();
+                        })
+                        .show();
 
                 menu.collapse();
             }
