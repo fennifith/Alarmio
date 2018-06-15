@@ -15,4 +15,7 @@
 
     <color name="textColorPrimaryNight">#FFFFFF</color>
     <color name="textColorSecondaryNight">#B3FFFFFF</color>
+
+    <color name="colorIndeterminateBackground">#30565656</color>
+    <color name="colorIndeterminateText">#606060</color>
 </resources>

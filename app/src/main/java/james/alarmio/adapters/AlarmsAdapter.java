@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.AlarmManager;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +23,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +31,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.afollestad.aesthetic.Aesthetic;
 
@@ -47,6 +44,7 @@ import james.alarmio.activities.MainActivity;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
+import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.dialogs.SoundChooserDialog;
 import james.alarmio.interfaces.SoundChooserListener;
 import james.alarmio.receivers.TimerReceiver;
@@ -54,6 +52,8 @@ import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.DaySwitch;
 import james.alarmio.views.ProgressLineView;
+import me.jfenn.timedatepickers.dialogs.PickerDialog;
+import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
 public class AlarmsAdapter extends RecyclerView.Adapter {
 
@@ -187,22 +187,22 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
 
-                    new TimePickerDialog(
-                            view.getContext(),
-                            new TimePickerDialog.OnTimeSetListener() {
+                    new AestheticTimeSheetPickerDialog(view.getContext(), alarm.time.get(Calendar.HOUR_OF_DAY), alarm.time.get(Calendar.MINUTE))
+                            .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
                                 @Override
-                                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
                                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                                    alarm.time.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                    alarm.time.set(Calendar.MINUTE, minute);
+                                    alarm.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
+                                    alarm.time.set(Calendar.MINUTE, view.getMinute());
                                     alarm.setTime(alarmio, alarmManager, alarm.time.getTimeInMillis());
                                     alarmHolder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
                                 }
-                            },
-                            alarm.time.get(Calendar.HOUR_OF_DAY),
-                            alarm.time.get(Calendar.MINUTE),
-                            DateFormat.is24HourFormat(alarmio)
-                    ).show();
+
+                                @Override
+                                public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                                }
+                            })
+                            .show();
                 }
             });
 

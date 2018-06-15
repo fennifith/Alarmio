@@ -8,12 +8,13 @@
         android:id="@+id/timePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:amPmBackgroundColor="#30565656"
-        android:numbersTextColor="#606060"
-        android:numbersInnerTextColor="#606060"
-        android:amPmTextColor="#FFFFFF"
-        android:numbersSelectorColor="#FFFFFF"
-        android:numbersBackgroundColor="#30565656" />
+        android:colorAccent="@color/colorIndeterminateBackground"
+        android:amPmTextColor="@color/textColorPrimaryNight"
+        android:amPmBackgroundColor="@color/colorIndeterminateBackground"
+        android:numbersTextColor="@color/colorIndeterminateText"
+        android:numbersInnerTextColor="@color/colorIndeterminateText"
+        android:numbersSelectorColor="@color/textColorPrimaryNight"
+        android:numbersBackgroundColor="@color/colorIndeterminateBackground" />
 
     <LinearLayout
         android:layout_width="match_parent"
