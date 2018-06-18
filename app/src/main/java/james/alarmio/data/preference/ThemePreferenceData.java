@@ -1,7 +1,6 @@
 package james.alarmio.data.preference;
 
 import android.Manifest;
-import android.app.TimePickerDialog;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.afollestad.aesthetic.Aesthetic;
 
@@ -29,8 +26,11 @@ import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
+import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.SunriseView;
+import me.jfenn.timedatepickers.dialogs.PickerDialog;
+import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
 public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.ViewHolder> {
 
@@ -103,24 +103,25 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             @Override
             public void onClick(View view) {
                 if (!holder.getAlarmio().isDayAuto()) {
-                    new TimePickerDialog(
-                            view.getContext(),
-                            new TimePickerDialog.OnTimeSetListener() {
+                    new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayStart(), 0)
+                            .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
                                 @Override
-                                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
                                     int dayEnd = holder.getAlarmio().getDayEnd();
-                                    if (hourOfDay < dayEnd) {
-                                        PreferenceData.DAY_START.setValue(holder.getContext(), hourOfDay);
+                                    if (view.getHourOfDay() < dayEnd) {
+                                        PreferenceData.DAY_START.setValue(holder.getContext(), view.getHourOfDay());
                                         holder.sunriseView.invalidate();
-                                        listener.onSunriseChanged(hourOfDay, dayEnd);
+                                        listener.onSunriseChanged(view.getHourOfDay(), dayEnd);
                                         holder.getAlarmio().onActivityResume();
                                     }
                                 }
-                            },
-                            holder.getAlarmio().getDayStart(),
-                            0,
-                            DateFormat.is24HourFormat(holder.getContext())
-                    ).show();
+
+                                @Override
+                                public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+
+                                }
+                            })
+                            .show();
                 }
             }
         });
@@ -129,24 +130,25 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             @Override
             public void onClick(View view) {
                 if (!holder.getAlarmio().isDayAuto()) {
-                    new TimePickerDialog(
-                            view.getContext(),
-                            new TimePickerDialog.OnTimeSetListener() {
+                    new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayEnd(), 0)
+                            .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
                                 @Override
-                                public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                                public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
                                     int dayStart = holder.getAlarmio().getDayStart();
-                                    if (hourOfDay > dayStart) {
-                                        PreferenceData.DAY_END.setValue(holder.getContext(), hourOfDay);
+                                    if (view.getHourOfDay() > dayStart) {
+                                        PreferenceData.DAY_END.setValue(holder.getContext(), view.getHourOfDay());
                                         holder.sunriseView.invalidate();
-                                        listener.onSunriseChanged(dayStart, hourOfDay);
+                                        listener.onSunriseChanged(dayStart, view.getHourOfDay());
                                         holder.getAlarmio().onActivityResume();
                                     }
                                 }
-                            },
-                            holder.getAlarmio().getDayEnd(),
-                            0,
-                            DateFormat.is24HourFormat(holder.getContext())
-                    ).show();
+
+                                @Override
+                                public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+
+                                }
+                            })
+                            .show();
                 }
             }
         });
