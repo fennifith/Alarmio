@@ -28,7 +28,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) {
-                        getView().setPrimaryTextColor(integer);
+                        setPrimaryTextColor(integer);
                     }
                 });
 
@@ -38,7 +38,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) {
-                        getView().setSecondaryTextColor(integer);
+                        setSecondaryTextColor(integer);
                     }
                 });
 
@@ -47,7 +47,9 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) {
-                        getView().setBackgroundColor(integer, integer);
+                        setBackgroundColor(integer);
+                        setPrimaryBackgroundColor(integer);
+                        setSecondaryBackgroundColor(integer);
                     }
                 });
 
@@ -56,8 +58,8 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) {
-                        getView().setSelectionColor(integer);
-                        getView().setSelectedTextColor(ColorUtils.getPrimaryTextColor(getContext(), integer));
+                        setSelectionColor(integer);
+                        setSelectionTextColor(ColorUtils.getPrimaryTextColor(getContext(), integer));
                     }
                 });
     }
