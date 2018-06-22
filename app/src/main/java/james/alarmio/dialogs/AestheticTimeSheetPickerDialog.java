@@ -1,12 +1,13 @@
 package james.alarmio.dialogs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.afollestad.aesthetic.Aesthetic;
 
 import io.reactivex.functions.Consumer;
-import james.alarmio.utils.ColorUtils;
+import james.alarmio.Alarmio;
 import me.jfenn.timedatepickers.dialogs.TimeSheetPickerDialog;
 
 public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
@@ -59,7 +60,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                     @Override
                     public void accept(Integer integer) {
                         setSelectionColor(integer);
-                        setSelectionTextColor(ColorUtils.getPrimaryTextColor(getContext(), integer));
+                        setSelectionTextColor(((Alarmio) getContext().getApplicationContext()).getActivityTheme() == Alarmio.THEME_AMOLED ? Color.BLACK : Color.WHITE);
                     }
                 });
     }
