@@ -44,4 +44,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'me.jfenn:attribouter:0.0.7'
     implementation 'me.jfenn:timedatepickers:0.0.6'
+    implementation 'me.jfenn:crasher:0.0.1'
 }
