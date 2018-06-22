@@ -90,7 +90,6 @@
 
     </contributors>
     <licenses>
-
         <project
             description="A fast and easy to use plug-and-play dynamic theme engine. Powered by Rx, for Android apps."
             license="apache-2.0"
@@ -132,6 +131,10 @@
             description="^A Material Design progress bar with a consistent appearance back to Android 4.0."
             license="apache-2.0"
             repo="DreaminginCodeZH/MaterialProgressBar/" />
+
+        <project repo="TheAndroidMaster/TimeDatePickers" />
+
+        <project repo="TheAndroidMaster/Crasher" />
 
         <project repo="bumptech/glide" />
 
