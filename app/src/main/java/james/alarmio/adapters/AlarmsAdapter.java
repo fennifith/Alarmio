@@ -12,6 +12,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+import android.support.transition.AutoTransition;
+import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -218,7 +220,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                             alarm.days[i] = b;
                         }
                         alarm.setDays(alarmio, alarm.days);
-                        TransitionManager.beginDelayedTransition(recycler);
+
+                        Transition transition = new AutoTransition();
+                        transition.setDuration(150);
+                        TransitionManager.beginDelayedTransition(recycler, transition);
+
                         notifyDataSetChanged();
                     }
                 });
@@ -431,7 +437,11 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     expandedPosition = isExpanded ? -1 : alarmHolder.getAdapterPosition();
-                    TransitionManager.beginDelayedTransition(recycler);
+
+                    Transition transition = new AutoTransition();
+                    transition.setDuration(250);
+                    TransitionManager.beginDelayedTransition(recycler, transition);
+
                     notifyDataSetChanged();
                 }
             });
