@@ -57,6 +57,7 @@
     <string name="title_background_image">Background Image</string>
     <string name="title_ringing_background_image">Show Background Image On Alarms/Timers</string>
     <string name="desc_ringing_background_image">Whether to display the background image when an alarm or timer is ringing.</string>
+    <string name="msg_alarms_empty">You don\'t have any alarms set. Press the \'+\' button to create one.</string>
     <string-array name="array_themes">
         <item>Schedule</item>
         <item>Day</item>

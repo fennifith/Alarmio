@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
 
@@ -18,6 +19,7 @@ import james.alarmio.adapters.AlarmsAdapter;
 public class AlarmsFragment extends BasePagerFragment {
 
     private RecyclerView recyclerView;
+    private View empty;
 
     private AlarmsAdapter alarmsAdapter;
 
@@ -30,6 +32,9 @@ public class AlarmsFragment extends BasePagerFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
         recyclerView = v.findViewById(R.id.recycler);
+        empty = v.findViewById(R.id.empty);
+        ((TextView) v.findViewById(R.id.emptyText)).setText(R.string.msg_alarms_empty);
+
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         alarmsAdapter = new AlarmsAdapter(getAlarmio(), recyclerView, getFragmentManager());
         recyclerView.setAdapter(alarmsAdapter);
@@ -60,6 +65,8 @@ public class AlarmsFragment extends BasePagerFragment {
                         alarmsAdapter.setTextColorPrimary(integer);
                     }
                 });
+
+        onChanged();
         return v;
     }
 
@@ -78,14 +85,23 @@ public class AlarmsFragment extends BasePagerFragment {
 
     @Override
     public void onAlarmsChanged() {
-        if (alarmsAdapter != null)
+        if (alarmsAdapter != null) {
             alarmsAdapter.notifyDataSetChanged();
+            onChanged();
+        }
     }
 
     @Override
     public void onTimersChanged() {
-        if (alarmsAdapter != null)
+        if (alarmsAdapter != null) {
             alarmsAdapter.notifyDataSetChanged();
+            onChanged();
+        }
+    }
+
+    private void onChanged() {
+        if (empty != null && alarmsAdapter != null)
+            empty.setVisibility(alarmsAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
     }
 
 }
