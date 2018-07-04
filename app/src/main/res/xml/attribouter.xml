@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <about>
     <appInfo repo="TheAndroidMaster/Alarmio">
+
         <link
             id="github"
             url="https://jfenn.me/redirects/?t=github&amp;d=Alarmio" />
+
     </appInfo>
     <contributors repo="TheAndroidMaster/Alarmio">
         <contributor
@@ -43,7 +45,7 @@
             task="^Design Consultant">
 
             <link
-                name="Google+"
+                name="Google Plus"
                 icon="@drawable/ic_gplus"
                 url="https://plus.google.com/+EduardoPratti" />
 
@@ -74,6 +76,21 @@
         </contributor>
 
         <contributor
+            name="Rohit Parida"
+            avatar="https://avatars2.githubusercontent.com/u/18437518"
+            bio="A freelance graphic design artist, student, and developer."
+            blog="https://rohitkparida.github.io/"
+            login="rohitkparida"
+            task="^Illustrator">
+
+            <link
+                name="Google Plus"
+                icon="@drawable/ic_gplus"
+                url="https://plus.google.com/+RohitParida27" />
+
+        </contributor>
+
+        <contributor
             name="Alexandre Piveteau"
             avatar="https://avatars0.githubusercontent.com/u/6318990"
             bio="Computer Science student and Android developer."
@@ -88,8 +105,22 @@
 
         </contributor>
 
+        <contributor
+            hidden="true"
+            login="FriederZi" /> <!-- already in <translators> section -->
+
     </contributors>
+    <translators>
+
+        <translator
+            name="Frieder Zi"
+            blog="https://plus.google.com/109963929934858074229"
+            locales="de"
+            login="FriederZi" />
+
+    </translators>
     <licenses>
+
         <project
             description="A fast and easy to use plug-and-play dynamic theme engine. Powered by Rx, for Android apps."
             license="apache-2.0"
