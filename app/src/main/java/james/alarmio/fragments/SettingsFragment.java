@@ -42,7 +42,8 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
+        View v = inflater.inflate(R.layout.fragment_recycler, container, false);
+        recyclerView = v.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
@@ -84,7 +85,7 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
                 .textColorPrimary()
                 .subscribe(this);
 
-        return recyclerView;
+        return v;
     }
 
     @Override
