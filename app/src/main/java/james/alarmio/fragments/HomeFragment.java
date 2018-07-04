@@ -2,7 +2,6 @@ package james.alarmio.fragments;
 
 import android.app.AlarmManager;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,9 +18,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.afollestad.aesthetic.Aesthetic;
-import com.bumptech.glide.Glide;
 
-import java.io.File;
 import java.util.Calendar;
 
 import io.reactivex.disposables.Disposable;
@@ -36,6 +33,7 @@ import james.alarmio.data.PreferenceData;
 import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.dialogs.TimerDialog;
 import james.alarmio.utils.ConversionUtils;
+import james.alarmio.utils.ImageUtils;
 import james.alarmio.views.PageIndicatorView;
 import me.jfenn.timedatepickers.dialogs.PickerDialog;
 import me.jfenn.timedatepickers.views.LinearTimePickerView;
@@ -271,14 +269,7 @@ public class HomeFragment extends BaseFragment {
             timeIndicator.setVisibility(clockFragments.length > 1 ? View.VISIBLE : View.GONE);
         }
 
-        String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(getContext());
-        if (backgroundUrl != null && backgroundUrl.length() > 0) {
-            if (backgroundUrl.startsWith("http"))
-                Glide.with(getContext()).load(backgroundUrl).into(background);
-            else if (backgroundUrl.contains("://"))
-                Glide.with(getContext()).load(Uri.parse(backgroundUrl)).into(background);
-            else Glide.with(getContext()).load(new File(backgroundUrl)).into(background);
-        }
+        ImageUtils.getBackgroundImage(background);
     }
 
     @Override

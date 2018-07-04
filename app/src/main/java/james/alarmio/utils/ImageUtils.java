@@ -4,6 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+
+import james.alarmio.data.PreferenceData;
 
 public class ImageUtils {
 
@@ -29,6 +37,17 @@ public class ImageUtils {
         drawable.draw(canvas);
 
         return bitmap;
+    }
+
+    public static void getBackgroundImage(ImageView imageView) {
+        String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(imageView.getContext());
+        if (backgroundUrl != null && backgroundUrl.length() > 0) {
+            if (backgroundUrl.startsWith("http"))
+                Glide.with(imageView.getContext()).load(backgroundUrl).into(imageView);
+            else if (backgroundUrl.contains("://"))
+                Glide.with(imageView.getContext()).load(Uri.parse(backgroundUrl)).into(imageView);
+            else Glide.with(imageView.getContext()).load(new File(backgroundUrl)).into(imageView);
+        }
     }
 
 }

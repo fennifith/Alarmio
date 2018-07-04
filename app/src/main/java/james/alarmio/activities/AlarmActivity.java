@@ -38,12 +38,14 @@ import james.alarmio.data.TimerData;
 import james.alarmio.dialogs.TimeChooserDialog;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.utils.FormatUtils;
+import james.alarmio.utils.ImageUtils;
 
 public class AlarmActivity extends AestheticActivity implements View.OnTouchListener {
 
     public static final String EXTRA_ALARM = "james.alarmio.AlarmActivity.EXTRA_ALARM";
     public static final String EXTRA_TIMER = "james.alarmio.AlarmActivity.EXTRA_TIMER";
 
+    private View overlay;
     private TextView date;
     private TextView time;
     private ImageView snooze;
@@ -83,11 +85,14 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         setContentView(R.layout.activity_alarm);
         alarmio = (Alarmio) getApplicationContext();
 
+        overlay = findViewById(R.id.overlay);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
         snooze = findViewById(R.id.snooze);
         dismiss = findViewById(R.id.dismiss);
         fab = findViewById(R.id.fab);
+
+        ImageUtils.getBackgroundImage((ImageView) findViewById(R.id.background));
 
         textColorPrimarySubscription = Aesthetic.get()
                 .textColorPrimary()
@@ -96,6 +101,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                     public void accept(Integer integer) throws Exception {
                         snooze.setColorFilter(integer);
                         dismiss.setColorFilter(integer);
+                        overlay.setBackgroundColor(integer);
                     }
                 });
 
