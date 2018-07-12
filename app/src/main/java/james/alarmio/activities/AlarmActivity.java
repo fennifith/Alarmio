@@ -75,6 +75,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     private PowerManager.WakeLock wakeLock;
 
     private Disposable textColorPrimarySubscription;
+    private Disposable textColorPrimaryInverseSubscription;
     private Disposable isDarkSubscription;
 
     private boolean isDark;
@@ -101,6 +102,14 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                     public void accept(Integer integer) throws Exception {
                         snooze.setColorFilter(integer);
                         dismiss.setColorFilter(integer);
+                    }
+                });
+
+        textColorPrimaryInverseSubscription = Aesthetic.get()
+                .textColorPrimaryInverse()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
                         overlay.setBackgroundColor(integer);
                     }
                 });
@@ -176,6 +185,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         if (sound != null)
             sound.play(alarmio);
 
+        ImageUtils.getBackgroundImage((ImageView) findViewById(R.id.background));
         SleepReminderService.refreshSleepTime(alarmio);
     }
 
@@ -198,8 +208,9 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (textColorPrimarySubscription != null && isDarkSubscription != null) {
+        if (textColorPrimarySubscription != null && textColorPrimaryInverseSubscription != null && isDarkSubscription != null) {
             textColorPrimarySubscription.dispose();
+            textColorPrimaryInverseSubscription.dispose();
             isDarkSubscription.dispose();
         }
 
