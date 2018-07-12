@@ -59,9 +59,13 @@ public class TimerFragment extends BaseFragment {
                         time.setProgress(timer.getDuration() - remainingMillis);
                         handler.postDelayed(this, 10);
                     } else {
-                        FragmentManager manager = getFragmentManager();
-                        if (manager != null)
-                            manager.popBackStack();
+                        try {
+                            FragmentManager manager = getFragmentManager();
+                            if (manager != null)
+                                manager.popBackStack();
+                        } catch (IllegalStateException e) {
+                            handler.postDelayed(this, 100);
+                        }
                     }
                 }
             }
@@ -103,5 +107,4 @@ public class TimerFragment extends BaseFragment {
         time.unsubscribe();
         super.onDestroyView();
     }
-
 }
