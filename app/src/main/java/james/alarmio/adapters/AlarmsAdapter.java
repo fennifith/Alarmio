@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -16,9 +15,7 @@ import android.support.transition.AutoTransition;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
@@ -339,38 +336,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                             .show();
                 }
             });
-
-            int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
-
-            ColorStateList colorStateList = new ColorStateList(
-                    states,
-                    new int[]{
-                            Color.argb(100, 128, 128, 128),
-                            colorAccent
-                    }
-            );
-
-            ColorStateList thumbStateList = new ColorStateList(
-                    states,
-                    new int[]{
-                            Color.argb(255, 128, 128, 128),
-                            colorAccent
-                    }
-            );
-
-            ColorStateList trackStateList = new ColorStateList(
-                    states,
-                    new int[]{
-                            Color.argb(100, 128, 128, 128),
-                            Color.argb(100, Color.red(colorAccent), Color.green(colorAccent), Color.blue(colorAccent))
-                    }
-            );
-
-            CompoundButtonCompat.setButtonTintList(alarmHolder.enable, colorStateList);
-            CompoundButtonCompat.setButtonTintList(alarmHolder.repeat, colorStateList);
-
-            DrawableCompat.setTintList(DrawableCompat.wrap(alarmHolder.enable.getThumbDrawable()), thumbStateList);
-            DrawableCompat.setTintList(DrawableCompat.wrap(alarmHolder.enable.getTrackDrawable()), trackStateList);
 
             alarmHolder.repeat.setTextColor(textColorPrimary);
             alarmHolder.delete.setTextColor(textColorPrimary);

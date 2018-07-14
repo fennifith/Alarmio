@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -19,9 +20,10 @@ import java.util.TimeZone;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.FormatUtils;
 
-public class DigitalClockView extends BaseSubscriptionView implements ViewTreeObserver.OnGlobalLayoutListener {
+public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Subscribblable {
 
     private Paint paint;
 

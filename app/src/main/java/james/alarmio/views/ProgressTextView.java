@@ -8,15 +8,17 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.afollestad.aesthetic.Aesthetic;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.ConversionUtils;
 
-public class ProgressTextView extends BaseSubscriptionView {
+public class ProgressTextView extends View implements Subscribblable {
 
     private Paint linePaint, circlePaint, referenceCirclePaint, backgroundPaint, textPaint;
     private long progress, maxProgress, referenceProgress;

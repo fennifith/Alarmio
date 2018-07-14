@@ -17,9 +17,10 @@ import com.afollestad.aesthetic.Aesthetic;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.ConversionUtils;
 
-public class DaySwitch extends BaseSubscriptionView implements View.OnClickListener {
+public class DaySwitch extends View implements View.OnClickListener, Subscribblable {
 
     private Paint accentPaint;
     private Paint textPaint;

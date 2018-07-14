@@ -21,14 +21,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.afollestad.aesthetic.Aesthetic;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.ConversionUtils;
 
-public class PageIndicatorView extends BaseSubscriptionView implements ViewPager.OnPageChangeListener {
+public class PageIndicatorView extends View implements ViewPager.OnPageChangeListener, Subscribblable {
 
     private int actualPosition;
     private float offset;

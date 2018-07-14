@@ -6,13 +6,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.afollestad.aesthetic.Aesthetic;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import james.alarmio.interfaces.Subscribblable;
 
-public class ProgressLineView extends BaseSubscriptionView {
+public class ProgressLineView extends View implements Subscribblable {
 
     private Paint backgroundPaint;
     private Paint linePaint;
