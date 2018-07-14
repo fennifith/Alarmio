@@ -93,8 +93,6 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         dismiss = findViewById(R.id.dismiss);
         fab = findViewById(R.id.fab);
 
-        ImageUtils.getBackgroundImage((ImageView) findViewById(R.id.background));
-
         textColorPrimarySubscription = Aesthetic.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
@@ -185,8 +183,10 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         if (sound != null)
             sound.play(alarmio);
 
-        ImageUtils.getBackgroundImage((ImageView) findViewById(R.id.background));
         SleepReminderService.refreshSleepTime(alarmio);
+
+        if (PreferenceData.RINGING_BACKGROUND_IMAGE.getValue(this))
+            ImageUtils.getBackgroundImage((ImageView) findViewById(R.id.background));
     }
 
     @Override
