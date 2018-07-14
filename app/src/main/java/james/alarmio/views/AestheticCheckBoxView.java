@@ -16,6 +16,7 @@ import james.alarmio.interfaces.Subscribblable;
 public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscribblable {
 
     private Disposable colorAccentSubscription;
+    private Disposable textColorPrimarySubscription;
 
     public AestheticCheckBoxView(Context context) {
         super(context);
@@ -51,10 +52,19 @@ public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscrib
                         CompoundButtonCompat.setButtonTintList(AestheticCheckBoxView.this, colorStateList);
                     }
                 });
+
+        textColorPrimarySubscription = Aesthetic.get().textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        setTextColor(integer);
+                    }
+                });
     }
 
     @Override
     public void unsubscribe() {
         colorAccentSubscription.dispose();
+        textColorPrimarySubscription.dispose();
     }
 }

@@ -17,6 +17,7 @@ import james.alarmio.interfaces.Subscribblable;
 public class AestheticSwitchView extends SwitchCompat implements Subscribblable {
 
     private Disposable colorAccentSubscription;
+    private Disposable textColorPrimarySubscription;
 
     public AestheticSwitchView(Context context) {
         super(context);
@@ -73,10 +74,19 @@ public class AestheticSwitchView extends SwitchCompat implements Subscribblable 
                             DrawableCompat.setTintList(DrawableCompat.wrap(getTrackDrawable()), trackStateList);
                     }
                 });
+
+        textColorPrimarySubscription = Aesthetic.get().textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        setTextColor(integer);
+                    }
+                });
     }
 
     @Override
     public void unsubscribe() {
         colorAccentSubscription.dispose();
+        textColorPrimarySubscription.dispose();
     }
 }
