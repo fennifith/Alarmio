@@ -105,9 +105,15 @@
 
         </contributor>
 
+		<!-- already in <translators> section -->
+
         <contributor
             hidden="true"
-            login="FriederZi" /> <!-- already in <translators> section -->
+            login="FriederZi" />
+
+        <contributor
+        	hidden="true"
+        	login="pablomeza10" />
 
     </contributors>
     <translators>
@@ -117,6 +123,12 @@
             blog="https://plus.google.com/109963929934858074229"
             locales="de"
             login="FriederZi" />
+
+        <translator
+        	name="Pablo Meza"
+        	blog="https://plus.google.com/112338221490547010788"
+        	locales="es"
+        	login="pablomeza10" />
 
     </translators>
     <licenses>
