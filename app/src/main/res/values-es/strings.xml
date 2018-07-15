@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">Alarmio</string>
+    <string name="title_alarm">Alarma %d</string>
+    <string name="title_none">Ninguno</string>
+    <string name="title_vibrate">Vibrate</string>
+    <string name="title_repeat">Repitir</string>
+    <string name="title_set_alarm">Alarma</string>
+    <string name="title_set_timer">Temporizador</string>
+    <string name="title_set_stopwatch">Cronómetro</string>
+    <string name="title_lap">Vuelta</string>
+    <string name="title_stopwatch">Cronómetro</string>
+    <string name="title_stopwatch_share">%s Cronómetro: %s</string>
+    <string name="title_lap_number">#%d</string>
+    <string name="title_time">Tiemp: %s</string>
+    <string name="title_lap_time">Vuelta: %s</string>
+    <string name="title_total_time">Total: %s</string>
+    <string name="title_share_results">Compartír Resultados…</string>
+    <string name="msg_delete_confirmation">Estas seguro que quieres eliminar %s?</string>
+    <string name="title_delete">Eleminar</string>
+    <string name="title_start_timer">Empiezar temporizador</string>
+    <string name="title_auto">Automatico</string>
+    <string name="title_sunrise">Amanecer</string>
+    <string name="title_sunset">Puesta del Sol</string>
+    <string name="title_theme">Thema</string>
+    <string name="title_appearance">Apariencia</string>
+    <string name="title_sound_none">Ninguno</string>
+    <string name="title_snooze">Dormitar</string>
+    <string name="word_minute">minuto</string>
+    <string name="word_minutes">minutos</string>
+    <string name="word_hour">hora</string>
+    <string name="word_hours">horas</string>
+    <string name="word_join">y</string>
+    <string name="title_snooze_custom">Personalizado…</string>
+    <string name="msg_snoozed_until">Dormitar hasta %s</string>
+    <string name="title_radio_test">Testear</string>
+    <string name="title_radio_create">Crear</string>
+    <string name="msg_radio_create">Crear un nuevo Radio</string>
+    <string name="msg_radio_url">Pega un \'.m3u8\' URL de Radio aqui...</string>
+    <string name="msg_radio_previous">Escoje un radio previamente usado </string>
+    <string name="title_radio_stop">Para</string>
+    <string name="title_radio">Radio</string>
+    <string name="title_time_zones">Zonas de Tiempo</string>
+    <string name="title_behavior">Comportamiento</string>
+    <string name="title_default_alarm_ringtone">Tono de Alarma por Defecto</string>
+    <string name="title_default_timer_ringtone">Tono del Temporizador por Defecto</string>
+    <string name="title_sleep_reminder">Recordatorio de Dormir</string>
+    <string name="desc_sleep_reminder">Manda un notificacion recordándote a ir a dormir a un cierto tiempo antes que se tiembre la alarma si está usando su teléfono.</string>
+    <string name="title_sleep_reminder_time">Recordatorio de Dormir Temporizador</string>
+    <string name="desc_sleep_reminder_time">%1$d horas antes</string>
+    <string name="title_slow_wake_up">Despertar despacio</string>
+    <string name="desc_slow_wake_up">Gradualmente incrementar el brillo y volumen cuando este timbrando una alarma.</string>
+    <string name="title_slow_wake_up_time">Duración del tiempo de despertar despacio</string>
+    <string name="title_about">Acerca de &amp; Licencias de OSS</string>
+    <string name="title_choose_time_zone">Escoje una Zona de Tiempo</string>
+    <string name="msg_sleep_reminder">Tu próxima alarma va a timbrar en approximadamente %s de ahora. Para recibir tu tiempo específico de la cantidad de tu sueño, deberias ir a dormir ahorita.<strings>
+    <string name="title_alarm_name">Nombre de la Alarma</string>
+    <string name="title_background_image">Imagen de Fondo</string>
+    <string name="title_ringing_background_image">Enseñar Imágen de Fondo en Alarmas/Temporizadores</string>
+    <string name="desc_ringing_background_image">Si enseñarar el imágen de fondo cuando una alarmo o temporizador timbre.</string>
+    <string name="msg_alarms_empty">You don\'t have any alarms set. Presióne el boton \'+\' para crear uno.</string>
+    <string-array name="array_themes">
+        <item>Programa</item>
+        <item>Day</item>
+        <item>Noche</item>
+        <item>AMOLED</item>
+    </string-array>
+</resources>
