@@ -5,7 +5,6 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.AlarmManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -44,6 +42,7 @@ import james.alarmio.data.AlarmData;
 import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
+import james.alarmio.dialogs.AlertDialog;
 import james.alarmio.dialogs.SoundChooserDialog;
 import james.alarmio.interfaces.SoundChooserListener;
 import james.alarmio.receivers.TimerReceiver;
@@ -318,19 +317,13 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    new AlertDialog.Builder(view.getContext())
-                            .setMessage(alarmio.getString(R.string.msg_delete_confirmation, alarm.getName(alarmio)))
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    new AlertDialog(view.getContext())
+                            .setContent(alarmio.getString(R.string.msg_delete_confirmation, alarm.getName(alarmio)))
+                            .setListener(new AlertDialog.Listener() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int i) {
-                                    alarmio.removeAlarm(getAlarm(alarmHolder.getAdapterPosition()));
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int i) {
-                                    dialog.dismiss();
+                                public void onDismiss(AlertDialog dialog, boolean ok) {
+                                    if (ok)
+                                        alarmio.removeAlarm(getAlarm(alarmHolder.getAdapterPosition()));
                                 }
                             })
                             .show();
