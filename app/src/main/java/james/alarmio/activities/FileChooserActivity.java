@@ -3,9 +3,7 @@ package james.alarmio.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -63,32 +61,8 @@ public class FileChooserActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
             String path = data.getDataString();
-            if (type.equals("image/*")) {
-                try {
-                    Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
-                    String documentId;
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-                        documentId = cursor.getString(0);
-                        documentId = documentId.substring(documentId.lastIndexOf(":") + 1);
-                        cursor.close();
-                    } else {
-                        finish();
-                        return;
-                    }
-
-                    cursor = getContentResolver().query(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Images.Media._ID + " = ? ", new String[]{documentId}, null);
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-                        path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                        cursor.close();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            preference.setValue(this, path);
+            if (path != null)
+                preference.setValue(this, path);
         }
 
         finish();
