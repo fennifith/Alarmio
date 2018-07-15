@@ -175,7 +175,10 @@
             license="apache-2.0"
             repo="DreaminginCodeZH/MaterialProgressBar/" />
 
-        <project repo="TheAndroidMaster/TimeDatePickers" />
+        <project
+            description="A simple library containing several configurable time/date picker views and dialogs."
+            license="apache-2.0"
+            repo="TheAndroidMaster/TimeDatePicker" />
 
         <project repo="TheAndroidMaster/Crasher" />
 
