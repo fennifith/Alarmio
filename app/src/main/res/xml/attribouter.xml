@@ -130,6 +130,12 @@
         	locales="es"
         	login="pablomeza10" />
 
+        <translator
+            name="Vinicius R"
+            blog="^https://github.com/Suburbanno"
+            locales="pt"
+            login="Suburbanno" />
+
     </translators>
     <licenses>
 
