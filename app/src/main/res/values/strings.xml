@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Alarmio</string>
+    <string name="app_name" translatable="false">Alarmio</string>
     <string name="title_alarm">Alarm %d</string>
     <string name="title_none">None</string>
     <string name="title_vibrate">Vibrate</string>
@@ -10,7 +10,7 @@
     <string name="title_lap">Lap</string>
     <string name="title_stopwatch">Stopwatch</string>
     <string name="title_stopwatch_share">%s Stopwatch: %s</string>
-    <string name="title_lap_number">#%d</string>
+    <string name="title_lap_number" translatable="false">#%d</string>
     <string name="title_time">Time: %s</string>
     <string name="title_lap_time">Lap: %s</string>
     <string name="title_total_time">Total: %s</string>
@@ -35,7 +35,7 @@
     <string name="title_radio_test">Test</string>
     <string name="title_radio_create">Create</string>
     <string name="msg_radio_create">Create a new Radio</string>
-    <string name="msg_radio_url">Paste an \'.m3u8\' Radio URL here...</string>
+    <string name="msg_radio_url">Paste an \'.m3u8\' Radio URL here…</string>
     <string name="msg_radio_previous">Choose a Previously Used Radio</string>
     <string name="title_radio_stop">Stop</string>
     <string name="title_radio">Radio</string>

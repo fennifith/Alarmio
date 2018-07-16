@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Alarmio</string>
     <string name="title_alarm">Alarm %d</string>
     <string name="title_none">Keiner</string>
     <string name="title_vibrate">Vibrieren</string>
@@ -10,11 +9,10 @@
     <string name="title_lap">Runde</string>
     <string name="title_stopwatch">Stoppuhr</string>
     <string name="title_stopwatch_share">%s Stoppuhr: %s</string>
-    <string name="title_lap_number">#%d</string>
     <string name="title_time">Zeit: %s</string>
     <string name="title_lap_time">Runde: %s</string>
     <string name="title_total_time">Gesamt: %s</string>
-    <string name="title_share_results">Teile Ergebnisse...</string>
+    <string name="title_share_results">Teile Ergebnisse…</string>
     <string name="msg_delete_confirmation">Bist du dir sicher, dass du %s löschen möchtest?</string>
     <string name="title_delete">Löschen</string>
     <string name="title_start_timer">Timer starten</string>
@@ -63,4 +61,7 @@
         <item>Nacht</item>
         <item>AMOLED</item>
     </string-array>
+
+    <!-- untranslated strings -->
+    <string name="msg_alarms_empty">You don\'t have any alarms set. Press the \'+\' button to create one.</string>
 </resources>
