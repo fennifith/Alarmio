@@ -1,0 +1,65 @@
+<resources>
+    <string name="title_alarm">Alarme %d</string>
+    <string name="title_none">Nenhum</string>
+    <string name="title_vibrate">Vibrar</string>
+    <string name="title_repeat">Repetir</string>
+    <string name="title_set_alarm">Alarme</string>
+    <string name="title_set_timer">Temporizador</string>
+    <string name="title_set_stopwatch">Cronômetro</string>
+    <string name="title_lap">Volta</string>
+    <string name="title_stopwatch">Cronômetro</string>
+    <string name="title_stopwatch_share">%s Cronômetro: %s</string>
+    <string name="title_time">Hora: %s</string>
+    <string name="title_lap_time">Volta: %s</string>
+    <string name="title_total_time">Total: %s</string>
+    <string name="title_share_results">Compartilhar os resultados…</string>
+    <string name="msg_delete_confirmation">Tem certeza de que deseja excluir %s?</string>
+    <string name="title_delete">Excluir</string>
+    <string name="title_start_timer">Iniciar temporizador</string>
+    <string name="title_auto">Auto</string>
+    <string name="title_sunrise">Nascer do Sol</string>
+    <string name="title_sunset">Pôr do Sol</string>
+    <string name="title_theme">Tema</string>
+    <string name="title_appearance">Aparência</string>
+    <string name="title_sound_none">Nenhum</string>
+    <string name="title_snooze">Adiar</string>
+    <string name="word_minute">minuto</string>
+    <string name="word_minutes">minutos</string>
+    <string name="word_hour">hora</string>
+    <string name="word_hours">horas</string>
+    <string name="word_join">e</string>
+    <string name="title_snooze_custom">Personalizar…</string>
+    <string name="msg_snoozed_until">Suspenso até %s</string>
+    <string name="title_radio_test">Teste</string>
+    <string name="title_radio_create">Criar</string>
+    <string name="msg_radio_create">Crie um novo Radio</string>
+    <string name="msg_radio_url">Cole um URL de rádio \'.m3u8 \' aqui…</string>
+    <string name="msg_radio_previous">Escolher um rádio usado anteriormente</string>
+    <string name="title_radio_stop">Parar</string>
+    <string name="title_radio">Rádio</string>
+    <string name="title_time_zones">Fusos Horários</string>
+    <string name="title_behavior">Comportamento</string>
+    <string name="title_default_alarm_ringtone">Toque de Alarme Padrão</string>
+    <string name="title_default_timer_ringtone">Toque do Timer Padrão</string>
+    <string name="title_sleep_reminder">Lembrete de suspensão</string>
+    <string name="desc_sleep_reminder">Envie uma notificação lembrando você de ir dormir um certo tempo antes que seu alarme toque se você estiver usando o seu telefone.</string>
+    <string name="title_sleep_reminder_time">Hora do lembrete de suspensão</string>
+    <string name="desc_sleep_reminder_time">%1$d horas antes</string>
+    <string name="title_slow_wake_up">Despertar lento</string>
+    <string name="desc_slow_wake_up">Aumente gradualmente o brilho e o volume quando um alarme estiver tocando.</string>
+    <string name="title_slow_wake_up_time">Duração do Despertar Lento</string>
+    <string name="title_about">Sobre &amp; Licenças OSS</string>
+    <string name="title_choose_time_zone">Escolha um fuso horário</string>
+    <string name="msg_sleep_reminder">Seu próximo alarme tocará aproximadamente% s a partir de agora. Para obter a quantidade especificada de sono no menu de configurações, você deve ir para a cama agora.</string>
+    <string name="title_alarm_name">Nome do Alarme</string>
+    <string name="title_background_image">Imagem de fundo</string>
+    <string name="title_ringing_background_image">Mostra a imagem de fundo nos alarmes / temporizadores</string>
+    <string name="desc_ringing_background_image">Exibe a imagem de fundo quando um alarme ou timer está tocando.</string>
+    <string name="msg_alarms_empty">Você não possui nenhum alarme definido. Pressione o botão \'+\' para criar um.</string>
+    <string-array name="array_themes">
+        <item>Agenda</item>
+        <item>Dia</item>
+        <item>Noite</item>
+        <item>AMOLED</item>
+    </string-array>
+</resources>
