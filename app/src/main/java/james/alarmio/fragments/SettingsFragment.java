@@ -10,13 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.adapters.PreferenceAdapter;
 import james.alarmio.data.PreferenceData;
@@ -30,14 +26,11 @@ import james.alarmio.data.preference.TimePreferenceData;
 import james.alarmio.data.preference.TimeZonesPreferenceData;
 import me.jfenn.attribouter.Attribouter;
 
-public class SettingsFragment extends BasePagerFragment implements Consumer {
+public class SettingsFragment extends BasePagerFragment {
 
     private RecyclerView recyclerView;
 
     private PreferenceAdapter preferenceAdapter;
-
-    private Disposable colorPrimarySubscription;
-    private Disposable textColorPrimarySubscription;
 
     @Nullable
     @Override
@@ -77,22 +70,7 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
         )));
         recyclerView.setAdapter(preferenceAdapter);
 
-        colorPrimarySubscription = Aesthetic.get()
-                .colorPrimary()
-                .subscribe(this);
-
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(this);
-
         return v;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        colorPrimarySubscription.dispose();
-        textColorPrimarySubscription.dispose();
     }
 
     @Override
@@ -103,12 +81,6 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (preferenceAdapter != null)
-            preferenceAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void accept(Object o) throws Exception {
         if (preferenceAdapter != null)
             preferenceAdapter.notifyDataSetChanged();
     }

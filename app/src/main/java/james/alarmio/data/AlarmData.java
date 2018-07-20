@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.annotations.Nullable;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
 import james.alarmio.receivers.AlarmReceiver;

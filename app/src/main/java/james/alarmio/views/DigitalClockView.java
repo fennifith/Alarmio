@@ -12,14 +12,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import james.alarmio.Alarmio;
 import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.FormatUtils;
 
@@ -28,8 +25,6 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
     private Paint paint;
 
     private TimeZone timezone;
-
-    private Disposable textColorPrimarySubscription;
 
     public DigitalClockView(Context context) {
         this(context, null, 0);
@@ -60,20 +55,11 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
 
     @Override
     public void subscribe() {
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        paint.setColor(integer);
-                        invalidate();
-                    }
-                });
+        paint.setColor(((Alarmio) getContext().getApplicationContext()).getTextColor());
     }
 
     @Override
     public void unsubscribe() {
-        textColorPrimarySubscription.dispose();
     }
 
     @Override

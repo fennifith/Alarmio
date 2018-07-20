@@ -23,10 +23,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.afollestad.aesthetic.Aesthetic;
-
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import james.alarmio.Alarmio;
 import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.ConversionUtils;
 
@@ -41,9 +38,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     private int textColorPrimary;
     private int textColorSecondary;
-
-    private Disposable textColorPrimarySubscription;
-    private Disposable textColorSecondarySubscription;
 
     public PageIndicatorView(Context context) {
         this(context, null);
@@ -66,33 +60,15 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     @Override
     public void subscribe() {
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorPrimary = integer;
-                        engine.updateTextColors(PageIndicatorView.this);
-                        invalidate();
-                    }
-                });
-
-        textColorSecondarySubscription = Aesthetic.get()
-                .textColorSecondary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorSecondary = integer;
-                        engine.updateTextColors(PageIndicatorView.this);
-                        invalidate();
-                    }
-                });
+        Alarmio alarmio = (Alarmio) getContext().getApplicationContext();
+        textColorPrimary = alarmio.getTextColor();
+        textColorSecondary = alarmio.getTextColor(false, false);
+        engine.updateTextColors(PageIndicatorView.this);
+        invalidate();
     }
 
     @Override
     public void unsubscribe() {
-        textColorPrimarySubscription.dispose();
-        textColorSecondarySubscription.dispose();
     }
 
     public int getTotalPages() {

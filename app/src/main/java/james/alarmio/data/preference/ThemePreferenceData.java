@@ -15,12 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.Calendar;
 import java.util.Date;
 
-import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
@@ -151,25 +148,8 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             }
         });
 
-        Aesthetic.get()
-                .textColorSecondary()
-                .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer textColorSecondary) throws Exception {
-                        holder.themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
-                    }
-                });
-
-        Aesthetic.get()
-                .colorCardViewBackground()
-                .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer colorForeground) throws Exception {
-                        holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
-                    }
-                });
+        holder.themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(holder.getAlarmio().getTextColor(false, false)));
+        holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(holder.getAlarmio().getTextColor(true, true)));
     }
 
     public static class ViewHolder extends BasePreferenceData.ViewHolder {

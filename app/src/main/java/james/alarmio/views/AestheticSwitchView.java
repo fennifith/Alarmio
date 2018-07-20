@@ -1,23 +1,12 @@
 package james.alarmio.views;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 
-import com.afollestad.aesthetic.Aesthetic;
-
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;
 
 public class AestheticSwitchView extends SwitchCompat implements Subscribblable {
-
-    private Disposable colorAccentSubscription;
-    private Disposable textColorPrimarySubscription;
 
     public AestheticSwitchView(Context context) {
         super(context);
@@ -36,7 +25,7 @@ public class AestheticSwitchView extends SwitchCompat implements Subscribblable 
 
     @Override
     public void subscribe() {
-        colorAccentSubscription = Aesthetic.get().colorAccent()
+        /*colorAccentSubscription = Aesthetic.get().colorAccent()
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
@@ -81,12 +70,12 @@ public class AestheticSwitchView extends SwitchCompat implements Subscribblable 
                     public void accept(Integer integer) throws Exception {
                         setTextColor(integer);
                     }
-                });
+                });*/
     }
 
     @Override
     public void unsubscribe() {
-        colorAccentSubscription.dispose();
-        textColorPrimarySubscription.dispose();
+        /*colorAccentSubscription.dispose();
+        textColorPrimarySubscription.dispose();*/
     }
 }

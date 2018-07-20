@@ -10,12 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
@@ -154,17 +151,11 @@ public class TimerDialog extends AestheticDialog implements View.OnClickListener
             }
         });
 
-        Aesthetic.get()
-                .textColorPrimary()
-                .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        ringtoneImage.setColorFilter(integer);
-                        vibrateImage.setColorFilter(integer);
-                        backspace.setColorFilter(integer);
-                    }
-                });
+        int textColorPrimary = getAlarmio().getTextColor();
+
+        ringtoneImage.setColorFilter(textColorPrimary);
+        vibrateImage.setColorFilter(textColorPrimary);
+        backspace.setColorFilter(textColorPrimary);
     }
 
     private void input(String character) {

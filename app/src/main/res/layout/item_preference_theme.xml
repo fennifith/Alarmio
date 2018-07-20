@@ -33,7 +33,7 @@
 
     </LinearLayout>
 
-    <james.alarmio.views.AestheticCheckBoxView
+    <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/sunriseAutoSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

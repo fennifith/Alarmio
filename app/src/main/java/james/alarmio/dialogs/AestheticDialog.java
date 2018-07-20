@@ -4,28 +4,25 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
 
-import com.afollestad.aesthetic.Aesthetic;
-
-import io.reactivex.functions.Consumer;
+import james.alarmio.Alarmio;
 
 public abstract class AestheticDialog extends AppCompatDialog {
 
+    private Alarmio alarmio;
+
     public AestheticDialog(Context context) {
         super(context);
+        alarmio = (Alarmio) context.getApplicationContext();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Aesthetic.get()
-                .colorPrimary()
-                .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        findViewById(android.R.id.content).setBackgroundColor(integer);
-                    }
-                });
+        //findViewById(android.R.id.content).setBackgroundColor(ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt());
+    }
+
+    Alarmio getAlarmio() {
+        return alarmio;
     }
 }

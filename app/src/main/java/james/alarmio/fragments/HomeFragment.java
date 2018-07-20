@@ -17,12 +17,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.Calendar;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.multimoon.colorful.ColorfulKt;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 import james.alarmio.Alarmio;
@@ -58,11 +55,6 @@ public class HomeFragment extends BaseFragment {
 
     private BottomSheetBehavior behavior;
     private boolean shouldCollapseBack;
-
-    private Disposable colorPrimarySubscription;
-    private Disposable colorAccentSubscription;
-    private Disposable textColorPrimarySubscription;
-    private Disposable textColorPrimaryInverseSubscription;
 
     @Nullable
     @Override
@@ -148,56 +140,32 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        colorPrimarySubscription = Aesthetic.get()
-                .colorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        bottomSheet.setBackgroundColor(integer);
-                        overlay.setBackgroundColor(integer);
-                    }
-                });
+        int colorPrimary = ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt();
+        bottomSheet.setBackgroundColor(colorPrimary);
+        overlay.setBackgroundColor(colorPrimary);
 
-        colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        menu.setMenuButtonColor(integer);
+        int colorAccent = ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt();
+        menu.setMenuButtonColor(colorAccent);
 
-                        int color = ContextCompat.getColor(getContext(), getAlarmio().getActivityTheme() == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
-                        menu.getMenuButton().setColorFilter(color);
-                        stopwatchFab.setColorFilter(color);
-                        timerFab.setColorFilter(color);
-                        alarmFab.setColorFilter(color);
+        int color = ContextCompat.getColor(getContext(), getAlarmio().getActivityTheme() == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
+        menu.getMenuButton().setColorFilter(color);
+        stopwatchFab.setColorFilter(color);
+        timerFab.setColorFilter(color);
+        alarmFab.setColorFilter(color);
 
-                        stopwatchFab.setBackgroundColor(integer);
-                        timerFab.setBackgroundColor(integer);
-                        alarmFab.setBackgroundColor(integer);
-                    }
-                });
+        stopwatchFab.setBackgroundColor(colorAccent);
+        timerFab.setBackgroundColor(colorAccent);
+        alarmFab.setBackgroundColor(colorAccent);
 
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        stopwatchFab.setTitleTextColor(integer);
-                        timerFab.setTitleTextColor(integer);
-                        alarmFab.setTitleTextColor(integer);
-                    }
-                });
+        int textColor = getAlarmio().getTextColor();
+        stopwatchFab.setTitleTextColor(textColor);
+        timerFab.setTitleTextColor(textColor);
+        alarmFab.setTitleTextColor(textColor);
 
-        textColorPrimaryInverseSubscription = Aesthetic.get()
-                .textColorPrimaryInverse()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        alarmFab.setTitleBackgroundColor(integer);
-                        stopwatchFab.setTitleBackgroundColor(integer);
-                        timerFab.setTitleBackgroundColor(integer);
-                    }
-                });
+        int textColorInverse = getAlarmio().getTextColor(true, true);
+        alarmFab.setTitleBackgroundColor(textColorInverse);
+        stopwatchFab.setTitleBackgroundColor(textColorInverse);
+        timerFab.setTitleBackgroundColor(textColorInverse);
 
         stopwatchFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,10 +243,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         timeIndicator.unsubscribe();
-        colorPrimarySubscription.dispose();
-        colorAccentSubscription.dispose();
-        textColorPrimarySubscription.dispose();
-        textColorPrimaryInverseSubscription.dispose();
         super.onDestroyView();
     }
 

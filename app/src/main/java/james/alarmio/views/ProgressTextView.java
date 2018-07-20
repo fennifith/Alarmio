@@ -11,10 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-import com.afollestad.aesthetic.Aesthetic;
-
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.multimoon.colorful.ColorfulKt;
+import james.alarmio.Alarmio;
 import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.ConversionUtils;
 
@@ -26,10 +24,6 @@ public class ProgressTextView extends View implements Subscribblable {
     private String text;
 
     private int padding;
-
-    private Disposable colorAccentSubscription;
-    private Disposable textColorPrimarySubscription;
-    private Disposable textColorSecondarySubscription;
 
     public ProgressTextView(Context context) {
         this(context, null);
@@ -71,45 +65,24 @@ public class ProgressTextView extends View implements Subscribblable {
 
     @Override
     public void subscribe() {
-        colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        linePaint.setColor(integer);
-                        circlePaint.setColor(integer);
-                        invalidate();
-                    }
-                });
+        Alarmio alarmio = (Alarmio) getContext().getApplicationContext();
 
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textPaint.setColor(integer);
-                        referenceCirclePaint.setColor(integer);
-                        invalidate();
-                    }
-                });
+        int colorAccent = ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt();
+        linePaint.setColor(colorAccent);
+        circlePaint.setColor(colorAccent);
 
-        textColorSecondarySubscription = Aesthetic.get()
-                .textColorSecondary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        backgroundPaint.setColor(integer);
-                        backgroundPaint.setAlpha(50);
-                        invalidate();
-                    }
-                });
+        int textColorPrimary = alarmio.getTextColor();
+        textPaint.setColor(textColorPrimary);
+        referenceCirclePaint.setColor(textColorPrimary);
+
+        int textColorSecondary = alarmio.getTextColor(false, false);
+        backgroundPaint.setColor(textColorSecondary);
+        backgroundPaint.setAlpha(50);
+        invalidate();
     }
 
     @Override
     public void unsubscribe() {
-        colorAccentSubscription.dispose();
-        textColorPrimarySubscription.dispose();
-        textColorSecondarySubscription.dispose();
     }
 
     public void setText(String text) {

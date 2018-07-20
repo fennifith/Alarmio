@@ -8,10 +8,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.afollestad.aesthetic.Aesthetic;
-
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.multimoon.colorful.ColorfulKt;
+import james.alarmio.Alarmio;
 import james.alarmio.interfaces.Subscribblable;
 
 public class ProgressLineView extends View implements Subscribblable {
@@ -21,9 +19,6 @@ public class ProgressLineView extends View implements Subscribblable {
 
     private float progress;
     private float drawnProgress;
-
-    private Disposable colorAccentSubscription;
-    private Disposable textColorPrimarySubscription;
 
     public ProgressLineView(Context context) {
         this(context, null);
@@ -49,33 +44,16 @@ public class ProgressLineView extends View implements Subscribblable {
 
     @Override
     public void subscribe() {
-        colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        linePaint.setColor(integer);
-                        linePaint.setAlpha(100);
-                        postInvalidate();
-                    }
-                });
+        linePaint.setColor(ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt());
+        linePaint.setAlpha(100);
 
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        backgroundPaint.setColor(integer);
-                        backgroundPaint.setAlpha(30);
-                        postInvalidate();
-                    }
-                });
+        backgroundPaint.setColor(((Alarmio) getContext().getApplicationContext()).getTextColor());
+        backgroundPaint.setAlpha(30);
+        postInvalidate();
     }
 
     @Override
     public void unsubscribe() {
-        colorAccentSubscription.dispose();
-        textColorPrimarySubscription.dispose();
     }
 
     public void update(float progress) {

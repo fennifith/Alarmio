@@ -6,8 +6,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.afollestad.aesthetic.AestheticActivity;
-
+import io.multimoon.colorful.CAppCompatActivity;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.fragments.BaseFragment;
@@ -17,7 +16,7 @@ import james.alarmio.fragments.StopwatchFragment;
 import james.alarmio.fragments.TimerFragment;
 import james.alarmio.receivers.TimerReceiver;
 
-public class MainActivity extends AestheticActivity implements FragmentManager.OnBackStackChangedListener, Alarmio.ActivityListener {
+public class MainActivity extends CAppCompatActivity implements FragmentManager.OnBackStackChangedListener, Alarmio.ActivityListener {
 
     public static final String EXTRA_FRAGMENT = "james.alarmio.MainActivity.EXTRA_FRAGMENT";
     public static final int FRAGMENT_TIMER = 0;

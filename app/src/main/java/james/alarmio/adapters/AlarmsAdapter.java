@@ -29,12 +29,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.Calendar;
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
+import io.multimoon.colorful.ColorfulKt;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;
@@ -343,49 +341,43 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             int visibility = isExpanded ? View.VISIBLE : View.GONE;
             if (visibility != alarmHolder.extra.getVisibility()) {
                 alarmHolder.extra.setVisibility(visibility);
-                Aesthetic.get()
-                        .colorPrimary()
-                        .take(1)
-                        .subscribe(new Consumer<Integer>() {
-                            @Override
-                            public void accept(Integer integer) throws Exception {
-                                ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isExpanded ? integer : colorForeground, isExpanded ? colorForeground : integer);
-                                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                                    @Override
-                                    public void onAnimationUpdate(ValueAnimator animation) {
-                                        alarmHolder.itemView.setBackgroundColor((int) animation.getAnimatedValue());
-                                    }
-                                });
-                                animator.addListener(new Animator.AnimatorListener() {
-                                    @Override
-                                    public void onAnimationStart(Animator animation) {
-                                    }
 
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
-                                    }
-
-                                    @Override
-                                    public void onAnimationCancel(Animator animation) {
-                                    }
-
-                                    @Override
-                                    public void onAnimationRepeat(Animator animation) {
-                                    }
-                                });
-                                animator.start();
-                            }
-                        });
-
-                ValueAnimator animator = ValueAnimator.ofFloat(isExpanded ? 0 : ConversionUtils.dpToPx(2), isExpanded ? ConversionUtils.dpToPx(2) : 0);
+                int colorPrimary = ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt();
+                ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isExpanded ? colorPrimary : colorForeground, isExpanded ? colorForeground : colorPrimary);
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        alarmHolder.itemView.setBackgroundColor((int) animation.getAnimatedValue());
+                    }
+                });
+                animator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                animator.start();
+
+                ValueAnimator animator2 = ValueAnimator.ofFloat(isExpanded ? 0 : ConversionUtils.dpToPx(2), isExpanded ? ConversionUtils.dpToPx(2) : 0);
+                animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
                         ViewCompat.setElevation(alarmHolder.itemView, (float) animation.getAnimatedValue());
                     }
                 });
-                animator.start();
+                animator2.start();
             } else {
                 alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
                 ViewCompat.setElevation(alarmHolder.itemView, isExpanded ? ConversionUtils.dpToPx(2) : 0);

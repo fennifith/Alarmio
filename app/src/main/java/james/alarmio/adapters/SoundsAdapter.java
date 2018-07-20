@@ -11,11 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
+import io.multimoon.colorful.ColorfulKt;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.SoundData;
@@ -97,52 +95,43 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
     }
 
     private void setPlaying(final ViewHolder holder, final boolean isPlaying, final boolean isAnimated) {
-        (isPlaying ? Aesthetic.get().colorPrimary() : Aesthetic.get().textColorPrimary()).take(1).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                if (isAnimated) {
-                    ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), holder.title.getTextColors().getDefaultColor(), integer);
-                    animator.setDuration(300);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            int color = (int) valueAnimator.getAnimatedValue();
-                            holder.title.setTextColor(color);
-                            holder.icon.setColorFilter(color);
-                        }
-                    });
-                    animator.start();
-                } else {
-                    holder.title.setTextColor(integer);
-                    holder.icon.setColorFilter(integer);
-                }
-            }
-        });
-
-        Aesthetic.get().textColorPrimary().take(1).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                if (isAnimated) {
-                    ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isPlaying ? Color.TRANSPARENT : integer, isPlaying ? integer : Color.TRANSPARENT);
-                    animator.setDuration(300);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            holder.itemView.setBackgroundColor((int) valueAnimator.getAnimatedValue());
-                        }
-                    });
-                    animator.start();
-                } else holder.itemView.setBackgroundColor(isPlaying ? integer : Color.TRANSPARENT);
-            }
-        });
+        int color = isPlaying ? ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt()
+                : alarmio.getTextColor();
+        int textColor = alarmio.getTextColor(true, true);
 
         if (isAnimated) {
+            ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), holder.title.getTextColors().getDefaultColor(), color);
+            animator.setDuration(300);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    int color = (int) valueAnimator.getAnimatedValue();
+                    holder.title.setTextColor(color);
+                    holder.icon.setColorFilter(color);
+                }
+            });
+            animator.start();
+
+            ValueAnimator animator2 = ValueAnimator.ofObject(new ArgbEvaluator(), isPlaying ? Color.TRANSPARENT : textColor, isPlaying ? textColor : Color.TRANSPARENT);
+            animator2.setDuration(300);
+            animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    holder.itemView.setBackgroundColor((int) valueAnimator.getAnimatedValue());
+                }
+            });
+            animator2.start();
+
             AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(alarmio, isPlaying ? R.drawable.ic_play_to_pause : R.drawable.ic_pause_to_play);
             if (drawable != null) {
                 holder.icon.setImageDrawable(drawable);
                 drawable.start();
                 return;
             }
+        } else {
+            holder.title.setTextColor(color);
+            holder.icon.setColorFilter(color);
+            holder.itemView.setBackgroundColor(isPlaying ? textColor : Color.TRANSPARENT);
         }
 
         holder.icon.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);

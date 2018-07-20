@@ -17,12 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.aesthetic.Aesthetic;
-
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.services.StopwatchService;
 import james.alarmio.utils.FormatUtils;
@@ -39,7 +35,6 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
     private LinearLayout lapsLayout;
 
     private int textColorPrimary;
-    private Disposable textColorPrimarySubscription;
 
     private StopwatchService service;
 
@@ -118,25 +113,18 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
             }
         });
 
-        textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorPrimary = integer;
-                        back.setColorFilter(integer);
-                        reset.setColorFilter(integer);
-                        lap.setTextColor(integer);
-                        share.setColorFilter(integer);
+        textColorPrimary = getAlarmio().getTextColor();
+        back.setColorFilter(textColorPrimary);
+        reset.setColorFilter(textColorPrimary);
+        lap.setTextColor(textColorPrimary);
+        share.setColorFilter(textColorPrimary);
 
-                        for (int i = 0; i < lapsLayout.getChildCount(); i++) {
-                            LinearLayout layout = (LinearLayout) lapsLayout.getChildAt(i);
-                            for (int i2 = 0; i2 < layout.getChildCount(); i2++) {
-                                ((TextView) layout.getChildAt(i2)).setTextColor(integer);
-                            }
-                        }
-                    }
-                });
+        for (int i = 0; i < lapsLayout.getChildCount(); i++) {
+            LinearLayout layout = (LinearLayout) lapsLayout.getChildAt(i);
+            for (int i2 = 0; i2 < layout.getChildCount(); i2++) {
+                ((TextView) layout.getChildAt(i2)).setTextColor(textColorPrimary);
+            }
+        }
 
         Intent intent = new Intent(getContext(), StopwatchService.class);
         getContext().startService(intent);
@@ -146,7 +134,6 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
 
     @Override
     public void onDestroyView() {
-        textColorPrimarySubscription.dispose();
         time.unsubscribe();
         if (service != null) {
             service.setListener(null);
