@@ -94,10 +94,9 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
         }
     }
 
-    private void setPlaying(final ViewHolder holder, final boolean isPlaying, final boolean isAnimated) {
-        int color = isPlaying ? ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt()
-                : alarmio.getTextColor();
-        int textColor = alarmio.getTextColor(true, true);
+    private void setPlaying(final ViewHolder holder, boolean isPlaying, boolean isAnimated) {
+        int textColor = alarmio.getTextColor();
+        int color = isPlaying ? ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt() : textColor;
 
         if (isAnimated) {
             ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), holder.title.getTextColors().getDefaultColor(), color);
