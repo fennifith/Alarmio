@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.multimoon.colorful.ColorfulKt;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
@@ -149,7 +150,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
         });
 
         holder.themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(holder.getAlarmio().getTextColor(false, false)));
-        holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(holder.getAlarmio().getTextColor(true, true)));
+        holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt()));
     }
 
     public static class ViewHolder extends BasePreferenceData.ViewHolder {

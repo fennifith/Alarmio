@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import io.multimoon.colorful.ColorfulKt;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -52,7 +53,7 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
         });
 
         holder.spinner.setSupportBackgroundTintList(ColorStateList.valueOf(holder.getAlarmio().getTextColor(false, false)));
-        holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(holder.getAlarmio().getTextColor(true, true)));
+        holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt()));
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {
