@@ -47,12 +47,16 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
         holder.sunriseAutoSwitch.setVisibility(theme == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
         holder.sunriseLayout.setVisibility(theme == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
         holder.themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            Integer selection = null;
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                PreferenceData.THEME.setValue(adapterView.getContext(), i);
-                holder.sunriseAutoSwitch.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
-                holder.sunriseLayout.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
-                ((Alarmio) holder.itemView.getContext().getApplicationContext()).onActivityResume();
+                if (selection != null) {
+                    PreferenceData.THEME.setValue(adapterView.getContext(), i);
+                    holder.sunriseAutoSwitch.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
+                    holder.sunriseLayout.setVisibility(i == Alarmio.THEME_DAY_NIGHT ? View.VISIBLE : View.GONE);
+                    ((Alarmio) holder.itemView.getContext().getApplicationContext()).updateTheme();
+                } else selection = i;
             }
 
             @Override
@@ -88,7 +92,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                     holder.sunriseView.invalidate();
                     listener.onSunriseChanged(holder.getAlarmio().getDayStart(), holder.getAlarmio().getDayEnd());
                 }
-                holder.getAlarmio().onActivityResume();
+                holder.getAlarmio().updateTheme();
             }
         });
 
@@ -108,7 +112,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                                         PreferenceData.DAY_START.setValue(holder.getContext(), view.getHourOfDay());
                                         holder.sunriseView.invalidate();
                                         listener.onSunriseChanged(view.getHourOfDay(), dayEnd);
-                                        holder.getAlarmio().onActivityResume();
+                                        holder.getAlarmio().updateTheme();
                                     }
                                 }
 
@@ -135,7 +139,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                                         PreferenceData.DAY_END.setValue(holder.getContext(), view.getHourOfDay());
                                         holder.sunriseView.invalidate();
                                         listener.onSunriseChanged(dayStart, view.getHourOfDay());
-                                        holder.getAlarmio().onActivityResume();
+                                        holder.getAlarmio().updateTheme();
                                     }
                                 }
 

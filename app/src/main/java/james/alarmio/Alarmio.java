@@ -199,7 +199,17 @@ public class Alarmio extends Application implements Player.EventListener {
         return prefs;
     }
 
-    public void onActivityResume() {
+    public void updateTheme() {
+        Function0<Unit> callback = new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                if (listener != null)
+                    listener.recreate();
+
+                return null;
+            }
+        };
+
         if (isNight()) {
             ColorfulKt.Colorful().edit()
                     .setDarkTheme(true)
@@ -227,12 +237,7 @@ public class Alarmio extends Application implements Player.EventListener {
                         }
                     })
                     .setAccentColor(ThemeColor.RED)
-                    .apply(this, new Function0<Unit>() {
-                        @Override
-                        public Unit invoke() {
-                            return null;
-                        }
-                    });
+                    .apply(this, callback);
         } else {
             int theme = getActivityTheme();
             if (theme == THEME_DAY || theme == THEME_DAY_NIGHT) {
@@ -240,23 +245,13 @@ public class Alarmio extends Application implements Player.EventListener {
                         .setDarkTheme(false)
                         .setPrimaryColor(ThemeColor.WHITE)
                         .setAccentColor(ThemeColor.BLUE)
-                        .apply(this, new Function0<Unit>() {
-                            @Override
-                            public Unit invoke() {
-                                return null;
-                            }
-                        });
+                        .apply(this, callback);
             } else if (theme == THEME_AMOLED) {
                 ColorfulKt.Colorful().edit()
                         .setDarkTheme(true)
                         .setPrimaryColor(ThemeColor.BLACK)
                         .setAccentColor(ThemeColor.WHITE)
-                        .apply(this, new Function0<Unit>() {
-                            @Override
-                            public Unit invoke() {
-                                return null;
-                            }
-                        });
+                        .apply(this, callback);
             }
         }
     }
@@ -477,6 +472,8 @@ public class Alarmio extends Application implements Player.EventListener {
         void requestPermissions(String... permissions);
 
         FragmentManager gettFragmentManager(); //help
+
+        void recreate();
     }
 
 }

@@ -175,7 +175,7 @@ public class SunriseView extends View implements View.OnTouchListener {
                     float dayStart = Math.min((float) Math.round(horizontalDistance * 24), dayEnd - 1);
                     PreferenceData.DAY_START.setValue(getContext(), Math.round(dayStart));
                     invalidate();
-                    alarmio.onActivityResume();
+                    alarmio.updateTheme();
                     if (listener != null)
                         listener.onSunriseChanged(Math.round(dayStart), Math.round(dayEnd));
                 } else if (movingEnd) {
@@ -183,7 +183,7 @@ public class SunriseView extends View implements View.OnTouchListener {
                     float dayEnd = Math.max((float) Math.round(horizontalDistance * 24), dayStart + 1);
                     PreferenceData.DAY_END.setValue(getContext(), Math.round(dayEnd));
                     invalidate();
-                    alarmio.onActivityResume();
+                    alarmio.updateTheme();
                     if (listener != null)
                         listener.onSunriseChanged(Math.round(dayStart), Math.round(dayEnd));
                 }

@@ -103,12 +103,6 @@ public class MainActivity extends CAppCompatActivity implements FragmentManager.
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        alarmio.onActivityResume();
-    }
-
-    @Override
     public void onBackStackChanged() {
         fragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
     }

@@ -173,12 +173,6 @@ public class AlarmActivity extends CAppCompatActivity implements View.OnTouchLis
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        alarmio.onActivityResume();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         /*if (textColorPrimarySubscription != null && textColorPrimaryInverseSubscription != null && isDarkSubscription != null) {
