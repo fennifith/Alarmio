@@ -140,9 +140,9 @@
     <licenses>
 
         <project
-            description="A fast and easy to use plug-and-play dynamic theme engine. Powered by Rx, for Android apps."
+            description="A dynamic theming library allowing you to change color schemes easily."
             license="apache-2.0"
-            repo="afollestad/aesthetic" />
+            repo="garretyoder/Colorful" />
 
         <project
             description="A simple library to use a menu of FloatingActionButtons from Design Support Library that follow Material Design Guidelines."
@@ -162,33 +162,17 @@
             repo="google/ExoPlayer" />
 
         <project
-            description="^A library for composing asynchronous and event-based programs using observable sequences for the Java VM."
-            license="apache-2.0"
-            repo="ReactiveX/RxJava" />
-
-        <project
-            description="^RxJava bindings for Android."
-            license="apache-2.0"
-            repo="ReactiveX/RxAndroid" />
-
-        <project
-            description="^Reactive SharedPreferences for Android."
-            license="apache-2.0"
-            repo="f2prateek/rx-preferences" />
-
-        <project
-            description="^A Material Design progress bar with a consistent appearance back to Android 4.0."
-            license="apache-2.0"
-            repo="DreaminginCodeZH/MaterialProgressBar/" />
-
-        <project
             description="A simple library containing several configurable time/date picker views and dialogs."
             license="apache-2.0"
             repo="TheAndroidMaster/TimeDatePicker" />
 
-        <project repo="TheAndroidMaster/Crasher" />
+        <project
+            description="An easy to use crash reporting library for Android."
+            repo="TheAndroidMaster/Crasher" />
 
-        <project repo="bumptech/glide" />
+        <project
+            description="An image loading and caching library for Android focused on smooth scrolling."
+            repo="bumptech/glide" />
 
     </licenses>
 </about>
