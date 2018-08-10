@@ -5,10 +5,10 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.Nullable;
 
 import com.google.android.exoplayer2.C;
 
+import io.reactivex.annotations.Nullable;
 import james.alarmio.Alarmio;
 
 public class SoundData {

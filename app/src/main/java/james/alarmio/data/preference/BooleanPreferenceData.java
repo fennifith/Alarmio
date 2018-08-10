@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import io.multimoon.colorful.ColorfulKt;
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -47,18 +49,32 @@ public class BooleanPreferenceData extends BasePreferenceData<BooleanPreferenceD
             }
         });
 
-        int textColorPrimary = holder.getAlarmio().getTextColor();
+        Aesthetic.get()
+                .colorAccent()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(final Integer colorAccent) throws Exception {
+                        Aesthetic.get()
+                                .textColorPrimary()
+                                .take(1)
+                                .subscribe(new Consumer<Integer>() {
+                                    @Override
+                                    public void accept(Integer textColorPrimary) throws Exception {
+                                        ColorStateList colorStateList = new ColorStateList(
+                                                new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
+                                                new int[]{
+                                                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                                                        colorAccent
+                                                }
+                                        );
 
-        ColorStateList colorStateList = new ColorStateList(
-                new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
-                new int[]{
-                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
-                        ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt()
-                }
-        );
-
-        CompoundButtonCompat.setButtonTintList(holder.toggle, colorStateList);
-        holder.toggle.setTextColor(textColorPrimary);
+                                        CompoundButtonCompat.setButtonTintList(holder.toggle, colorStateList);
+                                        holder.toggle.setTextColor(textColorPrimary);
+                                    }
+                                });
+                    }
+                });
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {

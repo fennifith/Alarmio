@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.TimerData;
 import james.alarmio.utils.FormatUtils;
@@ -29,6 +33,8 @@ public class TimerFragment extends BaseFragment {
     private boolean isRunning = true;
 
     private TimerData timer;
+
+    private Disposable textColorPrimarySubscription;
 
     @Nullable
     @Override
@@ -82,7 +88,14 @@ public class TimerFragment extends BaseFragment {
 
         handler.post(runnable);
 
-        back.setColorFilter(getAlarmio().getTextColor());
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        back.setColorFilter(integer);
+                    }
+                });
 
         return view;
     }
@@ -90,6 +103,7 @@ public class TimerFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         isRunning = false;
+        textColorPrimarySubscription.dispose();
         time.unsubscribe();
         super.onDestroyView();
     }

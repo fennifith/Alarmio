@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -56,9 +59,16 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
             }
         });
 
-        int textColor = holder.getAlarmio().getTextColor();
-        holder.add.setColorFilter(new PorterDuffColorFilter(textColor, PorterDuff.Mode.SRC_IN));
-        holder.remove.setColorFilter(new PorterDuffColorFilter(textColor, PorterDuff.Mode.SRC_IN));
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        holder.add.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
+                        holder.remove.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
+                    }
+                });
     }
 
     public final String[] getItems(Context context) {

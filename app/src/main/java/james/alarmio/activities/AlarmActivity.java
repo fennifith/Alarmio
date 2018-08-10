@@ -21,11 +21,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+import com.afollestad.aesthetic.AestheticActivity;
+
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import io.multimoon.colorful.CAppCompatActivity;
-import io.multimoon.colorful.ColorfulKt;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
@@ -37,7 +40,7 @@ import james.alarmio.services.SleepReminderService;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.utils.ImageUtils;
 
-public class AlarmActivity extends CAppCompatActivity implements View.OnTouchListener {
+public class AlarmActivity extends AestheticActivity implements View.OnTouchListener {
 
     public static final String EXTRA_ALARM = "james.alarmio.AlarmActivity.EXTRA_ALARM";
     public static final String EXTRA_TIMER = "james.alarmio.AlarmActivity.EXTRA_TIMER";
@@ -71,6 +74,10 @@ public class AlarmActivity extends CAppCompatActivity implements View.OnTouchLis
     private boolean isWoken;
     private PowerManager.WakeLock wakeLock;
 
+    private Disposable textColorPrimarySubscription;
+    private Disposable textColorPrimaryInverseSubscription;
+    private Disposable isDarkSubscription;
+
     private boolean isDark;
 
     @Override
@@ -86,13 +93,33 @@ public class AlarmActivity extends CAppCompatActivity implements View.OnTouchLis
         dismiss = findViewById(R.id.dismiss);
         fab = findViewById(R.id.fab);
 
-        int textColorPrimary = alarmio.getTextColor();
-        snooze.setColorFilter(textColorPrimary);
-        dismiss.setColorFilter(textColorPrimary);
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        snooze.setColorFilter(integer);
+                        dismiss.setColorFilter(integer);
+                    }
+                });
 
-        overlay.setBackgroundColor(alarmio.getTextColor(true, true));
+        textColorPrimaryInverseSubscription = Aesthetic.get()
+                .textColorPrimaryInverse()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        overlay.setBackgroundColor(integer);
+                    }
+                });
 
-        isDark = ColorfulKt.Colorful().getDarkTheme();
+        isDarkSubscription = Aesthetic.get()
+                .isDark()
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        isDark = aBoolean;
+                    }
+                });
 
         fab.setOnTouchListener(this);
         fab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -175,11 +202,11 @@ public class AlarmActivity extends CAppCompatActivity implements View.OnTouchLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*if (textColorPrimarySubscription != null && textColorPrimaryInverseSubscription != null && isDarkSubscription != null) {
+        if (textColorPrimarySubscription != null && textColorPrimaryInverseSubscription != null && isDarkSubscription != null) {
             textColorPrimarySubscription.dispose();
             textColorPrimaryInverseSubscription.dispose();
             isDarkSubscription.dispose();
-        }*/
+        }
 
         stopAnnoyingness();
     }

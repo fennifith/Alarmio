@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 
 public class TimeChooserDialog extends AestheticDialog implements View.OnClickListener {
@@ -84,7 +87,15 @@ public class TimeChooserDialog extends AestheticDialog implements View.OnClickLi
             }
         });
 
-        backspace.setColorFilter(getAlarmio().getTextColor());
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        backspace.setColorFilter(integer);
+                    }
+                });
     }
 
     private void input(String character) {

@@ -12,8 +12,11 @@ import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import io.multimoon.colorful.ColorfulKt;
-import james.alarmio.Alarmio;
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;
 import james.alarmio.utils.ConversionUtils;
 
@@ -22,6 +25,10 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
     private Paint accentPaint;
     private Paint textPaint;
     private Paint clippedTextPaint;
+
+    private Disposable colorAccentSubscription;
+    private Disposable textColorPrimarySubscription;
+    private Disposable textColorPrimaryInverseSubscription;
 
     private float checked;
     private boolean isChecked;
@@ -95,19 +102,44 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
 
     @Override
     public void subscribe() {
-        accentPaint.setColor(ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt());
+        colorAccentSubscription = Aesthetic.get()
+                .colorAccent()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(@NonNull Integer integer) throws Exception {
+                        accentPaint.setColor(integer);
+                        invalidate();
+                    }
+                });
 
-        textColorPrimary = ((Alarmio) getContext().getApplicationContext()).getTextColor();
-        textPaint.setColor(textColorPrimary);
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        textColorPrimary = integer;
+                        textPaint.setColor(integer);
+                        invalidate();
+                    }
+                });
 
-        textColorPrimaryInverse = ((Alarmio) getContext().getApplicationContext()).getTextColor(true, true);
-        clippedTextPaint.setColor(textColorPrimaryInverse);
-
-        invalidate();
+        textColorPrimaryInverseSubscription = Aesthetic.get()
+                .textColorPrimaryInverse()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        textColorPrimaryInverse = integer;
+                        clippedTextPaint.setColor(integer);
+                        invalidate();
+                    }
+                });
     }
 
     @Override
     public void unsubscribe() {
+        colorAccentSubscription.dispose();
+        textColorPrimarySubscription.dispose();
+        textColorPrimaryInverseSubscription.dispose();
     }
 
     @Override

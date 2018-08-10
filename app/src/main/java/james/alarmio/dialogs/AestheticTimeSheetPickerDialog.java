@@ -4,37 +4,64 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import io.multimoon.colorful.ColorfulKt;
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import me.jfenn.timedatepickers.dialogs.TimeSheetPickerDialog;
 
 public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
 
-    private Alarmio alarmio;
-
     public AestheticTimeSheetPickerDialog(Context context) {
         super(context);
-        alarmio = (Alarmio) context.getApplicationContext();
     }
 
     public AestheticTimeSheetPickerDialog(Context context, int hourOfDay, int minute) {
         super(context, hourOfDay, minute);
-        alarmio = (Alarmio) context.getApplicationContext();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setPrimaryTextColor(alarmio.getTextColor());
-        setSecondaryTextColor(alarmio.getTextColor(false, false));
+        Aesthetic.get()
+                .textColorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) {
+                        setPrimaryTextColor(integer);
+                    }
+                });
 
-        int colorPrimary = ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt();
-        setBackgroundColor(colorPrimary);
-        setPrimaryBackgroundColor(colorPrimary);
-        setSecondaryBackgroundColor(colorPrimary);
+        Aesthetic.get()
+                .textColorSecondary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) {
+                        setSecondaryTextColor(integer);
+                    }
+                });
 
-        int colorAccent = ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt();
-        setSelectionColor(colorAccent);
-        setSelectionTextColor(((Alarmio) getContext().getApplicationContext()).getActivityTheme() == Alarmio.THEME_AMOLED ? Color.BLACK : Color.WHITE);
+        Aesthetic.get().colorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) {
+                        setBackgroundColor(integer);
+                        setPrimaryBackgroundColor(integer);
+                        setSecondaryBackgroundColor(integer);
+                    }
+                });
+
+        Aesthetic.get().colorAccent()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) {
+                        setSelectionColor(integer);
+                        setSelectionTextColor(((Alarmio) getContext().getApplicationContext()).getActivityTheme() == Alarmio.THEME_AMOLED ? Color.BLACK : Color.WHITE);
+                    }
+                });
     }
 }

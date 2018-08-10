@@ -5,17 +5,19 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.media.Ringtone;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.afollestad.aesthetic.Aesthetic;
+import com.afollestad.aesthetic.AutoSwitchMode;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -32,27 +34,18 @@ import com.google.android.exoplayer2.util.Util;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import io.multimoon.colorful.ColorPack;
-import io.multimoon.colorful.ColorfulColor;
-import io.multimoon.colorful.ColorfulKt;
-import io.multimoon.colorful.Defaults;
-import io.multimoon.colorful.ThemeColor;
-import io.multimoon.colorful.ThemeColorInterface;
+import io.reactivex.annotations.Nullable;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.services.TimerService;
 import james.crasher.Crasher;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
 
 public class Alarmio extends Application implements Player.EventListener {
 
@@ -113,14 +106,6 @@ public class Alarmio extends Application implements Player.EventListener {
             startService(new Intent(this, TimerService.class));
 
         SleepReminderService.refreshSleepTime(this);
-
-        ColorfulKt.initColorful(this, new Defaults(
-                ThemeColor.WHITE,
-                ThemeColor.BLUE,
-                false,
-                true,
-                0
-        ));
     }
 
     public List<AlarmData> getAlarms() {
@@ -211,47 +196,52 @@ public class Alarmio extends Application implements Player.EventListener {
         };
 
         if (isNight()) {
-            ColorfulKt.Colorful().edit()
-                    .setDarkTheme(true)
-                    .setPrimaryColor(new ThemeColorInterface() {
-                        @Override
-                        public int primaryStyle() {
-                            return 0;
-                        }
-
-                        @Override
-                        public int accentStyle() {
-                            return 0;
-                        }
-
-                        @NotNull
-                        @Override
-                        public ColorPack getColorPack() {
-                            return new ColorPack(new ColorfulColor("#212121"), new ColorfulColor("#101010"));
-                        }
-
-                        @NotNull
-                        @Override
-                        public String getThemeName() {
-                            return null;
-                        }
-                    })
-                    .setAccentColor(ThemeColor.RED)
-                    .apply(this, callback);
+            Aesthetic.get()
+                    .isDark(true)
+                    .lightStatusBarMode(AutoSwitchMode.OFF)
+                    .colorPrimary(ContextCompat.getColor(this, R.color.colorNightPrimary))
+                    .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
+                    .colorNavigationBar(ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
+                    .colorAccent(ContextCompat.getColor(this, R.color.colorNightAccent))
+                    .colorCardViewBackground(ContextCompat.getColor(this, R.color.colorNightForeground))
+                    .colorWindowBackground(ContextCompat.getColor(this, R.color.colorNightPrimaryDark))
+                    .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
+                    .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
+                    .textColorPrimaryInverse(ContextCompat.getColor(this, R.color.textColorPrimary))
+                    .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondary))
+                    .apply();
         } else {
             int theme = getActivityTheme();
             if (theme == THEME_DAY || theme == THEME_DAY_NIGHT) {
-                ColorfulKt.Colorful().edit()
-                        .setDarkTheme(false)
-                        .setPrimaryColor(ThemeColor.WHITE)
-                        .setAccentColor(ThemeColor.BLUE)
-                        .apply(this, callback);
+                Aesthetic.get()
+                        .isDark(false)
+                        .lightStatusBarMode(AutoSwitchMode.ON)
+                        .colorPrimary(ContextCompat.getColor(this, R.color.colorPrimary))
+                        .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                        .colorNavigationBar(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                        .colorAccent(ContextCompat.getColor(this, R.color.colorAccent))
+                        .colorCardViewBackground(ContextCompat.getColor(this, R.color.colorForeground))
+                        .colorWindowBackground(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                        .textColorPrimary(ContextCompat.getColor(this, R.color.textColorPrimary))
+                        .textColorSecondary(ContextCompat.getColor(this, R.color.textColorSecondary))
+                        .textColorPrimaryInverse(ContextCompat.getColor(this, R.color.textColorPrimaryNight))
+                        .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
+                        .apply();
             } else if (theme == THEME_AMOLED) {
-                ColorfulKt.Colorful().edit()
-                        .setDarkTheme(true)
-                        .setPrimaryColor(ThemeColor.BLACK)
-                        .setAccentColor(ThemeColor.WHITE)
-                        .apply(this, callback);
+                Aesthetic.get()
+                        .isDark(true)
+                        .lightStatusBarMode(AutoSwitchMode.OFF)
+                        .colorPrimary(Color.BLACK)
+                        .colorStatusBar(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? Color.TRANSPARENT : Color.BLACK)
+                        .colorNavigationBar(Color.BLACK)
+                        .colorAccent(Color.WHITE)
+                        .colorCardViewBackground(Color.BLACK)
+                        .colorWindowBackground(Color.BLACK)
+                        .textColorPrimary(Color.WHITE)
+                        .textColorSecondary(Color.WHITE)
+                        .textColorPrimaryInverse(Color.BLACK)
+                        .textColorSecondaryInverse(Color.BLACK)
+                        .apply();
             }
         }
     }
@@ -263,18 +253,6 @@ public class Alarmio extends Application implements Player.EventListener {
 
     public int getActivityTheme() {
         return PreferenceData.THEME.getValue(this);
-    }
-
-    @ColorInt
-    public int getTextColor() {
-        return getTextColor(true, false);
-    }
-
-    @ColorInt
-    public int getTextColor(boolean primary, boolean inverse) {
-        return ContextCompat.getColor(this, inverse != ColorfulKt.Colorful().getDarkTheme()
-                ? (primary ? R.color.textColorPrimaryNight : R.color.textColorSecondaryNight)
-                : (primary ? R.color.textColorPrimary : R.color.textColorSecondary));
     }
 
     public boolean isDayAuto() {

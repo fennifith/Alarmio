@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import io.multimoon.colorful.ColorfulKt;
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.adapters.SimplePagerAdapter;
@@ -54,7 +56,16 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_sound_chooser, container, false);
-        view.setBackgroundColor(ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt());
+
+        Aesthetic.get()
+                .colorPrimary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        view.setBackgroundColor(integer);
+                    }
+                });
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager viewPager = view.findViewById(R.id.viewPager);

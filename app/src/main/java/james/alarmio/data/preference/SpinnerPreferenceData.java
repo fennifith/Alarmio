@@ -10,7 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import io.multimoon.colorful.ColorfulKt;
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.functions.Consumer;
+
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -52,8 +55,25 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
             }
         });
 
-        holder.spinner.setSupportBackgroundTintList(ColorStateList.valueOf(holder.getAlarmio().getTextColor(false, false)));
-        holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt()));
+        Aesthetic.get()
+                .textColorSecondary()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer textColorSecondary) throws Exception {
+                        holder.spinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
+                    }
+                });
+
+        Aesthetic.get()
+                .colorCardViewBackground()
+                .take(1)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer colorForeground) throws Exception {
+                        holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
+                    }
+                });
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {

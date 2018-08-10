@@ -2,19 +2,24 @@ package james.alarmio.views;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import com.afollestad.aesthetic.Aesthetic;
+
 import java.util.Calendar;
 
-import io.multimoon.colorful.ColorfulKt;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.data.PreferenceData;
 
@@ -35,7 +40,11 @@ public class SunriseView extends View implements View.OnTouchListener {
     private ValueAnimator animator2;
 
     private Alarmio alarmio;
+    private SharedPreferences prefs;
     private SunriseListener listener;
+
+    private Disposable colorAccentSubscription;
+    private Disposable textColorPrimarySubscription;
 
     public SunriseView(Context context) {
         this(context, null, 0);
@@ -48,6 +57,7 @@ public class SunriseView extends View implements View.OnTouchListener {
     public SunriseView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         alarmio = (Alarmio) getContext().getApplicationContext();
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -72,19 +82,33 @@ public class SunriseView extends View implements View.OnTouchListener {
     }
 
     public void subscribe() {
-        int textColorPrimary = alarmio.getTextColor();
-        sunsetPaint.setColor(textColorPrimary);
-        sunsetPaint.setAlpha(200);
-        linePaint.setColor(textColorPrimary);
-        linePaint.setAlpha(20);
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        sunsetPaint.setColor(integer);
+                        sunsetPaint.setAlpha(200);
+                        linePaint.setColor(integer);
+                        linePaint.setAlpha(20);
+                        invalidate();
+                    }
+                });
 
-        paint.setColor(ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt());
-        paint.setAlpha(200);
-
-        invalidate();
+        colorAccentSubscription = Aesthetic.get()
+                .colorAccent()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        paint.setColor(integer);
+                        paint.setAlpha(200);
+                    }
+                });
     }
 
     public void unsubscribe() {
+        textColorPrimarySubscription.dispose();
+        colorAccentSubscription.dispose();
     }
 
     public void setListener(SunriseListener listener) {

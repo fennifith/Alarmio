@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.multimoon.colorful.ColorfulKt;
+import com.afollestad.aesthetic.Aesthetic;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.adapters.AlarmsAdapter;
 
@@ -19,6 +22,10 @@ public class AlarmsFragment extends BasePagerFragment {
     private View empty;
 
     private AlarmsAdapter alarmsAdapter;
+
+    private Disposable colorAccentSubscription;
+    private Disposable colorForegroundSubscription;
+    private Disposable textColorPrimarySubscription;
 
     @Nullable
     @Override
@@ -32,12 +39,43 @@ public class AlarmsFragment extends BasePagerFragment {
         alarmsAdapter = new AlarmsAdapter(getAlarmio(), recyclerView, getFragmentManager());
         recyclerView.setAdapter(alarmsAdapter);
 
-        alarmsAdapter.setColorAccent(ColorfulKt.Colorful().getAccentColor().getColorPack().normal().asInt());
-        alarmsAdapter.setColorForeground(ColorfulKt.Colorful().getPrimaryColor().getColorPack().normal().asInt());
-        alarmsAdapter.setTextColorPrimary(getAlarmio().getTextColor());
+        colorAccentSubscription = Aesthetic.get()
+                .colorAccent()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        alarmsAdapter.setColorAccent(integer);
+                    }
+                });
+
+        colorForegroundSubscription = Aesthetic.get()
+                .colorCardViewBackground()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        alarmsAdapter.setColorForeground(integer);
+                    }
+                });
+
+        textColorPrimarySubscription = Aesthetic.get()
+                .textColorPrimary()
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        alarmsAdapter.setTextColorPrimary(integer);
+                    }
+                });
 
         onChanged();
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        colorAccentSubscription.dispose();
+        colorForegroundSubscription.dispose();
+        textColorPrimarySubscription.dispose();
+        super.onDestroyView();
     }
 
     @Override
