@@ -185,18 +185,8 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     public void updateTheme() {
-        Function0<Unit> callback = new Function0<Unit>() {
-            @Override
-            public Unit invoke() {
-                if (listener != null)
-                    listener.recreate();
-
-                return null;
-            }
-        };
-
         if (isNight()) {
-            Aesthetic.get()
+            Aesthetic.Companion.get()
                     .isDark(true)
                     .lightStatusBarMode(AutoSwitchMode.OFF)
                     .colorPrimary(ContextCompat.getColor(this, R.color.colorNightPrimary))
@@ -213,7 +203,7 @@ public class Alarmio extends Application implements Player.EventListener {
         } else {
             int theme = getActivityTheme();
             if (theme == THEME_DAY || theme == THEME_DAY_NIGHT) {
-                Aesthetic.get()
+                Aesthetic.Companion.get()
                         .isDark(false)
                         .lightStatusBarMode(AutoSwitchMode.ON)
                         .colorPrimary(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -228,7 +218,7 @@ public class Alarmio extends Application implements Player.EventListener {
                         .textColorSecondaryInverse(ContextCompat.getColor(this, R.color.textColorSecondaryNight))
                         .apply();
             } else if (theme == THEME_AMOLED) {
-                Aesthetic.get()
+                Aesthetic.Companion.get()
                         .isDark(true)
                         .lightStatusBarMode(AutoSwitchMode.OFF)
                         .colorPrimary(Color.BLACK)
@@ -450,8 +440,6 @@ public class Alarmio extends Application implements Player.EventListener {
         void requestPermissions(String... permissions);
 
         FragmentManager gettFragmentManager(); //help
-
-        void recreate();
     }
 
 }

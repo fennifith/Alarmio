@@ -148,7 +148,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        colorPrimarySubscription = Aesthetic.get()
+        colorPrimarySubscription = Aesthetic.Companion.get()
                 .colorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -158,7 +158,7 @@ public class HomeFragment extends BaseFragment {
                     }
                 });
 
-        colorAccentSubscription = Aesthetic.get()
+        colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -177,7 +177,7 @@ public class HomeFragment extends BaseFragment {
                     }
                 });
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -188,7 +188,7 @@ public class HomeFragment extends BaseFragment {
                     }
                 });
 
-        textColorPrimaryInverseSubscription = Aesthetic.get()
+        textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
                 .subscribe(new Consumer<Integer>() {
                     @Override

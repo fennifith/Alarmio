@@ -59,7 +59,7 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
             }
         });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {

@@ -23,7 +23,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
@@ -33,7 +33,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                     }
                 });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorSecondary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
@@ -43,7 +43,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                     }
                 });
 
-        Aesthetic.get().colorPrimary()
+        Aesthetic.Companion.get().colorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -54,7 +54,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                     }
                 });
 
-        Aesthetic.get().colorAccent()
+        Aesthetic.Companion.get().colorAccent()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
                     @Override

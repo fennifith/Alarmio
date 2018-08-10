@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.reactivex.functions.Consumer;
-
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
@@ -156,7 +155,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             }
         });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorSecondary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
@@ -166,7 +165,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                     }
                 });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .colorCardViewBackground()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {

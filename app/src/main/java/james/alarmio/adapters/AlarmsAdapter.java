@@ -343,7 +343,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             int visibility = isExpanded ? View.VISIBLE : View.GONE;
             if (visibility != alarmHolder.extra.getVisibility()) {
                 alarmHolder.extra.setVisibility(visibility);
-                Aesthetic.get()
+                Aesthetic.Companion.get()
                         .colorPrimary()
                         .take(1)
                         .subscribe(new Consumer<Integer>() {

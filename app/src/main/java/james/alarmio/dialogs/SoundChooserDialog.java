@@ -57,7 +57,7 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_sound_chooser, container, false);
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .colorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {

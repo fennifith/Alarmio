@@ -88,7 +88,7 @@ public class TimerFragment extends BaseFragment {
 
         handler.post(runnable);
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override

@@ -18,7 +18,7 @@ public abstract class AestheticDialog extends AppCompatDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .colorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {

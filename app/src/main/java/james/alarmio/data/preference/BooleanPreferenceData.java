@@ -49,13 +49,13 @@ public class BooleanPreferenceData extends BasePreferenceData<BooleanPreferenceD
             }
         });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .colorAccent()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(final Integer colorAccent) throws Exception {
-                        Aesthetic.get()
+                        Aesthetic.Companion.get()
                                 .textColorPrimary()
                                 .take(1)
                                 .subscribe(new Consumer<Integer>() {

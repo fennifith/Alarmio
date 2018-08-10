@@ -49,7 +49,7 @@ public class ProgressLineView extends View implements Subscribblable {
 
     @Override
     public void subscribe() {
-        colorAccentSubscription = Aesthetic.get()
+        colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -60,7 +60,7 @@ public class ProgressLineView extends View implements Subscribblable {
                     }
                 });
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override

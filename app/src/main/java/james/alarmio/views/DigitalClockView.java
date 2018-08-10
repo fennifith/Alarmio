@@ -60,7 +60,7 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
 
     @Override
     public void subscribe() {
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override

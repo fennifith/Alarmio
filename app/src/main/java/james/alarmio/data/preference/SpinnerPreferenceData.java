@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.afollestad.aesthetic.Aesthetic;
 
 import io.reactivex.functions.Consumer;
-
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 
@@ -55,7 +54,7 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
             }
         });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorSecondary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
@@ -65,7 +64,7 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
                     }
                 });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .colorCardViewBackground()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {

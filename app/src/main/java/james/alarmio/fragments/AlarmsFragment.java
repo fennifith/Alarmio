@@ -39,7 +39,7 @@ public class AlarmsFragment extends BasePagerFragment {
         alarmsAdapter = new AlarmsAdapter(getAlarmio(), recyclerView, getFragmentManager());
         recyclerView.setAdapter(alarmsAdapter);
 
-        colorAccentSubscription = Aesthetic.get()
+        colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -48,7 +48,7 @@ public class AlarmsFragment extends BasePagerFragment {
                     }
                 });
 
-        colorForegroundSubscription = Aesthetic.get()
+        colorForegroundSubscription = Aesthetic.Companion.get()
                 .colorCardViewBackground()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -57,7 +57,7 @@ public class AlarmsFragment extends BasePagerFragment {
                     }
                 });
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override

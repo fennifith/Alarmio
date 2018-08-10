@@ -97,7 +97,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
     }
 
     private void setPlaying(final ViewHolder holder, final boolean isPlaying, final boolean isAnimated) {
-        (isPlaying ? Aesthetic.get().colorPrimary() : Aesthetic.get().textColorPrimary()).take(1).subscribe(new Consumer<Integer>() {
+        (isPlaying ? Aesthetic.Companion.get().colorPrimary() : Aesthetic.Companion.get().textColorPrimary()).take(1).subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer integer) throws Exception {
                 if (isAnimated) {
@@ -119,7 +119,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
             }
         });
 
-        Aesthetic.get().textColorPrimary().take(1).subscribe(new Consumer<Integer>() {
+        Aesthetic.Companion.get().textColorPrimary().take(1).subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer integer) throws Exception {
                 if (isAnimated) {

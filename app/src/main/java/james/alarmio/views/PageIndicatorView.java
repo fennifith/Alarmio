@@ -66,7 +66,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     @Override
     public void subscribe() {
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -77,7 +77,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
                     }
                 });
 
-        textColorSecondarySubscription = Aesthetic.get()
+        textColorSecondarySubscription = Aesthetic.Companion.get()
                 .textColorSecondary()
                 .subscribe(new Consumer<Integer>() {
                     @Override

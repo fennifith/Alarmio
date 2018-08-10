@@ -93,7 +93,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
         dismiss = findViewById(R.id.dismiss);
         fab = findViewById(R.id.fab);
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -103,7 +103,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                     }
                 });
 
-        textColorPrimaryInverseSubscription = Aesthetic.get()
+        textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
                 .subscribe(new Consumer<Integer>() {
                     @Override
@@ -112,7 +112,7 @@ public class AlarmActivity extends AestheticActivity implements View.OnTouchList
                     }
                 });
 
-        isDarkSubscription = Aesthetic.get()
+        isDarkSubscription = Aesthetic.Companion.get()
                 .isDark()
                 .subscribe(new Consumer<Boolean>() {
                     @Override

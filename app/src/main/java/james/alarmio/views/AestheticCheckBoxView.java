@@ -35,7 +35,7 @@ public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscrib
 
     @Override
     public void subscribe() {
-        colorAccentSubscription = Aesthetic.get().colorAccent()
+        colorAccentSubscription = Aesthetic.Companion.get().colorAccent()
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
@@ -53,7 +53,7 @@ public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscrib
                     }
                 });
 
-        textColorPrimarySubscription = Aesthetic.get().textColorPrimary()
+        textColorPrimarySubscription = Aesthetic.Companion.get().textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {

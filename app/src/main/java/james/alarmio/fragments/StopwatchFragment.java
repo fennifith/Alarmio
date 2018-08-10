@@ -118,7 +118,7 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
             }
         });
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
                     @Override

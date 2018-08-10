@@ -87,7 +87,7 @@ public class TimeChooserDialog extends AestheticDialog implements View.OnClickLi
             }
         });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {

@@ -77,11 +77,11 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
         )));
         recyclerView.setAdapter(preferenceAdapter);
 
-        colorPrimarySubscription = Aesthetic.get()
+        colorPrimarySubscription = Aesthetic.Companion.get()
                 .colorPrimary()
                 .subscribe(this);
 
-        textColorPrimarySubscription = Aesthetic.get()
+        textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(this);
 

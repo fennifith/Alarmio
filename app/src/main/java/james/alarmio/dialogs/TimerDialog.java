@@ -154,7 +154,7 @@ public class TimerDialog extends AestheticDialog implements View.OnClickListener
             }
         });
 
-        Aesthetic.get()
+        Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
                 .subscribe(new Consumer<Integer>() {
