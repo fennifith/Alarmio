@@ -38,7 +38,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.2'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    implementation 'me.jfenn:attribouter:0.0.8'
+    implementation 'me.jfenn:attribouter:0.1.1'
     implementation 'me.jfenn:timedatepickers:0.0.6'
     implementation 'me.jfenn:crasher:0.0.1'
 }

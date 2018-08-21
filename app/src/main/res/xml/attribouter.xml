@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <about>
-    <appInfo repo="TheAndroidMaster/Alarmio">
+    <me.jfenn.attribouter.wedges.AppWedge repo="TheAndroidMaster/Alarmio">
 
-        <link
+        <me.jfenn.attribouter.wedges.link.LinkWedge
             id="github"
             url="https://jfenn.me/redirects/?t=github&amp;d=Alarmio" />
 
-    </appInfo>
-    <contributors repo="TheAndroidMaster/Alarmio">
-        <contributor
+    </me.jfenn.attribouter.wedges.AppWedge>
+    <me.jfenn.attribouter.wedges.ContributorsWedge repo="TheAndroidMaster/Alarmio">
+        <me.jfenn.attribouter.wedges.ContributorWedge
             name="James Fenn"
             bio="Android developer. Writes Java, C, and HTML. PHP confuses me."
             blog="https://jfenn.me/"
@@ -16,18 +16,18 @@
             position="1"
             task="^Developer">
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 id="github"
                 url="https://jfenn.me/redirects/?t=github" />
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://jfenn.me/redirects/?t=twitter" />
 
-        </contributor>
+        </me.jfenn.attribouter.wedges.ContributorWedge>
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
             name="Justin Kruit"
             avatar="https://avatars1.githubusercontent.com/u/1642830"
             bio="A lazy person that doesn\'t even put enough effort into life to write his own GitHub bio."
@@ -36,7 +36,7 @@
             position="2"
             task="^Idiot" />
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
             name="Eduardo Pratti"
             avatar="https://lh3.googleusercontent.com/qQw25pogbHUtvu5PUSX4X5YJgPLv2amu2PMWn7Uw3MlMIO9Pb-AwavOPf-mEEbwYsODr440WHHHhb_w=s768-rw-no"
             bio="UI / UX designer focusing on Android, illustrator, and a charismatic seal."
@@ -44,38 +44,38 @@
             position="3"
             task="^Design Consultant">
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Google Plus"
                 icon="@drawable/ic_gplus"
                 url="https://plus.google.com/+EduardoPratti" />
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://twitter.com/edpratti" />
 
-        </contributor>
+        </me.jfenn.attribouter.wedges.ContributorWedge>
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
             name="Vukašin Anđelković"
             avatar="https://lh3.googleusercontent.com/peV9PQ_0orI866TX6-rt9YowJ1pxiAmEWVrxHwHFA9go34zBXqK-rLwqBIfNNprLMhzHCrk8jtZUGlo"
             bio="Makes things and stuff. Creator of Candycons, PixBit, Cubllow, and Wafer."
             login="zavukodlak"
             task="^Design Consultant">
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Google Play"
                 icon="@drawable/ic_gplay"
                 url="https://play.google.com/store/apps/dev?id=6941105890231522296" />
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://twitter.com/zavukodlak" />
 
-        </contributor>
+        </me.jfenn.attribouter.wedges.ContributorWedge>
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
             name="Rohit Parida"
             avatar="https://avatars2.githubusercontent.com/u/18437518"
             bio="A freelance graphic design artist, student, and developer."
@@ -83,14 +83,14 @@
             login="rohitkparida"
             task="^Illustrator">
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Google Plus"
                 icon="@drawable/ic_gplus"
                 url="https://plus.google.com/+RohitParida" />
 
-        </contributor>
+        </me.jfenn.attribouter.wedges.ContributorWedge>
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
             name="Alexandre Piveteau"
             avatar="https://avatars0.githubusercontent.com/u/6318990"
             bio="Computer Science student and Android developer."
@@ -98,81 +98,81 @@
             login="alexandrepiveteau"
             task="^Open Source Contributor">
 
-            <link
+            <me.jfenn.attribouter.wedges.link.LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://twitter.com/agpiveteau" />
 
-        </contributor>
+        </me.jfenn.attribouter.wedges.ContributorWedge>
 
 		<!-- already in <translators> section -->
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
             hidden="true"
             login="FriederZi" />
 
-        <contributor
+        <me.jfenn.attribouter.wedges.ContributorWedge
         	hidden="true"
         	login="pablomeza10" />
 
-    </contributors>
-    <translators>
+    </me.jfenn.attribouter.wedges.ContributorsWedge>
+    <me.jfenn.attribouter.wedges.TranslatorsWedge>
 
-        <translator
+        <me.jfenn.attribouter.wedges.TranslatorWedge
             name="Frieder Zi"
             blog="https://plus.google.com/109963929934858074229"
             locales="de"
             login="FriederZi" />
 
-        <translator
+        <me.jfenn.attribouter.wedges.TranslatorWedge
         	name="Pablo Meza"
         	blog="https://plus.google.com/112338221490547010788"
         	locales="es"
         	login="pablomeza10" />
 
-        <translator
+        <me.jfenn.attribouter.wedges.TranslatorWedge
             name="Vinicius R"
             blog="^https://github.com/Suburbanno"
             locales="pt"
             login="Suburbanno" />
 
-    </translators>
-    <licenses>
+    </me.jfenn.attribouter.wedges.TranslatorsWedge>
+    <me.jfenn.attribouter.wedges.LicensesWedge>
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="A dynamic theming library allowing you to change color schemes easily."
             license="apache-2.0"
             repo="garretyoder/Colorful" />
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="A simple library to use a menu of FloatingActionButtons from Design Support Library that follow Material Design Guidelines."
             license="apache-2.0"
             repo="jahirfiquitiva/FABsMenu"
             title="^FABs Menu" />
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="Library for computing the sunrise/sunset from GPS coordinates and a date, in Java."
             license="apache-2.0"
             repo="mikereedell/sunrisesunsetlib-java"
             title="^Sunrise Sunset Lib" />
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="An extensible media player for Android."
             license="apache-2.0"
             repo="google/ExoPlayer" />
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="A simple library containing several configurable time/date picker views and dialogs."
             license="apache-2.0"
             repo="TheAndroidMaster/TimeDatePicker" />
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="An easy to use crash reporting library for Android."
             repo="TheAndroidMaster/Crasher" />
 
-        <project
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="An image loading and caching library for Android focused on smooth scrolling."
             repo="bumptech/glide" />
 
-    </licenses>
+    </me.jfenn.attribouter.wedges.LicensesWedge>
 </about>
