@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -18,6 +17,7 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;

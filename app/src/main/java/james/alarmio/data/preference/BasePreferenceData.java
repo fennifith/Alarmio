@@ -1,11 +1,11 @@
 package james.alarmio.data.preference;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
 import james.alarmio.Alarmio;
 
 public abstract class BasePreferenceData<V extends BasePreferenceData.ViewHolder> {

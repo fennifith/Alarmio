@@ -6,13 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;

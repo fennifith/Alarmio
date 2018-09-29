@@ -12,13 +12,13 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.media.ThumbnailUtils;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 import james.alarmio.R;
 
 public class AppIconView extends View {

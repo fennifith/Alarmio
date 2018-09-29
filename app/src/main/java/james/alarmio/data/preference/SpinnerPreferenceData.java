@@ -2,7 +2,6 @@ package james.alarmio.data.preference;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import androidx.appcompat.widget.AppCompatSpinner;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;

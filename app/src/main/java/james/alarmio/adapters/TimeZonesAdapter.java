@@ -1,7 +1,5 @@
 package james.alarmio.adapters;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import james.alarmio.R;
 
 public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.ViewHolder> {

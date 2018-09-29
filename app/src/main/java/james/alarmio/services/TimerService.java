@@ -11,11 +11,11 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.activities.MainActivity;

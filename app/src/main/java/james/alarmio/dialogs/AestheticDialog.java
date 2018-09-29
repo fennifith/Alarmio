@@ -2,10 +2,10 @@ package james.alarmio.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialog;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import androidx.appcompat.app.AppCompatDialog;
 import io.reactivex.functions.Consumer;
 
 public abstract class AestheticDialog extends AppCompatDialog {

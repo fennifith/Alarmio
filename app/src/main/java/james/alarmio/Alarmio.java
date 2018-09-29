@@ -12,8 +12,6 @@ import android.media.Ringtone;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -39,6 +37,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import io.reactivex.annotations.Nullable;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;

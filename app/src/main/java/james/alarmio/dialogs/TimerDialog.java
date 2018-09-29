@@ -3,8 +3,6 @@ package james.alarmio.dialogs;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
-import android.support.v4.app.FragmentManager;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +13,8 @@ import com.afollestad.aesthetic.Aesthetic;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;

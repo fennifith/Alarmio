@@ -2,9 +2,6 @@ package james.alarmio.data.preference;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.support.annotation.StringRes;
-import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +10,9 @@ import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.widget.CompoundButtonCompat;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;
 import james.alarmio.data.PreferenceData;

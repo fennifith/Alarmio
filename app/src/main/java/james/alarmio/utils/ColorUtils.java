@@ -2,9 +2,9 @@ package james.alarmio.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import android.support.v4.content.ContextCompat;
 
+import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
 import james.alarmio.R;
 
 public class ColorUtils {

@@ -3,13 +3,13 @@ package james.alarmio.views;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.CompoundButtonCompat;
-import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 
 import com.afollestad.aesthetic.Aesthetic;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.widget.CompoundButtonCompat;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;

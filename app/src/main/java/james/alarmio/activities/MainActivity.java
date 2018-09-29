@@ -2,12 +2,12 @@ package james.alarmio.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.afollestad.aesthetic.AestheticActivity;
 
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.fragments.BaseFragment;

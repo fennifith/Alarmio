@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
-import android.support.v4.view.GravityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.R;

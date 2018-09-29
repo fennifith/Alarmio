@@ -3,10 +3,10 @@ package james.alarmio.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 import java.util.TimeZone;
 
+import androidx.annotation.Nullable;
 import james.alarmio.Alarmio;
 
 public enum PreferenceData {

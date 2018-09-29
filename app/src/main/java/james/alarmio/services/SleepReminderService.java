@@ -10,14 +10,14 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;

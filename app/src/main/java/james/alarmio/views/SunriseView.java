@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +17,7 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import java.util.Calendar;
 
+import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;

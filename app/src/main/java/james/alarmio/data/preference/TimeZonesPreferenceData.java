@@ -1,11 +1,11 @@
 package james.alarmio.data.preference;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.recyclerview.widget.RecyclerView;
 import james.alarmio.adapters.TimeZonesAdapter;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.dialogs.TimeZoneChooserDialog;

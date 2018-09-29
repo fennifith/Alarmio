@@ -2,8 +2,6 @@ package james.alarmio.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -12,6 +10,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import james.alarmio.R;
 import james.alarmio.adapters.TimeZonesAdapter;
 
