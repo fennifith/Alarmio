@@ -140,9 +140,9 @@
     <me.jfenn.attribouter.wedges.LicensesWedge>
 
         <me.jfenn.attribouter.wedges.LicenseWedge
-            description="A dynamic theming library allowing you to change color schemes easily."
+            description="A fast, easy to use, dynamic theme engine. Powered by Rx and Kotlin, for Android apps."
             license="apache-2.0"
-            repo="garretyoder/Colorful" />
+            repo="afollestad/aesthetic" />
 
         <me.jfenn.attribouter.wedges.LicenseWedge
             description="A simple library to use a menu of FloatingActionButtons from Design Support Library that follow Material Design Guidelines."
