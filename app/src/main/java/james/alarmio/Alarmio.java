@@ -350,6 +350,9 @@ public class Alarmio extends Application implements Player.EventListener {
 
     public void setListener(ActivityListener listener) {
         this.listener = listener;
+
+        if (listener != null)
+            updateTheme();
     }
 
     @Override
