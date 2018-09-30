@@ -37,6 +37,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"
             android:tint="@color/textColorPrimaryNight"
+            android:tag=":aesthetic_ignore"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_backspace" />
 

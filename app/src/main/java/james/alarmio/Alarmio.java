@@ -45,7 +45,6 @@ import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.services.TimerService;
-import james.crasher.Crasher;
 
 public class Alarmio extends Application implements Player.EventListener {
 
@@ -75,9 +74,9 @@ public class Alarmio extends Application implements Player.EventListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        Crasher crasher = new Crasher(this);
+        /*Crasher crasher = new Crasher(this);
         crasher.setEmail("dev@jfenn.me");
-        crasher.setColor(ContextCompat.getColor(this, R.color.colorNightPrimary));
+        crasher.setColor(ContextCompat.getColor(this, R.color.colorNightPrimary));*/
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         listeners = new ArrayList<>();

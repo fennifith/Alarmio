@@ -64,5 +64,5 @@
     </string-array>
 
     <!-- untranslated strings -->
-    <string name="msg_time_zones_selected">%d selected</string>
+    <string name="msg_time_zones_selected">%d Selected</string>
 </resources>
