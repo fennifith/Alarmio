@@ -16,7 +16,7 @@
     <string name="msg_delete_confirmation">Tem certeza de que deseja excluir %s?</string>
     <string name="title_delete">Excluir</string>
     <string name="title_start_timer">Iniciar temporizador</string>
-    <string name="title_auto">Auto</string>
+    <string name="title_auto">Automático</string>
     <string name="title_sunrise">Nascer do Sol</string>
     <string name="title_sunset">Pôr do Sol</string>
     <string name="title_theme">Tema</string>
@@ -32,7 +32,7 @@
     <string name="msg_snoozed_until">Suspenso até %s</string>
     <string name="title_radio_test">Teste</string>
     <string name="title_radio_create">Criar</string>
-    <string name="msg_radio_create">Crie um novo Radio</string>
+    <string name="msg_radio_create">Crie um novo rádio</string>
     <string name="msg_radio_url">Cole um URL de rádio \'.m3u8 \' aqui…</string>
     <string name="msg_radio_previous">Escolher um rádio usado anteriormente</string>
     <string name="title_radio_stop">Parar</string>
@@ -54,15 +54,13 @@
     <string name="title_alarm_name">Nome do Alarme</string>
     <string name="title_background_image">Imagem de fundo</string>
     <string name="title_ringing_background_image">Mostra a imagem de fundo nos alarmes / temporizadores</string>
-    <string name="desc_ringing_background_image">Exibe a imagem de fundo quando um alarme ou timer está tocando.</string>
+    <string name="desc_ringing_background_image">Exibe a imagem de fundo quando um alarme ou timer estiver tocando.</string>
     <string name="msg_alarms_empty">Você não possui nenhum alarme definido. Pressione o botão \'+\' para criar um.</string>
+    <string name="msg_time_zones_selected">%d Selecionado</string>
     <string-array name="array_themes">
         <item>Agenda</item>
-        <item>Dia</item>
-        <item>Noite</item>
+        <item>Claro</item>
+        <item>Noturno</item>
         <item>AMOLED</item>
     </string-array>
-
-    <!-- untranslated strings -->
-    <string name="msg_time_zones_selected">%d Selected</string>
 </resources>
