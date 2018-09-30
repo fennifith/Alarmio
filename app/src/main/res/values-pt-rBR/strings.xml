@@ -62,4 +62,7 @@
         <item>Noite</item>
         <item>AMOLED</item>
     </string-array>
+
+    <!-- untranslated strings -->
+    <string name="msg_time_zones_selected">%d selected</string>
 </resources>

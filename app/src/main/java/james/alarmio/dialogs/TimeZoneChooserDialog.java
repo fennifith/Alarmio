@@ -17,15 +17,10 @@ import james.alarmio.adapters.TimeZonesAdapter;
 
 public class TimeZoneChooserDialog extends AestheticDialog {
 
-    private OnTimeZoneListener listener;
-    private String[] excludedIds;
+    private String[] excludedIds = new String[0];
 
     public TimeZoneChooserDialog(Context context) {
         super(context);
-    }
-
-    public void setListener(OnTimeZoneListener listener) {
-        this.listener = listener;
     }
 
     public void excludeTimeZones(String... ids) {
@@ -68,29 +63,14 @@ public class TimeZoneChooserDialog extends AestheticDialog {
             }
         });
 
-        TimeZonesAdapter adapter = new TimeZonesAdapter(timeZones);
-        adapter.setOnClickListener(new TimeZonesAdapter.OnClickListener() {
-            @Override
-            public void onClick(String timeZone) {
-                if (listener != null)
-                    listener.onTimeZoneChosen(timeZone);
+        recycler.setAdapter(new TimeZonesAdapter(timeZones));
 
-                dismiss();
-            }
-        });
-
-        recycler.setAdapter(adapter);
-
-        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-    }
-
-    public interface OnTimeZoneListener {
-        void onTimeZoneChosen(String timeZone);
     }
 
 }

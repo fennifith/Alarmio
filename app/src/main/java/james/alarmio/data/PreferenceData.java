@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.TimeZone;
-
 import androidx.annotation.Nullable;
 import james.alarmio.Alarmio;
 
@@ -18,7 +16,6 @@ public enum PreferenceData {
     DAY_END(18), //hours
     ALARM_LENGTH(0),
     TIMER_LENGTH(0),
-    TIME_ZONES(new String[]{TimeZone.getDefault().getID()}),
     DEFAULT_ALARM_RINGTONE(null),
     DEFAULT_TIMER_RINGTONE(null),
     SLEEP_REMINDER(true),
@@ -34,7 +31,8 @@ public enum PreferenceData {
     TIMER_DURATION("%d/TIMER_DURATION", 600000),
     TIMER_END_TIME("%d/TIMER_END_TIME", 0),
     TIMER_VIBRATE("%d/TIMER_VIBRATE", true),
-    TIMER_SOUND("%d/TIMER_SOUND", "");
+    TIMER_SOUND("%d/TIMER_SOUND", ""),
+    TIME_ZONE_ENABLED("%s/TIME_ZONE_ENABLED", false);
 
     private String name;
     private Object defaultValue;

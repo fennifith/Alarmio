@@ -14,7 +14,10 @@ import com.afollestad.aesthetic.Aesthetic;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -253,20 +256,25 @@ public class HomeFragment extends BaseFragment {
 
     private void setClockFragments() {
         if (timePager != null && timeIndicator != null) {
-            String[] timeZones = PreferenceData.TIME_ZONES.getValue(getContext());
-            ClockFragment[] clockFragments = new ClockFragment[timeZones.length];
-            for (int i = 0; i < timeZones.length; i++) {
-                Bundle args = new Bundle();
-                args.putString(ClockFragment.EXTRA_TIME_ZONE, timeZones[i]);
-                ClockFragment fragment = new ClockFragment();
-                fragment.setArguments(args);
-                clockFragments[i] = fragment;
+            List<ClockFragment> fragments = new ArrayList<>();
+
+            ClockFragment fragment = new ClockFragment();
+            fragments.add(fragment);
+
+            for (String id : TimeZone.getAvailableIDs()) {
+                if (PreferenceData.TIME_ZONE_ENABLED.getSpecificValue(getContext(), id)) {
+                    Bundle args = new Bundle();
+                    args.putString(ClockFragment.EXTRA_TIME_ZONE, id);
+                    fragment = new ClockFragment();
+                    fragment.setArguments(args);
+                    fragments.add(fragment);
+                }
             }
 
-            timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), clockFragments);
+            timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), fragments.toArray(new ClockFragment[0]));
             timePager.setAdapter(timeAdapter);
             timeIndicator.setViewPager(timePager);
-            timeIndicator.setVisibility(clockFragments.length > 1 ? View.VISIBLE : View.GONE);
+            timeIndicator.setVisibility(fragments.size() > 1 ? View.VISIBLE : View.GONE);
         }
 
         ImageUtils.getBackgroundImage(background);

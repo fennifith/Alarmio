@@ -51,7 +51,7 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
                 new ThemePreferenceData(),
                 new ImageFilePreferenceData(PreferenceData.BACKGROUND_IMAGE, R.string.title_background_image),
                 new BooleanPreferenceData(PreferenceData.RINGING_BACKGROUND_IMAGE, R.string.title_ringing_background_image, R.string.desc_ringing_background_image),
-                new TimeZonesPreferenceData(PreferenceData.TIME_ZONES, R.string.title_time_zones),
+                new TimeZonesPreferenceData(PreferenceData.TIME_ZONE_ENABLED, R.string.title_time_zones),
                 new RingtonePreferenceData(PreferenceData.DEFAULT_ALARM_RINGTONE, R.string.title_default_alarm_ringtone),
                 new RingtonePreferenceData(PreferenceData.DEFAULT_TIMER_RINGTONE, R.string.title_default_timer_ringtone),
                 new BooleanPreferenceData(PreferenceData.SLEEP_REMINDER, R.string.title_sleep_reminder, R.string.desc_sleep_reminder),
