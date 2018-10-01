@@ -1,5 +1,6 @@
 package james.alarmio.services;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -7,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
 import james.alarmio.data.AlarmData;
@@ -136,6 +139,9 @@ public class SleepReminderService extends Service {
      * unexpectedly leaped forwards.
      */
     public static void refreshSleepTime(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && ContextCompat.checkSelfPermission(context, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED)
+            return;
+
         Alarmio alarmio;
         if (context instanceof Alarmio)
             alarmio = (Alarmio) context;

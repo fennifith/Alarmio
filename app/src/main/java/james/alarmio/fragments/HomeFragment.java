@@ -1,7 +1,9 @@
 package james.alarmio.fragments;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import androidx.viewpager.widget.ViewPager;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
+import jahirfiquitiva.libs.fabsmenu.FABsMenuListener;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
@@ -217,8 +220,6 @@ public class HomeFragment extends BaseFragment {
         timerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(0, false);
-
                 new TimerDialog(getContext(), getFragmentManager()).show();
                 menu.collapse();
             }
@@ -227,7 +228,6 @@ public class HomeFragment extends BaseFragment {
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setCurrentItem(0, false);
                 new AestheticTimeSheetPickerDialog(view.getContext())
                         .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
                             @Override
@@ -248,6 +248,17 @@ public class HomeFragment extends BaseFragment {
                         .show();
 
                 menu.collapse();
+            }
+        });
+
+        menu.setMenuListener(new FABsMenuListener() {
+            @Override
+            public void onMenuExpanded(FABsMenu fabsMenu) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED)
+                        requestPermissions(new String[]{Manifest.permission.FOREGROUND_SERVICE}, 0);
+                    else fabsMenu.collapseImmediately();
+                }
             }
         });
 
