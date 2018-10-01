@@ -83,8 +83,4 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
         }
     }
 
-    public interface OnClickListener {
-        void onClick(String timeZone);
-    }
-
 }
