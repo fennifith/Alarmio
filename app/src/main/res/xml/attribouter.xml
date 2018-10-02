@@ -109,6 +109,10 @@
 
         <me.jfenn.attribouter.wedges.ContributorWedge
             hidden="true"
+            login="Suburbanno" />
+
+        <me.jfenn.attribouter.wedges.ContributorWedge
+            hidden="true"
             login="FriederZi" />
 
         <me.jfenn.attribouter.wedges.ContributorWedge

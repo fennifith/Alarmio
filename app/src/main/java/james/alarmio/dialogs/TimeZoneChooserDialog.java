@@ -3,6 +3,8 @@ package james.alarmio.dialogs;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,4 +75,11 @@ public class TimeZoneChooserDialog extends AestheticDialog {
         });
     }
 
+    @Override
+    public void show() {
+        super.show();
+        Window window = getWindow();
+        if (window != null)
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+    }
 }
