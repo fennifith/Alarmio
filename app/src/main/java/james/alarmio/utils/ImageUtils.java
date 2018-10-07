@@ -11,11 +11,18 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 
+import androidx.annotation.Nullable;
 import james.alarmio.data.PreferenceData;
 
 public class ImageUtils {
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    /**
+     * Converts drawables to bitmaps.
+     *
+     * @param drawable          A drawable.
+     * @return                  A bitmap.
+     */
+    public static Bitmap drawableToBitmap(@Nullable Drawable drawable) {
         if (drawable == null)
             return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_4444);
 
@@ -39,6 +46,12 @@ public class ImageUtils {
         return bitmap;
     }
 
+    /**
+     * Gets the current user-defined background image from SharedPreferences and applies
+     * it to the passed view.
+     *
+     * @param imageView         The ImageView to apply the background image to.
+     */
     public static void getBackgroundImage(ImageView imageView) {
         String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(imageView.getContext());
 

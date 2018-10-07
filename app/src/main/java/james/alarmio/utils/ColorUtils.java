@@ -1,26 +1,21 @@
 package james.alarmio.utils;
 
-import android.content.Context;
 import android.graphics.Color;
 
 import androidx.annotation.ColorInt;
-import androidx.core.content.ContextCompat;
-import james.alarmio.R;
 
 public class ColorUtils {
 
+    /**
+     * Determine if a color is dark or not, using some magic numbers.
+     *
+     * @see [this confusing wikipedia article](https://en.wikipedia.org/wiki/Luma_%28video%29)
+     *
+     * @param color         A color int to determine the luminance of.
+     * @return              True if the color should be considered "light".
+     */
     public static boolean isColorDark(@ColorInt int color) {
         return (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255 < 0.5;
-    }
-
-    @ColorInt
-    public static int getPrimaryTextColor(Context context, @ColorInt int background) {
-        return ContextCompat.getColor(context, isColorDark(background) ? R.color.textColorPrimaryNight : R.color.textColorPrimary);
-    }
-
-    @ColorInt
-    public static int getSecondaryTextColor(Context context, @ColorInt int background) {
-        return ContextCompat.getColor(context, isColorDark(background) ? R.color.textColorSecondaryNight : R.color.textColorSecondary);
     }
 
 }
