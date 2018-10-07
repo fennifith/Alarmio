@@ -59,6 +59,10 @@ public class SleepReminderService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    /**
+     * Refresh the state of the sleepy stuff. This will either show a notification if a notification
+     * should be shown, or stop the service if it shouldn't.
+     */
     public void refreshState() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? powerManager.isInteractive() : powerManager.isScreenOn()) {
             AlarmData nextAlarm = getSleepyAlarm(alarmio);
@@ -88,6 +92,13 @@ public class SleepReminderService extends Service {
         stopForeground(true);
     }
 
+    /**
+     * Get a sleepy alarm. Well, get the next alarm that should trigger a sleep alert.
+     *
+     * @param alarmio       The active Application instance.
+     * @return              The next [AlarmData](../data/AlarmData) that should trigger a
+     *                      sleep alert, or null if there isn't one.
+     */
     @Nullable
     public static AlarmData getSleepyAlarm(Alarmio alarmio) {
         if (PreferenceData.SLEEP_REMINDER.getValue(alarmio)) {
@@ -104,6 +115,12 @@ public class SleepReminderService extends Service {
         return null;
     }
 
+    /**
+     * Get the next scheduled [AlarmData](../data/AlarmData) that will ring.
+     *
+     * @param alarmio       The active Application instance.
+     * @return              The next AlarmData that will wake the user up.
+     */
     @Nullable
     public static AlarmData getNextWakeAlarm(Alarmio alarmio) {
         Calendar nextNoon = Calendar.getInstance();
@@ -136,7 +153,10 @@ public class SleepReminderService extends Service {
 
     /**
      * To be called whenever an alarm is changed, might change, or when time might have
-     * unexpectedly leaped forwards.
+     * unexpectedly leaped forwards. This will start the service if there is a
+     * [sleepy alarm](#getsleepyalarm) present.
+     *
+     * @param context       An active context instance.
      */
     public static void refreshSleepTime(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && ContextCompat.checkSelfPermission(context, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED)
