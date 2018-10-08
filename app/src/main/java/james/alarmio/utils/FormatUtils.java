@@ -18,26 +18,67 @@ public class FormatUtils {
     public static final String FORMAT_24H_SHORT = "HH:mm";
     public static final String FORMAT_DATE = "MMMM d yyyy";
 
+    /**
+     * Get the proper hh:mm:ss time format to use, dependent on whether
+     * 24-hour time is enabled in the system settings.
+     *
+     * @param context       An active context instance.
+     * @return              A string to format hh:mm:ss time.
+     */
     public static String getFormat(Context context) {
         return DateFormat.is24HourFormat(context) ? FORMAT_24H : FORMAT_12H;
     }
 
+    /**
+     * A shorter version of [getFormat](#getformat) with the AM/PM indicator
+     * in the 12-hour version.
+     *
+     * @param context       An active context instance.
+     * @return              A string to format hh:mm time.
+     */
     public static String getShortFormat(Context context) {
         return DateFormat.is24HourFormat(context) ? FORMAT_24H_SHORT : FORMAT_12H_SHORT;
     }
 
+    /**
+     * Formats the provided time into a string using [getFormat](#getformat).
+     *
+     * @param context       An active context instance.
+     * @param time          The time to be formatted.
+     * @return              A formatted hh:mm:ss string.
+     */
     public static String format(Context context, Date time) {
         return format(time, getFormat(context));
     }
 
+    /**
+     * Formats the provided time into a string using [getShortFormat](#getshortformat).
+     *
+     * @param context       An active context instance.
+     * @param time          The time to be formatted.
+     * @return              A formatted hh:mm string.
+     */
     public static String formatShort(Context context, Date time) {
         return format(time, getShortFormat(context));
     }
 
+    /**
+     * Formats the provided time into the provided format.
+     *
+     * @param time          The time to be formatted.
+     * @param format        The format to format the time into.
+     * @return              The formatted time string.
+     */
     public static String format(Date time, String format) {
         return new SimpleDateFormat(format, Locale.getDefault()).format(time);
     }
 
+    /**
+     * Formats a duration of milliseconds into a "0h 00m 00s 00" string.
+     *
+     * @param millis        The millisecond duration to be formatted.
+     * @return              The formatted time string.
+     */
     public static String formatMillis(long millis) {
         long hours = TimeUnit.MILLISECONDS.toHours(millis);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1);
@@ -51,6 +92,15 @@ public class FormatUtils {
         else return String.format(Locale.getDefault(), "%ds %02d", seconds, micros);
     }
 
+    /**
+     * Formats a duration of minutes into a meaningful string to be used in
+     * idk maybe a sentence or something. An input of 60 becomes "1 hour", 59
+     * becomes "59 minutes", and so on.
+     *
+     * @param context       An active context instance.
+     * @param minutes       The duration of minutes to format.
+     * @return              The formatted time string.
+     */
     public static String formatUnit(Context context, int minutes) {
         long hours = TimeUnit.MINUTES.toHours(minutes);
         minutes %= TimeUnit.HOURS.toMinutes(1);

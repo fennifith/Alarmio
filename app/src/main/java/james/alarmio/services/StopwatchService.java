@@ -114,6 +114,9 @@ public class StopwatchService extends Service {
         return lastLapTime;
     }
 
+    /**
+     * Reset the stopwatch, cancelling any notifications and setting everything to zero.
+     */
     public void reset() {
         if (isRunning)
             toggle();
@@ -131,6 +134,10 @@ public class StopwatchService extends Service {
             listener.onReset();
     }
 
+    /**
+     * Toggle whether the stopwatch is currently running (pausing it and storing a temporary
+     * time if so).
+     */
     public void toggle() {
         stopTime = System.currentTimeMillis();
         isRunning = !isRunning;
@@ -150,6 +157,9 @@ public class StopwatchService extends Service {
             listener.onStateChanged(isRunning);
     }
 
+    /**
+     * Record the current time as a "lap".
+     */
     public void lap() {
         long lapTime = System.currentTimeMillis() - startTime;
         long lapDiff = lapTime - lastLapTime;
@@ -161,6 +171,12 @@ public class StopwatchService extends Service {
             listener.onLap(laps.size(), lapTime, lastLastLapTime, lapDiff);
     }
 
+    /**
+     * Get a notification to send to the user for the current time.
+     *
+     * @param time      A formatted string defining the current time on the stopwatch.
+     * @return          A notification to use for this stopwatch.
+     */
     private Notification getNotification(String time) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_STOPWATCH, getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_DEFAULT));

@@ -38,6 +38,13 @@ public class SoundData {
         return url;
     }
 
+    /**
+     * Plays the sound. This will pass the SoundData instance to the provided
+     * [Alarmio](../Alarmio) class, which will store the currently playing sound
+     * until it is stopped or cancelled.
+     *
+     * @param alarmio           The active Application instance.
+     */
     public void play(Alarmio alarmio) {
         if (url.startsWith("content://")) {
             if (ringtone == null) {
@@ -57,12 +64,24 @@ public class SoundData {
         }
     }
 
+    /**
+     * Stops the currently playing alarm. This only differentiates between sounds
+     * if the sound is a ringtone; if it is a stream, then all streams will be stopped,
+     * regardless of whether this sound is in fact the currently playing stream or not.
+     *
+     * @param alarmio           The active Application instance.
+     */
     public void stop(Alarmio alarmio) {
         if (ringtone != null)
             ringtone.stop();
         else alarmio.stopStream();
     }
 
+    /**
+     * Preview the sound on the "media" volume channel.
+     *
+     * @param alarmio           The active Application instance.
+     */
     public void preview(Alarmio alarmio) {
         if (url.startsWith("content://")) {
             if (ringtone == null) {
@@ -82,17 +101,36 @@ public class SoundData {
         }
     }
 
+    /**
+     * Decide whether the sound is currently playing or not.
+     *
+     * @param alarmio           The active Application instance.
+     * @return                  True if "this" sound is playing.
+     */
     public boolean isPlaying(Alarmio alarmio) {
         if (ringtone != null)
             return ringtone.isPlaying();
         else return alarmio.isPlayingStream(url);
     }
 
+    /**
+     * Returns an identifier string that can be used to recreate this
+     * SoundDate class.
+     *
+     * @return                  A non-null identifier string.
+     */
     @Override
     public String toString() {
         return name + SEPARATOR + url;
     }
 
+    /**
+     * Construct a new instance of SoundData from an identifier string which was
+     * (hopefully) created by [toString](#tostring).
+     *
+     * @param string            A non-null identifier string.
+     * @return                  A recreated SoundData instance.
+     */
     @Nullable
     public static SoundData fromString(String string) {
         if (string.contains(SEPARATOR)) {
@@ -104,6 +142,12 @@ public class SoundData {
         return null;
     }
 
+    /**
+     * Decide if two SoundDatas are equal.
+     *
+     * @param obj               The object to compare to.
+     * @return                  True if the SoundDatas contain the same sound.
+     */
     @Override
     public boolean equals(Object obj) {
         return (obj != null && obj instanceof SoundData && ((SoundData) obj).url.equals(url));

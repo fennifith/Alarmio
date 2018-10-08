@@ -5,7 +5,6 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.AlarmManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
@@ -37,7 +36,6 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import io.reactivex.functions.Consumer;
 import james.alarmio.Alarmio;
 import james.alarmio.R;
-import james.alarmio.activities.MainActivity;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
@@ -45,7 +43,6 @@ import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.dialogs.AlertDialog;
 import james.alarmio.dialogs.SoundChooserDialog;
 import james.alarmio.interfaces.SoundChooserListener;
-import james.alarmio.receivers.TimerReceiver;
 import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.DaySwitch;
@@ -124,15 +121,6 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     }
                 }
             };
-
-            timerHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(alarmio, MainActivity.class);
-                    intent.putExtra(TimerReceiver.EXTRA_TIMER_ID, timerHolder.getAdapterPosition());
-                    alarmio.startActivity(intent);
-                }
-            });
 
             timerHolder.stop.setColorFilter(textColorPrimary);
             timerHolder.stop.setOnClickListener(new View.OnClickListener() {
