@@ -37,9 +37,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
-import io.reactivex.annotations.Nullable;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.data.TimerData;
@@ -115,6 +115,11 @@ public class Alarmio extends Application implements Player.EventListener {
         return timers;
     }
 
+    /**
+     * Create a new alarm, assigning it an unused preference id.
+     *
+     * @return          The newly instantiated [AlarmData](./data/AlarmData).
+     */
     public AlarmData newAlarm() {
         AlarmData alarm = new AlarmData(alarms.size(), Calendar.getInstance());
         alarms.add(alarm);
@@ -122,6 +127,11 @@ public class Alarmio extends Application implements Player.EventListener {
         return alarm;
     }
 
+    /**
+     * Remove an alarm and all of its its preferences.
+     *
+     * @param alarm     The alarm to be removed.
+     */
     public void removeAlarm(AlarmData alarm) {
         alarm.onRemoved(this);
 
@@ -135,16 +145,27 @@ public class Alarmio extends Application implements Player.EventListener {
         onAlarmsChanged();
     }
 
+    /**
+     * Update preferences to show that the alarm count has been changed.
+     */
     public void onAlarmCountChanged() {
         PreferenceData.ALARM_LENGTH.setValue(this, alarms.size());
     }
 
+    /**
+     * Notify the application of changes to the current alarms.
+     */
     public void onAlarmsChanged() {
         for (AlarmioListener listener : listeners) {
             listener.onAlarmsChanged();
         }
     }
 
+    /**
+     * Create a new timer, assigning it an unused preference id.
+     *
+     * @return          The newly instantiated [TimerData](./data/TimerData).
+     */
     public TimerData newTimer() {
         TimerData timer = new TimerData(timers.size());
         timers.add(timer);
@@ -152,6 +173,11 @@ public class Alarmio extends Application implements Player.EventListener {
         return timer;
     }
 
+    /**
+     * Remove a timer and all of its preferences.
+     *
+     * @param timer     The timer to be removed.
+     */
     public void removeTimer(TimerData timer) {
         timer.onRemoved(this);
 
@@ -165,24 +191,42 @@ public class Alarmio extends Application implements Player.EventListener {
         onTimersChanged();
     }
 
+    /**
+     * Update the preferences to show that the timer count has been changed.
+     */
     public void onTimerCountChanged() {
-        PreferenceData.TIMER_LENGTH.setValue(this, alarms.size());
+        PreferenceData.TIMER_LENGTH.setValue(this, timers.size());
     }
 
+    /**
+     * Notify the application of changes to the current timers.
+     */
     public void onTimersChanged() {
         for (AlarmioListener listener : listeners) {
             listener.onTimersChanged();
         }
     }
 
+    /**
+     * Starts the timer service after a timer has been set.
+     */
     public void onTimerStarted() {
         startService(new Intent(this, TimerService.class));
     }
 
+    /**
+     * Get an instance of SharedPreferences.
+     *
+     * @return          The instance of SharedPreferences being used by the application.
+     * @see [android.content.SharedPreferences Documentation](https://developer.android.com/reference/android/content/SharedPreferences)
+     */
     public SharedPreferences getPrefs() {
         return prefs;
     }
 
+    /**
+     * Update the application theme.
+     */
     public void updateTheme() {
         if (isNight()) {
             Aesthetic.Companion.get()
@@ -235,15 +279,33 @@ public class Alarmio extends Application implements Player.EventListener {
         }
     }
 
+    /**
+     * Determine if the theme should be a night theme.
+     *
+     * @return          True if the current theme is a night theme.
+     */
     public boolean isNight() {
         int time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return ((time < getDayStart() || time > getDayEnd()) && getActivityTheme() == THEME_DAY_NIGHT) || getActivityTheme() == THEME_NIGHT;
     }
 
+    /**
+     * Get the theme to be used for activities and things. Despite
+     * what the name implies, it does not return a theme resource,
+     * but rather one of Alarmio.THEME_DAY_NIGHT, Alarmio.THEME_DAY,
+     * Alarmio.THEME_NIGHT, or Alarmio.THEME_AMOLED.
+     *
+     * @return          The theme to be used for activites.
+     */
     public int getActivityTheme() {
         return PreferenceData.THEME.getValue(this);
     }
 
+    /**
+     * Determine if the sunrise/sunset stuff should occur automatically.
+     *
+     * @return          True if the day/night stuff is automated.
+     */
     public boolean isDayAuto() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && (boolean) PreferenceData.DAY_AUTO.getValue(this);
     }
@@ -266,6 +328,9 @@ public class Alarmio extends Application implements Player.EventListener {
         else return PreferenceData.DAY_END.getValue(this);
     }
 
+    /**
+     * @return the hour of the calculated sunrise time, or null.
+     */
     @Nullable
     public Integer getSunrise() {
         if (getSunsetCalculator() != null)
@@ -273,6 +338,9 @@ public class Alarmio extends Application implements Player.EventListener {
         else return null;
     }
 
+    /**
+     * @return the hour of the calculated sunset time, or null.
+     */
     @Nullable
     public Integer getSunset() {
         if (getSunsetCalculator() != null)
@@ -280,6 +348,11 @@ public class Alarmio extends Application implements Player.EventListener {
         else return null;
     }
 
+    /**
+     * @return the current SunriseSunsetCalculator object, or null if it cannot
+     *         be instantiated.
+     * @see [SunriseSunsetLib Repo](https://github.com/mikereedell/sunrisesunsetlib-java)
+     */
     @Nullable
     private SunriseSunsetCalculator getSunsetCalculator() {
         if (sunsetCalculator == null && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -294,10 +367,21 @@ public class Alarmio extends Application implements Player.EventListener {
         return sunsetCalculator;
     }
 
+    /**
+     * Determine if a ringtone is currently playing.
+     *
+     * @return          True if a ringtone is currently playing.
+     */
     public boolean isRingtonePlaying() {
         return currentRingtone != null && currentRingtone.isPlaying();
     }
 
+    /**
+     * Get the currently playing ringtone.
+     *
+     * @return          The currently playing ringtone, or null.
+     */
+    @Nullable
     public Ringtone getCurrentRingtone() {
         return currentRingtone;
     }
@@ -311,6 +395,12 @@ public class Alarmio extends Application implements Player.EventListener {
         currentRingtone = ringtone;
     }
 
+    /**
+     * Play a stream ringtone.
+     *
+     * @param url       The URL of the stream to be passed to ExoPlayer.
+     * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
+     */
     public void playStream(String url) {
         stopCurrentSound();
         player.prepare(mediaSourceFactory.createMediaSource(Uri.parse(url)));
@@ -318,21 +408,42 @@ public class Alarmio extends Application implements Player.EventListener {
         currentStream = url;
     }
 
+    /**
+     * Play a stream ringtone.
+     *
+     * @param url           The URL of the stream to be passed to ExoPlayer.
+     * @param attributes    The attributes to play the stream with.
+     * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
+     */
     public void playStream(String url, AudioAttributes attributes) {
         player.stop();
         player.setAudioAttributes(attributes);
         playStream(url);
     }
 
+    /**
+     * Stop the currently playing stream.
+     */
     public void stopStream() {
         player.stop();
         currentStream = null;
     }
 
+    /**
+     * Determine if the passed url matches the stream that is currently playing.
+     *
+     * @param url           The URL to match the current stream to.
+     * @return              True if the URL matches that of the currently playing
+     *                      stream.
+     */
     public boolean isPlayingStream(String url) {
         return currentStream != null && currentStream.equals(url);
     }
 
+    /**
+     * Stop the currently playing sound, regardless of whether it is a ringtone
+     * or a stream.
+     */
     public void stopCurrentSound() {
         if (isRingtonePlaying())
             currentRingtone.stop();
