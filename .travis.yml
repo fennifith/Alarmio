@@ -16,11 +16,15 @@ before_install:
   - chmod +x gradlew
 before_deploy:
   - export BODY=$(cat app/src/main/play/release-notes/en-US/default.txt)
+  - export VERSION=$(gradle -q :app:printVersionName)
 deploy:
   - provider: releases
     skip_cleanup: true
     overwrite: true
+    name: ${VERSION}
+    tag_name: ${VERSION}
     body: ${BODY}
+    prerelease: true
     api_key: $GITHUB_TOKEN
     file_glob: true
     file: "app/build/outputs/apk/release/*"
