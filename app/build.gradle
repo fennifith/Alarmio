@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
 
 android {
     compileSdkVersion 28
@@ -6,7 +7,7 @@ android {
         applicationId "james.alarmio"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 6
+        versionCode 7
         versionName "0.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -20,6 +21,19 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    def isRunningOnTravis = System.getenv("CI") == "true"
+    if (isRunningOnTravis) {
+        signingConfigs.release.storeFile = file("../key.jks")
+        signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
+        signingConfigs.release.keyAlias = System.getenv("KEYSTORE_ALIAS")
+        signingConfigs.release.keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD")
+    }
+}
+
+play {
+	serviceAccountCredentials = file("../service.json")
+	track = "alpha"
 }
 
 dependencies {

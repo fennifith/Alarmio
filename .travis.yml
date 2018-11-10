@@ -1,14 +1,36 @@
 language: android
 android:
   components:
-  - tools
-  - platform-tools
-  - build-tools-28.0.3
-  - android-28
-  - extra-google-google_play_services
-  - extra-google-m2repository
-  - extra-android-m2repository
+    - tools
+    - platform-tools
+    - build-tools-28.0.3
+    - android-28
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
 jdk:
-- oraclejdk8
+  - oraclejdk8
 before_install:
-- chmod +x gradlew
+  - openssl aes-256-cbc -K $encrypted_bb7fd5d8e773_key -iv $encrypted_bb7fd5d8e773_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar -xvf secrets.tar
+  - chmod +x gradlew
+before_deploy:
+  - brew install jshon
+  - export BODY=$(jshon -s "$(cat app/src/main/play/release-notes/en-US/default.txt)")
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    overwrite: true
+    body: ${BODY}
+    api_key:
+      secure: bDFLNV2s4k9wVTR//QClL+eL9JCaWc0I0yvNXAhfZayI+dzWxwnPtTS2Bwb4WIzdlhsJFlbbu7ydcjgCfjogR3QvKfKZy4TOK7eE6K4j14iADZ34cn5gdPEOPZjRD75jb7oopuRgAql1t15GDVYO7Tc35PRSn2YtfIuxaSw35qo3vzDv/kE5p5677nOBW8zx9WNBkcYaewq3n+AZBiEbBqFxr+pXpJRuCxehSabfO+AsoREbVPvg4dc2LBOCD4JEwKbsImD8RtuJhRQVEWXV+4TaHuvgxlB89m+WE7J38b6mDQR3UrfJVR6vZZEl+coP+KZMFr5EG4zb5PSW5Kmz/c18o35gf6beNYrbuFDq3jx3gl7YWEd9kiVF7g7vC+LdV9VxKUV//2z45z62E8qB0322OhV52IZluGxWN1Zor5Cm8x6cjcQ6vi4R09klJUH3PqCVid6Yd9F7bd9Fm5cre/mEQlasSX9ow/CYL6pMTs4zs/3FxuP5V7uaMbB1Vkux0PjgzGb4IylzIbZnNoilsnBSA28FF4P1wXECx/JED3ESd303XzBWTwE2Xom86bRdgHPc2XBo0+9wbTtYogGmlgP3KhZ5Gm/TBcLLm37Q5334AKvkz3scEeiNn9piizLR+gX4F2GaXZc2y+9xIWtt6ziF48wZKRpHr8Ad2kqnsf4=
+    file_glob: true
+    file: "app/build/outputs/apk/release/*"
+    on:
+      repo: fennifith/Alarmio
+      branch: master
+  - provider: script
+    script: ./gradlew publish
+    on:
+      repo: fennifith/Alarmio
+      branch: master
