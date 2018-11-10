@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <about>
-    <me.jfenn.attribouter.wedges.AppWedge repo="TheAndroidMaster/Alarmio">
+    <me.jfenn.attribouter.wedges.AppWedge repo="fennifith/Alarmio">
 
         <me.jfenn.attribouter.wedges.link.LinkWedge
             id="github"
             url="https://jfenn.me/redirects/?t=github&amp;d=Alarmio" />
 
     </me.jfenn.attribouter.wedges.AppWedge>
-    <me.jfenn.attribouter.wedges.ContributorsWedge repo="TheAndroidMaster/Alarmio">
+    <me.jfenn.attribouter.wedges.ContributorsWedge repo="fennifith/Alarmio">
         <me.jfenn.attribouter.wedges.ContributorWedge
             name="James Fenn"
             bio="Android developer. Writes Java, C, and HTML. PHP confuses me."
             blog="https://jfenn.me/"
-            login="TheAndroidMaster"
+            login="fennifith"
             position="1"
             task="^Developer">
 
@@ -168,11 +168,11 @@
         <me.jfenn.attribouter.wedges.LicenseWedge
             description="A simple library containing several configurable time/date picker views and dialogs."
             license="apache-2.0"
-            repo="TheAndroidMaster/TimeDatePicker" />
+            repo="fennifith/TimeDatePicker" />
 
         <me.jfenn.attribouter.wedges.LicenseWedge
             description="An easy to use crash reporting library for Android."
-            repo="TheAndroidMaster/Crasher" />
+            repo="fennifith/Crasher" />
 
         <me.jfenn.attribouter.wedges.LicenseWedge
             description="An image loading and caching library for Android focused on smooth scrolling."
