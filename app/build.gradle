@@ -12,6 +12,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
+    def isRunningOnTravis = System.getenv("CI") == "true"
+    if (isRunningOnTravis) {
+        signingConfigs.release.storeFile = file("../key.jks")
+        signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
+        signingConfigs.release.keyAlias = System.getenv("KEYSTORE_ALIAS")
+        signingConfigs.release.keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD")
+    }
+    
     buildTypes {
         release {
             minifyEnabled false
@@ -20,14 +29,6 @@ android {
     }
     lintOptions {
         abortOnError false
-    }
-
-    def isRunningOnTravis = System.getenv("CI") == "true"
-    if (isRunningOnTravis) {
-        signingConfigs.release.storeFile = file("../key.jks")
-        signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
-        signingConfigs.release.keyAlias = System.getenv("KEYSTORE_ALIAS")
-        signingConfigs.release.keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD")
     }
 }
 
