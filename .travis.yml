@@ -16,7 +16,7 @@ before_install:
   - chmod +x gradlew
 before_deploy:
   - export BODY=$(cat app/src/main/play/release-notes/en-US/default.txt)
-  - export VERSION=$(gradle -q :app:printVersionName)
+  - export VERSION=$(./gradlew -q :app:printVersionName)
 deploy:
   - provider: releases
     skip_cleanup: true
