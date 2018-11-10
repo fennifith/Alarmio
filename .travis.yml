@@ -21,8 +21,7 @@ deploy:
     skip_cleanup: true
     overwrite: true
     body: ${BODY}
-    api_key:
-      secure: bDFLNV2s4k9wVTR//QClL+eL9JCaWc0I0yvNXAhfZayI+dzWxwnPtTS2Bwb4WIzdlhsJFlbbu7ydcjgCfjogR3QvKfKZy4TOK7eE6K4j14iADZ34cn5gdPEOPZjRD75jb7oopuRgAql1t15GDVYO7Tc35PRSn2YtfIuxaSw35qo3vzDv/kE5p5677nOBW8zx9WNBkcYaewq3n+AZBiEbBqFxr+pXpJRuCxehSabfO+AsoREbVPvg4dc2LBOCD4JEwKbsImD8RtuJhRQVEWXV+4TaHuvgxlB89m+WE7J38b6mDQR3UrfJVR6vZZEl+coP+KZMFr5EG4zb5PSW5Kmz/c18o35gf6beNYrbuFDq3jx3gl7YWEd9kiVF7g7vC+LdV9VxKUV//2z45z62E8qB0322OhV52IZluGxWN1Zor5Cm8x6cjcQ6vi4R09klJUH3PqCVid6Yd9F7bd9Fm5cre/mEQlasSX9ow/CYL6pMTs4zs/3FxuP5V7uaMbB1Vkux0PjgzGb4IylzIbZnNoilsnBSA28FF4P1wXECx/JED3ESd303XzBWTwE2Xom86bRdgHPc2XBo0+9wbTtYogGmlgP3KhZ5Gm/TBcLLm37Q5334AKvkz3scEeiNn9piizLR+gX4F2GaXZc2y+9xIWtt6ziF48wZKRpHr8Ad2kqnsf4=
+    api_key: $GITHUB_TOKEN
     file_glob: true
     file: "app/build/outputs/apk/release/*"
     on:
