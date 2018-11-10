@@ -12,7 +12,7 @@ jdk:
   - oraclejdk8
 before_install:
   - openssl aes-256-cbc -K $encrypted_bb7fd5d8e773_key -iv $encrypted_bb7fd5d8e773_iv -in secrets.tar.enc -out secrets.tar -d
-  - tar -xvf --overwrite secrets.tar
+  - tar -xvf secrets.tar --overwrite
   - chmod +x gradlew
 before_deploy:
   - export BODY=$(cat app/src/main/play/release-notes/en-US/default.txt)
