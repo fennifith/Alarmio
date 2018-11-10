@@ -15,8 +15,7 @@ before_install:
   - tar -xvf secrets.tar
   - chmod +x gradlew
 before_deploy:
-  - brew install jshon
-  - export BODY=$(jshon -s "$(cat app/src/main/play/release-notes/en-US/default.txt)")
+  - export BODY=$(cat app/src/main/play/release-notes/en-US/default.txt)
 deploy:
   - provider: releases
     skip_cleanup: true
