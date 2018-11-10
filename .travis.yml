@@ -1,38 +1,38 @@
 language: android
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-28.0.3
-    - android-28
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
+  - tools
+  - platform-tools
+  - build-tools-28.0.3
+  - android-28
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
 jdk:
-  - oraclejdk8
+- oraclejdk8
 before_install:
-  - openssl aes-256-cbc -K $encrypted_bb7fd5d8e773_key -iv $encrypted_bb7fd5d8e773_iv -in secrets.tar.enc -out secrets.tar -d
-  - tar -xvf secrets.tar --overwrite
-  - chmod +x gradlew
+- openssl aes-256-cbc -K $encrypted_bb7fd5d8e773_key -iv $encrypted_bb7fd5d8e773_iv -in secrets.tar.enc -out secrets.tar -d
+- tar -xvf secrets.tar --overwrite
+- chmod +x gradlew
 before_deploy:
-  - export BODY=$(cat app/src/main/play/release-notes/en-US/default.txt)
-  - export VERSION=$(./gradlew -q :app:printVersionName)
+- export BODY=$(cat app/src/main/play/release-notes/en-US/default.txt)
+- export VERSION=$(./gradlew -q :app:printVersionName)
 deploy:
-  - provider: releases
-    skip_cleanup: true
-    overwrite: true
-    name: ${VERSION}
-    tag_name: ${VERSION}
-    body: ${BODY}
-    prerelease: true
-    api_key: $GITHUB_TOKEN
-    file_glob: true
-    file: "app/build/outputs/apk/release/*"
-    on:
-      repo: fennifith/Alarmio
-      branch: master
-  - provider: script
-    script: ./gradlew publish
-    on:
-      repo: fennifith/Alarmio
-      branch: master
+- provider: releases
+  skip_cleanup: true
+  overwrite: true
+  name: "${VERSION}"
+  tag_name: "${VERSION}"
+  body: "${BODY}"
+  prerelease: true
+  api_key: "$GITHUB_TOKEN"
+  file_glob: true
+  file: app/build/outputs/apk/release/*
+  on:
+    repo: fennifith/Alarmio
+    branch: master
+- provider: script
+  script: "./gradlew publish"
+  on:
+    repo: fennifith/Alarmio
+    branch: master
