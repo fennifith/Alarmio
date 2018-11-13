@@ -37,7 +37,7 @@ import james.alarmio.dialogs.TimeChooserDialog;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.utils.ImageUtils;
-import james.alarmio.views.SlideActionView;
+import me.jfenn.slideactionview.SlideActionView;
 
 public class AlarmActivity extends AestheticActivity implements SlideActionView.SlideActionListener {
 
@@ -101,8 +101,8 @@ public class AlarmActivity extends AestheticActivity implements SlideActionView.
                     }
                 });
 
-        actionView.setLeftImage(VectorDrawableCompat.create(getResources(), R.drawable.ic_snooze, getTheme()));
-        actionView.setRightImage(VectorDrawableCompat.create(getResources(), R.drawable.ic_close, getTheme()));
+        actionView.setLeftIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_snooze, getTheme()));
+        actionView.setRightIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_close, getTheme()));
         actionView.setListener(this);
 
         isSlowWake = PreferenceData.SLOW_WAKE_UP.getValue(this);

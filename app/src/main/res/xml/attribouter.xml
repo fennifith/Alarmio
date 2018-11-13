@@ -155,6 +155,11 @@
             title="^FABs Menu" />
 
         <me.jfenn.attribouter.wedges.LicenseWedge
+            description="An Android view which provides a nice slide-to-left/right interaction."
+            license="apache-2.0"
+            repo="fennifith/SlideActionView" />
+
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="Library for computing the sunrise/sunset from GPS coordinates and a date, in Java."
             license="apache-2.0"
             repo="mikereedell/sunrisesunsetlib-java"

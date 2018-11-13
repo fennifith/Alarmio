@@ -64,4 +64,5 @@ dependencies {
     implementation 'me.jfenn:timedatepickers:0.0.6'
     implementation 'me.jfenn:crasher:0.0.1'
     implementation 'me.jfenn:Attribouter:0.1.5'
+    implementation 'me.jfenn:SlideActionView:0.0.1'
 }
