@@ -28,7 +28,7 @@ import androidx.viewpager.widget.ViewPager;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;
-import james.alarmio.utils.ConversionUtils;
+import me.jfenn.androidutils.DimenUtils;
 
 public class PageIndicatorView extends View implements ViewPager.OnPageChangeListener, Subscribblable {
 
@@ -162,11 +162,11 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         private Paint unselectedPaint;
 
         public int getMeasuredHeight(int widthMeasuredSpec, int heightMeasuredSpec) {
-            return ConversionUtils.dpToPx(8);
+            return DimenUtils.dpToPx(8);
         }
 
         public int getMeasuredWidth(int widthMeasuredSpec, int heightMeasuredSpec) {
-            return ConversionUtils.dpToPx(8 * (indicator.getTotalPages() * 2 - 1));
+            return DimenUtils.dpToPx(8 * (indicator.getTotalPages() * 2 - 1));
         }
 
         public void onInitEngine(PageIndicatorView indicator, Context context) {
@@ -191,30 +191,30 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
             int height = indicator.getHeight();
 
             for (int i = 0; i < indicator.getTotalPages(); i++) {
-                int x = ConversionUtils.dpToPx(4) + ConversionUtils.dpToPx(16 * i);
-                canvas.drawCircle(x, height / 2, ConversionUtils.dpToPx(4), unselectedPaint);
+                int x = DimenUtils.dpToPx(4) + DimenUtils.dpToPx(16 * i);
+                canvas.drawCircle(x, height / 2, DimenUtils.dpToPx(4), unselectedPaint);
             }
 
             int firstX;
             int secondX;
 
-            firstX = ConversionUtils.dpToPx(4 + indicator.getActualPosition() * 16);
+            firstX = DimenUtils.dpToPx(4 + indicator.getActualPosition() * 16);
 
             if (indicator.getPositionOffset() > .5f) {
-                firstX += ConversionUtils.dpToPx(16 * (indicator.getPositionOffset() - .5f) * 2);
+                firstX += DimenUtils.dpToPx(16 * (indicator.getPositionOffset() - .5f) * 2);
             }
 
-            secondX = ConversionUtils.dpToPx(4 + indicator.getActualPosition() * 16);
+            secondX = DimenUtils.dpToPx(4 + indicator.getActualPosition() * 16);
 
             if (indicator.getPositionOffset() < .5f) {
-                secondX += ConversionUtils.dpToPx(16 * indicator.getPositionOffset() * 2);
+                secondX += DimenUtils.dpToPx(16 * indicator.getPositionOffset() * 2);
             } else {
-                secondX += ConversionUtils.dpToPx(16);
+                secondX += DimenUtils.dpToPx(16);
             }
 
-            canvas.drawCircle(firstX, ConversionUtils.dpToPx(4), ConversionUtils.dpToPx(4), selectedPaint);
-            canvas.drawCircle(secondX, ConversionUtils.dpToPx(4), ConversionUtils.dpToPx(4), selectedPaint);
-            canvas.drawRect(firstX, 0, secondX, ConversionUtils.dpToPx(8), selectedPaint);
+            canvas.drawCircle(firstX, DimenUtils.dpToPx(4), DimenUtils.dpToPx(4), selectedPaint);
+            canvas.drawCircle(secondX, DimenUtils.dpToPx(4), DimenUtils.dpToPx(4), selectedPaint);
+            canvas.drawRect(firstX, 0, secondX, DimenUtils.dpToPx(8), selectedPaint);
         }
     }
 }

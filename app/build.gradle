@@ -65,4 +65,5 @@ dependencies {
     implementation 'me.jfenn:crasher:0.0.1'
     implementation 'me.jfenn:Attribouter:0.1.5'
     implementation 'me.jfenn:SlideActionView:0.0.1'
+    implementation 'me.jfenn:AndroidUtils:0.0.1'
 }

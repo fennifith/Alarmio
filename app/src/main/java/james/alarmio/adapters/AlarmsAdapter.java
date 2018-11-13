@@ -43,10 +43,10 @@ import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.dialogs.AlertDialog;
 import james.alarmio.dialogs.SoundChooserDialog;
 import james.alarmio.interfaces.SoundChooserListener;
-import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.FormatUtils;
 import james.alarmio.views.DaySwitch;
 import james.alarmio.views.ProgressLineView;
+import me.jfenn.androidutils.DimenUtils;
 import me.jfenn.timedatepickers.dialogs.PickerDialog;
 import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
@@ -366,7 +366,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                             }
                         });
 
-                ValueAnimator animator = ValueAnimator.ofFloat(isExpanded ? 0 : ConversionUtils.dpToPx(2), isExpanded ? ConversionUtils.dpToPx(2) : 0);
+                ValueAnimator animator = ValueAnimator.ofFloat(isExpanded ? 0 : DimenUtils.dpToPx(2), isExpanded ? DimenUtils.dpToPx(2) : 0);
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
@@ -376,7 +376,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 animator.start();
             } else {
                 alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
-                ViewCompat.setElevation(alarmHolder.itemView, isExpanded ? ConversionUtils.dpToPx(2) : 0);
+                ViewCompat.setElevation(alarmHolder.itemView, isExpanded ? DimenUtils.dpToPx(2) : 0);
             }
 
             alarmHolder.itemView.setOnClickListener(new View.OnClickListener() {

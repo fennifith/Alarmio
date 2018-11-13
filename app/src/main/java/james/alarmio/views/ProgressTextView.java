@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;
-import james.alarmio.utils.ConversionUtils;
+import me.jfenn.androidutils.DimenUtils;
 
 public class ProgressTextView extends View implements Subscribblable {
 
@@ -42,7 +42,7 @@ public class ProgressTextView extends View implements Subscribblable {
     public ProgressTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        padding = ConversionUtils.dpToPx(4);
+        padding = DimenUtils.dpToPx(4);
 
         linePaint = new Paint();
         linePaint.setAntiAlias(true);
@@ -63,7 +63,7 @@ public class ProgressTextView extends View implements Subscribblable {
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(ConversionUtils.spToPx(34));
+        textPaint.setTextSize(DimenUtils.spToPx(34));
         textPaint.setFakeBoldText(true);
 
         subscribe();

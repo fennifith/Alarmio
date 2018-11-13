@@ -38,9 +38,9 @@ import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.dialogs.TimerDialog;
-import james.alarmio.utils.ConversionUtils;
 import james.alarmio.utils.ImageUtils;
 import james.alarmio.views.PageIndicatorView;
+import me.jfenn.androidutils.DimenUtils;
 import me.jfenn.timedatepickers.dialogs.PickerDialog;
 import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
@@ -100,7 +100,7 @@ public class HomeFragment extends BaseFragment {
                         bottomSheet.setPadding(0, 0, 0, 0);
                     else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                         if (statusBarHeight < 0)
-                            statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
+                            statusBarHeight = DimenUtils.getStatusBarHeight(getContext());
 
                         bottomSheet.setPadding(0, statusBarHeight, 0, 0);
                     }
@@ -109,7 +109,7 @@ public class HomeFragment extends BaseFragment {
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                     if (statusBarHeight < 0)
-                        statusBarHeight = ConversionUtils.getStatusBarHeight(getContext());
+                        statusBarHeight = DimenUtils.getStatusBarHeight(getContext());
 
                     bottomSheet.setPadding(0, (int) (slideOffset * statusBarHeight), 0, 0);
                 }

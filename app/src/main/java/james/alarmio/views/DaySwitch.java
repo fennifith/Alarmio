@@ -18,7 +18,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import james.alarmio.interfaces.Subscribblable;
-import james.alarmio.utils.ConversionUtils;
+import me.jfenn.androidutils.DimenUtils;
 
 public class DaySwitch extends View implements View.OnClickListener, Subscribblable {
 
@@ -56,12 +56,12 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
-        textPaint.setTextSize(ConversionUtils.dpToPx(18));
+        textPaint.setTextSize(DimenUtils.dpToPx(18));
         textPaint.setTextAlign(Paint.Align.CENTER);
 
         clippedTextPaint = new Paint();
         clippedTextPaint.setAntiAlias(true);
-        clippedTextPaint.setTextSize(ConversionUtils.dpToPx(18));
+        clippedTextPaint.setTextSize(DimenUtils.dpToPx(18));
         clippedTextPaint.setTextAlign(Paint.Align.CENTER);
 
         subscribe();
@@ -145,7 +145,7 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int size = ConversionUtils.dpToPx(18);
+        int size = DimenUtils.dpToPx(18);
 
         if (text != null)
             canvas.drawText(text, canvas.getWidth() / 2, ((canvas.getHeight() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2)), textPaint);
