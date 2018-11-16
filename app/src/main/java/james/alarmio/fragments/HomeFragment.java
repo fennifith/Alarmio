@@ -125,8 +125,10 @@ public class HomeFragment extends BaseFragment {
                 if (tab.getPosition() > 0) {
                     shouldCollapseBack = behavior.getState() != BottomSheetBehavior.STATE_EXPANDED;
                     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    menu.hide();
                 } else {
                     setClockFragments();
+                    menu.show();
                     if (shouldCollapseBack) {
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         shouldCollapseBack = false;
