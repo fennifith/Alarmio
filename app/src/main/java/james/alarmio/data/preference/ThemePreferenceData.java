@@ -73,8 +73,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             public void onSunriseChanged(SunriseSunsetView sunriseSunsetView, long l) {
                 int hour = Math.round((float) l / HOUR_LENGTH);
                 holder.sunriseTextView.setText(getText(hour));
-                sunriseSunsetView.setDayStart(hour * HOUR_LENGTH, true);
-                sunriseSunsetView.postInvalidate();
+                sunriseSunsetView.setSunrise(hour * HOUR_LENGTH, true);
                 PreferenceData.DAY_START.setValue(holder.getContext(), hour);
                 holder.getAlarmio().updateTheme();
             }
@@ -83,8 +82,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             public void onSunsetChanged(SunriseSunsetView sunriseSunsetView, long l) {
                 int hour = Math.round((float) l / HOUR_LENGTH);
                 holder.sunsetTextView.setText(getText(hour));
-                sunriseSunsetView.setDayEnd(hour * HOUR_LENGTH, true);
-                sunriseSunsetView.postInvalidate();
+                sunriseSunsetView.setSunset(hour * HOUR_LENGTH, true);
                 PreferenceData.DAY_END.setValue(holder.getContext(), hour);
                 holder.getAlarmio().updateTheme();
             }

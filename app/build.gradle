@@ -48,7 +48,6 @@ task printVersionName {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -65,6 +64,6 @@ dependencies {
     implementation 'me.jfenn:crasher:0.0.1'
     implementation 'me.jfenn:Attribouter:0.1.5'
     implementation 'me.jfenn:SlideActionView:0.0.1'
-    implementation 'me.jfenn:SunriseSunsetView:0.0.1'
+    implementation 'me.jfenn:SunriseSunsetView:0.0.2'
     implementation 'me.jfenn:AndroidUtils:0.0.1'
 }
