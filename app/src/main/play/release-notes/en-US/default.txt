@@ -1,1 +1,3 @@
-- minor fixes and improvements
+- fix: inconsistent time when creating alarms
+- improved sunrise/sunset theme scheduler
+- minor design changes
