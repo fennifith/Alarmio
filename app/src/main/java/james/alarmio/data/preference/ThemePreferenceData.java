@@ -26,11 +26,13 @@ import james.alarmio.R;
 import james.alarmio.data.PreferenceData;
 import james.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import james.alarmio.utils.FormatUtils;
-import james.alarmio.views.SunriseView;
+import me.jfenn.sunrisesunsetview.SunriseSunsetView;
 import me.jfenn.timedatepickers.dialogs.PickerDialog;
 import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
 public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.ViewHolder> {
+
+    private static final long HOUR_LENGTH = 3600000L;
 
     public ThemePreferenceData() {
     }
@@ -66,18 +68,32 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             }
         });
 
-        final SunriseView.SunriseListener listener = new SunriseView.SunriseListener() {
+        final SunriseSunsetView.SunriseListener listener = new SunriseSunsetView.SunriseListener() {
             @Override
-            public void onSunriseChanged(int sunrise, int sunset) {
-                Calendar sunriseCalendar = Calendar.getInstance();
-                sunriseCalendar.set(Calendar.HOUR_OF_DAY, sunrise);
-                sunriseCalendar.set(Calendar.MINUTE, 0);
-                holder.sunriseTextView.setText(FormatUtils.formatShort(holder.getContext(), new Date(sunriseCalendar.getTimeInMillis())));
+            public void onSunriseChanged(SunriseSunsetView sunriseSunsetView, long l) {
+                int hour = Math.round((float) l / HOUR_LENGTH);
+                holder.sunriseTextView.setText(getText(hour));
+                sunriseSunsetView.setDayStart(hour * HOUR_LENGTH, true);
+                sunriseSunsetView.postInvalidate();
+                PreferenceData.DAY_START.setValue(holder.getContext(), hour);
+                holder.getAlarmio().updateTheme();
+            }
 
-                Calendar sunsetCalendar = Calendar.getInstance();
-                sunsetCalendar.set(Calendar.HOUR_OF_DAY, sunset);
-                sunsetCalendar.set(Calendar.MINUTE, 0);
-                holder.sunsetTextView.setText(FormatUtils.formatShort(holder.getContext(), new Date(sunsetCalendar.getTimeInMillis())));
+            @Override
+            public void onSunsetChanged(SunriseSunsetView sunriseSunsetView, long l) {
+                int hour = Math.round((float) l / HOUR_LENGTH);
+                holder.sunsetTextView.setText(getText(hour));
+                sunriseSunsetView.setDayEnd(hour * HOUR_LENGTH, true);
+                sunriseSunsetView.postInvalidate();
+                PreferenceData.DAY_END.setValue(holder.getContext(), hour);
+                holder.getAlarmio().updateTheme();
+            }
+
+            private String getText(int hour) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, hour);
+                cal.set(Calendar.MINUTE, 0);
+                return FormatUtils.formatShort(holder.getContext(), new Date(cal.getTimeInMillis()));
             }
         };
 
@@ -91,67 +107,64 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
                     holder.getAlarmio().requestPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
                     holder.sunriseAutoSwitch.setChecked(false);
                 } else {
-                    holder.sunriseView.invalidate();
-                    listener.onSunriseChanged(holder.getAlarmio().getDayStart(), holder.getAlarmio().getDayEnd());
+                    listener.onSunriseChanged(holder.sunriseView, holder.getAlarmio().getDayStart() * HOUR_LENGTH);
+                    listener.onSunsetChanged(holder.sunriseView, holder.getAlarmio().getDayEnd() * HOUR_LENGTH);
                 }
-                holder.getAlarmio().updateTheme();
             }
         });
 
-        holder.sunriseView.setListener(listener);
-        listener.onSunriseChanged(holder.getAlarmio().getDayStart(), holder.getAlarmio().getDayEnd());
+        listener.onSunriseChanged(holder.sunriseView, holder.getAlarmio().getDayStart() * HOUR_LENGTH);
+        listener.onSunsetChanged(holder.sunriseView, holder.getAlarmio().getDayEnd() * HOUR_LENGTH);
+        holder.sunriseView.setListener(new SunriseSunsetView.SunriseListener() {
+            @Override
+            public void onSunriseChanged(SunriseSunsetView sunriseSunsetView, long l) {
+                holder.sunriseAutoSwitch.setChecked(false);
+                listener.onSunriseChanged(sunriseSunsetView, l);
+            }
+
+            @Override
+            public void onSunsetChanged(SunriseSunsetView sunriseSunsetView, long l) {
+                holder.sunriseAutoSwitch.setChecked(false);
+                listener.onSunsetChanged(sunriseSunsetView, l);
+            }
+        });
 
         holder.sunriseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!holder.getAlarmio().isDayAuto()) {
-                    new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayStart(), 0)
-                            .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
-                                @Override
-                                public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
-                                    int dayEnd = holder.getAlarmio().getDayEnd();
-                                    if (view.getHourOfDay() < dayEnd) {
-                                        PreferenceData.DAY_START.setValue(holder.getContext(), view.getHourOfDay());
-                                        holder.sunriseView.invalidate();
-                                        listener.onSunriseChanged(view.getHourOfDay(), dayEnd);
-                                        holder.getAlarmio().updateTheme();
-                                    }
-                                }
+                new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayStart(), 0)
+                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                            @Override
+                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                                holder.sunriseAutoSwitch.setChecked(false);
+                                if (view.getHourOfDay() < holder.getAlarmio().getDayEnd())
+                                    listener.onSunriseChanged(holder.sunriseView, view.getHourOfDay() * HOUR_LENGTH);
+                            }
 
-                                @Override
-                                public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
-
-                                }
-                            })
-                            .show();
-                }
+                            @Override
+                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                            }
+                        })
+                        .show();
             }
         });
 
         holder.sunsetTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!holder.getAlarmio().isDayAuto()) {
-                    new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayEnd(), 0)
-                            .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
-                                @Override
-                                public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
-                                    int dayStart = holder.getAlarmio().getDayStart();
-                                    if (view.getHourOfDay() > dayStart) {
-                                        PreferenceData.DAY_END.setValue(holder.getContext(), view.getHourOfDay());
-                                        holder.sunriseView.invalidate();
-                                        listener.onSunriseChanged(dayStart, view.getHourOfDay());
-                                        holder.getAlarmio().updateTheme();
-                                    }
-                                }
+                new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayEnd(), 0)
+                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                            @Override
+                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                                holder.sunriseAutoSwitch.setChecked(false);
+                                if (view.getHourOfDay() > holder.getAlarmio().getDayStart())
+                                    listener.onSunsetChanged(holder.sunriseView, view.getHourOfDay() * HOUR_LENGTH);
+                            }
 
-                                @Override
-                                public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
-
-                                }
-                            })
-                            .show();
-                }
+                            @Override
+                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                            }
+                        }).show();
             }
         });
 
@@ -181,7 +194,7 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
         private AppCompatSpinner themeSpinner;
         private AppCompatCheckBox sunriseAutoSwitch;
         private View sunriseLayout;
-        private SunriseView sunriseView;
+        private SunriseSunsetView sunriseView;
         private TextView sunriseTextView;
         private TextView sunsetTextView;
 

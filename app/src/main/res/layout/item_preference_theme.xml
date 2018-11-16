@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="12dp">
 
-        <james.alarmio.views.SunriseView
+        <james.alarmio.views.AestheticSunriseView
             android:id="@+id/sunriseView"
             android:layout_width="match_parent"
             android:layout_height="200dp" />

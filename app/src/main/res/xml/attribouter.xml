@@ -160,6 +160,11 @@
             repo="fennifith/SlideActionView" />
 
         <me.jfenn.attribouter.wedges.LicenseWedge
+            description="A lightweight Android view used for displaying and/or editing sunrise and sunset times."
+            license="apache-2.0"
+            repo="fennifith/SunriseSunsetView" />
+
+        <me.jfenn.attribouter.wedges.LicenseWedge
             description="Library for computing the sunrise/sunset from GPS coordinates and a date, in Java."
             license="apache-2.0"
             repo="mikereedell/sunrisesunsetlib-java"
