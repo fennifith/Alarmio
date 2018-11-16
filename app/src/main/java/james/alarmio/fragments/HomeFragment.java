@@ -238,6 +238,7 @@ public class HomeFragment extends BaseFragment {
                                 AlarmData alarm = getAlarmio().newAlarm();
                                 alarm.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
                                 alarm.time.set(Calendar.MINUTE, view.getMinute());
+                                alarm.setTime(getAlarmio(), manager, alarm.time.getTimeInMillis());
                                 alarm.setEnabled(getContext(), manager, true);
 
                                 getAlarmio().onAlarmsChanged();
@@ -267,6 +268,9 @@ public class HomeFragment extends BaseFragment {
         return view;
     }
 
+    /**
+     * Update the time zones displayed in the clock fragments pager.
+     */
     private void setClockFragments() {
         if (timePager != null && timeIndicator != null) {
             List<ClockFragment> fragments = new ArrayList<>();
