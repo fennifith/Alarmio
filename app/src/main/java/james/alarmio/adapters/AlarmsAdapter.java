@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -137,8 +138,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             final boolean isExpanded = position == expandedPosition;
             AlarmData alarm = getAlarm(position);
 
-            alarmHolder.name.setFocusable(isExpanded);
-            alarmHolder.name.setEnabled(isExpanded);
+            alarmHolder.name.setFocusableInTouchMode(isExpanded);
+            alarmHolder.name.setCursorVisible(false);
             alarmHolder.name.clearFocus();
             alarmHolder.nameUnderline.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
@@ -155,6 +156,20 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void afterTextChanged(Editable editable) {
+                }
+            });
+
+            alarmHolder.name.setOnClickListener(isExpanded ? null : new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alarmHolder.itemView.callOnClick();
+                }
+            });
+
+            alarmHolder.name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    alarmHolder.name.setCursorVisible(hasFocus && alarmHolder.getAdapterPosition() == expandedPosition);
                 }
             });
 
@@ -431,7 +446,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name;
+        private View nameContainer;
+        private EditText name;
         private View nameUnderline;
         private SwitchCompat enable;
         private TextView time;
@@ -450,26 +466,27 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
         private ImageView soundIndicator;
         private ImageView vibrateIndicator;
 
-        public AlarmViewHolder(View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.name);
-            nameUnderline = itemView.findViewById(R.id.underline);
-            enable = itemView.findViewById(R.id.enable);
-            time = itemView.findViewById(R.id.time);
-            extra = itemView.findViewById(R.id.extra);
-            repeat = itemView.findViewById(R.id.repeat);
-            days = itemView.findViewById(R.id.days);
-            ringtone = itemView.findViewById(R.id.ringtone);
-            ringtoneImage = itemView.findViewById(R.id.ringtoneImage);
-            ringtoneText = itemView.findViewById(R.id.ringtoneText);
-            vibrate = itemView.findViewById(R.id.vibrate);
-            vibrateImage = itemView.findViewById(R.id.vibrateImage);
-            expandImage = itemView.findViewById(R.id.expandImage);
-            delete = itemView.findViewById(R.id.delete);
-            indicators = itemView.findViewById(R.id.indicators);
-            repeatIndicator = itemView.findViewById(R.id.repeatIndicator);
-            soundIndicator = itemView.findViewById(R.id.soundIndicator);
-            vibrateIndicator = itemView.findViewById(R.id.vibrateIndicator);
+        public AlarmViewHolder(View v) {
+            super(v);
+            nameContainer = v.findViewById(R.id.nameContainer);
+            name = v.findViewById(R.id.name);
+            nameUnderline = v.findViewById(R.id.underline);
+            enable = v.findViewById(R.id.enable);
+            time = v.findViewById(R.id.time);
+            extra = v.findViewById(R.id.extra);
+            repeat = v.findViewById(R.id.repeat);
+            days = v.findViewById(R.id.days);
+            ringtone = v.findViewById(R.id.ringtone);
+            ringtoneImage = v.findViewById(R.id.ringtoneImage);
+            ringtoneText = v.findViewById(R.id.ringtoneText);
+            vibrate = v.findViewById(R.id.vibrate);
+            vibrateImage = v.findViewById(R.id.vibrateImage);
+            expandImage = v.findViewById(R.id.expandImage);
+            delete = v.findViewById(R.id.delete);
+            indicators = v.findViewById(R.id.indicators);
+            repeatIndicator = v.findViewById(R.id.repeatIndicator);
+            soundIndicator = v.findViewById(R.id.soundIndicator);
+            vibrateIndicator = v.findViewById(R.id.vibrateIndicator);
         }
     }
 }

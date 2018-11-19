@@ -12,7 +12,7 @@
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -23,9 +23,9 @@
 
             <TextView
                 android:id="@+id/time"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="start"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:textColor="?android:textColorSecondary"
@@ -36,9 +36,10 @@
                 android:id="@+id/enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:tag=":aesthetic_ignore" />
 
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/extra"
@@ -105,8 +106,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">
@@ -132,9 +133,9 @@
                             android:layout_height="24dp"
                             android:layout_marginBottom="4dp"
                             android:scaleType="centerInside"
-                            tools:tint="@color/textColorPrimaryNight"
+                            app:srcCompat="@drawable/ic_ringtone_disabled"
                             tools:alpha="0.333"
-                            app:srcCompat="@drawable/ic_ringtone_disabled" />
+                            tools:tint="@color/textColorPrimaryNight" />
 
                         <TextView
                             android:id="@+id/ringtoneText"
@@ -174,8 +175,8 @@
                             android:layout_height="24dp"
                             android:layout_marginBottom="4dp"
                             android:scaleType="centerInside"
-                            tools:tint="@color/textColorPrimaryNight"
-                            app:srcCompat="@drawable/ic_vibrate_to_none" />
+                            app:srcCompat="@drawable/ic_vibrate_to_none"
+                            tools:tint="@color/textColorPrimaryNight" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -213,10 +214,11 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:scaleType="centerInside"
-                tools:tint="@color/textColorPrimaryNight"
-                app:srcCompat="@drawable/ic_expand" />
+                app:srcCompat="@drawable/ic_expand"
+                tools:tint="@color/textColorPrimaryNight" />
 
             <LinearLayout
+                android:id="@+id/nameContainer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
@@ -240,6 +242,7 @@
                     android:paddingBottom="4dp"
                     android:singleLine="true"
                     android:textColor="?android:textColorPrimary"
+                    android:textCursorDrawable="@null"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -259,9 +262,9 @@
                 android:layout_gravity="start|center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:paddingBottom="4dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingBottom="4dp"
                 android:text="@string/title_delete"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -286,9 +289,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    tools:tint="@color/textColorPrimaryNight"
+                    app:srcCompat="@drawable/ic_repeat"
                     tools:alpha="0.333"
-                    app:srcCompat="@drawable/ic_repeat" />
+                    tools:tint="@color/textColorPrimaryNight" />
 
                 <ImageView
                     android:id="@+id/soundIndicator"
@@ -296,9 +299,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    tools:tint="@color/textColorPrimaryNight"
+                    app:srcCompat="@drawable/ic_sound"
                     tools:alpha="0.333"
-                    app:srcCompat="@drawable/ic_sound" />
+                    tools:tint="@color/textColorPrimaryNight" />
 
                 <ImageView
                     android:id="@+id/vibrateIndicator"
@@ -306,8 +309,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:scaleType="centerInside"
-                    tools:tint="@color/textColorPrimaryNight"
-                    app:srcCompat="@drawable/ic_vibrate" />
+                    app:srcCompat="@drawable/ic_vibrate"
+                    tools:tint="@color/textColorPrimaryNight" />
 
             </LinearLayout>
 
