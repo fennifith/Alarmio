@@ -1,10 +1,10 @@
 package james.alarmio.data.preference;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import james.alarmio.data.PreferenceData;
 import james.alarmio.dialogs.TimeChooserDialog;
+import james.alarmio.utils.FormatUtils;
 
 public class TimePreferenceData extends CustomPreferenceData {
 
@@ -17,28 +17,26 @@ public class TimePreferenceData extends CustomPreferenceData {
 
     @Override
     public String getValueName(ViewHolder holder) {
-        int minutes = preference.getValue(holder.getContext());
-        int hours = (int) TimeUnit.MINUTES.toHours(minutes);
-        minutes %= TimeUnit.HOURS.toMinutes(1);
-
-        if (hours > 0)
-            return String.format(Locale.getDefault(), "%dh %02dm", hours, minutes);
-        else return String.format(Locale.getDefault(), "%dm", minutes);
+        String str = FormatUtils.formatMillis((long) preference.getValue(holder.getContext()));
+        return str.substring(0, str.length() - 3);
     }
 
     @Override
     public void onClick(final ViewHolder holder) {
-        int minutes = preference.getValue(holder.getContext());
+        int seconds = (int) TimeUnit.MILLISECONDS.toSeconds((long) preference.getValue(holder.getContext()));
+        int minutes = (int) TimeUnit.SECONDS.toMinutes(seconds);
         int hours = (int) TimeUnit.MINUTES.toHours(minutes);
         minutes %= TimeUnit.HOURS.toMinutes(1);
+        seconds %= TimeUnit.MINUTES.toSeconds(1);
 
         TimeChooserDialog dialog = new TimeChooserDialog(holder.getContext());
-        dialog.setDefault(hours, minutes, 0);
+        dialog.setDefault(hours, minutes, seconds);
         dialog.setListener(new TimeChooserDialog.OnTimeChosenListener() {
             @Override
             public void onTimeChosen(int hours, int minutes, int seconds) {
-                minutes += TimeUnit.HOURS.toMinutes(hours);
-                preference.setValue(holder.getContext(), minutes);
+                seconds += TimeUnit.HOURS.toSeconds(hours);
+                seconds += TimeUnit.MINUTES.toSeconds(minutes);
+                preference.setValue(holder.getContext(), TimeUnit.SECONDS.toMillis(seconds));
                 bindViewHolder(holder);
             }
         });

@@ -106,7 +106,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionView.
         actionView.setListener(this);
 
         isSlowWake = PreferenceData.SLOW_WAKE_UP.getValue(this);
-        slowWakeMillis = TimeUnit.MINUTES.toMillis((int) PreferenceData.SLOW_WAKE_UP_TIME.getValue(this));
+        slowWakeMillis = PreferenceData.SLOW_WAKE_UP_TIME.getValue(this);
 
         isAlarm = getIntent().hasExtra(EXTRA_ALARM);
         if (isAlarm) {

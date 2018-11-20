@@ -19,9 +19,9 @@ public enum PreferenceData {
     DEFAULT_ALARM_RINGTONE(null),
     DEFAULT_TIMER_RINGTONE(null),
     SLEEP_REMINDER(true),
-    SLEEP_REMINDER_TIME(420), //minutes
+    SLEEP_REMINDER_TIME(25200000L), //milliseconds
     SLOW_WAKE_UP(true),
-    SLOW_WAKE_UP_TIME(5), //minutes
+    SLOW_WAKE_UP_TIME(300000L), //milliseconds
     ALARM_NAME("%d/ALARM_NAME", null),
     ALARM_TIME("%d/ALARM_TIME", (long) 0),
     ALARM_ENABLED("%d/ALARM_ENABLED", true),
@@ -116,6 +116,19 @@ public enum PreferenceData {
                 else if (type instanceof String)
                     return (T) prefs.getString(name, (String) defaultValue);
             } catch (ClassCastException e) {
+                // error prevention
+                if (type instanceof Long) {
+                    try {
+                        return (T) new Long(prefs.getInt(name, ((Long) defaultValue).intValue()));
+                    } catch (ClassCastException ignored) {
+                    }
+                } else if (type instanceof Integer) {
+                    try {
+                        return (T) new Integer((int) prefs.getLong(name, (Integer) defaultValue));
+                    } catch (ClassCastException ignored) {
+                    }
+                }
+
                 throw new TypeMismatchException(this, type.getClass());
             }
         }

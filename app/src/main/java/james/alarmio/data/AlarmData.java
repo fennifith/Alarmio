@@ -10,7 +10,6 @@ import android.os.Parcelable;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
 import james.alarmio.R;
@@ -301,7 +300,7 @@ public class AlarmData implements Parcelable {
         }
 
         manager.set(AlarmManager.RTC_WAKEUP,
-                timeMillis - TimeUnit.MINUTES.toMillis((int) PreferenceData.SLEEP_REMINDER_TIME.getValue(context)),
+                timeMillis - (long) PreferenceData.SLEEP_REMINDER_TIME.getValue(context),
                 PendingIntent.getService(context, 0, new Intent(context, SleepReminderService.class), 0));
 
         SleepReminderService.refreshSleepTime(context);
