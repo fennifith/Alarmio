@@ -18,7 +18,7 @@ script:
   - if [ "$TRAVIS_BRANCH" = "develop" ]; then ./gradlew build; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then ./gradlew publish; fi
 before_deploy:
-  - export RELEASE_CHANGELOG=$(cat app/src/main/play/release-notes/en-US/default.txt | sed 's/'\n'/\'\\n'/g')
+  - export RELEASE_CHANGELOG=$(sed 's/$/\\n/' app/src/main/play/release-notes/en-US/default.txt | tr -d '\n')
   - export RELEASE_VERSION=$(./gradlew -q :app:printVersionName)
 deploy:
   - provider: releases
