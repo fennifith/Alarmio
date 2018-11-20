@@ -18,19 +18,14 @@ script:
   - if [ "$TRAVIS_BRANCH" = "develop" ]; then ./gradlew build; fi
   - if [ "$TRAVIS_BRANCH" = "master" ]; then ./gradlew publish; fi
 before_deploy:
-  - export RELEASE_CHANGELOG=$(sed 's/$/\\n/' app/src/main/play/release-notes/en-US/default.txt | tr -d '\n')
   - export RELEASE_VERSION=$(./gradlew -q :app:printVersionName)
+  - export RELEASE_CHANGELOG=$(sed 's/$/\\n/' app/src/main/play/release-notes/en-US/default.txt | tr -d '\n')
+  - export RELEASE_FILE="app/build/outputs/apk/release/*.apk"
 deploy:
-  - provider: releases
+  - provider: script
     skip_cleanup: true
-    overwrite: true
-    name: "$RELEASE_VERSION"
-    tag_name: "$RELEASE_VERSION"
-    body: "$RELEASE_CHANGELOG"
-    prerelease: true
-    api_key: "$GITHUB_TOKEN"
-    file_glob: true
-    file: app/build/outputs/apk/release/*
+    script:
+      - mkdir .scripts && wget "https://gist.githubusercontent.com/fennifith/664f534ead7336adf420d5afa72628f9/raw/travis-github-release.sh" -O .scripts/github-release.sh
+      - chmod +x .scripts/github-release.sh && ./.scripts/github-release.sh
     on:
-      repo: fennifith/Alarmio
       branch: master
