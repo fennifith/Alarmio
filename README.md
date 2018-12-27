@@ -10,6 +10,16 @@ Alarmio is a simple alarm clock that implements many useful features while follo
 |-----|-----|-----|-----|-----|
 |![img](./.github/images/home.png?raw=true)|![img](./.github/images/alarms.png?raw=true)|![img](./.github/images/timers.png?raw=true)|![img](./.github/images/themes.png?raw=true)|![img](./.github/images/alert.gif?raw=true)|
 
+## Installation
+
+The app is published on Google Play:
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+    alt="Get it on Google Play"
+    height="80">](https://play.google.com/store/apps/details?id=james.alarmio)
+
+Alternatively, you can download the latest APK from [the GitHub releases](../../releases/).
+
 ## Contributing & Build Instructions
 
 Instructions for contributing to this project and building it locally can be found [here](./.github/CONTRIBUTING.md).
