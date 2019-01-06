@@ -15,7 +15,7 @@ before_install:
   - tar -xvf secrets.tar --overwrite
   - chmod +x gradlew
 script:
-  - if [ $TRAVIS_BRANCH == "master" ] && [ "$TRAVIS_TAG" != "" ]; then ./gradlew publish; else ./gradlew build; fi
+  - if [ "$TRAVIS_TAG" != "" ]; then ./gradlew publish; else ./gradlew build; fi
 before_deploy:
   - export RELEASE_VERSION=$TRAVIS_TAG
   - export RELEASE_CHANGELOG=$(cat app/src/main/play/release-notes/en-US/default.txt)
