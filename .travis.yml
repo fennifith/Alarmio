@@ -20,12 +20,21 @@ script:
 before_deploy:
   - export RELEASE_VERSION=$(./gradlew -q :app:printVersionName)
   - export RELEASE_CHANGELOG=$(cat app/src/main/play/release-notes/en-US/default.txt)
-  - export RELEASE_FILE="app/build/outputs/apk/release/*.apk"
+  - export RELEASE_FILE="app/build/outputs/apk/*/*.apk"
 deploy:
   - provider: script
     skip_cleanup: true
-    script:
-      - mkdir .scripts && wget "https://gist.githubusercontent.com/fennifith/664f534ead7336adf420d5afa72628f9/raw/travis-github-release.sh" -O .scripts/github-release.sh
-      - chmod +x .scripts/github-release.sh && ./.scripts/github-release.sh
+    script: bash ./.scripts/deploy.sh
     on:
       branch: master
+      tags: true
+  - provider: releases
+    api_key: "${GITHUB_TOKEN}"
+    skip_cleanup: true
+    overwrite: true
+    file_glob: true
+    file: "${RELEASE_FILE}"
+    tag_name: "${RELEASE_VERSION}"
+    on:
+      branch: master
+      tags: true
