@@ -88,7 +88,7 @@ public class SoundData {
                 ringtone = RingtoneManager.getRingtone(alarmio, Uri.parse(url));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ringtone.setAudioAttributes(new AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setUsage(AudioAttributes.USAGE_ALARM)
                             .build());
                 }
             }
@@ -96,7 +96,7 @@ public class SoundData {
             alarmio.playRingtone(ringtone);
         } else {
             alarmio.playStream(url, new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
-                    .setUsage(C.USAGE_MEDIA)
+                    .setUsage(C.USAGE_ALARM)
                     .build());
         }
     }
