@@ -42,6 +42,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import james.alarmio.data.AlarmData;
 import james.alarmio.data.PreferenceData;
+import james.alarmio.data.SoundData;
 import james.alarmio.data.TimerData;
 import james.alarmio.services.SleepReminderService;
 import james.alarmio.services.TimerService;
@@ -122,6 +123,7 @@ public class Alarmio extends Application implements Player.EventListener {
      */
     public AlarmData newAlarm() {
         AlarmData alarm = new AlarmData(alarms.size(), Calendar.getInstance());
+        alarm.sound = SoundData.fromString(PreferenceData.DEFAULT_ALARM_RINGTONE.getValue(this, ""));
         alarms.add(alarm);
         onAlarmCountChanged();
         return alarm;
