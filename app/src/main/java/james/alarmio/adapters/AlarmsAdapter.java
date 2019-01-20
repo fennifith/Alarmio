@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.afollestad.aesthetic.Aesthetic;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -179,6 +180,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     getAlarm(alarmHolder.getAdapterPosition()).setEnabled(alarmio, alarmManager, b);
+
+                    Transition transition = new AutoTransition();
+                    transition.setDuration(200);
+                    TransitionManager.beginDelayedTransition(recycler, transition);
+
+                    notifyDataSetChanged();
                 }
             });
 
@@ -196,7 +203,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                                     alarm.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
                                     alarm.time.set(Calendar.MINUTE, view.getMinute());
                                     alarm.setTime(alarmio, alarmManager, alarm.time.getTimeInMillis());
-                                    alarmHolder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
+
+                                    notifyItemChanged(alarmHolder.getAdapterPosition());
                                 }
 
                                 @Override
@@ -206,6 +214,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                             .show();
                 }
             });
+
+            alarmHolder.nextTime.setVisibility(alarm.isEnabled ? View.VISIBLE : View.GONE);
+
+            Calendar nextAlarm = alarm.getNext();
+            if (alarm.isEnabled && nextAlarm != null) {
+                Date nextAlarmTime = alarm.getNext().getTime();
+                alarmHolder.nextTime.setText(String.format(alarmio.getString(R.string.title_alarm_next),
+                        FormatUtils.formatShort(alarmio, nextAlarmTime) + FormatUtils.format(nextAlarmTime, ", MMMM d")));
+            }
 
             alarmHolder.indicators.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             if (isExpanded) {
@@ -236,8 +253,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                         AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
                         alarm.days[alarmHolder.days.indexOfChild(daySwitch)] = b;
                         alarm.setDays(alarmio, alarm.days);
-                        if (!alarm.isRepeat())
+
+                        if (!alarm.isRepeat()) {
                             notifyItemChanged(alarmHolder.getAdapterPosition());
+                        } else {
+                            // if the view isn't going to change size in the recycler,
+                            //   then I can just do this (prevents the background flickering as
+                            //   the recyclerview attempts to smooth the transition)
+                            bindViewHolder(alarmHolder, alarmHolder.getAdapterPosition());
+                        }
                     }
                 };
 
@@ -451,6 +475,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
         private View nameUnderline;
         private SwitchCompat enable;
         private TextView time;
+        private TextView nextTime;
         private View extra;
         private AppCompatCheckBox repeat;
         private LinearLayout days;
@@ -473,6 +498,7 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             nameUnderline = v.findViewById(R.id.underline);
             enable = v.findViewById(R.id.enable);
             time = v.findViewById(R.id.time);
+            nextTime = v.findViewById(R.id.nextTime);
             extra = v.findViewById(R.id.extra);
             repeat = v.findViewById(R.id.repeat);
             days = v.findViewById(R.id.days);

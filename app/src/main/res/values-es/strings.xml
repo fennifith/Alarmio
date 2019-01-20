@@ -64,5 +64,6 @@
     </string-array>
 
     <!-- untranslated strings -->
+    <string name="title_alarm_next">Next alarm: %s</string>
     <string name="msg_time_zones_selected">%d Selected</string>
 </resources>

@@ -63,4 +63,7 @@
         <item>Noturno</item>
         <item>AMOLED</item>
     </string-array>
+
+    <!-- untranslated strings -->
+    <string name="title_alarm_next">Next alarm: %s</string>
 </resources>

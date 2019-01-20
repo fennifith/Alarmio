@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Alarmio</string>
     <string name="title_alarm">Alarm %d</string>
+    <string name="title_alarm_next">Next alarm: %s</string>
     <string name="title_none">None</string>
     <string name="title_vibrate">Vibrate</string>
     <string name="title_repeat">Repeat</string>

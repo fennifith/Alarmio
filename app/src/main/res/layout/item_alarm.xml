@@ -41,6 +41,16 @@
 
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/nextTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="6dp"
+            tools:text="Next alarm: 14:00 Friday, January 26"/>
+
         <LinearLayout
             android:id="@+id/extra"
             android:layout_width="match_parent"

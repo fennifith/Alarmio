@@ -104,7 +104,7 @@ public class SleepReminderService extends Service {
         if (PreferenceData.SLEEP_REMINDER.getValue(alarmio)) {
             AlarmData nextAlarm = getNextWakeAlarm(alarmio);
             if (nextAlarm != null) {
-                Calendar nextTrigger = (Calendar) nextAlarm.getNext().clone();
+                Calendar nextTrigger = nextAlarm.getNext();
                 nextTrigger.set(Calendar.MINUTE, nextTrigger.get(Calendar.MINUTE) - (int) TimeUnit.MILLISECONDS.toMinutes((long) PreferenceData.SLEEP_REMINDER_TIME.getValue(alarmio)));
 
                 if (Calendar.getInstance().after(nextTrigger))
