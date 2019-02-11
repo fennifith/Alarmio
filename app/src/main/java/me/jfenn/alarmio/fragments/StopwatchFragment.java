@@ -172,7 +172,7 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
                 drawable.start();
             } else toggle.setImageResource(R.drawable.ic_pause);
         } else {
-            if (service.getLastLapTime() > 0) {
+            if (service.getElapsedTime() > 0) {
                 reset.setClickable(true);
                 reset.animate().alpha(1).start();
                 share.setVisibility(View.VISIBLE);
