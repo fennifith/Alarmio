@@ -20,7 +20,18 @@ before_deploy:
   - export RELEASE_VERSION=$TRAVIS_TAG
   - export RELEASE_CHANGELOG=$(cat app/src/main/play/release-notes/en-US/default.txt)
   - export RELEASE_FILE="app/build/outputs/apk/*/*.apk"
+  - if ! [ -e bintray.json ]; then
+      chmod +x .scripts/gen-bintray-descriptor.sh;
+      ./.scripts/gen-bintray-descriptor.sh;
+    fi
 deploy:
+  - provider: bintray
+    skip_cleanup: true
+    file: "bintray.json"
+    user: "18jafenn90"
+    key: $BINTRAY_KEY
+    on:
+      all_branches: true
   - provider: script
     skip_cleanup: true
     script: bash ./.scripts/deploy.sh
