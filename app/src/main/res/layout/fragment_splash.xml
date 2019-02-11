@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <james.alarmio.views.AppIconView
+    <me.jfenn.alarmio.views.AppIconView
         android:id="@+id/icon"
         android:layout_width="128dp"
         android:layout_height="128dp"

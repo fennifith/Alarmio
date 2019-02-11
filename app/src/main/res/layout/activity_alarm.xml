@@ -52,7 +52,7 @@
 
         </LinearLayout>
 
-        <james.alarmio.views.AestheticSlideActionView
+        <me.jfenn.alarmio.views.AestheticSlideActionView
             android:id="@+id/slideView"
             android:layout_width="match_parent"
             android:layout_height="96dp" />

@@ -7,7 +7,7 @@
     android:paddingBottom="8dp"
     android:layout_height="wrap_content">
 
-    <james.alarmio.views.ProgressLineView
+    <me.jfenn.alarmio.views.ProgressLineView
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

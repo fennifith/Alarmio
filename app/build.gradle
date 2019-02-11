@@ -4,7 +4,7 @@ apply plugin: 'com.github.triplet.play'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "james.alarmio"
+        applicationId "me.jfenn.alarmio"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 14
@@ -19,7 +19,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
     lintOptions {
@@ -28,6 +27,7 @@ android {
 
     def isRunningOnTravis = System.getenv("CI") == "true"
     if (isRunningOnTravis) {
+        buildTypes.release.signingConfig = signingConfigs.release
         signingConfigs.release.storeFile = file("../key.jks")
         signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
         signingConfigs.release.keyAlias = System.getenv("KEYSTORE_ALIAS")

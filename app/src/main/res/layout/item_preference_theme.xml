@@ -33,7 +33,7 @@
 
     </LinearLayout>
 
-    <james.alarmio.views.AestheticCheckBoxView
+    <me.jfenn.alarmio.views.AestheticCheckBoxView
         android:id="@+id/sunriseAutoSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="12dp">
 
-        <james.alarmio.views.AestheticSunriseView
+        <me.jfenn.alarmio.views.AestheticSunriseView
             android:id="@+id/sunriseView"
             android:layout_width="match_parent"
             android:layout_height="200dp" />

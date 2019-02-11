@@ -32,7 +32,7 @@
                 android:textSize="42sp"
                 tools:text="0:00" />
 
-            <james.alarmio.views.AestheticSwitchView
+            <me.jfenn.alarmio.views.AestheticSwitchView
                 android:id="@+id/enable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <james.alarmio.views.AestheticCheckBoxView
+            <me.jfenn.alarmio.views.AestheticCheckBoxView
                 android:id="@+id/repeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,37 +76,37 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp">
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
 
-                <james.alarmio.views.DaySwitch
+                <me.jfenn.alarmio.views.DaySwitch
                     android:layout_width="0dp"
                     android:layout_height="42dp"
                     android:layout_weight="1" />
