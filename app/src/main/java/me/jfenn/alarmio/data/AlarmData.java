@@ -232,25 +232,20 @@ public class AlarmData implements Parcelable {
             next.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
             next.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
             next.set(Calendar.SECOND, 0);
-            if (now.after(next))
-                next.add(Calendar.DATE, 1);
 
             if (isRepeat()) {
-                int nextDay = 0;
-                for (int i = 0; i < 7; i++) {
-                    int day = (now.get(Calendar.DAY_OF_WEEK) + i) % 7; // Calendar returns 1-7, modulo 7 becomes 0-6 plus one (unchanged since we want the NEXT day, not the current one)
-                    if (days[day]) {
-                        nextDay = day + 1; // -> 1-7
-                        break;
-                    }
+                int nextDay = now.get(Calendar.DAY_OF_WEEK) - 1; // index on 0-6, rather than the 1-7 returned by Calendar
+
+                for (int i = 0; i < 7 && !days[nextDay]; i++) {
+                    nextDay++;
+                    nextDay %= 7;
                 }
 
-                if (nextDay > 0) {
-                    next.set(Calendar.DAY_OF_WEEK, nextDay);
-                    if (now.after(next))
-                        next.add(Calendar.DATE, 7);
-                }
+                next.set(Calendar.DAY_OF_WEEK, nextDay + 1); // + 1 = back to 1-7 range
             }
+
+            while (now.after(next))
+                next.add(Calendar.DATE, 1);
 
             return next;
         }
