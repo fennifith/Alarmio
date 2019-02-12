@@ -33,6 +33,22 @@ android {
         signingConfigs.release.keyAlias = System.getenv("KEYSTORE_ALIAS")
         signingConfigs.release.keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD")
     }
+
+    /**
+     * This is used to circumvent some of Google Play's restrictions
+     * and make some features available in the OSS version that wouldn't
+     * be allowed on Google Play.
+     */
+    flavorDimensions "distribution"
+    productFlavors {
+        gplay {
+            dimension "distribution"
+        }
+
+        oss {
+            dimension "distribution"
+        }
+    }
 }
 
 play {
