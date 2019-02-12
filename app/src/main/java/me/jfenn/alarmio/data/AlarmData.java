@@ -233,8 +233,11 @@ public class AlarmData implements Parcelable {
             next.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
             next.set(Calendar.SECOND, 0);
 
+            while (now.after(next))
+                next.add(Calendar.DATE, 1);
+
             if (isRepeat()) {
-                int nextDay = now.get(Calendar.DAY_OF_WEEK) - 1; // index on 0-6, rather than the 1-7 returned by Calendar
+                int nextDay = next.get(Calendar.DAY_OF_WEEK) - 1; // index on 0-6, rather than the 1-7 returned by Calendar
 
                 for (int i = 0; i < 7 && !days[nextDay]; i++) {
                     nextDay++;
@@ -242,10 +245,10 @@ public class AlarmData implements Parcelable {
                 }
 
                 next.set(Calendar.DAY_OF_WEEK, nextDay + 1); // + 1 = back to 1-7 range
-            }
 
-            while (now.after(next))
-                next.add(Calendar.DATE, 1);
+                while (now.after(next))
+                    next.add(Calendar.DATE, 7);
+            }
 
             return next;
         }
