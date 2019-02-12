@@ -102,10 +102,13 @@ public class FormatUtils {
      * @return              The formatted time string.
      */
     public static String formatUnit(Context context, int minutes) {
-        long hours = TimeUnit.MINUTES.toHours(minutes);
+        long days = TimeUnit.MINUTES.toDays(minutes);
+        long hours = TimeUnit.MINUTES.toHours(minutes) % TimeUnit.DAYS.toHours(1);
         minutes %= TimeUnit.HOURS.toMinutes(1);
-        if (hours > 0)
-            return String.format(Locale.getDefault(), "%d " + context.getString(hours > 1 ? R.string.word_hours : R.string.word_hour) + (minutes > 0 ? " " + context.getString(R.string.word_join) + " %02d " + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute) : ""), hours, minutes);
+        if (days > 0)
+            return String.format(Locale.getDefault(),  "%d " + context.getString(days > 1 ? R.string.word_days : R.string.word_day) + ", %d " + context.getString(hours > 1 ? R.string.word_hours : R.string.word_hour) + (minutes > 0 ? ", " + context.getString(R.string.word_join) + " %d " + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute) : ""), days, hours, minutes);
+        else if (hours > 0)
+            return String.format(Locale.getDefault(), "%d " + context.getString(hours > 1 ? R.string.word_hours : R.string.word_hour) + (minutes > 0 ? " " + context.getString(R.string.word_join) + " %d " + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute) : ""), hours, minutes);
         else
             return String.format(Locale.getDefault(), "%d " + context.getString(minutes > 1 ? R.string.word_minutes : R.string.word_minute), minutes);
     }

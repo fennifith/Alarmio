@@ -25,6 +25,7 @@ import com.afollestad.aesthetic.Aesthetic;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.SwitchCompat;
@@ -220,8 +221,14 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             Calendar nextAlarm = alarm.getNext();
             if (alarm.isEnabled && nextAlarm != null) {
                 Date nextAlarmTime = alarm.getNext().getTime();
+
+                // minutes in a week: 10080
+                // maximum value of an integer: 2147483647
+                // we do not need to check this int cast
+                int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(nextAlarm.getTimeInMillis() - Calendar.getInstance().getTimeInMillis());
+
                 alarmHolder.nextTime.setText(String.format(alarmio.getString(R.string.title_alarm_next),
-                        FormatUtils.formatShort(alarmio, nextAlarmTime) + FormatUtils.format(nextAlarmTime, ", MMMM d")));
+                        FormatUtils.format(nextAlarmTime, "MMMM d"), FormatUtils.formatUnit(alarmio, minutes)));
             }
 
             alarmHolder.indicators.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
