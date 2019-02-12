@@ -82,4 +82,5 @@ dependencies {
     implementation 'me.jfenn:SlideActionView:0.0.1'
     implementation 'me.jfenn:SunriseSunsetView:0.0.2'
     implementation 'me.jfenn:AndroidUtils:0.0.1'
+    ossImplementation 'me.jfenn:crasher:0.0.2'
 }
