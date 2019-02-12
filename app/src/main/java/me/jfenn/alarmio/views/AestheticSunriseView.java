@@ -19,23 +19,26 @@ public class AestheticSunriseView extends SunriseSunsetView implements Subscribb
     public AestheticSunriseView(Context context) {
         super(context);
         subscribe();
+        setClickable(false);
+        setFocusable(false);
     }
 
     public AestheticSunriseView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         subscribe();
+        setClickable(false);
+        setFocusable(false);
     }
 
     public AestheticSunriseView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         subscribe();
+        setClickable(false);
+        setFocusable(false);
     }
 
     @Override
     public void subscribe() {
-        setClickable(false);
-        setFocusable(false);
-
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(new Consumer<Integer>() {
