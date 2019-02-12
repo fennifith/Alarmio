@@ -66,4 +66,6 @@
     <!-- untranslated strings -->
     <string name="title_alarm_next">Next alarm: %s</string>
     <string name="msg_time_zones_selected">%d Selected</string>
+    <string name="msg_battery_optimizations_switch_enable">Turn on the switch next to \"Alarmio\". You may need to scroll down… a lot.</string>
+    <string name="title_ignore_battery_optimizations">Ignore Battery Optimizations</string>
 </resources>

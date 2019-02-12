@@ -66,4 +66,7 @@
         <item>Night</item>
         <item>AMOLED</item>
     </string-array>
+
+    <string name="msg_battery_optimizations_switch_enable">Turn on the switch next to \"Alarmio\". You may need to scroll down… a lot.</string>
+    <string name="title_ignore_battery_optimizations">Ignore Battery Optimizations</string>
 </resources>

@@ -1,5 +1,6 @@
 package me.jfenn.alarmio.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +21,15 @@ import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.PreferenceAdapter;
 import me.jfenn.alarmio.data.PreferenceData;
+import me.jfenn.alarmio.data.preference.AboutPreferenceData;
 import me.jfenn.alarmio.data.preference.BasePreferenceData;
+import me.jfenn.alarmio.data.preference.BatteryOptimizationPreferenceData;
 import me.jfenn.alarmio.data.preference.BooleanPreferenceData;
-import me.jfenn.alarmio.data.preference.CustomPreferenceData;
 import me.jfenn.alarmio.data.preference.ImageFilePreferenceData;
 import me.jfenn.alarmio.data.preference.RingtonePreferenceData;
 import me.jfenn.alarmio.data.preference.ThemePreferenceData;
 import me.jfenn.alarmio.data.preference.TimePreferenceData;
 import me.jfenn.alarmio.data.preference.TimeZonesPreferenceData;
-import me.jfenn.attribouter.Attribouter;
 
 public class SettingsFragment extends BasePagerFragment implements Consumer {
 
@@ -47,7 +48,7 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        preferenceAdapter = new PreferenceAdapter(new ArrayList<BasePreferenceData>(Arrays.asList(
+        ArrayList<BasePreferenceData> list = new ArrayList<BasePreferenceData>(Arrays.asList(
                 new ThemePreferenceData(),
                 new ImageFilePreferenceData(PreferenceData.BACKGROUND_IMAGE, R.string.title_background_image),
                 new BooleanPreferenceData(PreferenceData.RINGING_BACKGROUND_IMAGE, R.string.title_ringing_background_image, R.string.desc_ringing_background_image),
@@ -57,24 +58,15 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
                 new BooleanPreferenceData(PreferenceData.SLEEP_REMINDER, R.string.title_sleep_reminder, R.string.desc_sleep_reminder),
                 new TimePreferenceData(PreferenceData.SLEEP_REMINDER_TIME, R.string.title_sleep_reminder_time),
                 new BooleanPreferenceData(PreferenceData.SLOW_WAKE_UP, R.string.title_slow_wake_up, R.string.desc_slow_wake_up),
-                new TimePreferenceData(PreferenceData.SLOW_WAKE_UP_TIME, R.string.title_slow_wake_up_time),
-                new CustomPreferenceData(R.string.title_about) {
-                    @Override
-                    public String getValueName(ViewHolder holder) {
-                        return "";
-                    }
+                new TimePreferenceData(PreferenceData.SLOW_WAKE_UP_TIME, R.string.title_slow_wake_up_time)
+        ));
 
-                    @Override
-                    public void onClick(ViewHolder holder) {
-                        Attribouter attribouter = Attribouter.from(getContext());
-                        int githubAuthKey = getResources().getIdentifier("githubAuthKey", "string", getContext().getPackageName());
-                        if (githubAuthKey != 0)
-                            attribouter = attribouter.withGitHubToken(getString(githubAuthKey));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            list.add(new BatteryOptimizationPreferenceData());
 
-                        attribouter.show();
-                    }
-                }
-        )));
+        list.add(new AboutPreferenceData());
+
+        preferenceAdapter = new PreferenceAdapter(list);
         recyclerView.setAdapter(preferenceAdapter);
 
         colorPrimarySubscription = Aesthetic.Companion.get()
