@@ -116,7 +116,7 @@ public class HomeFragment extends BaseFragment {
             });
         }
 
-        pagerAdapter = new SimplePagerAdapter(getChildFragmentManager(), new AlarmsFragment(), new SettingsFragment());
+        pagerAdapter = new SimplePagerAdapter(getContext(), getChildFragmentManager(), new AlarmsFragment(), new SettingsFragment());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -288,7 +288,7 @@ public class HomeFragment extends BaseFragment {
                 }
             }
 
-            timeAdapter = new SimplePagerAdapter(getChildFragmentManager(), fragments.toArray(new ClockFragment[0]));
+            timeAdapter = new SimplePagerAdapter(getContext(), getChildFragmentManager(), fragments.toArray(new ClockFragment[0]));
             timePager.setAdapter(timeAdapter);
             timeIndicator.setViewPager(timePager);
             timeIndicator.setVisibility(fragments.size() > 1 ? View.VISIBLE : View.GONE);

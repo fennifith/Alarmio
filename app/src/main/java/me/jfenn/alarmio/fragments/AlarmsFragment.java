@@ -1,5 +1,6 @@
 package me.jfenn.alarmio.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,8 +80,8 @@ public class AlarmsFragment extends BasePagerFragment {
     }
 
     @Override
-    public String getTitle() {
-        return "Alarms";
+    public String getTitle(Context context) {
+        return context.getString(R.string.title_alarms);
     }
 
     @Override

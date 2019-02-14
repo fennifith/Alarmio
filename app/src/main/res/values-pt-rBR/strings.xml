@@ -70,4 +70,7 @@
     <string name="title_ignore_battery_optimizations">Ignore Battery Optimizations</string>
     <string name="word_day">day</string>
     <string name="word_days">days</string>
+    <string name="title_alarms">Alarms</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_ringtones">Ringtones</string>
 </resources>

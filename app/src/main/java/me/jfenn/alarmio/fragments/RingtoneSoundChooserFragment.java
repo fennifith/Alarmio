@@ -1,5 +1,6 @@
 package me.jfenn.alarmio.fragments;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -48,8 +49,8 @@ public class RingtoneSoundChooserFragment extends BaseSoundChooserFragment {
     }
 
     @Override
-    public String getTitle() {
-        return "Ringtones";
+    public String getTitle(Context context) {
+        return context.getString(R.string.title_ringtones);
     }
 
 }

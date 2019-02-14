@@ -26,6 +26,9 @@
     <string name="title_appearance">Appearance</string>
     <string name="title_sound_none">None</string>
     <string name="title_snooze">Snooze</string>
+    <string name="title_alarms">Alarms</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_ringtones">Ringtones</string>
     <string name="word_day">day</string>
     <string name="word_days">days</string>
     <string name="word_minute">minute</string>

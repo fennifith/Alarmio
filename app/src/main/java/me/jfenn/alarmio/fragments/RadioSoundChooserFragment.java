@@ -1,5 +1,6 @@
 package me.jfenn.alarmio.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -129,8 +130,8 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
     }
 
     @Override
-    public String getTitle() {
-        return "Radio";
+    public String getTitle(Context context) {
+        return context.getString(R.string.title_radio);
     }
 
 }

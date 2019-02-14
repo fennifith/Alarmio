@@ -78,7 +78,7 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
         ringtoneFragment.setListener(this);
         radioFragment.setListener(this);
 
-        viewPager.setAdapter(new SimplePagerAdapter(getChildFragmentManager(), alarmFragment, ringtoneFragment, radioFragment));
+        viewPager.setAdapter(new SimplePagerAdapter(getContext(), getChildFragmentManager(), alarmFragment, ringtoneFragment, radioFragment));
         tabLayout.setupWithViewPager(viewPager);
         return view;
     }

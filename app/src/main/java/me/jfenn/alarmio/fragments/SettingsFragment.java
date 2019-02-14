@@ -1,5 +1,6 @@
 package me.jfenn.alarmio.fragments;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -88,8 +89,8 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
     }
 
     @Override
-    public String getTitle() {
-        return "Settings";
+    public String getTitle(Context context) {
+        return context.getString(R.string.title_settings);
     }
 
     @Override

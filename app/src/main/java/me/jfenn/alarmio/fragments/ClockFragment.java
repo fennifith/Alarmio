@@ -1,5 +1,6 @@
 package me.jfenn.alarmio.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class ClockFragment extends BasePagerFragment {
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle(Context context) {
         return timezone;
     }
 

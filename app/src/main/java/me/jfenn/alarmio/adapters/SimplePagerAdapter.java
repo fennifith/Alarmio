@@ -1,15 +1,19 @@
 package me.jfenn.alarmio.adapters;
 
+import android.content.Context;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import me.jfenn.alarmio.fragments.BasePagerFragment;
 
 public class SimplePagerAdapter extends FragmentStatePagerAdapter {
 
+    private Context context;
     private BasePagerFragment[] fragments;
 
-    public SimplePagerAdapter(FragmentManager fm, BasePagerFragment... fragments) {
+    public SimplePagerAdapter(Context context, FragmentManager fm, BasePagerFragment... fragments) {
         super(fm);
+        this.context = context;
         this.fragments = fragments;
     }
 
@@ -20,7 +24,7 @@ public class SimplePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return fragments[position].getTitle();
+        return fragments[position].getTitle(context);
     }
 
     @Override
