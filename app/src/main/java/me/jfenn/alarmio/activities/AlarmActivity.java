@@ -37,9 +37,10 @@ import me.jfenn.alarmio.dialogs.TimeChooserDialog;
 import me.jfenn.alarmio.services.SleepReminderService;
 import me.jfenn.alarmio.utils.FormatUtils;
 import me.jfenn.alarmio.utils.ImageUtils;
+import me.jfenn.slideactionview.SlideActionListener;
 import me.jfenn.slideactionview.SlideActionView;
 
-public class AlarmActivity extends AestheticActivity implements SlideActionView.SlideActionListener {
+public class AlarmActivity extends AestheticActivity implements SlideActionListener {
 
     public static final String EXTRA_ALARM = "james.alarmio.AlarmActivity.EXTRA_ALARM";
     public static final String EXTRA_TIMER = "james.alarmio.AlarmActivity.EXTRA_TIMER";
