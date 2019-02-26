@@ -1,15 +1,16 @@
-Alarmio is a simple alarm clock that implements many useful features while following regular design standards to ensure that it is quick and intuitive to use. APKs can be downloaded [here](./../../releases). The alpha testing community (linked to Google Play) is [here](https://plus.google.com/communities/116326840674933604304).
+Alarmio is a simple alarm clock that implements many useful features while following regular design standards to ensure that it is quick and intuitive to use.
 
 [![Build Status](https://travis-ci.com/fennifith/Alarmio.svg?branch=master)](https://travis-ci.com/fennifith/Alarmio)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e214b14f27464ce39a24539fc0ca27a5)](https://www.codacy.com/app/fennifith/Alarmio?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fennifith/Alarmio&amp;utm_campaign=Badge_Grade)
 [![Discord](https://img.shields.io/discord/514625116706177035.svg?logo=discord&colorB=7289da)](https://discord.gg/kgqJ5hM)
+[![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg?logo=liberapay)](https://liberapay.com/fennifith/donate)
 
 
 ## Screenshots
 
-|Home|Alarms|Timers|Themes|Ringing|
-|-----|-----|-----|-----|-----|
-|![img](./.github/images/home.png?raw=true)|![img](./.github/images/alarms.png?raw=true)|![img](./.github/images/timers.png?raw=true)|![img](./.github/images/themes.png?raw=true)|![img](./.github/images/alert.gif?raw=true)|
+| Home | Alarms | Timers | Themes | Ringing |
+|------|--------|--------|--------|---------|
+| ![img](./.github/images/home.png?raw=true) | ![img](./.github/images/alarms.png?raw=true) | ![img](./.github/images/timers.png?raw=true) | ![img](./.github/images/themes.png?raw=true) | ![img](./.github/images/alert.gif?raw=true) |
 
 ## Installation
 

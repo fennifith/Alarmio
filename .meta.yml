@@ -1,4 +1,6 @@
 icon: "app/src/main/ic_launcher-web.png"
+googleplay: "https://play.google.com/store/apps/details?id=me.jfenn.alarmio"
+package: "me.jfenn.alarmio"
 screenshots:
   - ".github/images/home.png"
   - ".github/images/alarms.png"
