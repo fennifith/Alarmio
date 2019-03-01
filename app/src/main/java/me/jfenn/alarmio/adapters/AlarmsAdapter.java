@@ -80,18 +80,34 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
     public void setColorAccent(int colorAccent) {
         this.colorAccent = colorAccent;
-        notifyDataSetChanged();
+        recycler.post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     public void setColorForeground(int colorForeground) {
         this.colorForeground = colorForeground;
-        if (expandedPosition > 0)
-            notifyItemChanged(expandedPosition);
+        if (expandedPosition > 0) {
+            recycler.post(new Runnable() {
+                @Override
+                public void run() {
+                    notifyItemChanged(expandedPosition);
+                }
+            });
+        }
     }
 
     public void setTextColorPrimary(int colorTextPrimary) {
         this.textColorPrimary = colorTextPrimary;
-        notifyDataSetChanged();
+        recycler.post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -186,7 +202,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     transition.setDuration(200);
                     TransitionManager.beginDelayedTransition(recycler, transition);
 
-                    notifyDataSetChanged();
+                    recycler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyDataSetChanged();
+                        }
+                    });
                 }
             });
 
@@ -248,7 +269,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                         transition.setDuration(150);
                         TransitionManager.beginDelayedTransition(recycler, transition);
 
-                        notifyDataSetChanged();
+                        recycler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                notifyDataSetChanged();
+                            }
+                        });
                     }
                 });
 
@@ -434,7 +460,12 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                     transition.setDuration(250);
                     TransitionManager.beginDelayedTransition(recycler, transition);
 
-                    notifyDataSetChanged();
+                    recycler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyDataSetChanged();
+                        }
+                    });
                 }
             });
         }

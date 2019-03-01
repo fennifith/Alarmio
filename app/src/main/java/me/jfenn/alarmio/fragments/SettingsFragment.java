@@ -96,14 +96,26 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (preferenceAdapter != null)
-            preferenceAdapter.notifyDataSetChanged();
+        if (recyclerView != null && preferenceAdapter != null) {
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    preferenceAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     @Override
     public void accept(Object o) throws Exception {
-        if (preferenceAdapter != null)
-            preferenceAdapter.notifyDataSetChanged();
+        if (recyclerView != null && preferenceAdapter != null) {
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    preferenceAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
 }

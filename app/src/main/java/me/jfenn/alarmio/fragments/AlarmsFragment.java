@@ -86,16 +86,28 @@ public class AlarmsFragment extends BasePagerFragment {
 
     @Override
     public void onAlarmsChanged() {
-        if (alarmsAdapter != null) {
-            alarmsAdapter.notifyDataSetChanged();
+        if (recyclerView != null && alarmsAdapter != null) {
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    alarmsAdapter.notifyDataSetChanged();
+                }
+            });
+
             onChanged();
         }
     }
 
     @Override
     public void onTimersChanged() {
-        if (alarmsAdapter != null) {
-            alarmsAdapter.notifyDataSetChanged();
+        if (recyclerView != null && alarmsAdapter != null) {
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    alarmsAdapter.notifyDataSetChanged();
+                }
+            });
+
             onChanged();
         }
     }
