@@ -3,7 +3,7 @@ Alarmio is a simple alarm clock that implements many useful features while follo
 [![Build Status](https://travis-ci.com/fennifith/Alarmio.svg?branch=master)](https://travis-ci.com/fennifith/Alarmio)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e214b14f27464ce39a24539fc0ca27a5)](https://www.codacy.com/app/fennifith/Alarmio?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fennifith/Alarmio&amp;utm_campaign=Badge_Grade)
 [![Discord](https://img.shields.io/discord/514625116706177035.svg?logo=discord&colorB=7289da)](https://discord.gg/kgqJ5hM)
-[![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg?logo=liberapay)](https://liberapay.com/fennifith/donate)
+[![Liberapay](https://img.shields.io/badge/liberapay-donate-yellow.svg?logo=liberapay)](https://jfenn.me/links/liberapay)
 
 
 ## Screenshots
@@ -26,9 +26,9 @@ Alternatively, you can download the latest APK from [the GitHub releases](../../
 
 Alarmio is, of course, completely free to download and use from either the GitHub Releases, F-Droid, or testing versions in the Discord server. However, it is approximately US$1.99 to install it through Google Play. Why is this?
 
-Essentially, when you pay the $1.99 to download the app from the Play Store, you are not paying for the right to use the app. That model [has been broken for a long time](https://updato.com/android-apps/cracked-android-apps-avoid-get-paid-apps-free) - even properly obfuscated applications are often trivial to "crack" through many tools available today, and it is no longer viable to ensure that every customer downloads your app through the Play Store and nothing else. Rather, what you are paying for is in "support" - replies to your reviews, quicker feedback when you send me an email, and so on.
+Essentially, when you pay the $1.99 to download the app from the Play Store, you are not paying for the right to use the app. That model [has been broken for a long time](https://updato.com/android-apps/cracked-android-apps-avoid-get-paid-apps-free) - even properly obfuscated applications are often trivial to "crack" through many tools available today, and it is no longer viable to ensure that every customer downloads your app through the Play Store and nothing else. Rather, what you are paying for is "support" - replies to your reviews, quicker responses when you send me an email, and so on.
 
-Of course, this means that the inverse goes for users that choose not to pay for the app: I have absolutely no obligation to help you or fix any of your problems. Of course, this shouldn't stop you from filing an issue when you come across one, just keep in mind that I might not fix them for free.
+Of course, this means that the opposite goes for users that choose not to pay for the app: I have absolutely no obligation to help you or fix any of your problems. Of course, this shouldn't stop you from filing an issue when you come across one, just keep in mind that when you do, I am essentially working for you for free. I understand that many users may not want to download the app through the Play Store - or have [30% of their money go to Google](https://support.google.com/googleplay/android-developer/answer/112622) - so I encourage these people to consider making a donation through either [PayPal](https://jfenn.me/links/paypal) or [Liberapay](https://jfenn.me/links/liberapay); this is what helps me to continue to work on and maintain my projects.
 
 ## Permissions
 
