@@ -31,6 +31,25 @@
             </intent-filter>
         </activity>
 
+        <activity-alias
+            android:name="me.jfenn.alarmio.activities.SetAlarmActivity"
+            android:targetActivity="me.jfenn.alarmio.activities.AlarmActivity"
+            android:excludeFromRecents="true"
+            android:permission="com.android.alarm.permission.SET_ALARM">
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SHOW_ALARMS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SET_TIMER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name="me.jfenn.alarmio.activities.AlarmActivity"
             android:launchMode="singleTask" />
