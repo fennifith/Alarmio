@@ -77,7 +77,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'me.jfenn:timedatepickers:0.0.6'
-    implementation 'me.jfenn:crasher:0.0.1'
     implementation 'me.jfenn:Attribouter:0.1.5'
     implementation 'me.jfenn:SlideActionView:0.0.2'
     implementation 'me.jfenn:SunriseSunsetView:0.0.3'

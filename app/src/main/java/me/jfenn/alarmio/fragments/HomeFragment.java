@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ import me.jfenn.timedatepickers.dialogs.PickerDialog;
 import me.jfenn.timedatepickers.views.LinearTimePickerView;
 
 public class HomeFragment extends BaseFragment {
+
+    public static final String INTENT_ACTION = "me.jfenn.alarmio.HomeFragment.INTENT_ACTION";
 
     private View view;
     private ViewPager viewPager;
@@ -222,7 +225,7 @@ public class HomeFragment extends BaseFragment {
         timerFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TimerDialog(getContext(), getFragmentManager()).show();
+                invokeTimerScheduler();
                 menu.collapse();
             }
         });
@@ -230,26 +233,7 @@ public class HomeFragment extends BaseFragment {
         alarmFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AestheticTimeSheetPickerDialog(view.getContext())
-                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
-                            @Override
-                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
-                                AlarmManager manager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
-                                AlarmData alarm = getAlarmio().newAlarm();
-                                alarm.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
-                                alarm.time.set(Calendar.MINUTE, view.getMinute());
-                                alarm.setTime(getAlarmio(), manager, alarm.time.getTimeInMillis());
-                                alarm.setEnabled(getContext(), manager, true);
-
-                                getAlarmio().onAlarmsChanged();
-                            }
-
-                            @Override
-                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
-                            }
-                        })
-                        .show();
-
+                invokeAlarmScheduler();
                 menu.collapse();
             }
         });
@@ -265,7 +249,61 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
+        // check actions passed from MainActivity; open timer/alarm schedulers if necessary
+        Bundle args = getArguments();
+        String action = args != null ? args.getString(INTENT_ACTION, null) : null;
+        if (AlarmClock.ACTION_SET_ALARM.equals(action)) {
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    invokeAlarmScheduler();
+                }
+            });
+        } else if (AlarmClock.ACTION_SET_TIMER.equals(action)) {
+            view.post(new Runnable() {
+                @Override
+                public void run() {
+                    invokeTimerScheduler();
+                }
+            });
+        }
+
         return view;
+    }
+
+    /**
+     * Open the alarm scheduler dialog to allow the user to create
+     * a new alarm.
+     */
+    private void invokeAlarmScheduler() {
+        new AestheticTimeSheetPickerDialog(view.getContext())
+                .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                    @Override
+                    public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                        AlarmManager manager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
+                        AlarmData alarm = getAlarmio().newAlarm();
+                        alarm.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
+                        alarm.time.set(Calendar.MINUTE, view.getMinute());
+                        alarm.setTime(getAlarmio(), manager, alarm.time.getTimeInMillis());
+                        alarm.setEnabled(getContext(), manager, true);
+
+                        getAlarmio().onAlarmsChanged();
+                    }
+
+                    @Override
+                    public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * Open the timer scheduler dialog to allow the user to start
+     * a timer.
+     */
+    private void invokeTimerScheduler() {
+        new TimerDialog(getContext(), getFragmentManager())
+                .show();
     }
 
     /**

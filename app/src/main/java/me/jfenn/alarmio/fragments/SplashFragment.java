@@ -67,9 +67,12 @@ public class SplashFragment extends BaseFragment implements Animator.AnimatorLis
     }
 
     private void finish() {
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(getArguments());
+
         getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                .replace(R.id.fragment, new HomeFragment())
+                .replace(R.id.fragment, fragment)
                 .commit();
     }
 }

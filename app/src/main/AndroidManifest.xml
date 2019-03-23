@@ -22,20 +22,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="me.jfenn.alarmio.activities.MainActivity"
-            android:launchMode="singleTop">
+            android:name=".activities.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity-alias
-            android:name="me.jfenn.alarmio.activities.SetAlarmActivity"
-            android:targetActivity="me.jfenn.alarmio.activities.AlarmActivity"
-            android:excludeFromRecents="true"
-            android:permission="com.android.alarm.permission.SET_ALARM">
             <intent-filter>
                 <action android:name="android.intent.action.SET_ALARM" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,27 +40,30 @@
                 <action android:name="android.intent.action.SET_TIMER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity-alias>
+            <intent-filter>
+                <action android:name="android.intent.action.SHOW_TIMERS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
-            android:name="me.jfenn.alarmio.activities.AlarmActivity"
+            android:name=".activities.AlarmActivity"
             android:launchMode="singleTask" />
 
         <activity
-            android:name="me.jfenn.alarmio.activities.FileChooserActivity"
+            android:name=".activities.FileChooserActivity"
             android:theme="@style/AppTheme.Transparent" />
 
-        <service android:name="me.jfenn.alarmio.services.SleepReminderService" />
-        <service android:name="me.jfenn.alarmio.services.StopwatchService" />
-        <service android:name="me.jfenn.alarmio.services.TimerService" />
+        <service android:name=".services.SleepReminderService" />
+        <service android:name=".services.StopwatchService" />
+        <service android:name=".services.TimerService" />
 
-        <receiver android:name="me.jfenn.alarmio.receivers.AlarmReceiver" />
-        <receiver android:name="me.jfenn.alarmio.receivers.TimerReceiver" />
-        <receiver android:name="me.jfenn.alarmio.receivers.RestoreOnBootReceiver">
+        <receiver android:name=".receivers.AlarmReceiver" />
+        <receiver android:name=".receivers.TimerReceiver" />
+        <receiver android:name=".receivers.RestoreOnBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
