@@ -81,15 +81,15 @@ public class SleepReminderService extends Service {
                                 FormatUtils.formatUnit(this, (int) TimeUnit.MILLISECONDS.toMinutes(nextAlarm.getNext().getTimeInMillis() - System.currentTimeMillis()))))
                         .setSmallIcon(R.drawable.ic_notification_sleep)
                         .setPriority(NotificationCompat.PRIORITY_LOW)
+                        .setCategory(NotificationCompat.CATEGORY_SERVICE)
                         .build());
                 return;
             }
         }
 
+        stopForeground(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             stopSelf();
-
-        stopForeground(true);
     }
 
     /**
@@ -167,12 +167,8 @@ public class SleepReminderService extends Service {
             alarmio = (Alarmio) context;
         else alarmio = (Alarmio) context.getApplicationContext();
 
-        if (getSleepyAlarm(alarmio) != null) {
-            Intent intent = new Intent(alarmio, SleepReminderService.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                alarmio.startForegroundService(intent);
-            else alarmio.startService(intent);
-        }
+        if (getSleepyAlarm(alarmio) != null)
+            ContextCompat.startForegroundService(context, new Intent(alarmio, SleepReminderService.class));
     }
 
     private static class ScreenReceiver extends BroadcastReceiver {
