@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
 
 android {
+    def isRunningOnTravis = System.getenv("CI") == "true"
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "me.jfenn.alarmio"
@@ -11,13 +14,20 @@ android {
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        if (isRunningOnTravis) {
+            buildConfigField "String", "GITHUB_TOKEN", '"' + System.getEnv("GITHUB_TOKEN_PUB") + '"'
+        } else {
+            buildConfigField "String", "GITHUB_TOKEN", 'null'
+        }
     }
     signingConfigs {
     	release
     }
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,7 +35,6 @@ android {
         abortOnError false
     }
 
-    def isRunningOnTravis = System.getenv("CI") == "true"
     if (isRunningOnTravis) {
         buildTypes.release.signingConfig = signingConfigs.release
         signingConfigs.release.storeFile = file("../key.jks")
