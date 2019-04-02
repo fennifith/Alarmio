@@ -16,7 +16,8 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         if (isRunningOnTravis) {
-            buildConfigField "String", "GITHUB_TOKEN", '"' + System.getEnv("GITHUB_TOKEN_PUB") + '"'
+            def githubToken = System.getEnv("GITHUB_TOKEN_PUB")
+            buildConfigField "String", "GITHUB_TOKEN", "\"$githubToken\""
         } else {
             buildConfigField "String", "GITHUB_TOKEN", 'null'
         }
