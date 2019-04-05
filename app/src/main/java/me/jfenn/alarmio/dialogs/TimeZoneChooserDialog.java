@@ -2,13 +2,11 @@ package me.jfenn.alarmio.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -58,21 +56,11 @@ public class TimeZoneChooserDialog extends AestheticDialog {
                 timeZones.add(id1);
         }
 
-        Collections.sort(timeZones, new Comparator<String>() {
-            @Override
-            public int compare(String id1, String id2) {
-                return TimeZone.getTimeZone(id1).getRawOffset() - TimeZone.getTimeZone(id2).getRawOffset();
-            }
-        });
+        Collections.sort(timeZones, (id1, id2) -> TimeZone.getTimeZone(id1).getRawOffset() - TimeZone.getTimeZone(id2).getRawOffset());
 
         recycler.setAdapter(new TimeZonesAdapter(timeZones));
 
-        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        findViewById(R.id.ok).setOnClickListener(v -> dismiss());
     }
 
     @Override

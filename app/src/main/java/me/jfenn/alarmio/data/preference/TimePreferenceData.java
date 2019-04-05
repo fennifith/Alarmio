@@ -31,14 +31,11 @@ public class TimePreferenceData extends CustomPreferenceData {
 
         TimeChooserDialog dialog = new TimeChooserDialog(holder.getContext());
         dialog.setDefault(hours, minutes, seconds);
-        dialog.setListener(new TimeChooserDialog.OnTimeChosenListener() {
-            @Override
-            public void onTimeChosen(int hours, int minutes, int seconds) {
-                seconds += TimeUnit.HOURS.toSeconds(hours);
-                seconds += TimeUnit.MINUTES.toSeconds(minutes);
-                preference.setValue(holder.getContext(), TimeUnit.SECONDS.toMillis(seconds));
-                bindViewHolder(holder);
-            }
+        dialog.setListener((hours1, minutes1, seconds1) -> {
+            seconds1 += TimeUnit.HOURS.toSeconds(hours1);
+            seconds1 += TimeUnit.MINUTES.toSeconds(minutes1);
+            preference.setValue(holder.getContext(), TimeUnit.SECONDS.toMillis(seconds1));
+            bindViewHolder(holder);
         });
         dialog.show();
     }

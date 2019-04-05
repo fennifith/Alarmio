@@ -28,7 +28,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import jahirfiquitiva.libs.fabsmenu.FABsMenu;
 import jahirfiquitiva.libs.fabsmenu.FABsMenuListener;
 import jahirfiquitiva.libs.fabsmenu.TitleFAB;
@@ -161,81 +160,60 @@ public class HomeFragment extends BaseFragment {
 
         colorPrimarySubscription = Aesthetic.Companion.get()
                 .colorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        bottomSheet.setBackgroundColor(integer);
-                        overlay.setBackgroundColor(integer);
-                    }
+                .subscribe(integer -> {
+                    bottomSheet.setBackgroundColor(integer);
+                    overlay.setBackgroundColor(integer);
                 });
 
         colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        menu.setMenuButtonColor(integer);
+                .subscribe(integer -> {
+                    menu.setMenuButtonColor(integer);
 
-                        int color = ContextCompat.getColor(getContext(), getAlarmio().getActivityTheme() == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
-                        menu.getMenuButton().setColorFilter(color);
-                        stopwatchFab.setColorFilter(color);
-                        timerFab.setColorFilter(color);
-                        alarmFab.setColorFilter(color);
+                    int color = ContextCompat.getColor(getContext(), getAlarmio().getActivityTheme() == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
+                    menu.getMenuButton().setColorFilter(color);
+                    stopwatchFab.setColorFilter(color);
+                    timerFab.setColorFilter(color);
+                    alarmFab.setColorFilter(color);
 
-                        stopwatchFab.setBackgroundColor(integer);
-                        timerFab.setBackgroundColor(integer);
-                        alarmFab.setBackgroundColor(integer);
-                    }
+                    stopwatchFab.setBackgroundColor(integer);
+                    timerFab.setBackgroundColor(integer);
+                    alarmFab.setBackgroundColor(integer);
                 });
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        stopwatchFab.setTitleTextColor(integer);
-                        timerFab.setTitleTextColor(integer);
-                        alarmFab.setTitleTextColor(integer);
-                    }
+                .subscribe(integer -> {
+                    stopwatchFab.setTitleTextColor(integer);
+                    timerFab.setTitleTextColor(integer);
+                    alarmFab.setTitleTextColor(integer);
                 });
 
         textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        alarmFab.setTitleBackgroundColor(integer);
-                        stopwatchFab.setTitleBackgroundColor(integer);
-                        timerFab.setTitleBackgroundColor(integer);
-                    }
+                .subscribe(integer -> {
+                    alarmFab.setTitleBackgroundColor(integer);
+                    stopwatchFab.setTitleBackgroundColor(integer);
+                    timerFab.setTitleBackgroundColor(integer);
                 });
 
-        stopwatchFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                menu.collapseImmediately();
-                getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
-                        .replace(R.id.fragment, new StopwatchFragment())
-                        .addToBackStack(null)
-                        .commit();
-            }
+        stopwatchFab.setOnClickListener(view -> {
+            menu.collapseImmediately();
+            getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
+                    .replace(R.id.fragment, new StopwatchFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
 
-        timerFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                invokeTimerScheduler();
-                menu.collapse();
-            }
+        timerFab.setOnClickListener(view -> {
+            invokeTimerScheduler();
+            menu.collapse();
         });
 
-        alarmFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                invokeAlarmScheduler();
-                menu.collapse();
-            }
+        alarmFab.setOnClickListener(view -> {
+            invokeAlarmScheduler();
+            menu.collapse();
         });
 
         menu.setMenuListener(new FABsMenuListener() {
@@ -253,19 +231,9 @@ public class HomeFragment extends BaseFragment {
         Bundle args = getArguments();
         String action = args != null ? args.getString(INTENT_ACTION, null) : null;
         if (AlarmClock.ACTION_SET_ALARM.equals(action)) {
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                    invokeAlarmScheduler();
-                }
-            });
+            view.post(() -> invokeAlarmScheduler());
         } else if (AlarmClock.ACTION_SET_TIMER.equals(action)) {
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                    invokeTimerScheduler();
-                }
-            });
+            view.post(() -> invokeTimerScheduler());
         }
 
         return view;

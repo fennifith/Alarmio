@@ -3,7 +3,6 @@ package me.jfenn.alarmio.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -46,21 +45,13 @@ public class TimeZonesAdapter extends RecyclerView.Adapter<TimeZonesAdapter.View
 
         holder.title.setText(timeZone.getDisplayName(Locale.getDefault()));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.checkBox.toggle();
-            }
-        });
+        holder.itemView.setOnClickListener(v -> holder.checkBox.toggle());
 
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked((boolean) PreferenceData.TIME_ZONE_ENABLED.getSpecificValue(holder.itemView.getContext(), timeZone.getID()));
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                TimeZone timeZone = TimeZone.getTimeZone(timeZones.get(holder.getAdapterPosition()));
-                PreferenceData.TIME_ZONE_ENABLED.setValue(holder.itemView.getContext(), isChecked, timeZone.getID());
-            }
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            TimeZone timeZone1 = TimeZone.getTimeZone(timeZones.get(holder.getAdapterPosition()));
+            PreferenceData.TIME_ZONE_ENABLED.setValue(holder.itemView.getContext(), isChecked, timeZone1.getID());
         });
     }
 

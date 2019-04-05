@@ -1,7 +1,5 @@
 package me.jfenn.alarmio.data.preference;
 
-import android.content.DialogInterface;
-
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -32,12 +30,7 @@ public class TimeZonesPreferenceData extends CustomPreferenceData {
     @Override
     public void onClick(final ViewHolder holder) {
         TimeZoneChooserDialog dialog = new TimeZoneChooserDialog(holder.getContext());
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                bindViewHolder(holder);
-            }
-        });
+        dialog.setOnDismissListener(dialog1 -> bindViewHolder(holder));
         dialog.show();
     }
 }

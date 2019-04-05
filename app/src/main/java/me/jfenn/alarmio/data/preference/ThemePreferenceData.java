@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -20,7 +19,6 @@ import java.util.Date;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContextCompat;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
@@ -97,17 +95,14 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
 
         holder.sunriseAutoSwitch.setOnCheckedChangeListener(null);
         holder.sunriseAutoSwitch.setChecked(holder.getAlarmio().isDayAuto());
-        holder.sunriseAutoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                PreferenceData.DAY_AUTO.setValue(holder.getContext(), b);
-                if (b && ContextCompat.checkSelfPermission(holder.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    holder.getAlarmio().requestPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
-                    holder.sunriseAutoSwitch.setChecked(false);
-                } else {
-                    listener.onSunriseChanged(holder.sunriseView, holder.getAlarmio().getDayStart() * HOUR_LENGTH);
-                    listener.onSunsetChanged(holder.sunriseView, holder.getAlarmio().getDayEnd() * HOUR_LENGTH);
-                }
+        holder.sunriseAutoSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            PreferenceData.DAY_AUTO.setValue(holder.getContext(), b);
+            if (b && ContextCompat.checkSelfPermission(holder.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                holder.getAlarmio().requestPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
+                holder.sunriseAutoSwitch.setChecked(false);
+            } else {
+                listener.onSunriseChanged(holder.sunriseView, holder.getAlarmio().getDayStart() * HOUR_LENGTH);
+                listener.onSunsetChanged(holder.sunriseView, holder.getAlarmio().getDayEnd() * HOUR_LENGTH);
             }
         });
 
@@ -127,64 +122,44 @@ public class ThemePreferenceData extends BasePreferenceData<ThemePreferenceData.
             }
         });
 
-        holder.sunriseTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayStart(), 0)
-                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
-                            @Override
-                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
-                                holder.sunriseAutoSwitch.setChecked(false);
-                                if (view.getHourOfDay() < holder.getAlarmio().getDayEnd())
-                                    listener.onSunriseChanged(holder.sunriseView, view.getHourOfDay() * HOUR_LENGTH);
-                            }
+        holder.sunriseTextView.setOnClickListener(view -> new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayStart(), 0)
+                .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                    @Override
+                    public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                        holder.sunriseAutoSwitch.setChecked(false);
+                        if (view.getHourOfDay() < holder.getAlarmio().getDayEnd())
+                            listener.onSunriseChanged(holder.sunriseView, view.getHourOfDay() * HOUR_LENGTH);
+                    }
 
-                            @Override
-                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
-                            }
-                        })
-                        .show();
-            }
-        });
+                    @Override
+                    public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                    }
+                })
+                .show());
 
-        holder.sunsetTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayEnd(), 0)
-                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
-                            @Override
-                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
-                                holder.sunriseAutoSwitch.setChecked(false);
-                                if (view.getHourOfDay() > holder.getAlarmio().getDayStart())
-                                    listener.onSunsetChanged(holder.sunriseView, view.getHourOfDay() * HOUR_LENGTH);
-                            }
+        holder.sunsetTextView.setOnClickListener(view -> new AestheticTimeSheetPickerDialog(view.getContext(), holder.getAlarmio().getDayEnd(), 0)
+                .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                    @Override
+                    public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                        holder.sunriseAutoSwitch.setChecked(false);
+                        if (view.getHourOfDay() > holder.getAlarmio().getDayStart())
+                            listener.onSunsetChanged(holder.sunriseView, view.getHourOfDay() * HOUR_LENGTH);
+                    }
 
-                            @Override
-                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
-                            }
-                        }).show();
-            }
-        });
+                    @Override
+                    public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                    }
+                }).show());
 
         Aesthetic.Companion.get()
                 .textColorSecondary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer textColorSecondary) throws Exception {
-                        holder.themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
-                    }
-                });
+                .subscribe(textColorSecondary -> holder.themeSpinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary)));
 
         Aesthetic.Companion.get()
                 .colorCardViewBackground()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer colorForeground) throws Exception {
-                        holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
-                    }
-                });
+                .subscribe(colorForeground -> holder.themeSpinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground)));
     }
 
     public static class ViewHolder extends BasePreferenceData.ViewHolder {

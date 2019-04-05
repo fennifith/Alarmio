@@ -11,7 +11,6 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 
 public class ProgressLineView extends View implements Subscribblable {
@@ -51,24 +50,18 @@ public class ProgressLineView extends View implements Subscribblable {
     public void subscribe() {
         colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        linePaint.setColor(integer);
-                        linePaint.setAlpha(100);
-                        postInvalidate();
-                    }
+                .subscribe(integer -> {
+                    linePaint.setColor(integer);
+                    linePaint.setAlpha(100);
+                    postInvalidate();
                 });
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        backgroundPaint.setColor(integer);
-                        backgroundPaint.setAlpha(30);
-                        postInvalidate();
-                    }
+                .subscribe(integer -> {
+                    backgroundPaint.setColor(integer);
+                    backgroundPaint.setAlpha(30);
+                    postInvalidate();
                 });
     }
 

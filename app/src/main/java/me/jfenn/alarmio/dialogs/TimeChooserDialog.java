@@ -11,7 +11,6 @@ import com.afollestad.aesthetic.Aesthetic;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 
 public class TimeChooserDialog extends AestheticDialog implements View.OnClickListener {
@@ -63,39 +62,26 @@ public class TimeChooserDialog extends AestheticDialog implements View.OnClickLi
 
         TextView startButton = findViewById(R.id.start);
         startButton.setText(android.R.string.ok);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(input) > 0) {
-                    if (listener != null) {
-                        listener.onTimeChosen(
-                                Integer.parseInt(input.substring(0, 2)),
-                                Integer.parseInt(input.substring(2, 4)),
-                                Integer.parseInt(input.substring(4, 6))
-                        );
-                    }
-
-                    dismiss();
+        startButton.setOnClickListener(view -> {
+            if (Integer.parseInt(input) > 0) {
+                if (listener != null) {
+                    listener.onTimeChosen(
+                            Integer.parseInt(input.substring(0, 2)),
+                            Integer.parseInt(input.substring(2, 4)),
+                            Integer.parseInt(input.substring(4, 6))
+                    );
                 }
-            }
-        });
 
-        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 dismiss();
             }
         });
 
+        findViewById(R.id.cancel).setOnClickListener(view -> dismiss());
+
         Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        backspace.setColorFilter(integer);
-                    }
-                });
+                .subscribe(integer -> backspace.setColorFilter(integer));
     }
 
     private void input(String character) {

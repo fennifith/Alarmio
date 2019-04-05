@@ -13,7 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.TimerData;
 import me.jfenn.alarmio.utils.FormatUtils;
@@ -71,31 +70,18 @@ public class TimerFragment extends BaseFragment {
             }
         };
 
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getAlarmio().removeTimer(timer);
-                getFragmentManager().popBackStack();
-            }
+        stop.setOnClickListener(view1 -> {
+            getAlarmio().removeTimer(timer);
+            getFragmentManager().popBackStack();
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getFragmentManager().popBackStack();
-            }
-        });
+        back.setOnClickListener(view12 -> getFragmentManager().popBackStack());
 
         handler.post(runnable);
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        back.setColorFilter(integer);
-                    }
-                });
+                .subscribe(integer -> back.setColorFilter(integer));
 
         return view;
     }

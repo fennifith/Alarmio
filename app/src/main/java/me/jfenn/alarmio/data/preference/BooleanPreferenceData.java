@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -13,7 +12,6 @@ import com.afollestad.aesthetic.Aesthetic;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.widget.CompoundButtonCompat;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
 
@@ -42,39 +40,26 @@ public class BooleanPreferenceData extends BasePreferenceData<BooleanPreferenceD
 
         Boolean value = preference.getValue(holder.itemView.getContext());
         holder.toggle.setChecked(value != null ? value : false);
-        holder.toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                preference.setValue(compoundButton.getContext(), b);
-            }
-        });
+        holder.toggle.setOnCheckedChangeListener((compoundButton, b) -> preference.setValue(compoundButton.getContext(), b));
 
         Aesthetic.Companion.get()
                 .colorAccent()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(final Integer colorAccent) throws Exception {
-                        Aesthetic.Companion.get()
-                                .textColorPrimary()
-                                .take(1)
-                                .subscribe(new Consumer<Integer>() {
-                                    @Override
-                                    public void accept(Integer textColorPrimary) throws Exception {
-                                        ColorStateList colorStateList = new ColorStateList(
-                                                new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
-                                                new int[]{
-                                                        Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
-                                                        colorAccent
-                                                }
-                                        );
-
-                                        CompoundButtonCompat.setButtonTintList(holder.toggle, colorStateList);
-                                        holder.toggle.setTextColor(textColorPrimary);
+                .subscribe(colorAccent -> Aesthetic.Companion.get()
+                        .textColorPrimary()
+                        .take(1)
+                        .subscribe(textColorPrimary -> {
+                            ColorStateList colorStateList = new ColorStateList(
+                                    new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}},
+                                    new int[]{
+                                            Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)),
+                                            colorAccent
                                     }
-                                });
-                    }
-                });
+                            );
+
+                            CompoundButtonCompat.setButtonTintList(holder.toggle, colorStateList);
+                            holder.toggle.setTextColor(textColorPrimary);
+                        }));
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {

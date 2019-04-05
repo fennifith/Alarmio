@@ -14,7 +14,6 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 import me.jfenn.androidutils.DimenUtils;
 
@@ -73,35 +72,26 @@ public class ProgressTextView extends View implements Subscribblable {
     public void subscribe() {
         colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        linePaint.setColor(integer);
-                        circlePaint.setColor(integer);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    linePaint.setColor(integer);
+                    circlePaint.setColor(integer);
+                    invalidate();
                 });
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textPaint.setColor(integer);
-                        referenceCirclePaint.setColor(integer);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    textPaint.setColor(integer);
+                    referenceCirclePaint.setColor(integer);
+                    invalidate();
                 });
 
         textColorSecondarySubscription = Aesthetic.Companion.get()
                 .textColorSecondary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        backgroundPaint.setColor(integer);
-                        backgroundPaint.setAlpha(50);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    backgroundPaint.setColor(integer);
+                    backgroundPaint.setAlpha(50);
+                    invalidate();
                 });
     }
 

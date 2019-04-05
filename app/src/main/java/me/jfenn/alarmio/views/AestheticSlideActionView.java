@@ -9,7 +9,6 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 import me.jfenn.slideactionview.SlideActionView;
 
@@ -43,24 +42,16 @@ public class AestheticSlideActionView extends SlideActionView implements Subscri
     public void subscribe() {
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        setTouchHandleColor(integer);
-                        setOutlineColor(integer);
-                        setIconColor(integer);
-                        postInvalidate();
-                    }
+                .subscribe(integer -> {
+                    setTouchHandleColor(integer);
+                    setOutlineColor(integer);
+                    setIconColor(integer);
+                    postInvalidate();
                 });
 
         textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        setBackgroundColor((100 << 24) | (integer & 0x00ffffff));
-                    }
-                });
+                .subscribe(integer -> setBackgroundColor((100 << 24) | (integer & 0x00ffffff)));
     }
 
     @Override

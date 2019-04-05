@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,14 +52,11 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
         testRadio = view.findViewById(R.id.testRadio);
 
         List<String> previousRadios = new ArrayList<>(prefs.getStringSet(PREF_RADIOS, new HashSet<String>()));
-        Collections.sort(previousRadios, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                try {
-                    return Integer.parseInt(o1.split(SEPARATOR)[0]) - Integer.parseInt(o2.split(SEPARATOR)[0]);
-                } catch (NumberFormatException e) {
-                    return 0;
-                }
+        Collections.sort(previousRadios, (o1, o2) -> {
+            try {
+                return Integer.parseInt(o1.split(SEPARATOR)[0]) - Integer.parseInt(o2.split(SEPARATOR)[0]);
+            } catch (NumberFormatException e) {
+                return 0;
             }
         });
 
@@ -76,34 +72,28 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
         adapter.setListener(this);
         recycler.setAdapter(adapter);
 
-        testRadio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentSound == null) {
-                    currentSound = new SoundData("", radioUrlEditText.getText().toString());
-                    try {
-                        currentSound.preview(getAlarmio());
-                        testRadio.setText(R.string.title_radio_stop);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    if (currentSound.isPlaying(getAlarmio()))
-                        currentSound.stop(getAlarmio());
-
-                    currentSound = null;
-                    testRadio.setText(R.string.title_radio_test);
+        testRadio.setOnClickListener(v -> {
+            if (currentSound == null) {
+                currentSound = new SoundData("", radioUrlEditText.getText().toString());
+                try {
+                    currentSound.preview(getAlarmio());
+                    testRadio.setText(R.string.title_radio_stop);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                if (currentSound.isPlaying(getAlarmio()))
+                    currentSound.stop(getAlarmio());
+
+                currentSound = null;
+                testRadio.setText(R.string.title_radio_test);
             }
         });
 
-        view.findViewById(R.id.createRadio).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (URLUtil.isValidUrl(radioUrlEditText.getText().toString())) {
-                    onSoundChosen(new SoundData(getString(R.string.title_radio), radioUrlEditText.getText().toString()));
-                }
+        view.findViewById(R.id.createRadio).setOnClickListener(v -> {
+            if (URLUtil.isValidUrl(radioUrlEditText.getText().toString())) {
+                onSoundChosen(new SoundData(getString(R.string.title_radio), radioUrlEditText.getText().toString()));
             }
         });
 

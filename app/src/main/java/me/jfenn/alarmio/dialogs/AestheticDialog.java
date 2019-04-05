@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.appcompat.app.AppCompatDialog;
-import io.reactivex.functions.Consumer;
 
 public abstract class AestheticDialog extends AppCompatDialog {
 
@@ -21,11 +20,6 @@ public abstract class AestheticDialog extends AppCompatDialog {
         Aesthetic.Companion.get()
                 .colorPrimary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        findViewById(android.R.id.content).setBackgroundColor(integer);
-                    }
-                });
+                .subscribe(integer -> findViewById(android.R.id.content).setBackgroundColor(integer));
     }
 }

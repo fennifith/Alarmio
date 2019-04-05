@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.services.StopwatchService;
 import me.jfenn.alarmio.utils.FormatUtils;
@@ -55,85 +54,65 @@ public class StopwatchFragment extends BaseFragment implements StopwatchService.
         time = view.findViewById(R.id.time);
         lapsLayout = view.findViewById(R.id.laps);
 
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (service != null)
-                    service.reset();
-            }
+        reset.setOnClickListener(v -> {
+            if (service != null)
+                service.reset();
         });
         reset.setClickable(false);
 
-        toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (service != null)
-                    service.toggle();
-            }
+        toggle.setOnClickListener(v -> {
+            if (service != null)
+                service.toggle();
         });
 
-        lap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (service != null)
-                    service.lap();
-            }
+        lap.setOnClickListener(v -> {
+            if (service != null)
+                service.lap();
         });
 
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (service != null) {
-                    String time = FormatUtils.formatMillis(service.getElapsedTime());
-                    StringBuilder content = new StringBuilder().append(getContext().getString(R.string.title_time, time)).append("\n");
-                    long total = 0;
-                    List<Long> laps = service.getLaps();
-                    for (int i = 0; i < laps.size(); i++) {
-                        long lapTime = laps.get(i);
-                        total += lapTime;
+        share.setOnClickListener(v -> {
+            if (service != null) {
+                String time = FormatUtils.formatMillis(service.getElapsedTime());
+                StringBuilder content = new StringBuilder().append(getContext().getString(R.string.title_time, time)).append("\n");
+                long total = 0;
+                List<Long> laps = service.getLaps();
+                for (int i = 0; i < laps.size(); i++) {
+                    long lapTime = laps.get(i);
+                    total += lapTime;
 
-                        content.append(getContext().getString(R.string.title_lap_number, laps.size() - i))
-                                .append("    \t")
-                                .append(getContext().getString(R.string.title_lap_time, FormatUtils.formatMillis(lapTime)))
-                                .append("    \t")
-                                .append(getContext().getString(R.string.title_total_time, FormatUtils.formatMillis(total)));
+                    content.append(getContext().getString(R.string.title_lap_number, laps.size() - i))
+                            .append("    \t")
+                            .append(getContext().getString(R.string.title_lap_time, FormatUtils.formatMillis(lapTime)))
+                            .append("    \t")
+                            .append(getContext().getString(R.string.title_total_time, FormatUtils.formatMillis(total)));
 
-                        if (i < laps.size() - 1)
-                            content.append("\n");
-                    }
-
-                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    sharingIntent.setType("text/plain");
-                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.title_stopwatch_share, getContext().getString(R.string.app_name), time));
-                    sharingIntent.putExtra(Intent.EXTRA_TEXT, content.toString());
-                    startActivity(Intent.createChooser(sharingIntent, getContext().getString(R.string.title_share_results)));
+                    if (i < laps.size() - 1)
+                        content.append("\n");
                 }
+
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.title_stopwatch_share, getContext().getString(R.string.app_name), time));
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, content.toString());
+                startActivity(Intent.createChooser(sharingIntent, getContext().getString(R.string.title_share_results)));
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getFragmentManager().popBackStack();
-            }
-        });
+        back.setOnClickListener(v -> getFragmentManager().popBackStack());
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorPrimary = integer;
-                        back.setColorFilter(integer);
-                        reset.setColorFilter(integer);
-                        lap.setTextColor(integer);
-                        share.setColorFilter(integer);
+                .subscribe(integer -> {
+                    textColorPrimary = integer;
+                    back.setColorFilter(integer);
+                    reset.setColorFilter(integer);
+                    lap.setTextColor(integer);
+                    share.setColorFilter(integer);
 
-                        for (int i = 0; i < lapsLayout.getChildCount(); i++) {
-                            LinearLayout layout = (LinearLayout) lapsLayout.getChildAt(i);
-                            for (int i2 = 0; i2 < layout.getChildCount(); i2++) {
-                                ((TextView) layout.getChildAt(i2)).setTextColor(integer);
-                            }
+                    for (int i = 0; i < lapsLayout.getChildCount(); i++) {
+                        LinearLayout layout = (LinearLayout) lapsLayout.getChildAt(i);
+                        for (int i2 = 0; i2 < layout.getChildCount(); i2++) {
+                            ((TextView) layout.getChildAt(i2)).setTextColor(integer);
                         }
                     }
                 });

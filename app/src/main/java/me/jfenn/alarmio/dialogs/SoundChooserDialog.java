@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.viewpager.widget.ViewPager;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.SimplePagerAdapter;
@@ -60,12 +59,7 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
         Aesthetic.Companion.get()
                 .colorPrimary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        view.setBackgroundColor(integer);
-                    }
-                });
+                .subscribe(integer -> view.setBackgroundColor(integer));
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager viewPager = view.findViewById(R.id.viewPager);

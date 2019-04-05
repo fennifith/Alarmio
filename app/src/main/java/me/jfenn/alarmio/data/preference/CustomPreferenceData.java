@@ -29,12 +29,7 @@ public abstract class CustomPreferenceData extends BasePreferenceData<CustomPref
         holder.nameView.setText(name);
         holder.valueNameView.setText(getValueName(holder));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CustomPreferenceData.this.onClick(holder);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> CustomPreferenceData.this.onClick(holder));
     }
 
     public static class ViewHolder extends BasePreferenceData.ViewHolder {

@@ -4,7 +4,6 @@ import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
 import me.jfenn.alarmio.data.SoundData;
 import me.jfenn.alarmio.dialogs.SoundChooserDialog;
-import me.jfenn.alarmio.interfaces.SoundChooserListener;
 
 public class RingtonePreferenceData extends CustomPreferenceData {
 
@@ -24,12 +23,9 @@ public class RingtonePreferenceData extends CustomPreferenceData {
     @Override
     public void onClick(final ViewHolder holder) {
         SoundChooserDialog dialog = new SoundChooserDialog();
-        dialog.setListener(new SoundChooserListener() {
-            @Override
-            public void onSoundChosen(SoundData sound) {
-                preference.setValue(holder.getContext(), sound != null ? sound.toString() : null);
-                bindViewHolder(holder);
-            }
+        dialog.setListener(sound -> {
+            preference.setValue(holder.getContext(), sound != null ? sound.toString() : null);
+            bindViewHolder(holder);
         });
         dialog.show(holder.getAlarmio().getFragmentManager(), null);
     }

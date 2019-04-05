@@ -10,7 +10,6 @@ import com.afollestad.aesthetic.Aesthetic;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.widget.CompoundButtonCompat;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 
 public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscribblable {
@@ -36,30 +35,22 @@ public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscrib
     @Override
     public void subscribe() {
         colorAccentSubscription = Aesthetic.Companion.get().colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
+                .subscribe(integer -> {
+                    int[][] states = new int[][]{new int[]{-android.R.attr.state_checked}, new int[]{android.R.attr.state_checked}};
 
-                        ColorStateList colorStateList = new ColorStateList(
-                                states,
-                                new int[]{
-                                        Color.argb(255, 128, 128, 128),
-                                        integer
-                                }
-                        );
+                    ColorStateList colorStateList = new ColorStateList(
+                            states,
+                            new int[]{
+                                    Color.argb(255, 128, 128, 128),
+                                    integer
+                            }
+                    );
 
-                        CompoundButtonCompat.setButtonTintList(AestheticCheckBoxView.this, colorStateList);
-                    }
+                    CompoundButtonCompat.setButtonTintList(AestheticCheckBoxView.this, colorStateList);
                 });
 
         textColorPrimarySubscription = Aesthetic.Companion.get().textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        setTextColor(integer);
-                    }
-                });
+                .subscribe(integer -> setTextColor(integer));
     }
 
     @Override

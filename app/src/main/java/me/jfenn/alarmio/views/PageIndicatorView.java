@@ -26,7 +26,6 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.viewpager.widget.ViewPager;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 import me.jfenn.androidutils.DimenUtils;
 
@@ -68,24 +67,18 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     public void subscribe() {
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorPrimary = integer;
-                        engine.updateTextColors(PageIndicatorView.this);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    textColorPrimary = integer;
+                    engine.updateTextColors(PageIndicatorView.this);
+                    invalidate();
                 });
 
         textColorSecondarySubscription = Aesthetic.Companion.get()
                 .textColorSecondary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorSecondary = integer;
-                        engine.updateTextColors(PageIndicatorView.this);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    textColorSecondary = integer;
+                    engine.updateTextColors(PageIndicatorView.this);
+                    invalidate();
                 });
     }
 

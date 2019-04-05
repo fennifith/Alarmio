@@ -14,9 +14,7 @@ import android.view.animation.DecelerateInterpolator;
 import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.annotation.Nullable;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 import me.jfenn.androidutils.DimenUtils;
 
@@ -81,12 +79,9 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
             if (isChecked)
                 animator.setInterpolator(new DecelerateInterpolator());
             else animator.setInterpolator(new AnticipateOvershootInterpolator());
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    checked = (float) valueAnimator.getAnimatedValue();
-                    invalidate();
-                }
+            animator.addUpdateListener(valueAnimator -> {
+                checked = (float) valueAnimator.getAnimatedValue();
+                invalidate();
             });
             animator.start();
         }
@@ -104,34 +99,25 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
     public void subscribe() {
         colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(@NonNull Integer integer) throws Exception {
-                        accentPaint.setColor(integer);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    accentPaint.setColor(integer);
+                    invalidate();
                 });
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorPrimary = integer;
-                        textPaint.setColor(integer);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    textColorPrimary = integer;
+                    textPaint.setColor(integer);
+                    invalidate();
                 });
 
         textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        textColorPrimaryInverse = integer;
-                        clippedTextPaint.setColor(integer);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    textColorPrimaryInverse = integer;
+                    clippedTextPaint.setColor(integer);
+                    invalidate();
                 });
     }
 

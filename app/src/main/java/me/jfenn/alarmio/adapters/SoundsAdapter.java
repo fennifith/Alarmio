@@ -15,7 +15,6 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.SoundData;
@@ -48,12 +47,9 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
         if (position == 0) {
             holder.title.setText(R.string.title_sound_none);
             holder.icon.setOnClickListener(null);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null)
-                        listener.onSoundChosen(null);
-                }
+            holder.itemView.setOnClickListener(v -> {
+                if (listener != null)
+                    listener.onSoundChosen(null);
             });
 
             setPlaying(holder, false, false);
@@ -61,35 +57,29 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
         } else {
             SoundData sound = sounds.get(position - 1);
             holder.title.setText(sound.getName());
-            holder.icon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = holder.getAdapterPosition();
-                    SoundData sound = sounds.get(position - 1);
-                    if (sound.isPlaying(alarmio) || currentlyPlaying == position) {
-                        sound.stop(alarmio);
-                        currentlyPlaying = -1;
-                    } else {
-                        sound.preview(alarmio);
+            holder.icon.setOnClickListener(v -> {
+                int position1 = holder.getAdapterPosition();
+                SoundData sound1 = sounds.get(position1 - 1);
+                if (sound1.isPlaying(alarmio) || currentlyPlaying == position1) {
+                    sound1.stop(alarmio);
+                    currentlyPlaying = -1;
+                } else {
+                    sound1.preview(alarmio);
 
-                        if (currentlyPlaying >= 0) {
-                            sounds.get(currentlyPlaying - 1).stop(alarmio);
-                            notifyItemChanged(currentlyPlaying);
-                        }
-
-                        currentlyPlaying = position;
+                    if (currentlyPlaying >= 0) {
+                        sounds.get(currentlyPlaying - 1).stop(alarmio);
+                        notifyItemChanged(currentlyPlaying);
                     }
 
-                    setPlaying(holder, currentlyPlaying == position, true);
+                    currentlyPlaying = position1;
                 }
+
+                setPlaying(holder, currentlyPlaying == position1, true);
             });
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null)
-                        listener.onSoundChosen(sounds.get(holder.getAdapterPosition() - 1));
-                }
+            holder.itemView.setOnClickListener(v -> {
+                if (listener != null)
+                    listener.onSoundChosen(sounds.get(holder.getAdapterPosition() - 1));
             });
 
             setPlaying(holder, sound.isPlaying(alarmio), false);
@@ -97,43 +87,29 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
     }
 
     private void setPlaying(final ViewHolder holder, final boolean isPlaying, final boolean isAnimated) {
-        (isPlaying ? Aesthetic.Companion.get().colorPrimary() : Aesthetic.Companion.get().textColorPrimary()).take(1).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                if (isAnimated) {
-                    ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), holder.title.getTextColors().getDefaultColor(), integer);
-                    animator.setDuration(300);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            int color = (int) valueAnimator.getAnimatedValue();
-                            holder.title.setTextColor(color);
-                            holder.icon.setColorFilter(color);
-                        }
-                    });
-                    animator.start();
-                } else {
-                    holder.title.setTextColor(integer);
-                    holder.icon.setColorFilter(integer);
-                }
+        (isPlaying ? Aesthetic.Companion.get().colorPrimary() : Aesthetic.Companion.get().textColorPrimary()).take(1).subscribe(integer -> {
+            if (isAnimated) {
+                ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), holder.title.getTextColors().getDefaultColor(), integer);
+                animator.setDuration(300);
+                animator.addUpdateListener(valueAnimator -> {
+                    int color = (int) valueAnimator.getAnimatedValue();
+                    holder.title.setTextColor(color);
+                    holder.icon.setColorFilter(color);
+                });
+                animator.start();
+            } else {
+                holder.title.setTextColor(integer);
+                holder.icon.setColorFilter(integer);
             }
         });
 
-        Aesthetic.Companion.get().textColorPrimary().take(1).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                if (isAnimated) {
-                    ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isPlaying ? Color.TRANSPARENT : integer, isPlaying ? integer : Color.TRANSPARENT);
-                    animator.setDuration(300);
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            holder.itemView.setBackgroundColor((int) valueAnimator.getAnimatedValue());
-                        }
-                    });
-                    animator.start();
-                } else holder.itemView.setBackgroundColor(isPlaying ? integer : Color.TRANSPARENT);
-            }
+        Aesthetic.Companion.get().textColorPrimary().take(1).subscribe(integer -> {
+            if (isAnimated) {
+                ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isPlaying ? Color.TRANSPARENT : integer, isPlaying ? integer : Color.TRANSPARENT);
+                animator.setDuration(300);
+                animator.addUpdateListener(valueAnimator -> holder.itemView.setBackgroundColor((int) valueAnimator.getAnimatedValue()));
+                animator.start();
+            } else holder.itemView.setBackgroundColor(isPlaying ? integer : Color.TRANSPARENT);
         });
 
         if (isAnimated) {

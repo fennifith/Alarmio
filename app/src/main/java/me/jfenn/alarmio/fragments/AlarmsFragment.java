@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.AlarmsAdapter;
 
@@ -42,30 +41,15 @@ public class AlarmsFragment extends BasePagerFragment {
 
         colorAccentSubscription = Aesthetic.Companion.get()
                 .colorAccent()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        alarmsAdapter.setColorAccent(integer);
-                    }
-                });
+                .subscribe(integer -> alarmsAdapter.setColorAccent(integer));
 
         colorForegroundSubscription = Aesthetic.Companion.get()
                 .colorCardViewBackground()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        alarmsAdapter.setColorForeground(integer);
-                    }
-                });
+                .subscribe(integer -> alarmsAdapter.setColorForeground(integer));
 
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        alarmsAdapter.setTextColorPrimary(integer);
-                    }
-                });
+                .subscribe(integer -> alarmsAdapter.setTextColorPrimary(integer));
 
         onChanged();
         return v;
@@ -87,12 +71,7 @@ public class AlarmsFragment extends BasePagerFragment {
     @Override
     public void onAlarmsChanged() {
         if (recyclerView != null && alarmsAdapter != null) {
-            recyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    alarmsAdapter.notifyDataSetChanged();
-                }
-            });
+            recyclerView.post(() -> alarmsAdapter.notifyDataSetChanged());
 
             onChanged();
         }
@@ -101,12 +80,7 @@ public class AlarmsFragment extends BasePagerFragment {
     @Override
     public void onTimersChanged() {
         if (recyclerView != null && alarmsAdapter != null) {
-            recyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    alarmsAdapter.notifyDataSetChanged();
-                }
-            });
+            recyclerView.post(() -> alarmsAdapter.notifyDataSetChanged());
 
             onChanged();
         }

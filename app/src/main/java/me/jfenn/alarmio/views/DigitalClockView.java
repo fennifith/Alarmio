@@ -19,7 +19,6 @@ import java.util.TimeZone;
 
 import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.interfaces.Subscribblable;
 import me.jfenn.alarmio.utils.FormatUtils;
 
@@ -62,12 +61,9 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
     public void subscribe() {
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        paint.setColor(integer);
-                        invalidate();
-                    }
+                .subscribe(integer -> {
+                    paint.setColor(integer);
+                    invalidate();
                 });
     }
 
@@ -110,13 +106,10 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
                     return;
                 }
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        DigitalClockView view = viewReference.get();
-                        if (view != null)
-                            view.invalidate();
-                    }
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    DigitalClockView view = viewReference.get();
+                    if (view != null)
+                        view.invalidate();
                 });
             }
         }

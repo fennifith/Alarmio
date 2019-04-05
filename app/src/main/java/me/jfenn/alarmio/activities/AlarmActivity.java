@@ -2,7 +2,6 @@ package me.jfenn.alarmio.activities;
 
 import android.app.AlarmManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.AlarmData;
@@ -86,21 +84,11 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
 
         textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        overlay.setBackgroundColor(integer);
-                    }
-                });
+                .subscribe(integer -> overlay.setBackgroundColor(integer));
 
         isDarkSubscription = Aesthetic.Companion.get()
                 .isDark()
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        isDark = aBoolean;
-                    }
-                });
+                .subscribe(aBoolean -> isDark = aBoolean);
 
         actionView.setLeftIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_snooze, getTheme()));
         actionView.setRightIcon(VectorDrawableCompat.create(getResources(), R.drawable.ic_close, getTheme()));
@@ -212,46 +200,35 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
 
         stopAnnoyingness();
         new AlertDialog.Builder(AlarmActivity.this, isDark ? R.style.Theme_AppCompat_Dialog_Alert : R.style.Theme_AppCompat_Light_Dialog_Alert)
-                .setItems(names, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which < minutes.length) {
+                .setItems(names, (dialog, which) -> {
+                    if (which < minutes.length) {
+                        TimerData timer = alarmio.newTimer();
+                        timer.setDuration(TimeUnit.MINUTES.toMillis(minutes[which]), alarmio);
+                        timer.setVibrate(AlarmActivity.this, isVibrate);
+                        timer.setSound(AlarmActivity.this, sound);
+                        timer.set(alarmio, ((AlarmManager) AlarmActivity.this.getSystemService(Context.ALARM_SERVICE)));
+                        alarmio.onTimerStarted();
+
+                        finish();
+                    } else {
+                        TimeChooserDialog timerDialog = new TimeChooserDialog(AlarmActivity.this);
+                        timerDialog.setListener((hours, minutes1, seconds) -> {
                             TimerData timer = alarmio.newTimer();
-                            timer.setDuration(TimeUnit.MINUTES.toMillis(minutes[which]), alarmio);
                             timer.setVibrate(AlarmActivity.this, isVibrate);
                             timer.setSound(AlarmActivity.this, sound);
-                            timer.set(alarmio, ((AlarmManager) AlarmActivity.this.getSystemService(Context.ALARM_SERVICE)));
+                            timer.setDuration(TimeUnit.HOURS.toMillis(hours)
+                                            + TimeUnit.MINUTES.toMillis(minutes1)
+                                            + TimeUnit.SECONDS.toMillis(seconds),
+                                    alarmio);
+
+                            timer.set(alarmio, ((AlarmManager) getSystemService(Context.ALARM_SERVICE)));
                             alarmio.onTimerStarted();
-
                             finish();
-                        } else {
-                            TimeChooserDialog timerDialog = new TimeChooserDialog(AlarmActivity.this);
-                            timerDialog.setListener(new TimeChooserDialog.OnTimeChosenListener() {
-                                @Override
-                                public void onTimeChosen(int hours, int minutes, int seconds) {
-                                    TimerData timer = alarmio.newTimer();
-                                    timer.setVibrate(AlarmActivity.this, isVibrate);
-                                    timer.setSound(AlarmActivity.this, sound);
-                                    timer.setDuration(TimeUnit.HOURS.toMillis(hours)
-                                                    + TimeUnit.MINUTES.toMillis(minutes)
-                                                    + TimeUnit.SECONDS.toMillis(seconds),
-                                            alarmio);
-
-                                    timer.set(alarmio, ((AlarmManager) getSystemService(Context.ALARM_SERVICE)));
-                                    alarmio.onTimerStarted();
-                                    finish();
-                                }
-                            });
-                            timerDialog.show();
-                        }
+                        });
+                        timerDialog.show();
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss())
                 .show();
 
         overlay.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);

@@ -13,7 +13,6 @@ import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
 
@@ -44,30 +43,17 @@ public abstract class ListPreferenceData extends BasePreferenceData<ListPreferen
         holder.recycler.setLayoutManager(new LinearLayoutManager(holder.getContext()));
         holder.recycler.setAdapter(getAdapter(holder.getContext(), items));
 
-        holder.add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestAddItem(holder);
-            }
-        });
+        holder.add.setOnClickListener(v -> requestAddItem(holder));
 
         holder.remove.setVisibility(items.length > 1 ? View.VISIBLE : View.GONE);
-        holder.remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeItem(holder);
-            }
-        });
+        holder.remove.setOnClickListener(v -> removeItem(holder));
 
         Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        holder.add.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
-                        holder.remove.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
-                    }
+                .subscribe(integer -> {
+                    holder.add.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
+                    holder.remove.setColorFilter(new PorterDuffColorFilter(integer, PorterDuff.Mode.SRC_IN));
                 });
     }
 

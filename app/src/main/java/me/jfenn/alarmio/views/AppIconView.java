@@ -57,12 +57,9 @@ public class AppIconView extends View {
         animator.setInterpolator(new OvershootInterpolator());
         animator.setDuration(750);
         animator.setStartDelay(250);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                bgScale = (float) animator.getAnimatedValue();
-                invalidate();
-            }
+        animator.addUpdateListener(animator -> {
+            bgScale = (float) animator.getAnimatedValue();
+            invalidate();
         });
         animator.start();
 
@@ -70,13 +67,10 @@ public class AppIconView extends View {
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(1000);
         animator.setStartDelay(250);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                fgScale = animator.getAnimatedFraction() * 0.8f;
-                rotation = (float) animator.getAnimatedValue();
-                invalidate();
-            }
+        animator.addUpdateListener(animator -> {
+            fgScale = animator.getAnimatedFraction() * 0.8f;
+            rotation = (float) animator.getAnimatedValue();
+            invalidate();
         });
         animator.start();
 
@@ -84,12 +78,9 @@ public class AppIconView extends View {
         animator.setInterpolator(new DecelerateInterpolator());
         animator.setDuration(1250);
         animator.setStartDelay(250);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                bgRotation = (float) animator.getAnimatedValue();
-                invalidate();
-            }
+        animator.addUpdateListener(animator -> {
+            bgRotation = (float) animator.getAnimatedValue();
+            invalidate();
         });
         animator.start();
     }

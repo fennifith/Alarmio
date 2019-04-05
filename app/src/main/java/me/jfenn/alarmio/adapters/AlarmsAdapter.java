@@ -14,7 +14,6 @@ import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,16 +34,13 @@ import androidx.transition.AutoTransition;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.AlarmData;
-import me.jfenn.alarmio.data.SoundData;
 import me.jfenn.alarmio.data.TimerData;
 import me.jfenn.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import me.jfenn.alarmio.dialogs.AlertDialog;
 import me.jfenn.alarmio.dialogs.SoundChooserDialog;
-import me.jfenn.alarmio.interfaces.SoundChooserListener;
 import me.jfenn.alarmio.utils.FormatUtils;
 import me.jfenn.alarmio.views.DaySwitch;
 import me.jfenn.alarmio.views.ProgressLineView;
@@ -79,34 +75,19 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
     public void setColorAccent(int colorAccent) {
         this.colorAccent = colorAccent;
-        recycler.post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
+        recycler.post(() -> notifyDataSetChanged());
     }
 
     public void setColorForeground(int colorForeground) {
         this.colorForeground = colorForeground;
         if (expandedPosition > 0) {
-            recycler.post(new Runnable() {
-                @Override
-                public void run() {
-                    notifyItemChanged(expandedPosition);
-                }
-            });
+            recycler.post(() -> notifyItemChanged(expandedPosition));
         }
     }
 
     public void setTextColorPrimary(int colorTextPrimary) {
         this.textColorPrimary = colorTextPrimary;
-        recycler.post(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
+        recycler.post(() -> notifyDataSetChanged());
     }
 
     @Override
@@ -141,12 +122,9 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             };
 
             timerHolder.stop.setColorFilter(textColorPrimary);
-            timerHolder.stop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TimerData timer = getTimer(timerHolder.getAdapterPosition());
-                    alarmio.removeTimer(timer);
-                }
+            timerHolder.stop.setOnClickListener(view -> {
+                TimerData timer = getTimer(timerHolder.getAdapterPosition());
+                alarmio.removeTimer(timer);
             });
 
             timerHolder.handler.post(timerHolder.runnable);
@@ -176,64 +154,48 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            alarmHolder.name.setOnClickListener(isExpanded ? null : new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alarmHolder.itemView.callOnClick();
-                }
-            });
+            alarmHolder.name.setOnClickListener(isExpanded ? null : (View.OnClickListener) v -> alarmHolder.itemView.callOnClick());
 
-            alarmHolder.name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    alarmHolder.name.setCursorVisible(hasFocus && alarmHolder.getAdapterPosition() == expandedPosition);
-                }
-            });
+            alarmHolder.name.setOnFocusChangeListener((v, hasFocus) -> alarmHolder.name.setCursorVisible(hasFocus && alarmHolder.getAdapterPosition() == expandedPosition));
 
             alarmHolder.enable.setOnCheckedChangeListener(null);
             alarmHolder.enable.setChecked(alarm.isEnabled);
-            alarmHolder.enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    getAlarm(alarmHolder.getAdapterPosition()).setEnabled(alarmio, alarmManager, b);
+            alarmHolder.enable.setOnCheckedChangeListener((compoundButton, b) -> {
+                getAlarm(alarmHolder.getAdapterPosition()).setEnabled(alarmio, alarmManager, b);
 
-                    Transition transition = new AutoTransition();
-                    transition.setDuration(200);
-                    TransitionManager.beginDelayedTransition(recycler, transition);
+                Transition transition = new AutoTransition();
+                transition.setDuration(200);
+                TransitionManager.beginDelayedTransition(recycler, transition);
 
-                    recycler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyDataSetChanged();
-                        }
-                    });
-                }
+                recycler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                });
             });
 
             alarmHolder.time.setText(FormatUtils.formatShort(alarmio, alarm.time.getTime()));
-            alarmHolder.time.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
+            alarmHolder.time.setOnClickListener(view -> {
+                AlarmData alarm1 = getAlarm(alarmHolder.getAdapterPosition());
 
-                    new AestheticTimeSheetPickerDialog(view.getContext(), alarm.time.get(Calendar.HOUR_OF_DAY), alarm.time.get(Calendar.MINUTE))
-                            .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
-                                @Override
-                                public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
-                                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                                    alarm.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
-                                    alarm.time.set(Calendar.MINUTE, view.getMinute());
-                                    alarm.setTime(alarmio, alarmManager, alarm.time.getTimeInMillis());
+                new AestheticTimeSheetPickerDialog(view.getContext(), alarm1.time.get(Calendar.HOUR_OF_DAY), alarm1.time.get(Calendar.MINUTE))
+                        .setListener(new PickerDialog.OnSelectedListener<LinearTimePickerView>() {
+                            @Override
+                            public void onSelect(PickerDialog<LinearTimePickerView> dialog, LinearTimePickerView view) {
+                                AlarmData alarm1 = getAlarm(alarmHolder.getAdapterPosition());
+                                alarm1.time.set(Calendar.HOUR_OF_DAY, view.getHourOfDay());
+                                alarm1.time.set(Calendar.MINUTE, view.getMinute());
+                                alarm1.setTime(alarmio, alarmManager, alarm1.time.getTimeInMillis());
 
-                                    notifyItemChanged(alarmHolder.getAdapterPosition());
-                                }
+                                notifyItemChanged(alarmHolder.getAdapterPosition());
+                            }
 
-                                @Override
-                                public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
-                                }
-                            })
-                            .show();
-                }
+                            @Override
+                            public void onCancel(PickerDialog<LinearTimePickerView> dialog) {
+                            }
+                        })
+                        .show();
             });
 
             alarmHolder.nextTime.setVisibility(alarm.isEnabled ? View.VISIBLE : View.GONE);
@@ -252,45 +214,34 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
             if (isExpanded) {
                 alarmHolder.repeat.setOnCheckedChangeListener(null);
                 alarmHolder.repeat.setChecked(alarm.isRepeat());
-                alarmHolder.repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                        for (int i = 0; i < 7; i++) {
-                            alarm.days[i] = b;
-                        }
-                        alarm.setDays(alarmio, alarm.days);
-
-                        Transition transition = new AutoTransition();
-                        transition.setDuration(150);
-                        TransitionManager.beginDelayedTransition(recycler, transition);
-
-                        recycler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                notifyDataSetChanged();
-                            }
-                        });
+                alarmHolder.repeat.setOnCheckedChangeListener((compoundButton, b) -> {
+                    AlarmData alarm12 = getAlarm(alarmHolder.getAdapterPosition());
+                    for (int i = 0; i < 7; i++) {
+                        alarm12.days[i] = b;
                     }
+                    alarm12.setDays(alarmio, alarm12.days);
+
+                    Transition transition = new AutoTransition();
+                    transition.setDuration(150);
+                    TransitionManager.beginDelayedTransition(recycler, transition);
+
+                    recycler.post(() -> notifyDataSetChanged());
                 });
 
                 alarmHolder.days.setVisibility(alarm.isRepeat() ? View.VISIBLE : View.GONE);
 
-                DaySwitch.OnCheckedChangeListener listener = new DaySwitch.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(DaySwitch daySwitch, boolean b) {
-                        AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                        alarm.days[alarmHolder.days.indexOfChild(daySwitch)] = b;
-                        alarm.setDays(alarmio, alarm.days);
+                DaySwitch.OnCheckedChangeListener listener = (daySwitch, b) -> {
+                    AlarmData alarm13 = getAlarm(alarmHolder.getAdapterPosition());
+                    alarm13.days[alarmHolder.days.indexOfChild(daySwitch)] = b;
+                    alarm13.setDays(alarmio, alarm13.days);
 
-                        if (!alarm.isRepeat()) {
-                            notifyItemChanged(alarmHolder.getAdapterPosition());
-                        } else {
-                            // if the view isn't going to change size in the recycler,
-                            //   then I can just do this (prevents the background flickering as
-                            //   the recyclerview attempts to smooth the transition)
-                            bindViewHolder(alarmHolder, alarmHolder.getAdapterPosition());
-                        }
+                    if (!alarm13.isRepeat()) {
+                        notifyItemChanged(alarmHolder.getAdapterPosition());
+                    } else {
+                        // if the view isn't going to change size in the recycler,
+                        //   then I can just do this (prevents the background flickering as
+                        //   the recyclerview attempts to smooth the transition)
+                        bindViewHolder(alarmHolder, alarmHolder.getAdapterPosition());
                     }
                 };
 
@@ -323,43 +274,34 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 alarmHolder.ringtoneImage.setImageResource(alarm.hasSound() ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
                 alarmHolder.ringtoneImage.setAlpha(alarm.hasSound() ? 1 : 0.333f);
                 alarmHolder.ringtoneText.setText(alarm.hasSound() ? alarm.getSound().getName() : alarmio.getString(R.string.title_sound_none));
-                alarmHolder.ringtone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SoundChooserDialog dialog = new SoundChooserDialog();
-                        dialog.setListener(new SoundChooserListener() {
-                            @Override
-                            public void onSoundChosen(SoundData sound) {
-                                int position = alarmHolder.getAdapterPosition();
-                                AlarmData alarm = getAlarm(position);
-                                alarm.setSound(alarmio, sound);
-                                notifyItemChanged(position);
-                            }
-                        });
-                        dialog.show(fragmentManager, null);
-                    }
+                alarmHolder.ringtone.setOnClickListener(view -> {
+                    SoundChooserDialog dialog = new SoundChooserDialog();
+                    dialog.setListener(sound -> {
+                        int position1 = alarmHolder.getAdapterPosition();
+                        AlarmData alarm14 = getAlarm(position1);
+                        alarm14.setSound(alarmio, sound);
+                        notifyItemChanged(position1);
+                    });
+                    dialog.show(fragmentManager, null);
                 });
 
                 AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(alarmio, alarm.isVibrate ? R.drawable.ic_vibrate_to_none : R.drawable.ic_none_to_vibrate);
                 alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
                 alarmHolder.vibrateImage.setAlpha(alarm.isVibrate ? 1 : 0.333f);
-                alarmHolder.vibrate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                        alarm.setVibrate(alarmio, !alarm.isVibrate);
+                alarmHolder.vibrate.setOnClickListener(view -> {
+                    AlarmData alarm15 = getAlarm(alarmHolder.getAdapterPosition());
+                    alarm15.setVibrate(alarmio, !alarm15.isVibrate);
 
-                        AnimatedVectorDrawableCompat vibrateDrawable = AnimatedVectorDrawableCompat.create(alarmio, alarm.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
-                        if (vibrateDrawable != null) {
-                            alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable);
-                            vibrateDrawable.start();
-                        } else
-                            alarmHolder.vibrateImage.setImageResource(alarm.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_vibrate_none);
+                    AnimatedVectorDrawableCompat vibrateDrawable1 = AnimatedVectorDrawableCompat.create(alarmio, alarm15.isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
+                    if (vibrateDrawable1 != null) {
+                        alarmHolder.vibrateImage.setImageDrawable(vibrateDrawable1);
+                        vibrateDrawable1.start();
+                    } else
+                        alarmHolder.vibrateImage.setImageResource(alarm15.isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_vibrate_none);
 
-                        alarmHolder.vibrateImage.animate().alpha(alarm.isVibrate ? 1 : 0.333f).setDuration(250).start();
-                        if (alarm.isVibrate)
-                            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                    }
+                    alarmHolder.vibrateImage.animate().alpha(alarm15.isVibrate ? 1 : 0.333f).setDuration(250).start();
+                    if (alarm15.isVibrate)
+                        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 });
             } else {
                 alarmHolder.repeatIndicator.setAlpha(alarm.isRepeat() ? 1 : 0.333f);
@@ -369,21 +311,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
 
             alarmHolder.expandImage.animate().rotationX(isExpanded ? 180 : 0).start();
             alarmHolder.delete.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-            alarmHolder.delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlarmData alarm = getAlarm(alarmHolder.getAdapterPosition());
-                    new AlertDialog(view.getContext())
-                            .setContent(alarmio.getString(R.string.msg_delete_confirmation, alarm.getName(alarmio)))
-                            .setListener(new AlertDialog.Listener() {
-                                @Override
-                                public void onDismiss(AlertDialog dialog, boolean ok) {
-                                    if (ok)
-                                        alarmio.removeAlarm(getAlarm(alarmHolder.getAdapterPosition()));
-                                }
-                            })
-                            .show();
-                }
+            alarmHolder.delete.setOnClickListener(view -> {
+                AlarmData alarm16 = getAlarm(alarmHolder.getAdapterPosition());
+                new AlertDialog(view.getContext())
+                        .setContent(alarmio.getString(R.string.msg_delete_confirmation, alarm16.getName(alarmio)))
+                        .setListener((dialog, ok) -> {
+                            if (ok)
+                                alarmio.removeAlarm(getAlarm(alarmHolder.getAdapterPosition()));
+                        })
+                        .show();
             });
 
             alarmHolder.repeat.setTextColor(textColorPrimary);
@@ -402,67 +338,46 @@ public class AlarmsAdapter extends RecyclerView.Adapter {
                 Aesthetic.Companion.get()
                         .colorPrimary()
                         .take(1)
-                        .subscribe(new Consumer<Integer>() {
-                            @Override
-                            public void accept(Integer integer) throws Exception {
-                                ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isExpanded ? integer : colorForeground, isExpanded ? colorForeground : integer);
-                                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                                    @Override
-                                    public void onAnimationUpdate(ValueAnimator animation) {
-                                        alarmHolder.itemView.setBackgroundColor((int) animation.getAnimatedValue());
-                                    }
-                                });
-                                animator.addListener(new Animator.AnimatorListener() {
-                                    @Override
-                                    public void onAnimationStart(Animator animation) {
-                                    }
+                        .subscribe(integer -> {
+                            ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), isExpanded ? integer : colorForeground, isExpanded ? colorForeground : integer);
+                            animator.addUpdateListener(animation -> alarmHolder.itemView.setBackgroundColor((int) animation.getAnimatedValue()));
+                            animator.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+                                }
 
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
-                                    }
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
+                                }
 
-                                    @Override
-                                    public void onAnimationCancel(Animator animation) {
-                                    }
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+                                }
 
-                                    @Override
-                                    public void onAnimationRepeat(Animator animation) {
-                                    }
-                                });
-                                animator.start();
-                            }
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+                                }
+                            });
+                            animator.start();
                         });
 
                 ValueAnimator animator = ValueAnimator.ofFloat(isExpanded ? 0 : DimenUtils.dpToPx(2), isExpanded ? DimenUtils.dpToPx(2) : 0);
-                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        ViewCompat.setElevation(alarmHolder.itemView, (float) animation.getAnimatedValue());
-                    }
-                });
+                animator.addUpdateListener(animation -> ViewCompat.setElevation(alarmHolder.itemView, (float) animation.getAnimatedValue()));
                 animator.start();
             } else {
                 alarmHolder.itemView.setBackgroundColor(isExpanded ? colorForeground : Color.TRANSPARENT);
                 ViewCompat.setElevation(alarmHolder.itemView, isExpanded ? DimenUtils.dpToPx(2) : 0);
             }
 
-            alarmHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    expandedPosition = isExpanded ? -1 : alarmHolder.getAdapterPosition();
+            alarmHolder.itemView.setOnClickListener(view -> {
+                expandedPosition = isExpanded ? -1 : alarmHolder.getAdapterPosition();
 
-                    Transition transition = new AutoTransition();
-                    transition.setDuration(250);
-                    TransitionManager.beginDelayedTransition(recycler, transition);
+                Transition transition = new AutoTransition();
+                transition.setDuration(250);
+                TransitionManager.beginDelayedTransition(recycler, transition);
 
-                    recycler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyDataSetChanged();
-                        }
-                    });
-                }
+                recycler.post(() -> notifyDataSetChanged());
             });
         }
     }

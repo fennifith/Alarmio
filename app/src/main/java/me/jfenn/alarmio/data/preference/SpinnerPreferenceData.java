@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.afollestad.aesthetic.Aesthetic;
 
 import androidx.appcompat.widget.AppCompatSpinner;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
 
@@ -57,22 +56,12 @@ public class SpinnerPreferenceData extends BasePreferenceData<SpinnerPreferenceD
         Aesthetic.Companion.get()
                 .textColorSecondary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer textColorSecondary) throws Exception {
-                        holder.spinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary));
-                    }
-                });
+                .subscribe(textColorSecondary -> holder.spinner.setSupportBackgroundTintList(ColorStateList.valueOf(textColorSecondary)));
 
         Aesthetic.Companion.get()
                 .colorCardViewBackground()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer colorForeground) throws Exception {
-                        holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground));
-                    }
-                });
+                .subscribe(colorForeground -> holder.spinner.setPopupBackgroundDrawable(new ColorDrawable(colorForeground)));
     }
 
     public class ViewHolder extends BasePreferenceData.ViewHolder {

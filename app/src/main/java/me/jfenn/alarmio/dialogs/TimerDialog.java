@@ -15,14 +15,12 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
 import me.jfenn.alarmio.data.SoundData;
 import me.jfenn.alarmio.data.TimerData;
 import me.jfenn.alarmio.fragments.TimerFragment;
-import me.jfenn.alarmio.interfaces.SoundChooserListener;
 
 public class TimerDialog extends AestheticDialog implements View.OnClickListener {
 
@@ -81,89 +79,69 @@ public class TimerDialog extends AestheticDialog implements View.OnClickListener
             ringtoneText.setText(ringtone.getName());
         else ringtoneText.setText(R.string.title_sound_none);
 
-        findViewById(R.id.ringtone).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoundChooserDialog dialog = new SoundChooserDialog();
-                dialog.setListener(new SoundChooserListener() {
-                    @Override
-                    public void onSoundChosen(SoundData sound) {
-                        ringtone = sound;
-                        ringtoneImage.setImageResource(sound != null ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
-                        ringtoneImage.setAlpha(sound != null ? 1f : 0.333f);
+        findViewById(R.id.ringtone).setOnClickListener(v -> {
+            SoundChooserDialog dialog = new SoundChooserDialog();
+            dialog.setListener(sound -> {
+                ringtone = sound;
+                ringtoneImage.setImageResource(sound != null ? R.drawable.ic_ringtone : R.drawable.ic_ringtone_disabled);
+                ringtoneImage.setAlpha(sound != null ? 1f : 0.333f);
 
-                        if (sound != null)
-                            ringtoneText.setText(sound.getName());
-                        else ringtoneText.setText(R.string.title_sound_none);
-                    }
-                });
-                dialog.show(manager, "");
-            }
+                if (sound != null)
+                    ringtoneText.setText(sound.getName());
+                else ringtoneText.setText(R.string.title_sound_none);
+            });
+            dialog.show(manager, "");
         });
 
-        findViewById(R.id.vibrate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isVibrate = !isVibrate;
+        findViewById(R.id.vibrate).setOnClickListener(v -> {
+            isVibrate = !isVibrate;
 
-                AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(v.getContext(), isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
-                if (drawable != null) {
-                    vibrateImage.setImageDrawable(drawable);
-                    drawable.start();
-                } else
-                    vibrateImage.setImageResource(isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
+            AnimatedVectorDrawableCompat drawable = AnimatedVectorDrawableCompat.create(v.getContext(), isVibrate ? R.drawable.ic_none_to_vibrate : R.drawable.ic_vibrate_to_none);
+            if (drawable != null) {
+                vibrateImage.setImageDrawable(drawable);
+                drawable.start();
+            } else
+                vibrateImage.setImageResource(isVibrate ? R.drawable.ic_vibrate : R.drawable.ic_none);
 
-                vibrateImage.animate().alpha(isVibrate ? 1f : 0.333f).start();
+            vibrateImage.animate().alpha(isVibrate ? 1f : 0.333f).start();
 
-                if (isVibrate)
-                    v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-            }
+            if (isVibrate)
+                v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
         });
 
-        findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Integer.parseInt(input) > 0) {
-                    TimerData timer = alarmio.newTimer();
-                    timer.setDuration(getMillis(), alarmio);
-                    timer.setVibrate(view.getContext(), isVibrate);
-                    timer.setSound(view.getContext(), ringtone);
-                    timer.set(alarmio, ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)));
-                    alarmio.onTimerStarted();
+        findViewById(R.id.start).setOnClickListener(view -> {
+            if (Integer.parseInt(input) > 0) {
+                TimerData timer = alarmio.newTimer();
+                timer.setDuration(getMillis(), alarmio);
+                timer.setVibrate(view.getContext(), isVibrate);
+                timer.setSound(view.getContext(), ringtone);
+                timer.set(alarmio, ((AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE)));
+                alarmio.onTimerStarted();
 
-                    Bundle args = new Bundle();
-                    args.putParcelable(TimerFragment.EXTRA_TIMER, timer);
-                    TimerFragment fragment = new TimerFragment();
-                    fragment.setArguments(args);
+                Bundle args = new Bundle();
+                args.putParcelable(TimerFragment.EXTRA_TIMER, timer);
+                TimerFragment fragment = new TimerFragment();
+                fragment.setArguments(args);
 
-                    manager.beginTransaction()
-                            .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
-                            .replace(R.id.fragment, fragment)
-                            .addToBackStack(null)
-                            .commit();
+                manager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
+                        .replace(R.id.fragment, fragment)
+                        .addToBackStack(null)
+                        .commit();
 
-                    dismiss();
-                }
-            }
-        });
-
-        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 dismiss();
             }
         });
 
+        findViewById(R.id.cancel).setOnClickListener(view -> dismiss());
+
         Aesthetic.Companion.get()
                 .textColorPrimary()
                 .take(1)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        ringtoneImage.setColorFilter(integer);
-                        vibrateImage.setColorFilter(integer);
-                        backspace.setColorFilter(integer);
-                    }
+                .subscribe(integer -> {
+                    ringtoneImage.setColorFilter(integer);
+                    vibrateImage.setColorFilter(integer);
+                    backspace.setColorFilter(integer);
                 });
     }
 
