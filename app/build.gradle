@@ -59,6 +59,12 @@ android {
             dimension "distribution"
         }
     }
+
+    // enable Jave 8 features
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 play {
@@ -74,18 +80,23 @@ task printVersionName {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.2'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.2'
+
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.afollestad:aesthetic:0.7.2'
     implementation 'me.jahirfiquitiva:FABsMenu:1.1.4'
     implementation 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.2'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.2'
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
     implementation 'me.jfenn:timedatepickers:0.0.6'
     implementation 'me.jfenn:Attribouter:0.1.5'
     implementation 'me.jfenn:SlideActionView:0.0.2'
