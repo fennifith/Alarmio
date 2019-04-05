@@ -17,21 +17,18 @@ public class AestheticSunriseView extends SunriseSunsetView implements Subscribb
 
     public AestheticSunriseView(Context context) {
         super(context);
-        subscribe();
         setClickable(false);
         setFocusable(false);
     }
 
     public AestheticSunriseView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        subscribe();
         setClickable(false);
         setFocusable(false);
     }
 
     public AestheticSunriseView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        subscribe();
         setClickable(false);
         setFocusable(false);
     }
@@ -55,5 +52,17 @@ public class AestheticSunriseView extends SunriseSunsetView implements Subscribb
     public void unsubscribe() {
         textColorPrimarySubscription.dispose();
         colorAccentSubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 }

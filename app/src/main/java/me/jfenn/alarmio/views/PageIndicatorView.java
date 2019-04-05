@@ -45,22 +45,25 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     private Disposable textColorSecondarySubscription;
 
     public PageIndicatorView(Context context) {
-        this(context, null);
+        super(context);
+        init();
     }
 
     public PageIndicatorView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
 
     public PageIndicatorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
 
+    private void init() {
         engine = new IndicatorEngine();
 
-        engine.onInitEngine(this, context);
+        engine.onInitEngine(this, getContext());
         size = 2;
-
-        subscribe();
     }
 
     @Override
@@ -86,6 +89,18 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     public void unsubscribe() {
         textColorPrimarySubscription.dispose();
         textColorSecondarySubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 
     public int getTotalPages() {

@@ -64,8 +64,10 @@ public class FileChooserActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
             String path = data.getDataString();
             if (type.equals("image/*")) {
+                Cursor cursor = null;
+
                 try {
-                    Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
+                    cursor = getContentResolver().query(data.getData(), null, null, null, null);
 
                     String documentId;
                     if (cursor != null) {
@@ -86,6 +88,9 @@ public class FileChooserActivity extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                } finally {
+                    if (cursor != null)
+                        cursor.close();
                 }
             }
 

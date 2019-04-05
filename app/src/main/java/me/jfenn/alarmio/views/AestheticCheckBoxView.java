@@ -19,17 +19,14 @@ public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscrib
 
     public AestheticCheckBoxView(Context context) {
         super(context);
-        subscribe();
     }
 
     public AestheticCheckBoxView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        subscribe();
     }
 
     public AestheticCheckBoxView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        subscribe();
     }
 
     @Override
@@ -57,5 +54,17 @@ public class AestheticCheckBoxView extends AppCompatCheckBox implements Subscrib
     public void unsubscribe() {
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 }

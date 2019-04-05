@@ -20,17 +20,14 @@ public class AestheticSwitchView extends SwitchCompat implements Subscribblable 
 
     public AestheticSwitchView(Context context) {
         super(context);
-        subscribe();
     }
 
     public AestheticSwitchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        subscribe();
     }
 
     public AestheticSwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        subscribe();
     }
 
     @Override
@@ -79,5 +76,17 @@ public class AestheticSwitchView extends SwitchCompat implements Subscribblable 
     public void unsubscribe() {
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 }

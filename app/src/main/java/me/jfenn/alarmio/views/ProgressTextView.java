@@ -31,16 +31,21 @@ public class ProgressTextView extends View implements Subscribblable {
     private Disposable textColorSecondarySubscription;
 
     public ProgressTextView(Context context) {
-        this(context, null);
+        super(context);
+        init();
     }
 
     public ProgressTextView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
 
     public ProgressTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
 
+    private void init() {
         padding = DimenUtils.dpToPx(4);
 
         linePaint = new Paint();
@@ -64,8 +69,6 @@ public class ProgressTextView extends View implements Subscribblable {
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setTextSize(DimenUtils.spToPx(34));
         textPaint.setFakeBoldText(true);
-
-        subscribe();
     }
 
     @Override
@@ -100,6 +103,18 @@ public class ProgressTextView extends View implements Subscribblable {
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();
         textColorSecondarySubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 
     public void setText(String text) {

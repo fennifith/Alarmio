@@ -31,23 +31,27 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
     private Disposable textColorPrimarySubscription;
 
     public DigitalClockView(Context context) {
-        this(context, null, 0);
+        super(context);
+        init();
     }
 
     public DigitalClockView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
 
     public DigitalClockView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
         timezone = TimeZone.getDefault();
 
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
         paint.setTextAlign(Paint.Align.CENTER);
-
-        subscribe();
 
         new UpdateThread(this).start();
         getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -70,6 +74,18 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
     @Override
     public void unsubscribe() {
         textColorPrimarySubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 
     @Override

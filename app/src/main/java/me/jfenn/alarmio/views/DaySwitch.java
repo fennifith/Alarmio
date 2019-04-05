@@ -36,15 +36,21 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
     private OnCheckedChangeListener listener;
 
     public DaySwitch(Context context) {
-        this(context, null);
+        super(context);
+        init();
     }
 
     public DaySwitch(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
 
     public DaySwitch(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
         setOnClickListener(this);
 
         accentPaint = new Paint();
@@ -61,8 +67,6 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
         clippedTextPaint.setAntiAlias(true);
         clippedTextPaint.setTextSize(DimenUtils.dpToPx(18));
         clippedTextPaint.setTextAlign(Paint.Align.CENTER);
-
-        subscribe();
     }
 
     public void setText(String text) {
@@ -126,6 +130,18 @@ public class DaySwitch extends View implements View.OnClickListener, Subscribbla
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();
         textColorPrimaryInverseSubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 
     @Override

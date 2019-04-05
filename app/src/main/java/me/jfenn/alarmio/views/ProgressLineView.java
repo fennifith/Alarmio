@@ -25,16 +25,21 @@ public class ProgressLineView extends View implements Subscribblable {
     private Disposable textColorPrimarySubscription;
 
     public ProgressLineView(Context context) {
-        this(context, null);
+        super(context);
+        init();
     }
 
     public ProgressLineView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
 
     public ProgressLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
 
+    private void init() {
         backgroundPaint = new Paint();
         backgroundPaint.setStyle(Paint.Style.FILL);
         backgroundPaint.setColor(Color.LTGRAY);
@@ -42,8 +47,6 @@ public class ProgressLineView extends View implements Subscribblable {
         linePaint = new Paint();
         linePaint.setStyle(Paint.Style.FILL);
         linePaint.setColor(Color.DKGRAY);
-
-        subscribe();
     }
 
     @Override
@@ -69,6 +72,18 @@ public class ProgressLineView extends View implements Subscribblable {
     public void unsubscribe() {
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 
     public void update(float progress) {

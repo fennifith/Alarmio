@@ -19,23 +19,19 @@ public class AestheticSlideActionView extends SlideActionView implements Subscri
 
     public AestheticSlideActionView(Context context) {
         super(context);
-        subscribe();
     }
 
     public AestheticSlideActionView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        subscribe();
     }
 
     public AestheticSlideActionView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        subscribe();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public AestheticSlideActionView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        subscribe();
     }
 
     @Override
@@ -60,5 +56,17 @@ public class AestheticSlideActionView extends SlideActionView implements Subscri
             textColorPrimarySubscription.dispose();
         if (textColorPrimaryInverseSubscription != null)
             textColorPrimaryInverseSubscription.dispose();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        subscribe();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        unsubscribe();
     }
 }
