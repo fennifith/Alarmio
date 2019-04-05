@@ -6,14 +6,10 @@ import me.jfenn.attribouter.Attribouter
 
 class AboutPreferenceData : CustomPreferenceData(R.string.title_about) {
 
-    override fun getValueName(holder: CustomPreferenceData.ViewHolder): String? {
-        return null
-    }
+    override fun getValueName(holder: CustomPreferenceData.ViewHolder): String? = null
 
     override fun onClick(holder: CustomPreferenceData.ViewHolder) {
-        val context = holder.context
-
-        Attribouter.from(context)
+        Attribouter.from(holder.context)
                 .withGitHubToken(BuildConfig.GITHUB_TOKEN)
                 .show()
     }
