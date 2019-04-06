@@ -10,6 +10,10 @@ import com.afollestad.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
 
+/**
+ * An AppCompatCheckBox extension class that
+ * implements Aesthetic theming.
+ */
 class AestheticCheckBoxView : AppCompatCheckBox, Subscribblable {
 
     private var colorAccentSubscription: Disposable? = null

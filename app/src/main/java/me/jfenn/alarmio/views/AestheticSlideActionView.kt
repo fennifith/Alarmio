@@ -7,6 +7,10 @@ import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
 import me.jfenn.slideactionview.SlideActionView
 
+/**
+ * A SlideActionView extension class that implements
+ * Aesthetic theming.
+ */
 class AestheticSlideActionView : SlideActionView, Subscribblable {
 
     private var textColorPrimarySubscription: Disposable? = null

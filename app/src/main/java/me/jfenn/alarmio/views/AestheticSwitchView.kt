@@ -11,6 +11,10 @@ import com.afollestad.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
 
+/**
+ * A SwitchCompat extension class that implements
+ * Aesthetic theming.
+ */
 class AestheticSwitchView : SwitchCompat, Subscribblable {
 
     private var colorAccentSubscription: Disposable? = null
@@ -46,7 +50,7 @@ class AestheticSwitchView : SwitchCompat, Subscribblable {
                 }
 
         textColorPrimarySubscription = Aesthetic.get().textColorPrimary()
-                .subscribe { integer -> setTextColor(integer!!) }
+                .subscribe { integer -> setTextColor(integer) }
     }
 
     override fun unsubscribe() {

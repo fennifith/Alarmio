@@ -8,6 +8,10 @@ import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
 import me.jfenn.sunrisesunsetview.SunriseSunsetView
 
+/**
+ * A SunriseView extension class that implements
+ * Aesthetic theming.
+ */
 class AestheticSunriseView : SunriseSunsetView, Subscribblable {
 
     private var colorAccentSubscription: Disposable? = null

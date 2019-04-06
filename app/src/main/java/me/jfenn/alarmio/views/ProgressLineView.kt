@@ -11,6 +11,10 @@ import com.afollestad.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
 
+/**
+ * Display a progress line, with a given foreground/background
+ * color set.
+ */
 class ProgressLineView : View, Subscribblable {
 
     private var backgroundPaint: Paint = Paint().apply {

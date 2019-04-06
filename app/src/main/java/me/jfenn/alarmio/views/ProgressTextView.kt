@@ -15,6 +15,10 @@ import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
 import me.jfenn.androidutils.DimenUtils
 
+/**
+ * Display a progress circle with text in
+ * the center.
+ */
 class ProgressTextView : View, Subscribblable {
 
     private var progress: Long = 0
@@ -118,7 +122,9 @@ class ProgressTextView : View, Subscribblable {
             ValueAnimator.ofFloat(this.progress.toFloat(), progress.toFloat()).apply {
                 interpolator = LinearInterpolator()
                 addUpdateListener { valueAnimator ->
-                    setProgress((valueAnimator.animatedValue as Float).toLong(), false)
+                    (valueAnimator.animatedValue as? Float)?.toLong()?.let { value ->
+                        setProgress(value, false)
+                    }
                 }
                 start()
             }
@@ -137,7 +143,9 @@ class ProgressTextView : View, Subscribblable {
             ValueAnimator.ofFloat(this.maxProgress.toFloat(), maxProgress.toFloat()).apply {
                 interpolator = LinearInterpolator()
                 addUpdateListener { valueAnimator ->
-                    setMaxProgress((valueAnimator.animatedValue as Float).toLong(), false)
+                    (valueAnimator.animatedValue as? Float)?.toLong()?.let { value ->
+                        setMaxProgress(value, false)
+                    }
                 }
                 start()
             }

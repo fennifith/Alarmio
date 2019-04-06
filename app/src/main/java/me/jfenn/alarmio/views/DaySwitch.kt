@@ -40,7 +40,8 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
     private var textColorPrimarySubscription: Disposable? = null
     private var textColorPrimaryInverseSubscription: Disposable? = null
 
-    private var checked: Float = 0.toFloat()
+    private var checked: Float = 0f
+
     var isChecked: Boolean = false
         set(isChecked) {
             if (isChecked != this.isChecked) {
@@ -54,7 +55,7 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
                 }.apply {
                     interpolator = if (isChecked) DecelerateInterpolator() else AnticipateOvershootInterpolator()
                     addUpdateListener { valueAnimator ->
-                        checked = valueAnimator.animatedValue as Float
+                        checked = valueAnimator.animatedValue as? Float ?: 0f
                         invalidate()
                     }
                     start()
@@ -76,6 +77,10 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
         setOnClickListener(this)
     }
 
+    /**
+     * Set the text (a single letter, usually) to display
+     * in the switch.
+     */
     fun setText(text: String) {
         this.text = text
         invalidate()
@@ -125,8 +130,9 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (text != null)
-            canvas.drawText(text!!, (canvas.width / 2).toFloat(), canvas.height / 2 - (textPaint!!.descent() + textPaint!!.ascent()) / 2, textPaint)
+        text?.let { str ->
+            canvas.drawText(str, (canvas.width / 2).toFloat(), canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
+        }
 
         val circlePath = Path()
         circlePath.addCircle((canvas.width / 2).toFloat(), (canvas.height / 2).toFloat(), checked * DimenUtils.dpToPx(18f), Path.Direction.CW)
@@ -146,7 +152,18 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
         onCheckedChangeListener?.onCheckedChanged(this, this.isChecked)
     }
 
+    /**
+     * A listener to be invoked whenever the checked state
+     * of the view is modified.
+     */
     interface OnCheckedChangeListener {
+
+        /**
+         * Called when the state is changed.
+         *
+         * @param daySwitch The switch view that was changed.
+         * @param b Whether the switch is checked (boolean).
+         */
         fun onCheckedChanged(daySwitch: DaySwitch, b: Boolean)
     }
 }
