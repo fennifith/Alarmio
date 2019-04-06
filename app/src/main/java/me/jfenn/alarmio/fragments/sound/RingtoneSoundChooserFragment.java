@@ -1,4 +1,4 @@
-package me.jfenn.alarmio.fragments;
+package me.jfenn.alarmio.fragments.sound;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.SoundsAdapter;
 import me.jfenn.alarmio.data.SoundData;
+import me.jfenn.alarmio.fragments.BasePagerFragment;
+import me.jfenn.alarmio.interfaces.SoundChooserListener;
 
 public class RingtoneSoundChooserFragment extends BaseSoundChooserFragment {
-
-    private SoundsAdapter adapter;
 
     @Nullable
     @Override
@@ -41,7 +41,7 @@ public class RingtoneSoundChooserFragment extends BaseSoundChooserFragment {
             } while (cursor.moveToNext());
         }
 
-        adapter = new SoundsAdapter(getAlarmio(), sounds);
+        SoundsAdapter adapter = new SoundsAdapter(getAlarmio(), sounds);
         adapter.setListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -51,6 +51,25 @@ public class RingtoneSoundChooserFragment extends BaseSoundChooserFragment {
     @Override
     public String getTitle(Context context) {
         return context.getString(R.string.title_ringtones);
+    }
+
+    public static class Instantiator extends BaseSoundChooserFragment.Instantiator {
+
+        public Instantiator(Context context, SoundChooserListener listener) {
+            super(context, listener);
+        }
+
+        @Override
+        BasePagerFragment newInstance(int position, SoundChooserListener listener) {
+            BaseSoundChooserFragment fragment = new RingtoneSoundChooserFragment();
+            fragment.setListener(listener);
+            return fragment;
+        }
+
+        @Override
+        public String getTitle(Context context, int position) {
+            return context.getString(R.string.title_ringtones);
+        }
     }
 
 }

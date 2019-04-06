@@ -20,10 +20,12 @@ public abstract class BaseFragment extends Fragment implements Alarmio.AlarmioLi
     @Override
     public void onDestroy() {
         alarmio.removeListener(this);
+        alarmio = null;
         super.onDestroy();
     }
 
-    Alarmio getAlarmio() {
+    @Nullable
+    protected Alarmio getAlarmio() {
         return alarmio;
     }
 

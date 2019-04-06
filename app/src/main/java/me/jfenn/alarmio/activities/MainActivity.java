@@ -7,7 +7,9 @@ import android.provider.AlarmClock;
 
 import com.afollestad.aesthetic.AestheticActivity;
 
-import androidx.annotation.NonNull;
+import java.lang.ref.WeakReference;
+
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,7 +29,7 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     public static final int FRAGMENT_STOPWATCH = 2;
 
     private Alarmio alarmio;
-    private BaseFragment fragment;
+    private WeakReference<BaseFragment> fragmentRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +39,26 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         alarmio.setListener(this);
 
         if (savedInstanceState == null) {
-            fragment = createFragmentFor(getIntent());
+            BaseFragment fragment = createFragmentFor(getIntent());
+            if (fragment == null)
+                return;
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment, fragment)
                     .commit();
+
+            fragmentRef = new WeakReference<>(fragment);
         } else {
-            if (fragment == null)
+            BaseFragment fragment;
+
+            if (fragmentRef == null || (fragment = fragmentRef.get()) == null)
                 fragment = new HomeFragment();
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment, fragment)
                     .commit();
+
+            fragmentRef = new WeakReference<>(fragment);
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -59,23 +69,23 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         super.onNewIntent(intent);
         if (isActionableIntent(intent)) {
             FragmentManager manager = getSupportFragmentManager();
-            BaseFragment fragment = createFragmentFor(intent);
+            BaseFragment newFragment = createFragmentFor(intent);
+            BaseFragment fragment = fragmentRef != null ? fragmentRef.get() : null;
 
-            if (fragment.equals(this.fragment)) // check that fragment isn't already displayed
+            if (newFragment == null || newFragment.equals(fragment)) // check that fragment isn't already displayed
                 return;
 
-            if (fragment instanceof HomeFragment && manager.getBackStackEntryCount() > 0) // clear the back stack
+            if (newFragment instanceof HomeFragment && manager.getBackStackEntryCount() > 0) // clear the back stack
                 manager.popBackStack(manager.getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             FragmentTransaction transaction = manager.beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_up_sheet, R.anim.slide_out_up_sheet, R.anim.slide_in_down_sheet, R.anim.slide_out_down_sheet)
-                    .replace(R.id.fragment, fragment);
+                    .replace(R.id.fragment, newFragment);
 
-            if (this.fragment instanceof HomeFragment && !(fragment instanceof HomeFragment))
+            if (fragment instanceof HomeFragment && !(newFragment instanceof HomeFragment))
                 transaction.addToBackStack(null);
 
-            this.fragment = fragment;
-
+            fragmentRef = new WeakReference<>(newFragment);
             transaction.commit();
         }
     }
@@ -88,9 +98,11 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
      * @return          An instantiated fragment corresponding
      *                  to the passed intent.
      */
-    @NonNull
+    @Nullable
     private BaseFragment createFragmentFor(Intent intent) {
+        BaseFragment fragment = fragmentRef != null ? fragmentRef.get() : null;
         int fragmentId = intent.getIntExtra(EXTRA_FRAGMENT, -1);
+
         switch (fragmentId) {
             case FRAGMENT_STOPWATCH:
                 if (fragment instanceof StopwatchFragment)
@@ -106,9 +118,9 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
                     Bundle args = new Bundle();
                     args.putParcelable(TimerFragment.EXTRA_TIMER, alarmio.getTimers().get(id));
 
-                    BaseFragment fragment = new TimerFragment();
-                    fragment.setArguments(args);
-                    return fragment;
+                    BaseFragment newFragment = new TimerFragment();
+                    newFragment.setArguments(args);
+                    return newFragment;
                 }
 
                 return fragment;
@@ -118,9 +130,10 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
 
                 Bundle args = new Bundle();
                 args.putString(HomeFragment.INTENT_ACTION, intent.getAction());
-                BaseFragment fragment = new HomeFragment();
-                fragment.setArguments(args);
-                return fragment;
+
+                BaseFragment newFragment = new HomeFragment();
+                newFragment.setArguments(args);
+                return newFragment;
         }
     }
 
@@ -150,6 +163,8 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         super.onDestroy();
         if (alarmio != null)
             alarmio.setListener(null);
+
+        alarmio = null;
     }
 
     @Override
@@ -165,7 +180,8 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
 
     @Override
     public void onBackStackChanged() {
-        fragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        BaseFragment fragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        fragmentRef = new WeakReference<>(fragment);
     }
 
     @Override

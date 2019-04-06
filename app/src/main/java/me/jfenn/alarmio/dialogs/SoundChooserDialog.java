@@ -20,9 +20,9 @@ import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.SimplePagerAdapter;
 import me.jfenn.alarmio.data.SoundData;
-import me.jfenn.alarmio.fragments.AlarmSoundChooserFragment;
-import me.jfenn.alarmio.fragments.RadioSoundChooserFragment;
-import me.jfenn.alarmio.fragments.RingtoneSoundChooserFragment;
+import me.jfenn.alarmio.fragments.sound.AlarmSoundChooserFragment;
+import me.jfenn.alarmio.fragments.sound.RadioSoundChooserFragment;
+import me.jfenn.alarmio.fragments.sound.RingtoneSoundChooserFragment;
 import me.jfenn.alarmio.interfaces.SoundChooserListener;
 
 public class SoundChooserDialog extends DialogFragment implements SoundChooserListener {
@@ -72,7 +72,13 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
         ringtoneFragment.setListener(this);
         radioFragment.setListener(this);
 
-        viewPager.setAdapter(new SimplePagerAdapter(getContext(), getChildFragmentManager(), alarmFragment, ringtoneFragment, radioFragment));
+        viewPager.setAdapter(new SimplePagerAdapter(
+                getContext(), getChildFragmentManager(),
+                new AlarmSoundChooserFragment.Instantiator(view.getContext(), this),
+                new RingtoneSoundChooserFragment.Instantiator(view.getContext(), this),
+                new RadioSoundChooserFragment.Instantiator(view.getContext(), this))
+        );
+
         tabLayout.setupWithViewPager(viewPager);
         return view;
     }

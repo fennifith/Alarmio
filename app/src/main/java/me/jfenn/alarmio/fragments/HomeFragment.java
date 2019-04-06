@@ -38,6 +38,7 @@ import me.jfenn.alarmio.data.AlarmData;
 import me.jfenn.alarmio.data.PreferenceData;
 import me.jfenn.alarmio.dialogs.AestheticTimeSheetPickerDialog;
 import me.jfenn.alarmio.dialogs.TimerDialog;
+import me.jfenn.alarmio.interfaces.FragmentInstantiator;
 import me.jfenn.alarmio.utils.ImageUtils;
 import me.jfenn.alarmio.views.PageIndicatorView;
 import me.jfenn.androidutils.DimenUtils;
@@ -49,8 +50,6 @@ public class HomeFragment extends BaseFragment {
     public static final String INTENT_ACTION = "me.jfenn.alarmio.HomeFragment.INTENT_ACTION";
 
     private View view;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
     private ViewPager timePager;
     private PageIndicatorView timeIndicator;
     private View bottomSheet;
@@ -60,9 +59,6 @@ public class HomeFragment extends BaseFragment {
     private TitleFAB stopwatchFab;
     private TitleFAB timerFab;
     private TitleFAB alarmFab;
-
-    private SimplePagerAdapter pagerAdapter;
-    private SimplePagerAdapter timeAdapter;
 
     private BottomSheetBehavior behavior;
     private boolean shouldCollapseBack;
@@ -76,8 +72,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        viewPager = view.findViewById(R.id.viewPager);
-        tabLayout = view.findViewById(R.id.tabLayout);
+        ViewPager viewPager = view.findViewById(R.id.viewPager);
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         timePager = view.findViewById(R.id.timePager);
         bottomSheet = view.findViewById(R.id.bottomSheet);
         timeIndicator = view.findViewById(R.id.pageIndicator);
@@ -118,7 +114,12 @@ public class HomeFragment extends BaseFragment {
             });
         }
 
-        pagerAdapter = new SimplePagerAdapter(getContext(), getChildFragmentManager(), new AlarmsFragment(), new SettingsFragment());
+        SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(
+                getContext(), getChildFragmentManager(),
+                new AlarmsFragment.Instantiator(getContext()),
+                new SettingsFragment.Instantiator(getContext())
+        );
+
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -279,22 +280,15 @@ public class HomeFragment extends BaseFragment {
      */
     private void setClockFragments() {
         if (timePager != null && timeIndicator != null) {
-            List<ClockFragment> fragments = new ArrayList<>();
-
-            ClockFragment fragment = new ClockFragment();
-            fragments.add(fragment);
+            List<FragmentInstantiator> fragments = new ArrayList<>();
+            fragments.add(new ClockFragment.Instantiator(getContext(), null));
 
             for (String id : TimeZone.getAvailableIDs()) {
-                if (PreferenceData.TIME_ZONE_ENABLED.getSpecificValue(getContext(), id)) {
-                    Bundle args = new Bundle();
-                    args.putString(ClockFragment.EXTRA_TIME_ZONE, id);
-                    fragment = new ClockFragment();
-                    fragment.setArguments(args);
-                    fragments.add(fragment);
-                }
+                if (PreferenceData.TIME_ZONE_ENABLED.getSpecificValue(getContext(), id))
+                    fragments.add(new ClockFragment.Instantiator(getContext(), id));
             }
 
-            timeAdapter = new SimplePagerAdapter(getContext(), getChildFragmentManager(), fragments.toArray(new ClockFragment[0]));
+            SimplePagerAdapter timeAdapter = new SimplePagerAdapter(getContext(), getChildFragmentManager(), fragments.toArray(new FragmentInstantiator[0]));
             timePager.setAdapter(timeAdapter);
             timeIndicator.setViewPager(timePager);
             timeIndicator.setVisibility(fragments.size() > 1 ? View.VISIBLE : View.GONE);
@@ -305,7 +299,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
-        timeIndicator.unsubscribe();
         colorPrimarySubscription.dispose();
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();

@@ -1,4 +1,4 @@
-package me.jfenn.alarmio.fragments;
+package me.jfenn.alarmio.fragments.sound;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.SoundsAdapter;
 import me.jfenn.alarmio.data.SoundData;
+import me.jfenn.alarmio.fragments.BasePagerFragment;
+import me.jfenn.alarmio.interfaces.SoundChooserListener;
 
 public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
 
@@ -101,6 +103,13 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        radioUrlEditText = null;
+        testRadio = null;
+    }
+
+    @Override
     public void onSoundChosen(SoundData sound) {
         super.onSoundChosen(sound);
 
@@ -122,6 +131,25 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
     @Override
     public String getTitle(Context context) {
         return context.getString(R.string.title_radio);
+    }
+
+    public static class Instantiator extends BaseSoundChooserFragment.Instantiator {
+
+        public Instantiator(Context context, SoundChooserListener listener) {
+            super(context, listener);
+        }
+
+        @Override
+        BasePagerFragment newInstance(int position, SoundChooserListener listener) {
+            BaseSoundChooserFragment fragment = new RadioSoundChooserFragment();
+            fragment.setListener(listener);
+            return fragment;
+        }
+
+        @Override
+        public String getTitle(Context context, int position) {
+            return context.getString(R.string.title_radio);
+        }
     }
 
 }

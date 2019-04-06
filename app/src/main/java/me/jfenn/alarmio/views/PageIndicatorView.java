@@ -62,7 +62,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     private void init() {
         engine = new IndicatorEngine();
 
-        engine.onInitEngine(this, getContext());
+        engine.onInitEngine(this);
         size = 2;
     }
 
@@ -87,8 +87,15 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     @Override
     public void unsubscribe() {
-        textColorPrimarySubscription.dispose();
-        textColorSecondarySubscription.dispose();
+        if (textColorPrimarySubscription != null) {
+            textColorPrimarySubscription.dispose();
+            textColorSecondarySubscription = null;
+        }
+
+        if (textColorSecondarySubscription != null) {
+            textColorSecondarySubscription.dispose();
+            textColorSecondarySubscription = null;
+        }
     }
 
     @Override
@@ -130,7 +137,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(engine.getMeasuredWidth(widthMeasureSpec, heightMeasureSpec), engine.getMeasuredHeight(widthMeasureSpec, heightMeasureSpec));
+        setMeasuredDimension(engine.getMeasuredWidth(), engine.getMeasuredHeight());
     }
 
     @Override
@@ -162,24 +169,21 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     private static class IndicatorEngine {
 
-        private Context context;
-
         private PageIndicatorView indicator;
 
         private Paint selectedPaint;
         private Paint unselectedPaint;
 
-        public int getMeasuredHeight(int widthMeasuredSpec, int heightMeasuredSpec) {
+        public int getMeasuredHeight() {
             return DimenUtils.dpToPx(8);
         }
 
-        public int getMeasuredWidth(int widthMeasuredSpec, int heightMeasuredSpec) {
+        public int getMeasuredWidth() {
             return DimenUtils.dpToPx(8 * (indicator.getTotalPages() * 2 - 1));
         }
 
-        public void onInitEngine(PageIndicatorView indicator, Context context) {
+        public void onInitEngine(PageIndicatorView indicator) {
             this.indicator = indicator;
-            this.context = context;
 
             selectedPaint = new Paint();
             unselectedPaint = new Paint();
@@ -200,7 +204,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
             for (int i = 0; i < indicator.getTotalPages(); i++) {
                 int x = DimenUtils.dpToPx(4) + DimenUtils.dpToPx(16 * i);
-                canvas.drawCircle(x, height / 2, DimenUtils.dpToPx(4), unselectedPaint);
+                canvas.drawCircle(x, height / 2f, DimenUtils.dpToPx(4), unselectedPaint);
             }
 
             int firstX;

@@ -31,6 +31,7 @@ import me.jfenn.alarmio.data.preference.RingtonePreferenceData;
 import me.jfenn.alarmio.data.preference.ThemePreferenceData;
 import me.jfenn.alarmio.data.preference.TimePreferenceData;
 import me.jfenn.alarmio.data.preference.TimeZonesPreferenceData;
+import me.jfenn.alarmio.interfaces.ContextFragmentInstantiator;
 
 public class SettingsFragment extends BasePagerFragment implements Consumer {
 
@@ -105,6 +106,24 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
     public void accept(Object o) throws Exception {
         if (recyclerView != null && preferenceAdapter != null) {
             recyclerView.post(() -> preferenceAdapter.notifyDataSetChanged());
+        }
+    }
+
+    public static class Instantiator extends ContextFragmentInstantiator {
+
+        public Instantiator(Context context) {
+            super(context);
+        }
+
+        @Override
+        public String getTitle(Context context, int position) {
+            return context.getString(R.string.title_settings);
+        }
+
+        @Nullable
+        @Override
+        public BasePagerFragment newInstance(int position) {
+            return new SettingsFragment();
         }
     }
 

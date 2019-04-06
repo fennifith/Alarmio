@@ -17,6 +17,7 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import io.reactivex.disposables.Disposable;
 import me.jfenn.alarmio.interfaces.Subscribblable;
@@ -25,6 +26,7 @@ import me.jfenn.alarmio.utils.FormatUtils;
 public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalLayoutListener, Subscribblable {
 
     private Paint paint;
+    private UpdateThread thread;
 
     private TimeZone timezone;
 
@@ -52,17 +54,19 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
         paint.setTextAlign(Paint.Align.CENTER);
-
-        new UpdateThread(this).start();
-        getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
-    public void setTimezone(String timezone) {
+    public void setTimezone(@NonNull String timezone) {
         this.timezone = TimeZone.getTimeZone(timezone);
     }
 
     @Override
     public void subscribe() {
+        getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+        if (thread == null) thread = new UpdateThread(this);
+        thread.start();
+
         textColorPrimarySubscription = Aesthetic.Companion.get()
                 .textColorPrimary()
                 .subscribe(integer -> {
@@ -73,6 +77,10 @@ public class DigitalClockView extends View implements ViewTreeObserver.OnGlobalL
 
     @Override
     public void unsubscribe() {
+        getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        thread.interrupt();
+        thread = null;
+
         textColorPrimarySubscription.dispose();
     }
 
