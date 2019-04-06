@@ -14,6 +14,10 @@ import com.afollestad.aesthetic.Aesthetic
 import me.jfenn.alarmio.R
 import me.jfenn.alarmio.data.PreferenceData
 
+/**
+ * Allow the user to choose from one of a range
+ * of items.
+ */
 class SpinnerPreferenceData(private val preference: PreferenceData, private val title: Int, private val options: Int) : BasePreferenceData<SpinnerPreferenceData.ViewHolder>() {
 
     override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): BasePreferenceData.ViewHolder {
@@ -52,6 +56,9 @@ class SpinnerPreferenceData(private val preference: PreferenceData, private val 
                 }
     }
 
+    /**
+     * Holds child views of the current item.
+     */
     inner class ViewHolder(v: View) : BasePreferenceData.ViewHolder(v) {
         val title: TextView = v.findViewById(R.id.title)
         val spinner: AppCompatSpinner = v.findViewById(R.id.spinner)

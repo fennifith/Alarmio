@@ -5,6 +5,11 @@ import me.jfenn.alarmio.data.PreferenceData
 import me.jfenn.alarmio.dialogs.TimeZoneChooserDialog
 import java.util.*
 
+/**
+ * A preference item allowing the user to select
+ * from multiple time zones (preference is a boolean,
+ * should have a parameter for the zone id).
+ */
 class TimeZonesPreferenceData(private val preference: PreferenceData, title: Int) : CustomPreferenceData(title) {
 
     override fun getValueName(holder: CustomPreferenceData.ViewHolder): String {

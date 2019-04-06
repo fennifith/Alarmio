@@ -75,6 +75,9 @@ abstract class ListPreferenceData(private val preference: PreferenceData, privat
         }
     }
 
+    /**
+     * Holds child views of the current item.
+     */
     class ViewHolder(v: View) : BasePreferenceData.ViewHolder(v) {
         val title: TextView = v.findViewById(R.id.title)
         val recycler: RecyclerView = v.findViewById(R.id.recycler)

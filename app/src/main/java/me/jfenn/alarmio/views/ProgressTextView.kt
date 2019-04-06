@@ -100,36 +100,44 @@ class ProgressTextView : View, Subscribblable {
         unsubscribe()
     }
 
+    /**
+     * Set the text (time) to display in the center
+     * of the view.
+     */
     fun setText(text: String) {
         this.text = text
         invalidate()
     }
 
+    /**
+     * Set the current progress value.
+     */
     @JvmOverloads
     fun setProgress(progress: Long, animate: Boolean = false) {
         if (animate) {
             ValueAnimator.ofFloat(this.progress.toFloat(), progress.toFloat()).apply {
                 interpolator = LinearInterpolator()
                 addUpdateListener { valueAnimator ->
-                    this@ProgressTextView.progress = (valueAnimator.animatedValue as Float).toLong()
-                    postInvalidate()
+                    setProgress((valueAnimator.animatedValue as Float).toLong(), false)
                 }
                 start()
             }
         } else {
             this.progress = progress
-            invalidate()
+            postInvalidate()
         }
     }
 
+    /**
+     * Set the largest progress that has been acquired so far.
+     */
     @JvmOverloads
     fun setMaxProgress(maxProgress: Long, animate: Boolean = false) {
         if (animate) {
             ValueAnimator.ofFloat(this.maxProgress.toFloat(), maxProgress.toFloat()).apply {
                 interpolator = LinearInterpolator()
                 addUpdateListener { valueAnimator ->
-                    this@ProgressTextView.maxProgress = (valueAnimator.animatedValue as Float).toLong()
-                    postInvalidate()
+                    setMaxProgress((valueAnimator.animatedValue as Float).toLong(), false)
                 }
                 start()
             }
@@ -139,6 +147,11 @@ class ProgressTextView : View, Subscribblable {
         }
     }
 
+    /**
+     * Set the progress value of the reference dot (?) on
+     * the circle. Mostly used in the stopwatch, to indicate
+     * the previous/best lap time.
+     */
     fun setReferenceProgress(referenceProgress: Long) {
         this.referenceProgress = referenceProgress
         postInvalidate()

@@ -5,6 +5,11 @@ import android.content.Intent
 import me.jfenn.alarmio.activities.FileChooserActivity
 import me.jfenn.alarmio.data.PreferenceData
 
+/**
+ * A preference item that allows the user to select
+ * an image from a file (the resulting preference
+ * contains a valid image path / URI).
+ */
 class ImageFilePreferenceData(private val preference: PreferenceData, name: Int) : CustomPreferenceData(name) {
 
     override fun getValueName(holder: CustomPreferenceData.ViewHolder): String = ""

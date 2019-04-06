@@ -14,7 +14,11 @@ import com.afollestad.aesthetic.Aesthetic
 import me.jfenn.alarmio.R
 import me.jfenn.alarmio.data.PreferenceData
 
-class BooleanPreferenceData(private val preference: PreferenceData, @param:StringRes private val title: Int, @param:StringRes private val description: Int) : BasePreferenceData<BooleanPreferenceData.ViewHolder>() {
+/**
+ * Allow the user to choose from a simple boolean
+ * using a switch item view.
+ */
+class BooleanPreferenceData(private val preference: PreferenceData, @StringRes private val title: Int, @StringRes private val description: Int) : BasePreferenceData<BooleanPreferenceData.ViewHolder>() {
 
     override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): BasePreferenceData.ViewHolder {
         return ViewHolder(inflater.inflate(R.layout.item_preference_boolean, parent, false))
@@ -47,6 +51,9 @@ class BooleanPreferenceData(private val preference: PreferenceData, @param:Strin
                 }
     }
 
+    /**
+     * Holds child views of the current item.
+     */
     inner class ViewHolder(v: View) : BasePreferenceData.ViewHolder(v) {
         val title: TextView = v.findViewById(R.id.title)
         val description: TextView = v.findViewById(R.id.description)

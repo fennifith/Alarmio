@@ -5,6 +5,9 @@ import me.jfenn.alarmio.dialogs.TimeChooserDialog
 import me.jfenn.alarmio.utils.FormatUtils
 import java.util.concurrent.TimeUnit
 
+/**
+ * A preference item that holds / displays a time value.
+ */
 class TimePreferenceData(private val preference: PreferenceData, name: Int) : CustomPreferenceData(name) {
 
     override fun getValueName(holder: CustomPreferenceData.ViewHolder): String {
@@ -15,7 +18,7 @@ class TimePreferenceData(private val preference: PreferenceData, name: Int) : Cu
 
     override fun onClick(holder: CustomPreferenceData.ViewHolder) {
         val dialog = run {
-            var seconds = TimeUnit.MILLISECONDS.toSeconds(preference.getValue<Any>(holder.context) as Long).toInt()
+            var seconds = TimeUnit.MILLISECONDS.toSeconds(preference.getValue<Long>(holder.context)).toInt()
             var minutes = TimeUnit.SECONDS.toMinutes(seconds.toLong()).toInt()
             val hours = TimeUnit.MINUTES.toHours(minutes.toLong()).toInt()
             minutes %= TimeUnit.HOURS.toMinutes(1).toInt()

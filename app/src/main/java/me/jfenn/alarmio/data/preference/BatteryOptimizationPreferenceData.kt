@@ -12,6 +12,10 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import me.jfenn.alarmio.R
 
+/**
+ * A preference item allowing the user to select to
+ * ignore battery optimizations to improve stability.
+ */
 @TargetApi(23)
 class BatteryOptimizationPreferenceData : CustomPreferenceData(R.string.title_ignore_battery_optimizations) {
 
