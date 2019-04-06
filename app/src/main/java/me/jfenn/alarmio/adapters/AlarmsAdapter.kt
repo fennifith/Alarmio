@@ -43,9 +43,13 @@ import me.jfenn.timedatepickers.views.LinearTimePickerView
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * View adapter for the "alarms" list; displays all timers and
+ * alarms currently stored in the application.
+ */
 class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: RecyclerView, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val alarmManager: AlarmManager = alarmio.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val alarmManager: AlarmManager? = alarmio.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
     private val timers: List<TimerData> = alarmio.timers
     private val alarms: List<AlarmData> = alarmio.alarms
 
@@ -155,7 +159,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
     private fun onBindAlarmViewHolderToggles(holder: AlarmViewHolder, alarm: AlarmData) {
         holder.ringtoneImage.setImageResource(if (alarm.hasSound()) R.drawable.ic_ringtone else R.drawable.ic_ringtone_disabled)
         holder.ringtoneImage.alpha = if (alarm.hasSound()) 1f else 0.333f
-        holder.ringtoneText.text = if (alarm.hasSound()) alarm.getSound()!!.name else alarmio.getString(R.string.title_sound_none)
+        holder.ringtoneText.text = if (alarm.hasSound()) alarm.getSound()?.name else alarmio.getString(R.string.title_sound_none)
         holder.ringtone.setOnClickListener { view ->
             val dialog = SoundChooserDialog()
             dialog.setListener { sound ->
@@ -200,7 +204,11 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                                 if (isExpanded) integer else colorForeground,
                                 if (isExpanded) colorForeground else integer
                         ).apply {
-                            addUpdateListener { animation -> holder.itemView.setBackgroundColor(animation.animatedValue as Int) }
+                            addUpdateListener { animation ->
+                                (animation.animatedValue as? Int)?.let { color ->
+                                    holder.itemView.setBackgroundColor(color)
+                                }
+                            }
                             addListener(object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animation: Animator) {}
 
@@ -220,7 +228,11 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                     if (isExpanded) 0f else DimenUtils.dpToPx(2f).toFloat(),
                     if (isExpanded) DimenUtils.dpToPx(2f).toFloat() else 0f
             ).apply {
-                addUpdateListener { animation -> ViewCompat.setElevation(holder.itemView, animation.animatedValue as Float) }
+                addUpdateListener { animation ->
+                    (animation.animatedValue as? Float)?.let { elevation ->
+                        ViewCompat.setElevation(holder.itemView, elevation)
+                    }
+                }
                 start()
             }
         } else {
@@ -364,12 +376,22 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         return timers.size + alarms.size
     }
 
+    /**
+     * Returns the timer that should be bound to the
+     * specified position in the list - null if there
+     * is no timer to be bound.
+     */
     private fun getTimer(position: Int): TimerData? {
         return if (position in (0 until timers.size))
             timers[position]
         else null
     }
 
+    /**
+     * Returns the alarm that should be bound to
+     * the specified position in the list - null if
+     * there is no alarm to be bound.
+     */
     private fun getAlarm(position: Int): AlarmData? {
         val alarmPosition = position - timers.size
 
@@ -379,6 +401,9 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
 
     }
 
+    /**
+     * ViewHolder for timer items.
+     */
     class TimerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val handler = Handler()
         var runnable: Runnable? = null
@@ -395,6 +420,9 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         val progress: ProgressLineView = itemView.findViewById(R.id.progress)
     }
 
+    /**
+     * ViewHolder for alarm items.
+     */
     class AlarmViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val name: EditText = v.findViewById(R.id.name)
         val nameUnderline: View = v.findViewById(R.id.underline)
