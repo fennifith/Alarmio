@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name" translatable="false">Alarmio</string>
+    <string name="title_alarm">Alarme %d</string>
+    <string name="title_alarm_next">%s à partir de maintenant.</string>
+    <string name="title_none">Aucune</string>
+    <string name="title_vibrate">Vibrer</string>
+    <string name="title_repeat">Répéter</string>
+    <string name="title_set_alarm">Alarme</string>
+    <string name="title_set_timer">Minuterie</string>
+    <string name="title_set_stopwatch">Chronomètre</string>
+    <string name="title_lap">Tour</string>
+    <string name="title_stopwatch">Chronomètre</string>
+    <string name="title_stopwatch_share">%s Chronomètre: %s</string>
+    <string name="title_lap_number" translatable="false">#%d</string>
+    <string name="title_time">Temps: %s</string>
+    <string name="title_lap_time">Tour: %s</string>
+    <string name="title_total_time">Total: %s</string>
+    <string name="title_share_results">Partager les résultats…</string>
+    <string name="msg_delete_confirmation">Êtes-vous sûr de vouloir supprimer %s?</string>
+    <string name="title_delete">Supprimer</string>
+    <string name="title_start_timer">Démarrer la minuterie</string>
+    <string name="title_auto">Auto</string>
+    <string name="title_sunrise">Lever du soleil</string>
+    <string name="title_sunset">Coucher de soleil</string>
+    <string name="title_theme">Thème</string>
+    <string name="title_appearance">Apparence</string>
+    <string name="title_sound_none">Aucun</string>
+    <string name="title_snooze">Répétition</string>
+    <string name="title_alarms">Alarmes</string>
+    <string name="title_settings">Paramètres</string>
+    <string name="title_ringtones">Sonneries</string>
+    <string name="word_day">jour</string>
+    <string name="word_days">jours</string>
+    <string name="word_minute">minute</string>
+    <string name="word_minutes">minutes</string>
+    <string name="word_hour">heure</string>
+    <string name="word_hours">heures</string>
+    <string name="word_join">et</string>
+    <string name="title_snooze_custom">Personnalisé…</string>
+    <string name="msg_snoozed_until">Répété jusqu'à %s</string>
+    <string name="title_radio_test">Test</string>
+    <string name="title_radio_create">Créer</string>
+    <string name="msg_radio_create">Créer une nouvelle radio</string>
+    <string name="msg_radio_url">Insérer l'URL d'une radio ici (\'.m3u8\') …</string>
+    <string name="msg_radio_previous">Choisir une radio déjà utilisée</string>
+    <string name="title_radio_stop">Stop</string>
+    <string name="title_radio">Radio</string>
+    <string name="title_time_zones">Fuseaux horaires</string>
+    <string name="title_behavior">Comportement</string>
+    <string name="title_default_alarm_ringtone">Sonnerie d'alarme par défaut</string>
+    <string name="title_default_timer_ringtone">Sonnerie de minuterie par défaut</string>
+    <string name="title_sleep_reminder">Rappel pour aller se coucher</string>
+    <string name="desc_sleep_reminder">Afficher une notification vous rappelant d'aller vous coucher un certain temps avant que votre alarme ne sonne si vous utilisez votre téléphone.</string>
+    <string name="title_sleep_reminder_time">Programmation du rappel</string>
+    <string name="desc_sleep_reminder_time">%1$d heures avant</string>
+    <string name="title_slow_wake_up">Réveil doux</string>
+    <string name="desc_slow_wake_up">Augmenter progressivement la luminosité et le volume lorsqu'une alarme retentit.</string>
+    <string name="title_slow_wake_up_time">Durée</string>
+    <string name="title_about">À propos &amp; OSS Licenses</string>
+    <string name="title_choose_time_zone">Sélectionner un fuseau horaire</string>
+    <string name="msg_sleep_reminder">Votre prochaine alarme sonnera dans environ %s à partir de maintenant. Pour obtenir la durée de sommeil spécifiée dans le menu des paramètres, vous devriez aller vous coucher maintenant.</string>
+    <string name="title_alarm_name">Nom de l'alarme</string>
+    <string name="title_background_image">Image d'arrière-plan</string>
+    <string name="title_ringing_background_image">Afficher l'image d'arrière-plan sur les alarmes/minuteries</string>
+    <string name="desc_ringing_background_image">Afficher ou non l'image d'arrière-plan lorsqu'une alarme ou une minuterie sonne.</string>
+    <string name="msg_alarms_empty">Vous n'avez pas d'alarme programmée. Appuyer sur le bouton \'+\' pour en créer une.</string>
+    <string name="msg_time_zones_selected">%d sélectionné</string>
+    <string-array name="array_themes">
+        <item>Automatique</item>
+        <item>Jour</item>
+        <item>Nuit</item>
+        <item>AMOLED</item>
+    </string-array>
+
+    <string name="msg_battery_optimizations_switch_enable">Faîtes défiler le menu jusqu'à "Alarmio" et désactivez l'optimisation de la batterie.</string>
+    <string name="title_ignore_battery_optimizations">Ignorer l' optimisation de la batterie</string>
+</resources>
