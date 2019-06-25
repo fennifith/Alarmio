@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name" translatable="false">Alarmio</string>
+    <string name="title_alarm">Budík %d</string>
+    <string name="title_alarm_next">%s od teď.</string>
+    <string name="title_none">Žádný</string>
+    <string name="title_vibrate">Vibrovat</string>
+    <string name="title_repeat">Opakovat</string>
+    <string name="title_set_alarm">Budík</string>
+    <string name="title_set_timer">Časovač</string>
+    <string name="title_set_stopwatch">Stopky</string>
+    <string name="title_lap">Úsek</string>
+    <string name="title_stopwatch">Stopky</string>
+    <string name="title_stopwatch_share">%s Stopky: %s</string>
+    <string name="title_lap_number" translatable="false">#%d</string>
+    <string name="title_time">Čas: %s</string>
+    <string name="title_lap_time">Úsek: %s</string>
+    <string name="title_total_time">Celkem: %s</string>
+    <string name="title_share_results">Sdílet výsledky…</string>
+    <string name="msg_delete_confirmation">Jste si jistí, že chcete smazat %s?</string>
+    <string name="title_delete">Smazat</string>
+    <string name="title_start_timer">Spustit časovač</string>
+    <string name="title_auto">Auto</string>
+    <string name="title_sunrise">Východ slunce</string>
+    <string name="title_sunset">Západ slunce</string>
+    <string name="title_theme">Motiv</string>
+    <string name="title_appearance">Vzhled</string>
+    <string name="title_sound_none">Žádný</string>
+    <string name="title_snooze">Snooze</string>
+    <string name="title_alarms">Budíky</string>
+    <string name="title_settings">Nastavení</string>
+    <string name="title_ringtones">Vyzvánění</string>
+    <string name="word_day">den</string>
+    <string name="word_days">dny</string>
+    <string name="word_minute">minuta</string>
+    <string name="word_minutes">minuty</string>
+    <string name="word_hour">hodina</string>
+    <string name="word_hours">hodiny</string>
+    <string name="word_join">a</string>
+    <string name="title_snooze_custom">Custom…</string>
+    <string name="msg_snoozed_until">Odložit zvonění do %s</string>
+    <string name="title_radio_test">Test</string>
+    <string name="title_radio_create">Vytvořit</string>
+    <string name="msg_radio_create">Vytvořit nové rádio</string>
+    <string name="msg_radio_url">Vlož URL rádia sem (\'.m3u8\')…</string>
+    <string name="msg_radio_previous">Vybrat naposled použité rádio</string>
+    <string name="title_radio_stop">Stop</string>
+    <string name="title_radio">Rádio</string>
+    <string name="title_time_zones">Časové zóny</string>
+    <string name="title_behavior">Chování</string>
+    <string name="title_default_alarm_ringtone">Výchozí zvuk budíku</string>
+    <string name="title_default_timer_ringtone">Výchozí zvuk časovače</string>
+    <string name="title_sleep_reminder">Připomenutí spánku</string>
+    <string name="desc_sleep_reminder">Zobrazit upozornění, že je čas jít spát, v určitý čas před tím, než začne zvonit budík, v případě že používáte váš telefon.</string>
+    <string name="title_sleep_reminder_time">Čas připomenutí spánku</string>
+    <string name="desc_sleep_reminder_time">%1$d hodin dřív</string>
+    <string name="title_slow_wake_up">Pomalé probouzení</string>
+    <string name="desc_slow_wake_up">Postupně zvyšuje jas a hlasitost, když budík vyzvání.</string>
+    <string name="title_slow_wake_up_time">Doba pomalého probouzení</string>
+    <string name="title_about">O &amp; OSS licencích</string>
+    <string name="title_choose_time_zone">Vybrat časové pásmo</string>
+    <string name="msg_sleep_reminder">Váš příští budík bude zvonit přibližně %s od teď. Abyste dosáhli určeného množsví spánku v nastavení, měli byste jít hned do postele.</string>
+    <string name="title_alarm_name">Název budíku</string>
+    <string name="title_background_image">Obrázek na pozadí</string>
+    <string name="title_ringing_background_image">Ukaž obrázek na pozadí v budících/časovačích</string>
+    <string name="desc_ringing_background_image">Zda se má při vyzvánění budíku nebo časovače zobrazit obrázek na pozadí.</string>
+    <string name="msg_alarms_empty">Nemáte nastavené žádné budíky. Stiskněte tlačítko \'+\' pro vytvoření.</string>
+    <string name="msg_time_zones_selected">%d vybrány</string>
+    <string-array name="array_themes">
+        <item>Automatický</item>
+        <item>Den</item>
+        <item>Noc</item>
+        <item>AMOLED</item>
+    </string-array>
+
+    <string name="msg_battery_optimizations_switch_enable">Zapněte přepínač vedle \"Alarmio\". Možná budete muset scrolovat hodně dolů….</string>
+    <string name="title_ignore_battery_optimizations">Ignorovat optimalizaci baterie</string>
+</resources>
