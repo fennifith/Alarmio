@@ -65,7 +65,7 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
         sounds = new ArrayList<>();
         for (String string : previousRadios) {
             String url = string.split(SEPARATOR)[1];
-            sounds.add(new SoundData(url, url));
+            sounds.add(new SoundData(url, SoundData.TYPE_RADIO, url));
         }
 
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,7 +76,7 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
 
         testRadio.setOnClickListener(v -> {
             if (currentSound == null) {
-                currentSound = new SoundData("", radioUrlEditText.getText().toString());
+                currentSound = new SoundData("", SoundData.TYPE_RADIO, radioUrlEditText.getText().toString());
                 try {
                     currentSound.preview(getAlarmio());
                     testRadio.setText(R.string.title_radio_stop);
@@ -95,7 +95,7 @@ public class RadioSoundChooserFragment extends BaseSoundChooserFragment {
 
         view.findViewById(R.id.createRadio).setOnClickListener(v -> {
             if (URLUtil.isValidUrl(radioUrlEditText.getText().toString())) {
-                onSoundChosen(new SoundData(getString(R.string.title_radio), radioUrlEditText.getText().toString()));
+                onSoundChosen(new SoundData(getString(R.string.title_radio), SoundData.TYPE_RADIO, radioUrlEditText.getText().toString()));
             }
         });
 
