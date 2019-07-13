@@ -15,23 +15,33 @@ public class SoundData {
 
     private static final String SEPARATOR = ":AlarmioSoundData:";
 
+    public static final String TYPE_RINGTONE = "ringtone";
+    public static final String TYPE_RADIO = "radio";
+    public static final String TYPE_FILE = "file";
+
     private String name;
+    private String type;
     private String url;
 
     private Ringtone ringtone;
 
-    public SoundData(String name, String url) {
+    public SoundData(String name, String type, String url) {
         this.name = name;
+        this.type = type;
         this.url = url;
     }
 
-    public SoundData(String name, String url, Ringtone ringtone) {
-        this(name, url);
+    public SoundData(String name, String type, String url, Ringtone ringtone) {
+        this(name, type, url);
         this.ringtone = ringtone;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getUrl() {
@@ -46,7 +56,7 @@ public class SoundData {
      * @param alarmio           The active Application instance.
      */
     public void play(Alarmio alarmio) {
-        if (url.startsWith("content://")) {
+        if (type.equals(TYPE_RINGTONE) && url.startsWith("content://")) {
             if (ringtone == null) {
                 ringtone = RingtoneManager.getRingtone(alarmio, Uri.parse(url));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -58,7 +68,8 @@ public class SoundData {
 
             alarmio.playRingtone(ringtone);
         } else {
-            alarmio.playStream(url, new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
+            alarmio.playStream(url, type,
+                    new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
                     .setUsage(C.USAGE_ALARM)
                     .build());
         }
@@ -95,7 +106,8 @@ public class SoundData {
 
             alarmio.playRingtone(ringtone);
         } else {
-            alarmio.playStream(url, new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
+            alarmio.playStream(url, type,
+                    new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
                     .setUsage(C.USAGE_ALARM)
                     .build());
         }
@@ -121,7 +133,7 @@ public class SoundData {
      */
     @Override
     public String toString() {
-        return name + SEPARATOR + url;
+        return name + SEPARATOR + type + SEPARATOR + url;
     }
 
     /**
@@ -135,8 +147,9 @@ public class SoundData {
     public static SoundData fromString(String string) {
         if (string.contains(SEPARATOR)) {
             String[] data = string.split(SEPARATOR);
-            if (data.length == 2 && data[0].length() > 0 && data[1].length() > 0)
-                return new SoundData(data[0], data[1]);
+            if (data.length == 3
+                    && data[0].length() > 0 && data[1].length() > 0 && data[2].length() > 0)
+                return new SoundData(data[0], data[1], data[2]);
         }
 
         return null;

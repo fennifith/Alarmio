@@ -25,6 +25,7 @@ import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -70,7 +71,8 @@ public class Alarmio extends Application implements Player.EventListener {
     private ActivityListener listener;
 
     private SimpleExoPlayer player;
-    private HlsMediaSource.Factory mediaSourceFactory;
+    private HlsMediaSource.Factory hlsMediaSourceFactory;
+    private ProgressiveMediaSource.Factory progressiveMediaSourceFactory;
     private String currentStream;
 
     @Override
@@ -87,7 +89,8 @@ public class Alarmio extends Application implements Player.EventListener {
         player.addListener(this);
 
         DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoplayer2example"), null);
-        mediaSourceFactory = new HlsMediaSource.Factory(dataSourceFactory);
+        hlsMediaSourceFactory = new HlsMediaSource.Factory(dataSourceFactory);
+        progressiveMediaSourceFactory = new ProgressiveMediaSource.Factory(dataSourceFactory);
 
         int alarmLength = PreferenceData.ALARM_LENGTH.getValue(this);
         for (int id = 0; id < alarmLength; id++) {
@@ -402,9 +405,15 @@ public class Alarmio extends Application implements Player.EventListener {
      * @param url       The URL of the stream to be passed to ExoPlayer.
      * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
      */
-    public void playStream(String url) {
+    public void playStream(String url, String type) {
         stopCurrentSound();
-        player.prepare(mediaSourceFactory.createMediaSource(Uri.parse(url)));
+
+        if (type.equals(SoundData.TYPE_RADIO)) {
+            player.prepare(hlsMediaSourceFactory.createMediaSource(Uri.parse(url)));
+        } else {
+            player.prepare(progressiveMediaSourceFactory.createMediaSource(Uri.parse(url)));
+        }
+
         player.setPlayWhenReady(true);
         currentStream = url;
     }
@@ -416,10 +425,10 @@ public class Alarmio extends Application implements Player.EventListener {
      * @param attributes    The attributes to play the stream with.
      * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
      */
-    public void playStream(String url, AudioAttributes attributes) {
+    public void playStream(String url, String type, AudioAttributes attributes) {
         player.stop();
         player.setAudioAttributes(attributes);
-        playStream(url);
+        playStream(url, type);
     }
 
     /**
