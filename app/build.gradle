@@ -3,8 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
 
 android {
-    def isRunningOnTravis = System.getenv("CI") == "true"
-    def isTaggedRelease = System.getenv("TRAVIS_TAG") != null
+    def travis = System.getenv("CI") == "true"
+    def travisTag = System.getenv("TRAVIS_TAG")
+    def travisTagExists = travisTag != null && !travisTag.isEmpty()
 
     compileSdkVersion 28
     defaultConfig {
@@ -18,7 +19,7 @@ android {
 
         multiDexEnabled true
 
-        if (isRunningOnTravis) {
+        if (travis) {
             def githubToken = System.getenv("GITHUB_TOKEN_PUB")
             buildConfigField "String", "GITHUB_TOKEN", "\"$githubToken\""
         } else {
@@ -39,7 +40,7 @@ android {
         abortOnError false
     }
 
-    if (isRunningOnTravis && isTaggedRelease) {
+    if (travis && travisTagExists) {
         buildTypes.release.signingConfig = signingConfigs.release
         signingConfigs.release.storeFile = file("../key.jks")
         signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
