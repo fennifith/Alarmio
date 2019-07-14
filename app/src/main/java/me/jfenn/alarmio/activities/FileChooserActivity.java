@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
@@ -17,6 +18,7 @@ import me.jfenn.alarmio.data.PreferenceData;
 public class FileChooserActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE = 284;
+    private static final int REQUEST_AUDIO = 285;
     private static final int REQUEST_STORAGE_PERMISSION = 727;
 
     public static final String EXTRA_TYPE = "james.alarmio.FileChooserActivity.EXTRA_TYPE";
@@ -31,7 +33,8 @@ public class FileChooserActivity extends AppCompatActivity {
 
         Intent data = getIntent();
         if (data != null) {
-            preference = (PreferenceData) data.getSerializableExtra(EXTRA_PREFERENCE);
+            if (data.hasExtra(EXTRA_PREFERENCE))
+                preference = (PreferenceData) data.getSerializableExtra(EXTRA_PREFERENCE);
             if (data.hasExtra(EXTRA_TYPE))
                 type = data.getStringExtra(EXTRA_TYPE);
         }
@@ -43,11 +46,22 @@ public class FileChooserActivity extends AppCompatActivity {
     }
 
     private void startIntent() {
+        int requestCode = type.equals("audio/*") ? REQUEST_AUDIO : REQUEST_IMAGE;
         Intent intent = new Intent();
         intent.setType(type);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        if (type.equals("audio/*")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            } else {
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+            }
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+        }
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, REQUEST_IMAGE);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -95,6 +109,43 @@ public class FileChooserActivity extends AppCompatActivity {
             }
 
             preference.setValue(this, path);
+        } else if (requestCode == REQUEST_AUDIO && resultCode == RESULT_OK && data != null && type.equals("audio/*")) {
+            String name = null;
+            Cursor cursor = null;
+
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                    getContentResolver().takePersistableUriPermission(data.getData(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                cursor = getContentResolver().query(data.getData(), null, null, null, null);
+
+                String documentId;
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    documentId = cursor.getString(0);
+                    documentId = documentId.substring(documentId.lastIndexOf(":") + 1);
+                    cursor.close();
+                } else {
+                    finish();
+                    return;
+                }
+
+                cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Media._ID + " = ? ", new String[]{documentId}, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                    cursor.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (cursor != null && !cursor.isClosed())
+                    cursor.close();
+            }
+
+            if (name != null && name.length() > 0)
+                data.putExtra("name", name);
+            setResult(RESULT_OK, data);
         }
 
         finish();

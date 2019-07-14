@@ -3,6 +3,7 @@ package me.jfenn.alarmio.activities;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,6 +51,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
 
     private Alarmio alarmio;
     private Vibrator vibrator;
+    private AudioManager audioManager;
 
     private boolean isAlarm;
     private long triggerMillis;
@@ -60,6 +62,11 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
 
     private boolean isSlowWake;
     private long slowWakeMillis;
+
+    private int currentVolume;
+    private int minVolume;
+    private int originalVolume;
+    private int volumeRange;
 
     private Handler handler;
     private Runnable runnable;
@@ -112,6 +119,20 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
 
         date.setText(FormatUtils.format(new Date(), FormatUtils.FORMAT_DATE + ", " + FormatUtils.getShortFormat(this)));
 
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+        if (isSlowWake) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                minVolume = audioManager.getStreamMinVolume(AudioManager.STREAM_ALARM);
+            } else {
+                minVolume = 0;
+            }
+            volumeRange = originalVolume - minVolume;
+            currentVolume = minVolume;
+
+            audioManager.setStreamVolume(AudioManager.STREAM_ALARM, minVolume, 0);
+        }
+
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         triggerMillis = System.currentTimeMillis();
@@ -133,10 +154,20 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
                     sound.play(alarmio);
 
                 if (alarm != null && isSlowWake) {
+                    float slowWakeProgress = (float) elapsedMillis / slowWakeMillis;
+
                     WindowManager.LayoutParams params = getWindow().getAttributes();
-                    params.screenBrightness = Math.max(0.01f, Math.min(1f, (float) elapsedMillis / slowWakeMillis));
+                    params.screenBrightness = Math.max(0.01f, Math.min(1f, slowWakeProgress));
                     getWindow().setAttributes(params);
                     getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
+
+                    if (currentVolume < originalVolume) {
+                        int newVolume = minVolume + (int) Math.min(originalVolume, slowWakeProgress * volumeRange);
+                        if (newVolume != currentVolume) {
+                            audioManager.setStreamVolume(audioManager.STREAM_ALARM, newVolume, 0);
+                            currentVolume = newVolume;
+                        }
+                    }
                 }
 
                 handler.postDelayed(this, 1000);
@@ -178,8 +209,13 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
         if (handler != null)
             handler.removeCallbacks(runnable);
 
-        if (sound != null && sound.isPlaying(alarmio))
+        if (sound != null && sound.isPlaying(alarmio)) {
             sound.stop(alarmio);
+
+            if (isSlowWake) {
+                audioManager.setStreamVolume(AudioManager.STREAM_ALARM, originalVolume, 0);
+            }
+        }
     }
 
     @Override

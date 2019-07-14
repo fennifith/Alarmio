@@ -25,7 +25,7 @@
     <string name="title_theme">Motiv</string>
     <string name="title_appearance">Vzhled</string>
     <string name="title_sound_none">Žádný</string>
-    <string name="title_snooze">Snooze</string>
+    <string name="title_snooze">Opakované buzení</string>
     <string name="title_alarms">Budíky</string>
     <string name="title_settings">Nastavení</string>
     <string name="title_ringtones">Vyzvánění</string>
@@ -36,7 +36,7 @@
     <string name="word_hour">hodina</string>
     <string name="word_hours">hodiny</string>
     <string name="word_join">a</string>
-    <string name="title_snooze_custom">Custom…</string>
+    <string name="title_snooze_custom">Vlastní…</string>
     <string name="msg_snoozed_until">Odložit zvonění do %s</string>
     <string name="title_radio_test">Test</string>
     <string name="title_radio_create">Vytvořit</string>
@@ -58,7 +58,7 @@
     <string name="title_slow_wake_up_time">Doba pomalého probouzení</string>
     <string name="title_about">O &amp; OSS licencích</string>
     <string name="title_choose_time_zone">Vybrat časové pásmo</string>
-    <string name="msg_sleep_reminder">Váš příští budík bude zvonit přibližně %s od teď. Abyste dosáhli určeného množsví spánku v nastavení, měli byste jít hned do postele.</string>
+    <string name="msg_sleep_reminder">Váš příští budík bude zvonit přibližně %s od teď. Abyste dosáhli určeného množství spánku v nastavení, měli byste jít hned do postele.</string>
     <string name="title_alarm_name">Název budíku</string>
     <string name="title_background_image">Obrázek na pozadí</string>
     <string name="title_ringing_background_image">Ukaž obrázek na pozadí v budících/časovačích</string>
@@ -72,6 +72,6 @@
         <item>AMOLED</item>
     </string-array>
 
-    <string name="msg_battery_optimizations_switch_enable">Zapněte přepínač vedle \"Alarmio\". Možná budete muset scrolovat hodně dolů….</string>
+    <string name="msg_battery_optimizations_switch_enable">Zapněte přepínač vedle \"Alarmio\". Možná budete muset skrolovat hodně dolů….</string>
     <string name="title_ignore_battery_optimizations">Ignorovat optimalizaci baterie</string>
 </resources>

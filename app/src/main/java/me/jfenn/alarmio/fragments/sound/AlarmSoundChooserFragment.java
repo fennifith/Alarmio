@@ -37,7 +37,7 @@ public class AlarmSoundChooserFragment extends BaseSoundChooserFragment {
         int count = cursor.getCount();
         if (count > 0 && cursor.moveToFirst()) {
             do {
-                sounds.add(new SoundData(cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX), cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX)));
+                sounds.add(new SoundData(cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX), SoundData.TYPE_RINGTONE, cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX)));
             } while (cursor.moveToNext());
         }
 
