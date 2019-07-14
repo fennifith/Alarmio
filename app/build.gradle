@@ -4,6 +4,7 @@ apply plugin: 'com.github.triplet.play'
 
 android {
     def isRunningOnTravis = System.getenv("CI") == "true"
+    def isTaggedRelease = System.getenv("TRAVIS_TAG") != null
 
     compileSdkVersion 28
     defaultConfig {
@@ -38,7 +39,7 @@ android {
         abortOnError false
     }
 
-    if (isRunningOnTravis) {
+    if (isRunningOnTravis && isTaggedRelease) {
         buildTypes.release.signingConfig = signingConfigs.release
         signingConfigs.release.storeFile = file("../key.jks")
         signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
@@ -83,6 +84,8 @@ task printVersionName {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(':common')
 
     // debugging tools
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
