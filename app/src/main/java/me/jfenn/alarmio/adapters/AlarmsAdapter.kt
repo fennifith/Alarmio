@@ -147,11 +147,13 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
             daySwitch.onCheckedChangeListener = listener
 
             when (i) {
-                0, 6 -> daySwitch.setText("S")
-                1 -> daySwitch.setText("M")
-                2, 4 -> daySwitch.setText("T")
-                3 -> daySwitch.setText("W")
-                5 -> daySwitch.setText("F")
+                0 -> daySwitch.setText(daySwitch.context.getString(R.string.day_sunday_abbr))
+                1 -> daySwitch.setText(daySwitch.context.getString(R.string.day_monday_abbr))
+                2 -> daySwitch.setText(daySwitch.context.getString(R.string.day_tuesday_abbr))
+                3 -> daySwitch.setText(daySwitch.context.getString(R.string.day_wednesday_abbr))
+                4 -> daySwitch.setText(daySwitch.context.getString(R.string.day_thursday_abbr))
+                5 -> daySwitch.setText(daySwitch.context.getString(R.string.day_friday_abbr))
+                6 -> daySwitch.setText(daySwitch.context.getString(R.string.day_saturday_abbr))
             }
         }
     }
