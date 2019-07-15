@@ -7,9 +7,9 @@ data class AlarmData(
         override val id: Int,
         var time: Calendar,
         var isEnabled: Boolean,
-        var repeat: MutableMap<Int, Boolean>,
-        override var isVibrate: Boolean,
-        override var sound: SoundData?
+        var repeat: MutableMap<Int, Boolean> = HashMap(),
+        override var isVibrate: Boolean = false,
+        override var sound: SoundData? = null
 ): AlertData {
 
     val days = intArrayOf(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY)
@@ -28,10 +28,9 @@ data class AlarmData(
      * @return              A Calendar object defining the next time that the alarm should ring at.
      * @see [java.util.Calendar Documentation](https://developer.android.com/reference/java/util/Calendar)
      */
-    fun getNext(): Calendar? {
+    fun getNext(now: Calendar = Calendar.getInstance()): Calendar? {
         if (isEnabled) {
-            val now = Calendar.getInstance()
-            val next = Calendar.getInstance()
+            val next = now.clone() as Calendar
             next.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY))
             next.set(Calendar.MINUTE, time.get(Calendar.MINUTE))
             next.set(Calendar.SECOND, 0)

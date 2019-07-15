@@ -46,6 +46,11 @@ fun String.format(locale: Locale = Locale.getDefault(), vararg args: Any?): Stri
     return String.format(locale, this, args)
 }
 
+val Calendar.timeInMinutes: Long
+    get() {
+        return TimeUnit.MILLISECONDS.toMinutes(timeInMillis)
+    }
+
 object FormatUtils {
     const val TIME_FORMAT_12H = "h:mm:ss"
     const val TIME_FORMAT_24H = "HH:mm:ss"
