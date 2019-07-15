@@ -9,6 +9,8 @@ interface AlertData {
     var isVibrate: Boolean
     var sound: SoundData?
 
+    fun getAlertId(): String = "${javaClass.name}::$id"
+
     fun getAlertTime(): Date?
 
 }

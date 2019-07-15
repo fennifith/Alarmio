@@ -2,7 +2,7 @@ package me.jfenn.alarmio.data.preference
 
 import me.jfenn.alarmio.R
 import me.jfenn.alarmio.data.PreferenceData
-import me.jfenn.alarmio.dialogs.TimeZoneChooserDialog
+import me.jfenn.alarmio.ui.dialogs.TimeZoneChooserDialog
 import java.util.*
 
 /**

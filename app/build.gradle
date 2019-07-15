@@ -96,6 +96,12 @@ dependencies {
     // support libraries
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
+    
+    // lifecycle/DI helpers
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    implementation "org.koin:koin-android-viewmodel:2.0.1"
+
+    // UI stuff
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'

@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import me.jfenn.alarmio.Alarmio;
-import me.jfenn.alarmio.activities.AlarmActivity;
 import me.jfenn.alarmio.data.AlarmData;
+import me.jfenn.alarmio.ui.activities.AlarmActivity;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

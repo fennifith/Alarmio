@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,12 +47,13 @@
         </activity>
 
         <activity
-            android:name=".activities.AlarmActivity"
+            android:name=".ui.activities.AlarmActivity"
             android:launchMode="singleTask" />
 
         <activity
-            android:name=".activities.FileChooserActivity"
+            android:name=".ui.activities.FileChooserActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity android:name=".ui.activities.AlertActivity" />
 
         <service android:name=".services.SleepReminderService" />
         <service android:name=".services.StopwatchService" />

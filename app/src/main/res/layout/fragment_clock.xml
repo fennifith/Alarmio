@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <me.jfenn.alarmio.views.DigitalClockView
+    <me.jfenn.alarmio.ui.views.DigitalClockView
         android:id="@+id/timeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

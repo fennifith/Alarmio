@@ -1,6 +1,7 @@
 package me.jfenn.alarmio.common.data
 
 import me.jfenn.alarmio.common.data.interfaces.AlertData
+import java.io.Serializable
 import java.util.*
 
 data class AlarmData(
@@ -10,9 +11,11 @@ data class AlarmData(
         var repeat: MutableMap<Int, Boolean> = HashMap(),
         override var isVibrate: Boolean = false,
         override var sound: SoundData? = null
-): AlertData {
+): AlertData, Serializable {
 
-    val days = intArrayOf(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY)
+    companion object {
+        val days = intArrayOf(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY)
+    }
 
     fun isRepeat(): Boolean {
         days.forEach {

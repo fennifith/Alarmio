@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <me.jfenn.alarmio.views.AppIconView
+    <me.jfenn.alarmio.ui.views.AppIconView
         android:id="@+id/icon"
         android:layout_width="128dp"
         android:layout_height="128dp"

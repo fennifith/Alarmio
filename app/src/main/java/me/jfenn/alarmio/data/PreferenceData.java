@@ -5,10 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.Alarmio;
 
 public enum PreferenceData {
-    THEME(Alarmio.THEME_DAY_NIGHT),
+    THEME(Alarmio.Companion.getTHEME_DAY_NIGHT()),
     BACKGROUND_IMAGE("https://jfenn.me/images/headers/snowytrees.jpg"),
     RINGING_BACKGROUND_IMAGE(true),
     DAY_AUTO(true),

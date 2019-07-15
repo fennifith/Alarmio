@@ -1,10 +1,12 @@
 package me.jfenn.alarmio.common.data
 
+import java.io.Serializable
+
 data class SoundData(
         val name: String,
         val type: String,
         val url: String
-) {
+): Serializable {
 
     /**
      * Returns an identifier string that can be used to recreate this

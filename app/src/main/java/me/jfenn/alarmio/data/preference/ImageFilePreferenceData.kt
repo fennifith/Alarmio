@@ -1,9 +1,8 @@
 package me.jfenn.alarmio.data.preference
 
 import android.content.Intent
-
-import me.jfenn.alarmio.activities.FileChooserActivity
 import me.jfenn.alarmio.data.PreferenceData
+import me.jfenn.alarmio.ui.activities.FileChooserActivity
 
 /**
  * A preference item that allows the user to select

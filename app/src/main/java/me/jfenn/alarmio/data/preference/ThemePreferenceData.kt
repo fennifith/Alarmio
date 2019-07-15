@@ -18,7 +18,7 @@ import com.afollestad.aesthetic.Aesthetic
 import me.jfenn.alarmio.Alarmio
 import me.jfenn.alarmio.R
 import me.jfenn.alarmio.data.PreferenceData
-import me.jfenn.alarmio.dialogs.AestheticTimeSheetPickerDialog
+import me.jfenn.alarmio.ui.dialogs.AestheticTimeSheetPickerDialog
 import me.jfenn.alarmio.utils.FormatUtils
 import me.jfenn.sunrisesunsetview.SunriseSunsetView
 import me.jfenn.timedatepickers.dialogs.PickerDialog

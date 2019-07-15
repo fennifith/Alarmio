@@ -6,7 +6,7 @@ interface SoundPlayer {
 
     fun play(sound: SoundData)
 
-    fun isPlaying(sound: SoundData? = null)
+    fun isPlaying(sound: SoundData? = null): Boolean
 
     fun stop()
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<me.jfenn.alarmio.views.FragmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<me.jfenn.alarmio.ui.views.FragmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment"
     android:layout_width="match_parent"

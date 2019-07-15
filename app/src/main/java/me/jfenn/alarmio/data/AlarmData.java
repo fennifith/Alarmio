@@ -8,14 +8,15 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 import java.util.Calendar;
 import java.util.Date;
 
-import androidx.annotation.Nullable;
 import me.jfenn.alarmio.R;
-import me.jfenn.alarmio.activities.MainActivity;
 import me.jfenn.alarmio.receivers.AlarmReceiver;
 import me.jfenn.alarmio.services.SleepReminderService;
+import me.jfenn.alarmio.ui.activities.MainActivity;
 
 public class AlarmData implements Parcelable {
 

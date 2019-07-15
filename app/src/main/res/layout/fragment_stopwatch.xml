@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <me.jfenn.alarmio.views.ProgressTextView
+            <me.jfenn.alarmio.ui.views.ProgressTextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

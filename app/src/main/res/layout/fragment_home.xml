@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/fragment_clock"/>
 
-        <me.jfenn.alarmio.views.PageIndicatorView
+        <me.jfenn.alarmio.ui.views.PageIndicatorView
             android:id="@+id/pageIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

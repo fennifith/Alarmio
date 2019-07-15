@@ -14,15 +14,16 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
-import me.jfenn.alarmio.activities.MainActivity;
+import me.jfenn.alarmio.ui.activities.MainActivity;
 import me.jfenn.alarmio.utils.FormatUtils;
 
 public class StopwatchService extends Service {
@@ -179,9 +180,9 @@ public class StopwatchService extends Service {
      */
     private Notification getNotification(String time) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_STOPWATCH, getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_DEFAULT));
+            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.Companion.getNOTIFICATION_CHANNEL_STOPWATCH(), getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_DEFAULT));
 
-        return new NotificationCompat.Builder(this, Alarmio.NOTIFICATION_CHANNEL_STOPWATCH)
+        return new NotificationCompat.Builder(this, Alarmio.Companion.getNOTIFICATION_CHANNEL_STOPWATCH())
                 .setSmallIcon(R.drawable.ic_stopwatch_notification)
                 .setContentTitle(getString(R.string.title_stopwatch))
                 .setContentText(time)

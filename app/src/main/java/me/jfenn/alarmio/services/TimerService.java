@@ -12,15 +12,16 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 
-import java.util.List;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
+import java.util.List;
+
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
-import me.jfenn.alarmio.activities.MainActivity;
 import me.jfenn.alarmio.data.TimerData;
 import me.jfenn.alarmio.receivers.TimerReceiver;
+import me.jfenn.alarmio.ui.activities.MainActivity;
 import me.jfenn.alarmio.utils.FormatUtils;
 
 public class TimerService extends Service {
@@ -64,7 +65,7 @@ public class TimerService extends Service {
     @Nullable
     private Notification getNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_TIMERS, "Timers", NotificationManager.IMPORTANCE_DEFAULT));
+            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.Companion.getNOTIFICATION_CHANNEL_TIMERS(), "Timers", NotificationManager.IMPORTANCE_DEFAULT));
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         String string = "";
@@ -87,7 +88,7 @@ public class TimerService extends Service {
         if (timers.size() == 1)
             intent.putExtra(TimerReceiver.EXTRA_TIMER_ID, 0);
 
-        return new NotificationCompat.Builder(this, Alarmio.NOTIFICATION_CHANNEL_TIMERS)
+        return new NotificationCompat.Builder(this, Alarmio.Companion.getNOTIFICATION_CHANNEL_TIMERS())
                 .setSmallIcon(R.drawable.ic_timer_notification)
                 .setContentTitle(getString(R.string.title_set_timer))
                 .setContentText("")
