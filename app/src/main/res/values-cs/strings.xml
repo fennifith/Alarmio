@@ -76,14 +76,14 @@
     <string name="title_ignore_battery_optimizations">Ignorovat optimalizaci baterie</string>
 
     <!-- Untranslated strings -->
-    <string name="title_files">Files</string>
-    <string name="title_files_audio_files">Audio Files</string>
-    <string name="title_files_add_audio">Choose File</string>
-    <string name="day_sunday_abbr">S</string>
-    <string name="day_monday_abbr">M</string>
-    <string name="day_tuesday_abbr">T</string>
-    <string name="day_wednesday_abbr">W</string>
-    <string name="day_thursday_abbr">T</string>
-    <string name="day_friday_abbr">F</string>
+    <string name="title_files">Soubory</string>
+    <string name="title_files_audio_files">Zvukové soubory</string>
+    <string name="title_files_add_audio">Vybrat soubor</string>
+    <string name="day_sunday_abbr">N</string>
+    <string name="day_monday_abbr">P</string>
+    <string name="day_tuesday_abbr">Ú</string>
+    <string name="day_wednesday_abbr">S</string>
+    <string name="day_thursday_abbr">Č</string>
+    <string name="day_friday_abbr">P</string>
     <string name="day_saturday_abbr">S</string>
 </resources>

@@ -17,7 +17,6 @@ public class SoundData {
 
     public static final String TYPE_RINGTONE = "ringtone";
     public static final String TYPE_RADIO = "radio";
-    public static final String TYPE_FILE = "file";
 
     private String name;
     private String type;
