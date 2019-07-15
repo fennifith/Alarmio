@@ -79,11 +79,11 @@
     <string name="title_files">Files</string>
     <string name="title_files_audio_files">Audio Files</string>
     <string name="title_files_add_audio">Choose File</string>
-    <string name="day_sunday_abbr">S</string>
-    <string name="day_monday_abbr">M</string>
-    <string name="day_tuesday_abbr">T</string>
-    <string name="day_wednesday_abbr">W</string>
-    <string name="day_thursday_abbr">T</string>
-    <string name="day_friday_abbr">F</string>
+    <string name="day_sunday_abbr">D</string>
+    <string name="day_monday_abbr">L</string>
+    <string name="day_tuesday_abbr">M</string>
+    <string name="day_wednesday_abbr">M</string>
+    <string name="day_thursday_abbr">J</string>
+    <string name="day_friday_abbr">V</string>
     <string name="day_saturday_abbr">S</string>
 </resources>
