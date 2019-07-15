@@ -15,6 +15,14 @@ fun Date.format(format: String): String {
     return SimpleDateFormat(format, Locale.getDefault()).format(this)
 }
 
+fun Date.formatDayString(): String {
+    return format(FormatUtils.DATE_FORMAT)
+}
+
+fun Date.formatDayHourString(is24Hour: Boolean = false): String {
+    return "${formatDayHourString()}, ${formatShortString(is24Hour)}"
+}
+
 /**
  * Formats the provided time into a string using [format](#format).
  *

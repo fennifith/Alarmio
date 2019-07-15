@@ -16,10 +16,8 @@ import com.afollestad.aesthetic.Aesthetic
 import com.afollestad.aesthetic.AutoSwitchMode
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import com.luckycatlabs.sunrisesunset.dto.Location
-import me.jfenn.alarmio.common.interfaces.AlarmioRepository
-import me.jfenn.alarmio.common.interfaces.AlertScheduler
-import me.jfenn.alarmio.common.interfaces.SoundPlayer
-import me.jfenn.alarmio.common.interfaces.VibrationPlayer
+import me.jfenn.alarmio.common.impl.AlertPlayerImpl
+import me.jfenn.alarmio.common.interfaces.*
 import me.jfenn.alarmio.data.AlarmData
 import me.jfenn.alarmio.data.PreferenceData
 import me.jfenn.alarmio.data.SoundData
@@ -132,6 +130,7 @@ class Alarmio : Application() {
     private val appModule = module {
         single<SoundPlayer> { SoundPlayerImpl(get()) }
         single<VibrationPlayer> { VibrationPlayerImpl(get()) }
+        single<AlertPlayer> { AlertPlayerImpl(get(), get()) }
         single<AlertScheduler> { AlertSchedulerImpl(get()) }
         single<AlarmioRepository> { AlarmioRepositoryImpl(get()) }
         viewModel { AlarmioViewModel(get(), get()) }

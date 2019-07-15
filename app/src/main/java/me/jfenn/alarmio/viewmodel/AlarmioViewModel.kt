@@ -80,7 +80,8 @@ class AlarmioViewModel(
     }
 
     fun save() {
-
+        alarms.value?.let { repo.setAlarms(it) }
+        timers.value?.let { repo.setTimers(it) }
     }
 
 }

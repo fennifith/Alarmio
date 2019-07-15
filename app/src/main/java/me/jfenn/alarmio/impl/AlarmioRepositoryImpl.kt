@@ -96,4 +96,22 @@ class AlarmioRepositoryImpl(context: Context): AlarmioRepository {
                 .apply()
     }
 
+    override fun setAlarms(alarms: List<AlarmData>) {
+        val ids = alarms.map { alarm ->
+            setAlarm(alarm)
+            alarm.id
+        }.joinToString(":")
+
+        prefs.edit().putString("alarms", ids).apply()
+    }
+
+    override fun setTimers(timers: List<TimerData>) {
+        val ids = timers.map { timer ->
+            setTimer(timer)
+            timer.id
+        }.joinToString(":")
+
+        prefs.edit().putString("timers", ids).apply()
+    }
+
 }

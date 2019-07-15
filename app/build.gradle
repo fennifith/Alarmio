@@ -100,6 +100,8 @@ dependencies {
     // lifecycle/DI helpers
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     implementation "org.koin:koin-android-viewmodel:2.0.1"
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-kotlin:3.0.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
 
     // UI stuff
     implementation 'androidx.gridlayout:gridlayout:1.0.0'

@@ -17,4 +17,8 @@ interface AlarmioRepository {
 
     fun setTimer(timer: TimerData)
 
+    fun setAlarms(alarms: List<AlarmData>)
+
+    fun setTimers(timers: List<TimerData>)
+
 }
