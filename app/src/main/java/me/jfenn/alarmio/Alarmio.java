@@ -25,7 +25,6 @@ import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -72,7 +71,6 @@ public class Alarmio extends Application implements Player.EventListener {
 
     private SimpleExoPlayer player;
     private HlsMediaSource.Factory hlsMediaSourceFactory;
-    private ProgressiveMediaSource.Factory progressiveMediaSourceFactory;
     private String currentStream;
 
     @Override
@@ -90,7 +88,6 @@ public class Alarmio extends Application implements Player.EventListener {
 
         DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoplayer2example"), null);
         hlsMediaSourceFactory = new HlsMediaSource.Factory(dataSourceFactory);
-        progressiveMediaSourceFactory = new ProgressiveMediaSource.Factory(dataSourceFactory);
 
         int alarmLength = PreferenceData.ALARM_LENGTH.getValue(this);
         for (int id = 0; id < alarmLength; id++) {
@@ -408,11 +405,7 @@ public class Alarmio extends Application implements Player.EventListener {
     public void playStream(String url, String type) {
         stopCurrentSound();
 
-        if (type.equals(SoundData.TYPE_RADIO)) {
-            player.prepare(hlsMediaSourceFactory.createMediaSource(Uri.parse(url)));
-        } else {
-            player.prepare(progressiveMediaSourceFactory.createMediaSource(Uri.parse(url)));
-        }
+        player.prepare(hlsMediaSourceFactory.createMediaSource(Uri.parse(url)));
 
         player.setPlayWhenReady(true);
         currentStream = url;
