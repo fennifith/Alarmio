@@ -13,7 +13,7 @@ data class SoundData(
      * @return                  A non-null identifier string.
      */
     override fun toString(): String {
-        return "$name:$type:$url"
+        return "$name:SoundData:$type:SoundData:$url"
     }
 
     /**
@@ -38,7 +38,7 @@ data class SoundData(
          * @return                  A recreated SoundData instance.
          */
         fun fromString(str: String): SoundData? {
-            val data = str.split(':')
+            val data = str.split(":SoundData:")
             return if (data.size == 3) {
                 SoundData(data[0], data[1], data[2])
             } else null

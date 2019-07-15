@@ -4,7 +4,7 @@ import me.jfenn.alarmio.common.data.interfaces.AlertData
 import java.util.*
 
 data class AlarmData(
-        val id: Int,
+        override val id: Int,
         var time: Calendar,
         var isEnabled: Boolean,
         var repeat: MutableMap<Int, Boolean>,
@@ -48,6 +48,10 @@ data class AlarmData(
         }
 
         return null
+    }
+
+    override fun getAlertTime(): Date? {
+        return getNext()?.time
     }
 
 }
