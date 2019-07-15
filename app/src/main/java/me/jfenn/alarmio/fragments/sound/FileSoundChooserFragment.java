@@ -66,7 +66,7 @@ public class FileSoundChooserFragment extends BaseSoundChooserFragment {
         sounds = new ArrayList<>();
         for (String string : previousFiles) {
             String[] parts = string.split(SEPARATOR);
-            sounds.add(new SoundData(parts[1], SoundData.TYPE_FILE, parts[2]));
+            sounds.add(new SoundData(parts[1], SoundData.TYPE_RINGTONE, parts[2]));
         }
 
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -91,7 +91,7 @@ public class FileSoundChooserFragment extends BaseSoundChooserFragment {
             if (data.hasExtra("name"))
                 name = data.getStringExtra("name");
 
-            onSoundChosen(new SoundData(name, SoundData.TYPE_FILE, data.getDataString()));
+            onSoundChosen(new SoundData(name, SoundData.TYPE_RINGTONE, data.getDataString()));
         }
     }
 
