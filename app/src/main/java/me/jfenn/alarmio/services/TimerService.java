@@ -65,7 +65,7 @@ public class TimerService extends Service {
     @Nullable
     private Notification getNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.Companion.getNOTIFICATION_CHANNEL_TIMERS(), "Timers", NotificationManager.IMPORTANCE_DEFAULT));
+            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.Companion.getNOTIFICATION_CHANNEL_TIMERS(), "Timers", NotificationManager.IMPORTANCE_LOW));
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         String string = "";
