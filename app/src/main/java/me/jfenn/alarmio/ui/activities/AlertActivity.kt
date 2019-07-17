@@ -51,6 +51,14 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
     private val actionView: SlideActionView? by bind(R.id.slideView)
     private val background: ImageView? by bind(R.id.background)
 
+    private val isSlowWake by lazy {
+        PreferenceData.SLOW_WAKE_UP.getValue<Boolean>(this)
+    }
+
+    private val slowWakeMillis by lazy {
+        PreferenceData.SLOW_WAKE_UP_TIME.getValue<Long>(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
