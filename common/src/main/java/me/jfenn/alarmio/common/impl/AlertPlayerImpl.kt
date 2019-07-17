@@ -12,6 +12,7 @@ class AlertPlayerImpl(
 ): TimerTask(), AlertPlayer {
 
     private var timer: Timer? = null
+    private var task: () -> Unit = {}
     private var alert: AlertData? = null
     private var vibrateDuration: Long = 500
 
@@ -21,10 +22,11 @@ class AlertPlayerImpl(
      * @param interval          The time (milliseconds) between
      *                          each alert.
      */
-    override fun start(alert: AlertData, interval: Long, vibrateDuration: Long) {
+    override fun start(alert: AlertData, task: () -> Unit, interval: Long, vibrateDuration: Long) {
         timer ?: run {
             timer = Timer()
             this.alert = alert
+            this.task = task
             this.vibrateDuration = vibrateDuration
             timer?.schedule(this, 0, interval)
         }
@@ -39,6 +41,8 @@ class AlertPlayerImpl(
     }
 
     override fun run() {
+        task()
+
         alert?.sound?.let {
             if (!soundPlayer.isPlaying(it))
                 soundPlayer.play(sound = it)

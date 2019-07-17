@@ -1,10 +1,15 @@
 package me.jfenn.alarmio.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.HapticFeedbackConstants
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +18,7 @@ import com.afollestad.aesthetic.Aesthetic
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.kotlin.bindToLifecycle
 import me.jfenn.alarmio.R
+import me.jfenn.alarmio.common.data.AlarmData
 import me.jfenn.alarmio.common.data.interfaces.AlertData
 import me.jfenn.alarmio.common.interfaces.AlertPlayer
 import me.jfenn.alarmio.common.interfaces.AlertScheduler
@@ -59,6 +65,22 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
         PreferenceData.SLOW_WAKE_UP_TIME.getValue<Long>(this)
     }
 
+    private val audioManager: AudioManager by lazy {
+        getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    }
+
+    private var originalVolume = 0
+    private var currentVolume = 0
+    private val minVolume by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            audioManager.getStreamMinVolume(AudioManager.STREAM_ALARM)
+        } else 0
+    }
+
+    private val triggerMillis by lazy {
+        System.currentTimeMillis()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
@@ -74,6 +96,8 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
 
         if (PreferenceData.RINGING_BACKGROUND_IMAGE.getValue(this))
             background?.let { ImageUtils.getBackgroundImage(it) }
+
+        originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM)
     }
 
     @SuppressLint("CheckResult")
@@ -88,10 +112,36 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
         actionView?.setListener(this)
     }
 
+    private fun updateAlert() {
+        val elapsedMillis = System.currentTimeMillis() - triggerMillis
+        val text = FormatUtils.formatMillis(elapsedMillis)
+        time?.text = String.format("-%s", text.substring(0, text.length - 3))
+
+        if (alert is AlarmData && isSlowWake) {
+            val slowWakeProgress = elapsedMillis.toFloat() / slowWakeMillis
+
+            val params = window.attributes
+            params.screenBrightness = Math.max(0.01f, Math.min(1f, slowWakeProgress))
+            window.attributes = params
+            window.addFlags(WindowManager.LayoutParams.FLAGS_CHANGED)
+
+            if (currentVolume < originalVolume) {
+                val newVolume = minVolume + Math.min(originalVolume.toFloat(), slowWakeProgress * (originalVolume - minVolume)).toInt()
+                if (newVolume != currentVolume) {
+                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0)
+                    currentVolume = newVolume
+                }
+            }
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         bindTheme()
-        alertPlayer.start(alert)
+        alertPlayer.start(
+                alert = alert,
+                task = ::updateAlert
+        )
     }
 
     override fun onStop() {
@@ -151,6 +201,21 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
     override fun onSlideRight() {
         overlay?.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
         finish()
+    }
+
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        finish()
+        startActivity(Intent(intent))
     }
 
 }

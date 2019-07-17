@@ -12,6 +12,7 @@ interface AlertPlayer {
      */
     fun start(
             alert: AlertData,
+            task: () -> Unit = {},
             interval: Long = 1000,
             vibrateDuration: Long = 500
     )
