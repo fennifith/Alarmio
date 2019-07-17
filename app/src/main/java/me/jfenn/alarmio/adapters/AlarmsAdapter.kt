@@ -78,7 +78,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         return if (viewType == 0)
             TimerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_timer, parent, false))
         else
-            AlarmViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_alarm, parent, false))
+            AlarmViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_alarm, parent, false), alarmio)
     }
 
     private fun onBindTimerViewHolder(holder: TimerViewHolder, position: Int) {
@@ -262,19 +262,6 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         holder.nameUnderline.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
         holder.name.setText(alarm.getName(alarmio))
-        holder.name.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                // ignore
-            }
-
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                alarm.setName(alarmio, holder.name.text.toString())
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-                // ignore
-            }
-        })
 
         if (isExpanded)
              holder.name.setOnClickListener(null)
@@ -423,7 +410,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
     /**
      * ViewHolder for alarm items.
      */
-    class AlarmViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class AlarmViewHolder(v: View, val alarmio: Alarmio) : RecyclerView.ViewHolder(v) {
         val name: EditText = v.findViewById(R.id.name)
         val nameUnderline: View = v.findViewById(R.id.underline)
         val enable: SwitchCompat = v.findViewById(R.id.enable)
@@ -443,5 +430,24 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         val repeatIndicator: ImageView = v.findViewById(R.id.repeatIndicator)
         val soundIndicator: ImageView = v.findViewById(R.id.soundIndicator)
         val vibrateIndicator: ImageView = v.findViewById(R.id.vibrateIndicator)
+
+        val alarms: List<AlarmData> = alarmio.alarms
+
+        init {
+            name.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                    // ignore
+                }
+
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                    // ignore
+                }
+
+                override fun afterTextChanged(editable: Editable) {
+                    alarms[adapterPosition].setName(alarmio, editable.toString())
+
+                }
+            })
+        }
     }
 }
