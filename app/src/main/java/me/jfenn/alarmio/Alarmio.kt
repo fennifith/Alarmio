@@ -18,10 +18,7 @@ import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
 import com.luckycatlabs.sunrisesunset.dto.Location
 import me.jfenn.alarmio.common.impl.AlertPlayerImpl
 import me.jfenn.alarmio.common.interfaces.*
-import me.jfenn.alarmio.data.AlarmData
 import me.jfenn.alarmio.data.PreferenceData
-import me.jfenn.alarmio.data.SoundData
-import me.jfenn.alarmio.data.TimerData
 import me.jfenn.alarmio.impl.AlarmioRepositoryImpl
 import me.jfenn.alarmio.impl.AlertSchedulerImpl
 import me.jfenn.alarmio.impl.SoundPlayerImpl
@@ -49,10 +46,6 @@ class Alarmio : Application() {
         private set
     private var sunsetCalculator: SunriseSunsetCalculator? = null
 
-    private var alarms: MutableList<AlarmData>? = null
-    private var timers: MutableList<TimerData>? = null
-
-    private var listeners: MutableList<AlarmioListener>? = null
     private var listener: ActivityListener? = null
 
     /**
@@ -147,127 +140,11 @@ class Alarmio : Application() {
         }
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        listeners = ArrayList()
-        alarms = ArrayList()
-        timers = ArrayList()
 
-        val alarmLength = PreferenceData.ALARM_LENGTH.getValue<Int>(this)
-        for (id in 0 until alarmLength) {
-            alarms!!.add(AlarmData(id, this))
-        }
-
-        val timerLength = PreferenceData.TIMER_LENGTH.getValue<Int>(this)
-        for (id in 0 until timerLength) {
-            val timer = TimerData(id, this)
-            if (timer.isSet)
-                timers!!.add(timer)
-        }
-
-        if (timerLength > 0)
-            startService(Intent(this, TimerService::class.java))
+        //if (timerLength > 0)
+        //    startService(Intent(this, TimerService::class.java))
 
         SleepReminderService.refreshSleepTime(this)
-    }
-
-    fun getAlarms(): List<AlarmData>? {
-        return alarms
-    }
-
-    fun getTimers(): List<TimerData>? {
-        return timers
-    }
-
-    /**
-     * Create a new alarm, assigning it an unused preference id.
-     *
-     * @return          The newly instantiated [AlarmData](./data/AlarmData).
-     */
-    fun newAlarm(): AlarmData {
-        val alarm = AlarmData(alarms!!.size, Calendar.getInstance())
-        alarm.sound = SoundData.fromString(PreferenceData.DEFAULT_ALARM_RINGTONE.getValue(this, ""))
-        alarms!!.add(alarm)
-        onAlarmCountChanged()
-        return alarm
-    }
-
-    /**
-     * Remove an alarm and all of its its preferences.
-     *
-     * @param alarm     The alarm to be removed.
-     */
-    fun removeAlarm(alarm: AlarmData) {
-        alarm.onRemoved(this)
-
-        val index = alarms!!.indexOf(alarm)
-        alarms!!.removeAt(index)
-        for (i in index until alarms!!.size) {
-            alarms!![i].onIdChanged(i, this)
-        }
-
-        onAlarmCountChanged()
-        onAlarmsChanged()
-    }
-
-    /**
-     * Update preferences to show that the alarm count has been changed.
-     */
-    fun onAlarmCountChanged() {
-        PreferenceData.ALARM_LENGTH.setValue(this, alarms!!.size)
-    }
-
-    /**
-     * Notify the application of changes to the current alarms.
-     */
-    fun onAlarmsChanged() {
-        for (listener in listeners!!) {
-            listener.onAlarmsChanged()
-        }
-    }
-
-    /**
-     * Create a new timer, assigning it an unused preference id.
-     *
-     * @return          The newly instantiated [TimerData](./data/TimerData).
-     */
-    fun newTimer(): TimerData {
-        val timer = TimerData(timers!!.size)
-        timers!!.add(timer)
-        onTimerCountChanged()
-        return timer
-    }
-
-    /**
-     * Remove a timer and all of its preferences.
-     *
-     * @param timer     The timer to be removed.
-     */
-    fun removeTimer(timer: TimerData) {
-        timer.onRemoved(this)
-
-        val index = timers!!.indexOf(timer)
-        timers!!.removeAt(index)
-        for (i in index until timers!!.size) {
-            timers!![i].onIdChanged(i, this)
-        }
-
-        onTimerCountChanged()
-        onTimersChanged()
-    }
-
-    /**
-     * Update the preferences to show that the timer count has been changed.
-     */
-    fun onTimerCountChanged() {
-        PreferenceData.TIMER_LENGTH.setValue(this, timers!!.size)
-    }
-
-    /**
-     * Notify the application of changes to the current timers.
-     */
-    fun onTimersChanged() {
-        for (listener in listeners!!) {
-            listener.onTimersChanged()
-        }
     }
 
     /**
@@ -351,14 +228,6 @@ class Alarmio : Application() {
         return sunsetCalculator
     }
 
-    fun addListener(listener: AlarmioListener) {
-        listeners!!.add(listener)
-    }
-
-    fun removeListener(listener: AlarmioListener) {
-        listeners!!.remove(listener)
-    }
-
     fun setListener(listener: ActivityListener?) {
         this.listener = listener
 
@@ -369,12 +238,6 @@ class Alarmio : Application() {
     fun requestPermissions(vararg permissions: String) {
         if (listener != null)
             listener!!.requestPermissions(*permissions)
-    }
-
-    interface AlarmioListener {
-        fun onAlarmsChanged()
-
-        fun onTimersChanged()
     }
 
     interface ActivityListener {

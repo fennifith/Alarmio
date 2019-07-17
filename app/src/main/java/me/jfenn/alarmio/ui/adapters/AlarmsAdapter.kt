@@ -4,8 +4,6 @@ import android.animation.Animator
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.content.Context
 import android.graphics.Color
 import android.os.Handler
 import android.text.Editable
@@ -22,6 +20,7 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -29,8 +28,9 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.afollestad.aesthetic.Aesthetic
 import me.jfenn.alarmio.Alarmio
 import me.jfenn.alarmio.R
-import me.jfenn.alarmio.data.AlarmData
-import me.jfenn.alarmio.data.TimerData
+import me.jfenn.alarmio.common.data.AlarmData
+import me.jfenn.alarmio.common.data.TimerData
+import me.jfenn.alarmio.common.data.interfaces.AlertData
 import me.jfenn.alarmio.ui.dialogs.AestheticTimeSheetPickerDialog
 import me.jfenn.alarmio.ui.dialogs.AlertDialog
 import me.jfenn.alarmio.ui.dialogs.SoundChooserDialog
@@ -47,11 +47,12 @@ import java.util.concurrent.TimeUnit
  * View adapter for the "alarms" list; displays all timers and
  * alarms currently stored in the application.
  */
-class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: RecyclerView, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val alarmManager: AlarmManager? = alarmio.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
-    private val timers: List<TimerData> = alarmio.timers
-    private val alarms: List<AlarmData> = alarmio.alarms
+class AlarmsAdapter(
+        private val alarmio: Alarmio,
+        private val recycler: RecyclerView,
+        private val fragmentManager: FragmentManager,
+        private val alerts: List<MutableLiveData<AlertData>>
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var expandedPosition = -1
 
@@ -74,6 +75,10 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
             recycler.post { notifyDataSetChanged() }
         }
 
+    override fun getItemViewType(position: Int): Int {
+        return if (alerts[position].value is TimerData) 0 else 1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0)
             TimerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_timer, parent, false))
@@ -85,7 +90,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         holder.runnable = object : Runnable {
             override fun run() {
                 try {
-                    getTimer(holder.adapterPosition)?.let { timer ->
+                    (alerts[position].value as? TimerData)?.let { timer ->
                         val text = FormatUtils.formatMillis(timer.remainingMillis)
                         holder.time.text = text.substring(0, text.length - 3)
                         holder.progress.update(1 - timer.remainingMillis.toFloat() / timer.duration)
@@ -100,37 +105,40 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
 
         holder.stop.setColorFilter(textColorPrimary)
         holder.stop.setOnClickListener {
-            getTimer(holder.adapterPosition)?.let { timer ->
-                alarmio.removeTimer(timer)
+            (alerts[position].value as? TimerData)?.let { timer ->
+                // alarmio.removeTimer(timer)
+                TODO("remove timer")
             }
         }
     }
 
     private fun onBindAlarmViewHolderRepeat(holder: AlarmViewHolder, alarm: AlarmData) {
         holder.repeat.setOnCheckedChangeListener(null)
-        holder.repeat.isChecked = alarm.isRepeat
+        holder.repeat.isChecked = alarm.isRepeat()
         holder.repeat.setOnCheckedChangeListener { _, b ->
-            for (i in 0 until alarm.days.size) {
-                alarm.days[i] = b
+            for (day in AlarmData.days) {
+                alarm.repeat[day] = b
             }
 
-            alarm.setDays(alarmio, alarm.days)
+            // alarm.setDays(alarmio, alarm.days)
 
             val transition = AutoTransition()
             transition.duration = 150
             TransitionManager.beginDelayedTransition(recycler, transition)
 
             recycler.post { notifyDataSetChanged() }
+
+            TODO("apply repeat")
         }
 
-        holder.days.visibility = if (alarm.isRepeat) View.VISIBLE else View.GONE
+        holder.days.visibility = if (alarm.isRepeat()) View.VISIBLE else View.GONE
 
         val listener : DaySwitch.OnCheckedChangeListener = object : DaySwitch.OnCheckedChangeListener {
             override fun onCheckedChanged(daySwitch: DaySwitch, b: Boolean) {
-                alarm.days[holder.days.indexOfChild(daySwitch)] = b
-                alarm.setDays(alarmio, alarm.days)
+                alarm.repeat[AlarmData.days[holder.days.indexOfChild(daySwitch)]] = b
+                // alarm.setDays(alarmio, alarm.days)
 
-                if (!alarm.isRepeat) {
+                if (!alarm.isRepeat()) {
                     notifyItemChanged(holder.adapterPosition)
                 } else {
                     // if the view isn't going to change size in the recycler,
@@ -138,12 +146,15 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                     //   the recyclerview attempts to smooth the transition)
                     onBindAlarmViewHolder(holder, holder.adapterPosition)
                 }
+
+                TODO("apply repeat")
             }
         }
 
         for (i in 0..6) {
             val daySwitch = holder.days.getChildAt(i) as DaySwitch
-            daySwitch.isChecked = alarm.days[i]
+            daySwitch.onCheckedChangeListener = null
+            daySwitch.isChecked = alarm.repeat[i] ?: false
             daySwitch.onCheckedChangeListener = listener
 
             when (i) {
@@ -159,14 +170,15 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
     }
 
     private fun onBindAlarmViewHolderToggles(holder: AlarmViewHolder, alarm: AlarmData) {
-        holder.ringtoneImage.setImageResource(if (alarm.hasSound()) R.drawable.ic_ringtone else R.drawable.ic_ringtone_disabled)
-        holder.ringtoneImage.alpha = if (alarm.hasSound()) 1f else 0.333f
-        holder.ringtoneText.text = if (alarm.hasSound()) alarm.getSound()?.name else alarmio.getString(R.string.title_sound_none)
+        holder.ringtoneImage.setImageResource(if (alarm.sound == null) R.drawable.ic_ringtone_disabled else R.drawable.ic_ringtone)
+        holder.ringtoneImage.alpha = if (alarm.sound == null) 0.333f else 1f
+        holder.ringtoneText.text = alarm.sound?.name ?: alarmio.getString(R.string.title_sound_none)
         holder.ringtone.setOnClickListener { view ->
             val dialog = SoundChooserDialog()
             dialog.setListener { sound ->
-                alarm.setSound(alarmio, sound)
+                // alarm.setSound(alarmio, sound)
                 onBindAlarmViewHolderToggles(holder, alarm)
+                TODO("set sound")
             }
             dialog.show(fragmentManager, null)
         }
@@ -175,7 +187,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         holder.vibrateImage.setImageDrawable(vibrateDrawable)
         holder.vibrateImage.alpha = if (alarm.isVibrate) 1f else 0.333f
         holder.vibrate.setOnClickListener { view ->
-            alarm.setVibrate(alarmio, !alarm.isVibrate)
+            // alarm.setVibrate(alarmio, !alarm.isVibrate)
 
             val vibrateDrawable1 = AnimatedVectorDrawableCompat.create(alarmio, if (alarm.isVibrate) R.drawable.ic_none_to_vibrate else R.drawable.ic_vibrate_to_none)
             if (vibrateDrawable1 != null) {
@@ -187,6 +199,8 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
             holder.vibrateImage.animate().alpha(if (alarm.isVibrate) 1f else 0.333f).setDuration(250).start()
             if (alarm.isVibrate)
                 view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+
+            TODO("set vibrate")
         }
     }
 
@@ -255,15 +269,14 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
 
     private fun onBindAlarmViewHolder(holder: AlarmViewHolder, position: Int) {
         val isExpanded = position == expandedPosition
-
-        val alarm = getAlarm(position) ?: return
+        val alarm = alerts[position] as? AlarmData ?: return
 
         holder.name.isFocusableInTouchMode = isExpanded
         holder.name.isCursorVisible = false
         holder.name.clearFocus()
         holder.nameUnderline.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
-        holder.name.setText(alarm.getName(alarmio))
+        holder.name.setText("Alarm ${alarm.id}") // TODO: get/set actual alarm name
 
         if (isExpanded)
              holder.name.setOnClickListener(null)
@@ -274,13 +287,15 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         holder.enable.setOnCheckedChangeListener(null)
         holder.enable.isChecked = alarm.isEnabled
         holder.enable.setOnCheckedChangeListener { _, b ->
-            alarm.setEnabled(alarmio, alarmManager, b)
+            // alarm.setEnabled(alarmio, alarmManager, b)
 
             val transition = AutoTransition()
             transition.duration = 200
             TransitionManager.beginDelayedTransition(recycler, transition)
 
             recycler.post { notifyDataSetChanged() }
+
+            TODO("enable/disable")
         }
 
         holder.time.text = FormatUtils.formatShort(alarmio, alarm.time.time)
@@ -290,9 +305,11 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                         override fun onSelect(dialog: PickerDialog<LinearTimePickerView>, view: LinearTimePickerView) {
                             alarm.time.set(Calendar.HOUR_OF_DAY, view.hourOfDay)
                             alarm.time.set(Calendar.MINUTE, view.minute)
-                            alarm.setTime(alarmio, alarmManager, alarm.time.timeInMillis)
+                            // alarm.setTime(alarmio, alarmManager, alarm.time.timeInMillis)
 
                             notifyItemChanged(holder.adapterPosition)
+
+                            TODO("set alarm time")
                         }
 
                         override fun onCancel(dialog: PickerDialog<LinearTimePickerView>) {
@@ -304,7 +321,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
 
         holder.nextTime.visibility = if (alarm.isEnabled) View.VISIBLE else View.GONE
 
-        val nextAlarm = alarm.next
+        val nextAlarm = alarm.getNext()
         if (alarm.isEnabled && nextAlarm != null) {
             // minutes in a week: 10080
             // maximum value of an integer: 2147483647
@@ -319,8 +336,8 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
             onBindAlarmViewHolderRepeat(holder, alarm)
             onBindAlarmViewHolderToggles(holder, alarm)
         } else {
-            holder.repeatIndicator.alpha = if (alarm.isRepeat) 1f else 0.333f
-            holder.soundIndicator.alpha = if (alarm.hasSound()) 1f else 0.333f
+            holder.repeatIndicator.alpha = if (alarm.isRepeat()) 1f else 0.333f
+            holder.soundIndicator.alpha = if (alarm.sound != null) 1f else 0.333f
             holder.vibrateIndicator.alpha = if (alarm.isVibrate) 1f else 0.333f
         }
 
@@ -328,10 +345,11 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         holder.delete.visibility = if (isExpanded) View.VISIBLE else View.GONE
         holder.delete.setOnClickListener { view ->
             AlertDialog(view.context)
-                    .setContent(alarmio.getString(R.string.msg_delete_confirmation, alarm.getName(alarmio)))
+                    .setContent(alarmio.getString(R.string.msg_delete_confirmation, "Alarm ${alarm.id}")) // TODO: get actual alarm id
                     .setListener { _, ok ->
-                        if (ok)
-                            alarmio.removeAlarm(alarm)
+                        //if (ok)
+                        //    alarmio.removeAlarm(alarm)
+                        TODO("remove alarm")
                     }
                     .show()
         }
@@ -357,37 +375,8 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position < timers.size) 0 else 1
-    }
-
     override fun getItemCount(): Int {
-        return timers.size + alarms.size
-    }
-
-    /**
-     * Returns the timer that should be bound to the
-     * specified position in the list - null if there
-     * is no timer to be bound.
-     */
-    private fun getTimer(position: Int): TimerData? {
-        return if (position in (0 until timers.size))
-            timers[position]
-        else null
-    }
-
-    /**
-     * Returns the alarm that should be bound to
-     * the specified position in the list - null if
-     * there is no alarm to be bound.
-     */
-    private fun getAlarm(position: Int): AlarmData? {
-        val alarmPosition = position - timers.size
-
-        return if (alarmPosition in (0 until alarms.size))
-            alarms[alarmPosition]
-        else null
-
+        return alerts.size
     }
 
     /**
@@ -433,7 +422,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         val soundIndicator: ImageView = v.findViewById(R.id.soundIndicator)
         val vibrateIndicator: ImageView = v.findViewById(R.id.vibrateIndicator)
 
-        val alarms: List<AlarmData> = alarmio.alarms
+        var setName: (name: String) -> Unit = {}
 
         init {
             name.addTextChangedListener(object : TextWatcher {
@@ -446,8 +435,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                 }
 
                 override fun afterTextChanged(editable: Editable) {
-                    alarms[adapterPosition].setName(alarmio, editable.toString())
-
+                    setName(editable.toString())
                 }
             })
         }

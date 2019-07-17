@@ -168,7 +168,7 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
                         }?.let {
                             alertScheduler.schedule(it)
                         }?.let {
-                            alarmio.save()
+                            alarmio.set()
                         }
 
                         finish()
@@ -184,7 +184,7 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
                             }?.let {
                                 alertScheduler.schedule(it)
                             }?.let {
-                                alarmio.save()
+                                alarmio.set()
                             }
 
                             finish()

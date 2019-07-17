@@ -16,12 +16,10 @@ import java.lang.ref.WeakReference;
 
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
-import me.jfenn.alarmio.receivers.TimerReceiver;
 import me.jfenn.alarmio.ui.fragments.BaseFragment;
 import me.jfenn.alarmio.ui.fragments.HomeFragment;
 import me.jfenn.alarmio.ui.fragments.SplashFragment;
 import me.jfenn.alarmio.ui.fragments.StopwatchFragment;
-import me.jfenn.alarmio.ui.fragments.TimerFragment;
 
 public class MainActivity extends AestheticActivity implements FragmentManager.OnBackStackChangedListener, Alarmio.ActivityListener {
 
@@ -110,7 +108,7 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
                     return fragment;
 
                 return new StopwatchFragment();
-            case FRAGMENT_TIMER:
+            /*case FRAGMENT_TIMER:
                 if (intent.hasExtra(TimerReceiver.EXTRA_TIMER_ID)) {
                     int id = intent.getIntExtra(TimerReceiver.EXTRA_TIMER_ID, 0);
                     if (alarmio.getTimers().size() <= id || id < 0)
@@ -124,7 +122,7 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
                     return newFragment;
                 }
 
-                return fragment;
+                return fragment;*/
             default:
                 if (Intent.ACTION_MAIN.equals(intent.getAction()) || intent.getAction() == null)
                     return new SplashFragment();
@@ -171,12 +169,6 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState != null ? outState : new Bundle());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        alarmio.stopCurrentSound();
     }
 
     @Override
