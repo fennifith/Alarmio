@@ -23,7 +23,7 @@
     <string name="title_sunrise">日出</string>
     <string name="title_sunset">日落</string>
     <string name="title_theme">主题</string>
-    <string name="title_appearance">Appearance</string>
+    <string name="title_appearance">样式</string>
     <string name="title_sound_none">无</string>
     <string name="title_snooze">打盹</string>
     <string name="title_alarms">闹钟</string>
@@ -72,6 +72,6 @@
         <item>AMOLED</item>
     </string-array>
 
-    <string name="msg_battery_optimizations_switch_enable">打开/“闹钟”/旁边的开关。 您可能需要向下滚动查看更多。</string>
+    <string name="msg_battery_optimizations_switch_enable">打开/“闹钟”/旁边的开关。您可能需要向下滚动以查看更多。</string>
     <string name="title_ignore_battery_optimizations">忽略电池优化</string>
 </resources>
