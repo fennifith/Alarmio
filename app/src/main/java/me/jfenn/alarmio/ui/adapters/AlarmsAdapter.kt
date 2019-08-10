@@ -20,7 +20,6 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -51,7 +50,7 @@ class AlarmsAdapter(
         private val alarmio: Alarmio,
         private val recycler: RecyclerView,
         private val fragmentManager: FragmentManager,
-        private val alerts: List<MutableLiveData<AlertData>>
+        private val alerts: List<AlertData>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var expandedPosition = -1
@@ -76,7 +75,7 @@ class AlarmsAdapter(
         }
 
     override fun getItemViewType(position: Int): Int {
-        return if (alerts[position].value is TimerData) 0 else 1
+        return if (alerts[position] is TimerData) 0 else 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -90,10 +89,10 @@ class AlarmsAdapter(
         holder.runnable = object : Runnable {
             override fun run() {
                 try {
-                    (alerts[position].value as? TimerData)?.let { timer ->
-                        val text = FormatUtils.formatMillis(timer.remainingMillis)
+                    (alerts[position] as? TimerData)?.let { timer ->
+                        val text = FormatUtils.formatMillis(timer.getRemainingMillis())
                         holder.time.text = text.substring(0, text.length - 3)
-                        holder.progress.update(1 - timer.remainingMillis.toFloat() / timer.duration)
+                        holder.progress.update(1 - timer.getRemainingMillis().toFloat() / timer.duration)
                     }
 
                     holder.handler.postDelayed(this, 1000)
@@ -105,7 +104,7 @@ class AlarmsAdapter(
 
         holder.stop.setColorFilter(textColorPrimary)
         holder.stop.setOnClickListener {
-            (alerts[position].value as? TimerData)?.let { timer ->
+            (alerts[position] as? TimerData)?.let { timer ->
                 // alarmio.removeTimer(timer)
                 TODO("remove timer")
             }
