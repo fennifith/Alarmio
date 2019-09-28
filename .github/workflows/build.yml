@@ -1,0 +1,23 @@
+name: Gradle Build
+
+on:
+  push:
+    paths:
+      - 'app/*'
+      - 'common/*'
+      - '*.gradle'
+  pull_request:
+    paths:
+      - 'app/*'
+      - 'common/*'
+      - '*.gradle'
+
+jobs:
+  test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: MrRamych/gradle-actions/openjdk-8@3.0
+        with:
+          args: test
