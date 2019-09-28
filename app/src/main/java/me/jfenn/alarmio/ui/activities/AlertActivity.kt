@@ -149,6 +149,17 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
         alertPlayer.stop()
     }
 
+    fun snooze(snoozeDuration: Long) {
+        val timer = alarmio.newTimer() ?: return
+        timer.value = timer.value?.apply {
+            isVibrate = alert.isVibrate
+            sound = alert.sound
+            duration = snoozeDuration
+        }
+
+        timer.value?.let { alertScheduler.schedule(it) }
+    }
+
     override fun onSlideLeft() {
         val minutes = intArrayOf(2, 5, 10, 20, 30, 60, -1)
         val names = minutes.map {
@@ -161,31 +172,14 @@ class AlertActivity: RxAppCompatActivity(), SlideActionListener {
         AlertDialog.Builder(this, if (isDark) R.style.Theme_AppCompat_Dialog_Alert else R.style.Theme_AppCompat_Light_Dialog_Alert)
                 .setItems(names) { _, which ->
                     if (minutes[which] > 0) {
-                        alarmio.newTimer()?.apply {
-                            isVibrate = alert.isVibrate
-                            sound = alert.sound
-                            duration = TimeUnit.MINUTES.toMillis(minutes[which].toLong())
-                        }?.let {
-                            alertScheduler.schedule(it)
-                        }?.let {
-                            alarmio.set()
-                        }
-
+                        snooze(TimeUnit.MINUTES.toMillis(minutes[which].toLong()))
                         finish()
                     } else {
                         val timerDialog = TimeChooserDialog(this)
                         timerDialog.setListener { hours, minutes1, seconds ->
-                            alarmio.newTimer()?.apply {
-                                isVibrate = alert.isVibrate
-                                sound = alert.sound
-                                duration = TimeUnit.HOURS.toMillis(hours.toLong())
+                            snooze(TimeUnit.HOURS.toMillis(hours.toLong())
                                     + TimeUnit.MINUTES.toMillis(minutes1.toLong())
-                                    + TimeUnit.SECONDS.toMillis(seconds.toLong())
-                            }?.let {
-                                alertScheduler.schedule(it)
-                            }?.let {
-                                alarmio.set()
-                            }
+                                    + TimeUnit.SECONDS.toMillis(seconds.toLong()))
 
                             finish()
                         }

@@ -60,8 +60,6 @@
         <service android:name=".services.StopwatchService" />
         <service android:name=".services.TimerService" />
 
-        <receiver android:name=".receivers.AlarmReceiver" />
-        <receiver android:name=".receivers.TimerReceiver" />
         <receiver android:name=".receivers.RestoreOnBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
