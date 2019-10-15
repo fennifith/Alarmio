@@ -37,5 +37,5 @@ jobs:
         name: Upload APK to Release
         with:
           name: alarmio.apk
-          path: app/build/output/apk/oss/release/app-oss-release.apk
+          path: app/build/outputs/apk/oss/release/app-oss-release.apk
           repo-token: ${{ secrets.GITHUB_TOKEN }}
