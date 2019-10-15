@@ -38,10 +38,10 @@ jobs:
           path: app/build/outputs/apk/oss/release/app-oss-release.apk
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to Google Play
-          env:
-            GITHUB_TOKEN_PUB: ${{ secrets.GITHUB_TOKEN_PUB }}
-            KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-            KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-            KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
-            CI: true
-          run: ./gradlew publishGplayRelease
+        env:
+          GITHUB_TOKEN_PUB: ${{ secrets.GITHUB_TOKEN_PUB }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
+          CI: true
+        run: ./gradlew publishGplayRelease
