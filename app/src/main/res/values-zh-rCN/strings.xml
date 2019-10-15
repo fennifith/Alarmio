@@ -42,7 +42,7 @@
     <string name="title_radio_create">创建</string>
     <string name="msg_radio_create">创建一个新广播</string>
     <string name="msg_radio_url">粘贴 \'.m3u8\' 广播链接到此处…</string>
-    <string name="msg_radio_previous"><选择以前使用的广播</string>
+    <string name="msg_radio_previous">选择以前使用的广播</string>
     <string name="title_radio_stop">停止</string>
     <string name="title_radio">广播</string>
     <string name="title_time_zones">时区</string>
@@ -50,7 +50,7 @@
     <string name="title_default_alarm_ringtone">默认闹钟铃声</string>
     <string name="title_default_timer_ringtone">默认计时器铃声</string>
     <string name="title_sleep_reminder">睡眠提醒</string>
-    <string name="desc_sleep_reminder">发送通知以提醒您在闹钟响铃前的某个时间抛开手机进入梦乡。/string>
+    <string name="desc_sleep_reminder">发送通知以提醒您在闹钟响铃前的某个时间抛开手机进入梦乡。</string>
     <string name="title_sleep_reminder_time">睡眠提醒时间</string>
     <string name="desc_sleep_reminder_time">%1$d 小时前</string>
     <string name="title_slow_wake_up">慢醒</string>
