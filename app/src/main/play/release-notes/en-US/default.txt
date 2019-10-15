@@ -2,5 +2,5 @@
 - add (some) alarm intents for external applications
 - fix errors in about section
 - French localization (thanks @Larnicone)
-- Czech localization (thanks @ikanova)
+- Czech localization (thanks @ikanakova)
 - Simplified Chinese localization (thanks @yzqzss)
