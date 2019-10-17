@@ -30,7 +30,7 @@ jobs:
           KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
           CI: true
-        run: /gradlew assembleOss
+        run: ./gradlew assembleOss
       - uses: Shopify/upload-to-release@master
         name: Upload APK to Release
         with:
