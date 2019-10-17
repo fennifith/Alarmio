@@ -3,22 +3,22 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
 
 android {
-    def isRunningOnTravis = System.getenv("CI") == "true"
+    def isCI = System.getenv("CI") == "true"
 
     compileSdkVersion 28
     defaultConfig {
         applicationId "me.jfenn.alarmio"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 19
-        versionName "1.0.3"
+        versionCode 20
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
 
-        if (isRunningOnTravis) {
-            def githubToken = System.getenv("GITHUB_TOKEN_PUB")
+        def githubToken = System.getenv("GITHUB_TOKEN_PUB")
+        if (isCI && githubToken != null) {
             buildConfigField "String", "GITHUB_TOKEN", "\"$githubToken\""
         } else {
             buildConfigField "String", "GITHUB_TOKEN", 'null'
@@ -37,7 +37,7 @@ android {
         abortOnError false
     }
 
-    if (isRunningOnTravis) {
+    if (isCI) {
         buildTypes.release.signingConfig = signingConfigs.release
         signingConfigs.release.storeFile = file("../key.jks")
         signingConfigs.release.storePassword = System.getenv("KEYSTORE_PASSWORD")
