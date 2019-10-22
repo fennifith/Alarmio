@@ -1,0 +1,86 @@
+<resources>
+    <string name="title_alarm">%d. ébresztés</string>
+    <string name="title_alarm_next">%s múlva.</string>
+    <string name="title_none">Nincs</string>
+    <string name="title_vibrate">Rezgés</string>
+    <string name="title_repeat">Ismétlés</string>
+    <string name="title_set_alarm">Ébresztés</string>
+    <string name="title_set_timer">Időzítő</string>
+    <string name="title_set_stopwatch">Stopper</string>
+    <string name="title_lap">Kör</string>
+    <string name="title_stopwatch">Stopper</string>
+    <string name="title_stopwatch_share">%s stopper: %s</string>
+    <string name="title_time">Idő: %s</string>
+    <string name="title_lap_time">Kör: %s</string>
+    <string name="title_total_time">Összesen: %s</string>
+    <string name="title_share_results">Eredmények megosztása…</string>
+    <string name="msg_delete_confirmation">Biztos, hogy törli a következőt: %s?</string>
+    <string name="title_delete">Törlés</string>
+    <string name="title_start_timer">Időzítő indítása</string>
+    <string name="title_auto">Automatikus</string>
+    <string name="title_sunrise">Napkelte</string>
+    <string name="title_sunset">Napnyugta</string>
+    <string name="title_theme">Téma</string>
+    <string name="title_appearance">Megjelenés</string>
+    <string name="title_sound_none">Nincs</string>
+    <string name="title_snooze">Szundi</string>
+    <string name="title_alarms">Ébresztések</string>
+    <string name="title_settings">Beállítások</string>
+    <string name="title_ringtones">Csengőhangok</string>
+    <string name="word_day">nap</string>
+    <string name="word_days">nap</string>
+    <string name="word_minute">perc</string>
+    <string name="word_minutes">perc</string>
+    <string name="word_hour">óra</string>
+    <string name="word_hours">óra</string>
+    <string name="word_join">és</string>
+    <string name="title_snooze_custom">Egyéni…</string>
+    <string name="msg_snoozed_until">Szundi eddig: %s</string>
+    <string name="title_radio_test">Teszt</string>
+    <string name="title_radio_create">Létrehozás</string>
+    <string name="msg_radio_create">Új rádió létrehozása</string>
+    <string name="msg_radio_url">Illeszen be ide egy „.m3u8” rádio URL-t…</string>
+    <string name="msg_radio_previous">Válasszon egy korábban használt rádiót</string>
+    <string name="title_radio_stop">Leállítás</string>
+    <string name="title_radio">Rádió</string>
+    <string name="title_time_zones">Időzónák</string>
+    <string name="title_behavior">Viselkedés</string>
+    <string name="title_default_alarm_ringtone">Alapértelmezett ébresztési csengőhang</string>
+    <string name="title_default_timer_ringtone">Alapértelmezett időzítő csengőhang</string>
+    <string name="title_sleep_reminder">Alvásemlékeztető</string>
+    <string name="desc_sleep_reminder">Értesítés küldése, amely figyelmezteti, hogy menjen aludni egy bizonyos idővel az ébresztő csörgése előtt, ha használja a telefont.</string>
+    <string name="title_sleep_reminder_time">Ébresztési emlékeztető ideje</string>
+    <string name="desc_sleep_reminder_time">%1$d órával korábban</string>
+    <string name="title_slow_wake_up">Lassú ébresztés</string>
+    <string name="desc_slow_wake_up">Fokozatosan növeli a fény- és hangerőt, ha az ébresztés csörög.</string>
+    <string name="title_slow_wake_up_time">Lassú ébresztés időtartama</string>
+    <string name="title_about">Névjegy és nyílt forráskódú licencek</string>
+    <string name="title_choose_time_zone">Válasszon időzónát</string>
+    <string name="msg_sleep_reminder">A következő ébresztés körülbelül %s múlva fog csörögni. Hogy annyit aludjon, amennyit a beállítások menüben megadott, most kellene aludni mennie.</string>
+    <string name="title_alarm_name">Ébresztés neve</string>
+    <string name="title_background_image">Háttérkép</string>
+    <string name="title_ringing_background_image">Háttérkép megjelenítése az ébresztőknél/időzítőknél</string>
+    <string name="desc_ringing_background_image">Megjelenjen-e a háttérkép, ha az ébresztő vagy időzítő csörög.</string>
+    <string name="msg_alarms_empty">Még nincsenek ébresztések beállítva. Nyomja meg a „+” gombot egy új létrehozásához.</string>
+    <string name="msg_time_zones_selected">%d kiválasztva</string>
+    <string name="title_files">Fájlok</string>
+    <string name="title_files_audio_files">Hangfájlok</string>
+    <string name="title_files_add_audio">Válasszon fájlt</string>
+    <string-array name="array_themes">
+        <item>Időzített</item>
+        <item>Nappal</item>
+        <item>Éjszaka</item>
+        <item>AMOLED</item>
+    </string-array>
+
+    <string name="msg_battery_optimizations_switch_enable">Kapcsolja be az „Alarmio” melletti kapcsolót. Lehet hogy sokáig kell görgetnie… nagyon.</string>
+    <string name="title_ignore_battery_optimizations">Akkumulátor optimalizációk mellőzése</string>
+
+    <string name="day_sunday_abbr">V</string>
+    <string name="day_monday_abbr">H</string>
+    <string name="day_tuesday_abbr">K</string>
+    <string name="day_wednesday_abbr">Sz</string>
+    <string name="day_thursday_abbr">Cs</string>
+    <string name="day_friday_abbr">P</string>
+    <string name="day_saturday_abbr">Sz</string>
+</resources>

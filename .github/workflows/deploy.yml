@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  gplay-build:
+    name: "Deploy APK"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: master
+      - name: Set up OpenJDK 1.8
+        uses: joschi/setup-jdk@v1
+        with:
+          java-version: 'openjdk8'
+      - name: Extract secrets
+        env:
+          SECRETS_KEY: ${{ secrets.SECRETS_KEY }}
+          SECRETS_IV: ${{ secrets.SECRETS_IV }}
+        run: |
+          openssl aes-256-cbc -K $SECRETS_KEY -iv $SECRETS_IV -in secrets.tar.enc -out secrets.tar -d
+          tar -xvf secrets.tar --overwrite
+      - name: Gradle Build / APK
+        env:
+          GITHUB_TOKEN_PUB: ${{ secrets.GITHUB_TOKEN_PUB }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
+          CI: true
+        run: /gradlew assembleOss
+      - uses: Shopify/upload-to-release@master
+        name: Upload APK to Release
+        with:
+          name: alarmio.apk
+          path: app/build/outputs/apk/oss/release/app-oss-release.apk
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to Google Play
+        env:
+          GITHUB_TOKEN_PUB: ${{ secrets.GITHUB_TOKEN_PUB }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
+          CI: true
+        run: ./gradlew publishGplayRelease

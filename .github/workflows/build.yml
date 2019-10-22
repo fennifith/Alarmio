@@ -1,0 +1,38 @@
+name: Gradle Build
+
+on:
+  push:
+    paths:
+      - '*.gradle'
+      - '*/*.gradle'
+      - '*/src/*/*/*'
+      - '*/src/*/*/*/*'
+      - '*/src/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*/*/*/*'
+  pull_request:
+    paths:
+      - '*.gradle'
+      - '*/*.gradle'
+      - '*/src/*/*/*'
+      - '*/src/*/*/*/*'
+      - '*/src/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*/*/*'
+      - '*/src/*/*/*/*/*/*/*/*/*'
+
+jobs:
+  test:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up OpenJDK 1.8
+        uses: joschi/setup-jdk@v1
+        with:
+          java-version: 'openjdk8'
+      - name: Build with Gradle
+        run: ./gradlew test

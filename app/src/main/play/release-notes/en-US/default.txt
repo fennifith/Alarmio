@@ -1,3 +1,8 @@
-- add alarm intents for external applications
-- various bug fixes / performance improvements
+- get alarms from local files (thanks @quipri)
+- add (some) alarm intents for external applications
+- prevent issues renaming alarms on some devices (thanks @quipri)
 - fix errors in about section
+- Hungarian localization (thanks @meskobalazs)
+- French localization (thanks @Larnicone)
+- Czech localization (thanks @ikanakova)
+- Simplified Chinese localization (thanks @yzqzss)
