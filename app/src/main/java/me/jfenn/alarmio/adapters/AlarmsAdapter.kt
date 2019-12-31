@@ -291,6 +291,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                             alarm.time.set(Calendar.HOUR_OF_DAY, view.hourOfDay)
                             alarm.time.set(Calendar.MINUTE, view.minute)
                             alarm.setTime(alarmio, alarmManager, alarm.time.timeInMillis)
+                            alarm.setEnabled(alarmio, alarmManager, true);
 
                             notifyItemChanged(holder.adapterPosition)
                         }

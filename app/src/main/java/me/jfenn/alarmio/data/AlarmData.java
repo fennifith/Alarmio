@@ -125,7 +125,7 @@ public class AlarmData implements Parcelable {
     }
 
     /**
-     * Change the scheduled alarm time,
+     * Change the scheduled alarm time.
      *
      * @param context       An active context instance.
      * @param manager       An AlarmManager to schedule the alarm on.
