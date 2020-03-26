@@ -3,6 +3,7 @@ package me.jfenn.alarmio.activities;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,6 +89,9 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
         actionView = findViewById(R.id.slideView);
+
+        // Lock orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         textColorPrimaryInverseSubscription = Aesthetic.Companion.get()
                 .textColorPrimaryInverse()
