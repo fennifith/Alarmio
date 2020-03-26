@@ -434,6 +434,15 @@ public class Alarmio extends Application implements Player.EventListener {
     }
 
     /**
+     * Sets the player volume to the given float.
+     *
+     * @param volume            The volume between 0 and 1
+     */
+    public void setStreamVolume(float volume) {
+        player.setVolume(volume);
+    }
+
+    /**
      * Determine if the passed url matches the stream that is currently playing.
      *
      * @param url           The URL to match the current stream to.
