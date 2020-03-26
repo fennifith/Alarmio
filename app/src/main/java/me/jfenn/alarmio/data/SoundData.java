@@ -136,7 +136,7 @@ public class SoundData {
                 ringtone.setVolume(volume);
             } else {
                 // Not possible
-                throw new IllegalArgumentException("Setting the ringtone volume on a device older than Android P");
+                throw new IllegalArgumentException("Attempted to set the ringtone volume on a device older than Android P.");
             }
         else alarmio.setStreamVolume(volume);
     }
@@ -146,7 +146,7 @@ public class SoundData {
      *
      * @return true if supported
      */
-    public boolean setVolumeSupported() {
+    public boolean isSetVolumeSupported() {
         return ringtone == null || Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
     }
 

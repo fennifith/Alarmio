@@ -119,7 +119,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
 
         date.setText(FormatUtils.format(new Date(), FormatUtils.FORMAT_DATE + ", " + FormatUtils.getShortFormat(this)));
 
-        if (!sound.setVolumeSupported()) {
+        if (!sound.isSetVolumeSupported()) {
             // Use the backup method if it is not supported
 
             audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -165,7 +165,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
                     getWindow().setAttributes(params);
                     getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
 
-                    if (sound.setVolumeSupported()) {
+                    if (sound.isSetVolumeSupported()) {
                         float newVolume = Math.min(1f, slowWakeProgress);
 
                         sound.setVolume(alarmio, newVolume);
@@ -221,7 +221,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
         if (sound != null && sound.isPlaying(alarmio)) {
             sound.stop(alarmio);
 
-            if (isSlowWake && !sound.setVolumeSupported()) {
+            if (isSlowWake && !sound.isSetVolumeSupported()) {
                 audioManager.setStreamVolume(AudioManager.STREAM_ALARM, originalVolume, 0);
             }
         }
