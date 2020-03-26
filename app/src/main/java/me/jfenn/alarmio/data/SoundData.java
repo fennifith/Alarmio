@@ -125,6 +125,32 @@ public class SoundData {
     }
 
     /**
+     * Sets the player volume to the given float.
+     *
+     * @param alarmio           The active Application instance.
+     * @param volume            The volume between 0 and 1
+     */
+    public void setVolume(Alarmio alarmio, float volume) {
+        if (ringtone != null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ringtone.setVolume(volume);
+            } else {
+                // Not possible
+                throw new IllegalArgumentException("Attempted to set the ringtone volume on a device older than Android P.");
+            }
+        else alarmio.setStreamVolume(volume);
+    }
+
+    /**
+     * Is the setVolume method supported on this version of Android
+     *
+     * @return true if supported
+     */
+    public boolean isSetVolumeSupported() {
+        return ringtone == null || Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
+    }
+
+    /**
      * Returns an identifier string that can be used to recreate this
      * SoundDate class.
      *
