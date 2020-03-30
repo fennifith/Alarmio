@@ -17,15 +17,20 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
+
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.adapters.PreferenceAdapter;
 import me.jfenn.alarmio.data.PreferenceData;
 import me.jfenn.alarmio.data.preference.AboutPreferenceData;
+import me.jfenn.alarmio.data.preference.AlertWindowPreferenceData;
 import me.jfenn.alarmio.data.preference.BasePreferenceData;
 import me.jfenn.alarmio.data.preference.BatteryOptimizationPreferenceData;
 import me.jfenn.alarmio.data.preference.BooleanPreferenceData;
+import me.jfenn.alarmio.data.preference.CustomPreferenceData;
 import me.jfenn.alarmio.data.preference.ImageFilePreferenceData;
 import me.jfenn.alarmio.data.preference.RingtonePreferenceData;
 import me.jfenn.alarmio.data.preference.ThemePreferenceData;
@@ -63,8 +68,10 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
                 new TimePreferenceData(PreferenceData.SLOW_WAKE_UP_TIME, R.string.title_slow_wake_up_time)
         ));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            list.add(new BatteryOptimizationPreferenceData());
+        if (Build.VERSION.SDK_INT >= 23) {
+            list.add(0, new BatteryOptimizationPreferenceData());
+            list.add(0, new AlertWindowPreferenceData());
+        }
 
         list.add(new AboutPreferenceData());
 

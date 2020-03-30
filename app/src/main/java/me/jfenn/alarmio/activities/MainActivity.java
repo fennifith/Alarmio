@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.provider.Settings;
 
 import com.afollestad.aesthetic.AestheticActivity;
 
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
+import me.jfenn.alarmio.data.PreferenceData;
+import me.jfenn.alarmio.dialogs.AlertDialog;
 import me.jfenn.alarmio.fragments.BaseFragment;
 import me.jfenn.alarmio.fragments.HomeFragment;
 import me.jfenn.alarmio.fragments.SplashFragment;
@@ -62,6 +65,20 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+
+        // background permissions info
+        if (Build.VERSION.SDK_INT >= 23 && !PreferenceData.INFO_BACKGROUND_PERMISSIONS.getValue(this, false)) {
+            AlertDialog alert = new AlertDialog(this);
+            alert.setTitle(getString(R.string.info_background_permissions_title));
+            alert.setContent(getString(R.string.info_background_permissions_body));
+            alert.setListener((dialog, ok) -> {
+                if (ok) {
+                    PreferenceData.INFO_BACKGROUND_PERMISSIONS.setValue(MainActivity.this, true);
+                    startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION));
+                }
+            });
+            alert.show();
+        }
     }
 
     @Override

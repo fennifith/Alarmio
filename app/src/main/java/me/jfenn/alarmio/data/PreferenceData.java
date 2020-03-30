@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import me.jfenn.alarmio.Alarmio;
 
 public enum PreferenceData {
+    INFO_BACKGROUND_PERMISSIONS(false),
     THEME(Alarmio.THEME_DAY_NIGHT),
     BACKGROUND_IMAGE("https://jfenn.me/images/headers/snowytrees.jpg"),
     RINGING_BACKGROUND_IMAGE(true),
