@@ -30,15 +30,14 @@
         <me.jfenn.attribouter.wedges.ContributorWedge
             name="Justin Kruit"
             avatar="https://avatars1.githubusercontent.com/u/1642830"
-            bio="A lazy person that doesn\'t even put enough effort into life to write his own GitHub bio."
             blog="https://justinkruit.com/"
             login="justinkruit"
             position="2"
-            task="^Idiot" />
+            task="^UX Design" />
 
         <me.jfenn.attribouter.wedges.ContributorWedge
             name="Eduardo Pratti"
-            avatar="https://lh3.googleusercontent.com/qQw25pogbHUtvu5PUSX4X5YJgPLv2amu2PMWn7Uw3MlMIO9Pb-AwavOPf-mEEbwYsODr440WHHHhb_w=s768-rw-no"
+            avatar="https://images.squarespace-cdn.com/content/5850c064e3df2866f9ea28e1/1521615909558-EJ104MS81XHWTDC6787M/ic_pratti_favicon.png"
             bio="UI / UX designer focusing on Android, illustrator, and a charismatic seal."
             blog="https://pratti.design/"
             position="3"
