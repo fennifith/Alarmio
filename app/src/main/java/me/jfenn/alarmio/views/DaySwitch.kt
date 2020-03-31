@@ -2,10 +2,7 @@ package me.jfenn.alarmio.views
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnticipateOvershootInterpolator
@@ -131,6 +128,14 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
         super.onDraw(canvas)
 
         text?.let { str ->
+            // calculate text size to not extend past circle radius ( - 4dp for padding)
+            val textWidth = textPaint.measureText(str)
+            val circleWidth = DimenUtils.dpToPx(32f)
+            if (textWidth > circleWidth) {
+                textPaint.textSize *= (circleWidth.toFloat() / textWidth)
+                clippedTextPaint.textSize = textPaint.textSize
+            }
+
             canvas.drawText(str, (canvas.width / 2).toFloat(), canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
         }
 
