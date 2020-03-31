@@ -1,77 +1,86 @@
 <resources>
-    <string name="app_name" translatable="false">Alarmio</string>
-    <string name="title_alarm">闹钟 %d</string>
-    <string name="title_alarm_next">%s 后.</string>
-    <string name="title_none">无</string>
-    <string name="title_vibrate">震动</string>
-    <string name="title_repeat">重复</string>
-    <string name="title_set_alarm">闹钟</string>
-    <string name="title_set_timer">计时器</string>
-    <string name="title_set_stopwatch">秒表</string>
-    <string name="title_lap">记录</string>
-    <string name="title_stopwatch">秒表</string>
-    <string name="title_stopwatch_share">%s 秒表: %s</string>
-    <string name="title_lap_number" translatable="false">#%d</string>
-    <string name="title_time">时长: %s</string>
-    <string name="title_lap_time">间隔: %s</string>
-    <string name="title_total_time">总记: %s</string>
-    <string name="title_share_results">分享结果…</string>
-    <string name="msg_delete_confirmation">你确定要删除 %s?</string>
-    <string name="title_delete">删除</string>
-    <string name="title_start_timer">开始计时</string>
-    <string name="title_auto">自动</string>
-    <string name="title_sunrise">日出</string>
-    <string name="title_sunset">日落</string>
-    <string name="title_theme">主题</string>
-    <string name="title_appearance">样式</string>
-    <string name="title_sound_none">无</string>
-    <string name="title_snooze">打盹</string>
-    <string name="title_alarms">闹钟</string>
-    <string name="title_settings">设置</string>
-    <string name="title_ringtones">铃声</string>
-    <string name="word_day">天</string>
-    <string name="word_days">天</string>
-    <string name="word_minute">分钟</string>
-    <string name="word_minutes">分钟</string>
-    <string name="word_hour">小时</string>
-    <string name="word_hours">小时</string>
-    <string name="word_join">和</string>
-    <string name="title_snooze_custom">自定义…</string>
-    <string name="msg_snoozed_until">打盹直到 %s</string>
-    <string name="title_radio_test">测试</string>
-    <string name="title_radio_create">创建</string>
-    <string name="msg_radio_create">创建一个新广播</string>
-    <string name="msg_radio_url">粘贴 \'.m3u8\' 广播链接到此处…</string>
-    <string name="msg_radio_previous">选择以前使用的广播</string>
-    <string name="title_radio_stop">停止</string>
-    <string name="title_radio">广播</string>
-    <string name="title_time_zones">时区</string>
-    <string name="title_behavior">Behavior</string>
-    <string name="title_default_alarm_ringtone">默认闹钟铃声</string>
-    <string name="title_default_timer_ringtone">默认计时器铃声</string>
-    <string name="title_sleep_reminder">睡眠提醒</string>
-    <string name="desc_sleep_reminder">发送通知以提醒您在闹钟响铃前的某个时间抛开手机进入梦乡。</string>
-    <string name="title_sleep_reminder_time">睡眠提醒时间</string>
-    <string name="desc_sleep_reminder_time">%1$d 小时前</string>
-    <string name="title_slow_wake_up">慢醒</string>
-    <string name="desc_slow_wake_up">当闹铃响起时，逐渐增加亮度和音量。</string>
-    <string name="title_slow_wake_up_time">慢醒持续时间</string>
-    <string name="title_about">About &amp; OSS Licenses</string>
-    <string name="title_choose_time_zone">选择一个时区</string>
-    <string name="msg_sleep_reminder">你的下一个闹钟会在 %s 后响起，为了有充足的睡眠，赶紧睡觉！</string>
-    <string name="title_alarm_name">闹钟名称</string>
-    <string name="title_background_image">背景图片</string>
-    <string name="title_ringing_background_image">在闹钟/计时器页面显示背景图片</string>
-    <string name="desc_ringing_background_image">在闹钟或定时器响铃时显示背景图像。</string>
-    <string name="msg_alarms_empty">你没有设置任何闹钟. 点击 \'+\' 按钮创建新闹钟.</string>
-    <string name="msg_time_zones_selected">%d 已添加</string>
-    <string-array name="array_themes">
-        <item>时间表</item>
-        <item>白天</item>
-        <item>夜间</item>
-        <item>AMOLED</item>
-    </string-array>
-
-    <string name="msg_battery_optimizations_switch_enable">打开/“闹钟”/旁边的开关。 您可能需要向下滚动以查看更多。</string>
-    <string name="title_ignore_battery_optimizations">忽略电池优化</string>
+  <string name="app_name" translatable="false">Alarmio</string>
+  <string name="title_alarm">闹钟 %d</string>
+  <string name="title_alarm_next">%s 后.</string>
+  <string name="title_none">无</string>
+  <string name="title_vibrate">震动</string>
+  <string name="title_repeat">重复</string>
+  <string name="title_set_alarm">闹钟</string>
+  <string name="title_set_timer">计时器</string>
+  <string name="title_set_stopwatch">秒表</string>
+  <string name="title_lap">记录</string>
+  <string name="title_stopwatch">秒表</string>
+  <string name="title_stopwatch_share">%s 秒表: %s</string>
+  <string name="title_lap_number" translatable="false">#%d</string>
+  <string name="title_time">时长: %s</string>
+  <string name="title_lap_time">间隔: %s</string>
+  <string name="title_total_time">总记: %s</string>
+  <string name="title_share_results">分享结果…</string>
+  <string name="msg_delete_confirmation">你确定要删除 %s?</string>
+  <string name="title_delete">删除</string>
+  <string name="title_start_timer">开始计时</string>
+  <string name="title_auto">自动</string>
+  <string name="title_sunrise">日出</string>
+  <string name="title_sunset">日落</string>
+  <string name="title_theme">主题</string>
+  <string name="title_appearance">样式</string>
+  <string name="title_sound_none">无</string>
+  <string name="title_snooze">打盹</string>
+  <string name="title_alarms">闹钟</string>
+  <string name="title_settings">设置</string>
+  <string name="title_ringtones">铃声</string>
+  <string name="word_day">天</string>
+  <string name="word_days">天</string>
+  <string name="word_minute">分钟</string>
+  <string name="word_minutes">分钟</string>
+  <string name="word_hour">小时</string>
+  <string name="word_hours">小时</string>
+  <string name="word_join">和</string>
+  <string name="title_snooze_custom">自定义…</string>
+  <string name="msg_snoozed_until">打盹直到 %s</string>
+  <string name="title_radio_test">测试</string>
+  <string name="title_radio_create">创建</string>
+  <string name="msg_radio_create">创建一个新广播</string>
+  <string name="msg_radio_url">粘贴 \'.m3u8\' 广播链接到此处…</string>
+  <string name="msg_radio_previous">选择以前使用的广播</string>
+  <string name="title_radio_stop">停止</string>
+  <string name="title_radio">广播</string>
+  <string name="title_time_zones">时区</string>
+  <string name="title_behavior">行为</string>
+  <string name="title_default_alarm_ringtone">默认闹钟铃声</string>
+  <string name="title_default_timer_ringtone">默认计时器铃声</string>
+  <string name="title_sleep_reminder">睡眠提醒</string>
+  <string name="desc_sleep_reminder">发送通知以提醒您在闹钟响铃前的某个时间抛开手机进入梦乡。</string>
+  <string name="title_sleep_reminder_time">睡眠提醒时间</string>
+  <string name="desc_sleep_reminder_time">%1$d 小时前</string>
+  <string name="title_slow_wake_up">慢醒</string>
+  <string name="desc_slow_wake_up">当闹铃响起时，逐渐增加亮度和音量。</string>
+  <string name="title_slow_wake_up_time">慢醒持续时间</string>
+  <string name="title_about">关于 &amp; OSS许可证</string>
+  <string name="title_choose_time_zone">选择一个时区</string>
+  <string name="msg_sleep_reminder">你的下一个闹钟会在 %s 后响起，为了有充足的睡眠，赶紧睡觉！</string>
+  <string name="title_alarm_name">闹钟名称</string>
+  <string name="title_background_image">背景图片</string>
+  <string name="title_ringing_background_image">在闹钟/计时器页面显示背景图片</string>
+  <string name="desc_ringing_background_image">在闹钟或定时器响铃时显示背景图像。</string>
+  <string name="msg_alarms_empty">你没有设置任何闹钟. 点击 \'+\' 按钮创建新闹钟.</string>
+  <string name="msg_time_zones_selected">%d 已添加</string>
+  <string name="title_files">文件</string>
+  <string name="title_files_audio_files">音频文件</string>
+  <string name="title_files_add_audio">选择文件</string>
+  <string-array name="array_themes">
+    <item>自动</item>
+    <item>白天</item>
+    <item>夜间</item>
+    <item>AMOLED</item>
+  </string-array>
+  <string name="msg_battery_optimizations_switch_enable">打开/“闹钟”/旁边的开关。 您可能需要向下滚动以查看更多。</string>
+  <string name="title_ignore_battery_optimizations">忽略电池优化</string>
+  <string name="day_sunday_abbr">星期天</string>
+  <string name="day_monday_abbr">星期一</string>
+  <string name="day_tuesday_abbr">星期二</string>
+  <string name="day_wednesday_abbr">星期三</string>
+  <string name="day_thursday_abbr">星期四</string>
+  <string name="day_friday_abbr">星期五</string>
+  <string name="day_saturday_abbr">星期六</string>
 </resources>
