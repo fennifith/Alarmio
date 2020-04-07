@@ -83,4 +83,6 @@
     <string name="day_thursday_abbr">J</string>
     <string name="day_friday_abbr">V</string>
     <string name="day_saturday_abbr">S</string>
+    <string name="info_background_permissions_title">System Alerts / Background Permissions</string>
+    <string name="info_background_permissions_body">Newer versions of Android are becoming increasingly unreliable at starting apps from the background without user interaction; with the introduction of Doze/App Standby in Android 6.0, the requirements for an app to be started are ambiguous and often device-specific.\n\nAs such, while it is not always a requirement for this app to function, it is highly recommended that you grant the System Overlays permission on the next page. This will grant Alarmio an exemption from Android\'s usual requirements for starting an app without user interaction, and allow it to function much more reliably.</string>
 </resources>
