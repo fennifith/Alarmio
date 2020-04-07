@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <about>
-    <me.jfenn.attribouter.wedges.AppWedge repo="fennifith/Alarmio">
+    <AppWedge repo="fennifith/Alarmio">
 
-        <me.jfenn.attribouter.wedges.link.LinkWedge
+        <LinkWedge
             id="github"
             url="https://jfenn.me/redirects/?t=github&amp;d=Alarmio" />
 
-    </me.jfenn.attribouter.wedges.AppWedge>
-    <me.jfenn.attribouter.wedges.ContributorsWedge repo="fennifith/Alarmio">
-        <me.jfenn.attribouter.wedges.ContributorWedge
+    </AppWedge>
+    <ContributorsWedge repo="fennifith/Alarmio">
+        <ContributorWedge
             name="James Fenn"
             bio="Android developer. Writes Java, C, and HTML. PHP confuses me."
             blog="https://jfenn.me/"
@@ -16,18 +16,18 @@
             position="1"
             task="^Developer">
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 id="github"
                 url="https://jfenn.me/redirects/?t=github" />
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://jfenn.me/redirects/?t=twitter" />
 
-        </me.jfenn.attribouter.wedges.ContributorWedge>
+        </ContributorWedge>
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             name="Justin Kruit"
             avatar="https://avatars1.githubusercontent.com/u/1642830"
             blog="https://justinkruit.com/"
@@ -35,7 +35,7 @@
             position="2"
             task="^UX Design" />
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             name="Eduardo Pratti"
             avatar="https://images.squarespace-cdn.com/content/5850c064e3df2866f9ea28e1/1521615909558-EJ104MS81XHWTDC6787M/ic_pratti_favicon.png"
             bio="UI / UX designer focusing on Android, illustrator, and a charismatic seal."
@@ -43,38 +43,38 @@
             position="3"
             task="^Design Consultant">
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Google Plus"
                 icon="@drawable/ic_gplus"
                 url="https://plus.google.com/+EduardoPratti" />
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://twitter.com/edpratti" />
 
-        </me.jfenn.attribouter.wedges.ContributorWedge>
+        </ContributorWedge>
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             name="Vukašin Anđelković"
             avatar="https://lh3.googleusercontent.com/peV9PQ_0orI866TX6-rt9YowJ1pxiAmEWVrxHwHFA9go34zBXqK-rLwqBIfNNprLMhzHCrk8jtZUGlo"
             bio="Makes things and stuff. Creator of Candycons, PixBit, Cubllow, and Wafer."
             login="zavukodlak"
             task="^Design Consultant">
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Google Play"
                 icon="@drawable/ic_gplay"
                 url="https://play.google.com/store/apps/dev?id=6941105890231522296" />
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://twitter.com/zavukodlak" />
 
-        </me.jfenn.attribouter.wedges.ContributorWedge>
+        </ContributorWedge>
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             name="Rohit Parida"
             avatar="https://avatars2.githubusercontent.com/u/18437518"
             bio="A freelance graphic design artist, student, and developer."
@@ -82,14 +82,14 @@
             login="rohitkparida"
             task="^Illustrator">
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Google Plus"
                 icon="@drawable/ic_gplus"
                 url="https://plus.google.com/+RohitParida" />
 
-        </me.jfenn.attribouter.wedges.ContributorWedge>
+        </ContributorWedge>
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             name="Alexandre Piveteau"
             avatar="https://avatars0.githubusercontent.com/u/6318990"
             bio="Computer Science student and Android developer."
@@ -97,105 +97,105 @@
             login="alexandrepiveteau"
             task="^Open Source Contributor">
 
-            <me.jfenn.attribouter.wedges.link.LinkWedge
+            <LinkWedge
                 name="Twitter"
                 icon="@drawable/ic_twitter"
                 url="https://twitter.com/agpiveteau" />
 
-        </me.jfenn.attribouter.wedges.ContributorWedge>
+        </ContributorWedge>
 
 		<!-- already in <translators> section -->
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             hidden="true"
             login="Suburbanno" />
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             hidden="true"
             login="FriederZi" />
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
         	hidden="true"
         	login="pablomeza10" />
 
-        <me.jfenn.attribouter.wedges.ContributorWedge
+        <ContributorWedge
             hidden="true"
             login="yzqzss" />
 
-    </me.jfenn.attribouter.wedges.ContributorsWedge>
-    <me.jfenn.attribouter.wedges.TranslatorsWedge>
+    </ContributorsWedge>
+    <TranslatorsWedge>
 
-        <me.jfenn.attribouter.wedges.TranslatorWedge
+        <TranslatorWedge
             name="Frieder Zi"
             blog="https://plus.google.com/109963929934858074229"
             locales="de"
             login="FriederZi" />
 
-        <me.jfenn.attribouter.wedges.TranslatorWedge
+        <TranslatorWedge
         	name="Pablo Meza"
         	blog="https://plus.google.com/112338221490547010788"
         	locales="es"
         	login="pablomeza10" />
 
-        <me.jfenn.attribouter.wedges.TranslatorWedge
+        <TranslatorWedge
             name="Vinicius R"
             blog="^https://github.com/Suburbanno"
             locales="pt"
             login="Suburbanno" />
 
-        <me.jfenn.attribouter.wedges.TranslatorWedge
+        <TranslatorWedge
             name="yzqzss"
             blog="^https://github.com/yzqzss"
             locales="zh"
             login="yzqzss" />
 
-    </me.jfenn.attribouter.wedges.TranslatorsWedge>
-    <me.jfenn.attribouter.wedges.LicensesWedge>
+    </TranslatorsWedge>
+    <LicensesWedge>
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
-            description="A fast, easy to use, dynamic theme engine. Powered by Rx and Kotlin, for Android apps."
+        <LicenseWedge
+            description="^A fast, easy to use, dynamic theme engine. Powered by Rx and Kotlin, for Android apps."
             license="apache-2.0"
             repo="afollestad/aesthetic" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="A simple library to use a menu of FloatingActionButtons from Design Support Library that follow Material Design Guidelines."
             license="apache-2.0"
             repo="jahirfiquitiva/FABsMenu"
             title="^FABs Menu" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="An Android view which provides a nice slide-to-left/right interaction."
             license="apache-2.0"
             repo="fennifith/SlideActionView" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="A lightweight Android view used for displaying and/or editing sunrise and sunset times."
             license="apache-2.0"
             repo="fennifith/SunriseSunsetView" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="Library for computing the sunrise/sunset from GPS coordinates and a date, in Java."
             license="apache-2.0"
             repo="mikereedell/sunrisesunsetlib-java"
             title="^Sunrise Sunset Lib" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="An extensible media player for Android."
             license="apache-2.0"
             repo="google/ExoPlayer" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="A simple library containing several configurable time/date picker views and dialogs."
             license="apache-2.0"
             repo="fennifith/TimeDatePicker" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="An easy to use crash reporting library for Android."
             repo="fennifith/Crasher" />
 
-        <me.jfenn.attribouter.wedges.LicenseWedge
+        <LicenseWedge
             description="An image loading and caching library for Android focused on smooth scrolling."
             repo="bumptech/glide" />
 
-    </me.jfenn.attribouter.wedges.LicensesWedge>
+    </LicensesWedge>
 </about>

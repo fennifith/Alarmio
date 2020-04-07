@@ -5,11 +5,11 @@ apply plugin: 'com.github.triplet.play'
 android {
     def isCI = System.getenv("CI") == "true"
 
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "me.jfenn.alarmio"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 20
         versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -90,10 +90,10 @@ dependencies {
 
     // support libraries
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     // media dependencies
     implementation 'com.google.android.exoplayer:exoplayer-core:2.11.1'
@@ -101,7 +101,7 @@ dependencies {
 
     // uncategorized libraries
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.afollestad:aesthetic:0.7.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -109,7 +109,7 @@ dependencies {
     implementation 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
 
     implementation 'me.jfenn:timedatepickers:0.0.6'
-    implementation 'me.jfenn:Attribouter:0.1.5'
+    implementation 'me.jfenn:Attribouter:0.1.6'
     implementation 'me.jfenn:SlideActionView:0.0.2'
     implementation 'me.jfenn:SunriseSunsetView:0.0.3'
     implementation 'me.jfenn:AndroidUtils:0.0.1'
