@@ -33,9 +33,6 @@ class StringPreferenceData(private val preference: PreferenceData, @StringRes pr
         holder.description.setText(description)
         holder.textChoice.setText(preference.getValue<String>(holder.context))
         holder.textChoice.afterTextChanged { editable -> preference.setValue(holder.context, editable.toString()) }
-
-        // Scroll to it when focused
-
     }
 
     /**
@@ -47,7 +44,7 @@ class StringPreferenceData(private val preference: PreferenceData, @StringRes pr
         val textChoice: EditText = v.findViewById(R.id.textChoice)
     }
 
-    fun EditText.afterTextChanged(afterTextChanged: (Editable?) -> Unit) {
+    private fun EditText.afterTextChanged(afterTextChanged: (Editable?) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }

@@ -23,13 +23,25 @@
             android:textSize="16sp"
             tools:text="Title" />
 
-        <!-- Cursor should be visible: https://stackoverflow.com/a/9165217-->
-        <EditText
-            android:id="@+id/textChoice"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textCursorDrawable="@null"
-            android:inputType="textNoSuggestions" />
+            android:orientation="horizontal" >
+
+            <SeekBar
+                android:id="@+id/sliderChoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/sliderChoiceView"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="sssss"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/description"

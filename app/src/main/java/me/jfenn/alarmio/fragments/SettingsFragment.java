@@ -33,6 +33,7 @@ import me.jfenn.alarmio.data.preference.BooleanPreferenceData;
 import me.jfenn.alarmio.data.preference.CustomPreferenceData;
 import me.jfenn.alarmio.data.preference.ImageFilePreferenceData;
 import me.jfenn.alarmio.data.preference.RingtonePreferenceData;
+import me.jfenn.alarmio.data.preference.SliderPreferenceData;
 import me.jfenn.alarmio.data.preference.ThemePreferenceData;
 import me.jfenn.alarmio.data.preference.TimePreferenceData;
 import me.jfenn.alarmio.data.preference.TimeZonesPreferenceData;
@@ -65,7 +66,8 @@ public class SettingsFragment extends BasePagerFragment implements Consumer {
                 new BooleanPreferenceData(PreferenceData.SLEEP_REMINDER, R.string.title_sleep_reminder, R.string.desc_sleep_reminder),
                 new TimePreferenceData(PreferenceData.SLEEP_REMINDER_TIME, R.string.title_sleep_reminder_time),
                 new BooleanPreferenceData(PreferenceData.SLOW_WAKE_UP, R.string.title_slow_wake_up, R.string.desc_slow_wake_up),
-                new TimePreferenceData(PreferenceData.SLOW_WAKE_UP_TIME, R.string.title_slow_wake_up_time)
+                new TimePreferenceData(PreferenceData.SLOW_WAKE_UP_TIME, R.string.title_slow_wake_up_time),
+                new SliderPreferenceData(PreferenceData.MANUAL_VOLUME_SETTING, 100, R.string.title_manual_volume, R.string.desc_manual_volume)
         ));
 
         if (Build.VERSION.SDK_INT >= 23) {
