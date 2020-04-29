@@ -82,6 +82,9 @@
     <string name="msg_battery_optimizations_switch_enable">Turn on the switch next to \"Alarmio\". You may need to scroll down… a lot.</string>
     <string name="title_ignore_battery_optimizations">Ignore Battery Optimizations</string>
 
+    <string name="title_manual_volume">Manual Alarm Volume</string>
+    <string name="desc_manual_volume">Your device\'s alarm volume will be multiplied by this number. This will give your more precise control as some devices limit volume to device fixed number of steps.</string>
+
     <string name="day_sunday_abbr">S</string>
     <string name="day_monday_abbr">M</string>
     <string name="day_tuesday_abbr">T</string>

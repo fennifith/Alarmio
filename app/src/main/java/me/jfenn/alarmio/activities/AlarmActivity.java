@@ -170,7 +170,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
                     getWindow().addFlags(WindowManager.LayoutParams.FLAGS_CHANGED);
 
                     if (sound != null && sound.isSetVolumeSupported()) {
-                        float newVolume = Math.min(1f, slowWakeProgress);
+                        float newVolume = Math.min(1f, slowWakeProgress) * (PreferenceData.MANUAL_VOLUME_SETTING.<Integer>getValue(AlarmActivity.this) / 100f);
 
                         sound.setVolume(alarmio, newVolume);
                     } else if (currentVolume < originalVolume) {
