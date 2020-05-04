@@ -2,7 +2,7 @@
     <string name="title_alarm">Alarma %d</string>
     <string name="title_none">Ninguno</string>
     <string name="title_vibrate">Vibrate</string>
-    <string name="title_repeat">Repitir</string>
+    <string name="title_repeat">Repetir</string>
     <string name="title_set_alarm">Alarma</string>
     <string name="title_set_timer">Temporizador</string>
     <string name="title_set_stopwatch">Cronómetro</string>
