@@ -303,6 +303,7 @@ public class HomeFragment extends BaseFragment {
         colorAccentSubscription.dispose();
         textColorPrimarySubscription.dispose();
         textColorPrimaryInverseSubscription.dispose();
+        timeIndicator.unsubscribe();
         super.onDestroyView();
     }
 

@@ -34,7 +34,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     private int actualPosition;
     private float offset;
     private int size;
-    private ViewPager viewPager;
 
     private IndicatorEngine engine;
 
@@ -89,7 +88,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     public void unsubscribe() {
         if (textColorPrimarySubscription != null) {
             textColorPrimarySubscription.dispose();
-            textColorSecondarySubscription = null;
+            textColorPrimarySubscription = null;
         }
 
         if (textColorSecondarySubscription != null) {
@@ -120,11 +119,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
     public float getPositionOffset() {
         return offset;
-    }
-
-    public void notifyNumberPagesChanged() {
-        size = viewPager.getAdapter().getCount();
-        invalidate();
     }
 
     @Override
@@ -161,7 +155,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
      * @param viewPager
      */
     public void setViewPager(ViewPager viewPager) {
-        this.viewPager = viewPager;
         viewPager.addOnPageChangeListener(this);
         size = viewPager.getAdapter().getCount();
         invalidate();
