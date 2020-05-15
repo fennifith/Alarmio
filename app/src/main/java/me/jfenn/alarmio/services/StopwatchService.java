@@ -178,8 +178,13 @@ public class StopwatchService extends Service {
      * @return          A notification to use for this stopwatch.
      */
     private Notification getNotification(String time) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_STOPWATCH, getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_DEFAULT));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_STOPWATCH, getString(R.string.title_stopwatch), NotificationManager.IMPORTANCE_LOW);
+            channel.setSound(null, null);
+            channel.enableVibration(false);
+
+            notificationManager.createNotificationChannel(channel);
+        }
 
         return new NotificationCompat.Builder(this, Alarmio.NOTIFICATION_CHANNEL_STOPWATCH)
                 .setSmallIcon(R.drawable.ic_stopwatch_notification)
@@ -197,6 +202,8 @@ public class StopwatchService extends Service {
                         "Lap",
                         PendingIntent.getBroadcast(this, 0, new Intent(ACTION_LAP), 0)
                 )
+                .setSound(null)
+                .setVibrate(new long[]{0L})
                 .build();
     }
 
