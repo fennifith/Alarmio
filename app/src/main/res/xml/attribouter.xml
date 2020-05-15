@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <about>
-    <AppWedge repo="fennifith/Alarmio">
+    <AppWedge
+        repo="fennifith/Alarmio"
+        websiteUrl="http://alarmio.site/">
 
         <LinkWedge
             id="github"
@@ -105,22 +107,13 @@
         </ContributorWedge>
 
 		<!-- already in <translators> section -->
-
-        <ContributorWedge
-            hidden="true"
-            login="Suburbanno" />
-
-        <ContributorWedge
-            hidden="true"
-            login="FriederZi" />
-
-        <ContributorWedge
-        	hidden="true"
-        	login="pablomeza10" />
-
-        <ContributorWedge
-            hidden="true"
-            login="yzqzss" />
+        <ContributorWedge hidden="true" login="Suburbanno" />
+        <ContributorWedge hidden="true" login="FriederZi" />
+        <ContributorWedge hidden="true" login="pablomeza10" />
+        <ContributorWedge hidden="true" login="yzqzss" />
+        <ContributorWedge hidden="true" login="Larnicone" />
+        <ContributorWedge hidden="true" login="ikanakova" />
+        <ContributorWedge hidden="true" login="meskobalazs" />
 
     </ContributorsWedge>
     <TranslatorsWedge>
@@ -148,6 +141,25 @@
             blog="^https://github.com/yzqzss"
             locales="zh"
             login="yzqzss" />
+
+        <TranslatorWedge
+            name="Larnicone"
+            blog="^https://github.com/Larnicone"
+            locales="fr"
+            login="Larnicone" />
+
+        <TranslatorWedge
+            name="ikanakova"
+            blog="^https://github.com/ikanakova"
+            locales="cs,pt"
+            login="ikanakova" />
+
+        <TranslatorWedge
+            name="Balázs Meskó"
+            blog="^https://github.com/meskobalazs"
+            locales="hu"
+            login="meskobalazs" />
+
 
     </TranslatorsWedge>
     <LicensesWedge>

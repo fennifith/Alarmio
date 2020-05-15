@@ -75,10 +75,6 @@
     <string name="msg_battery_optimizations_switch_enable">Faîtes défiler le menu jusqu\'à "Alarmio" et désactivez l\'optimisation de la batterie.</string>
     <string name="title_ignore_battery_optimizations">Ignorer l\'optimisation de la batterie</string>
 
-    <!-- Untranslated strings -->
-    <string name="title_files">Files</string>
-    <string name="title_files_audio_files">Audio Files</string>
-    <string name="title_files_add_audio">Choose File</string>
     <string name="day_sunday_abbr">D</string>
     <string name="day_monday_abbr">L</string>
     <string name="day_tuesday_abbr">M</string>
@@ -86,6 +82,11 @@
     <string name="day_thursday_abbr">J</string>
     <string name="day_friday_abbr">V</string>
     <string name="day_saturday_abbr">S</string>
+
+    <!-- Untranslated strings -->
+    <string name="title_files">Files</string>
+    <string name="title_files_audio_files">Audio Files</string>
+    <string name="title_files_add_audio">Choose File</string>
     <string name="info_background_permissions_title">System Alerts / Background Permissions</string>
     <string name="info_background_permissions_body">Newer versions of Android are becoming increasingly unreliable at starting apps from the background without user interaction; with the introduction of Doze/App Standby in Android 6.0, the requirements for an app to be started are ambiguous and often device-specific.\n\nAs such, while it is not always a requirement for this app to function, it is highly recommended that you grant the System Overlays permission on the next page. This will grant Alarmio an exemption from Android\'s usual requirements for starting an app without user interaction, and allow it to function much more reliably.</string>
     <string name="title_manual_volume">Manual Alarm Volume</string>
