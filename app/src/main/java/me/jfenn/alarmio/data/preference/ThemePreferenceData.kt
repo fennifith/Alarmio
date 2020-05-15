@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
@@ -106,6 +107,9 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
                 holder.sunriseAutoSwitch.isChecked = false
             } else {
                 holder.alarmio?.let { alarmio ->
+                    if (alarmio.sunrise == null) // test to check that location provider is actually available
+                        Toast.makeText(alarmio, R.string.msg_null_location_provider, Toast.LENGTH_SHORT).show()
+
                     listener.onSunriseChanged(holder.sunriseView, alarmio.dayStart * HOUR_LENGTH)
                     listener.onSunsetChanged(holder.sunriseView, alarmio.dayEnd * HOUR_LENGTH)
                 }

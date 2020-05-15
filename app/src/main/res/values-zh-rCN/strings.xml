@@ -90,5 +90,6 @@
 
   <string name="title_manual_volume">Manual Alarm Volume</string>
   <string name="desc_manual_volume">Your device\'s alarm volume will be multiplied by this number. This will give your more precise control as some devices limit volume to device fixed number of steps.</string>
+  <string name="msg_null_location_provider">Alarmio is unable to find a location provider - this feature may not work correctly.</string>
 
 </resources>
