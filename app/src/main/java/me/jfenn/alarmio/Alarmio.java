@@ -328,8 +328,9 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
      * @return the hour of the start of the day (24h), as specified by the user
      */
     public int getDayStart() {
-        if (isDayAuto() && getSunsetCalculator() != null)
-            return getSunsetCalculator().getOfficialSunriseCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
+        Integer sunrise;
+        if (isDayAuto() && (sunrise = getSunrise()) != null)
+            return sunrise;
         else return PreferenceData.DAY_START.getValue(this);
     }
 
@@ -337,8 +338,9 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
      * @return the hour of the end of the day (24h), as specified by the user
      */
     public int getDayEnd() {
-        if (isDayAuto() && getSunsetCalculator() != null)
-            return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
+        Integer sunset;
+        if (isDayAuto() && (sunset = getSunset()) != null)
+            return sunset;
         else return PreferenceData.DAY_END.getValue(this);
     }
 
@@ -347,8 +349,9 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
      */
     @Nullable
     public Integer getSunrise() {
-        if (getSunsetCalculator() != null)
-            return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
+        SunriseSunsetCalculator calculator = getSunsetCalculator();
+        if (calculator != null)
+            return calculator.getOfficialSunriseCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
         else return null;
     }
 
@@ -357,8 +360,9 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
      */
     @Nullable
     public Integer getSunset() {
-        if (getSunsetCalculator() != null)
-            return getSunsetCalculator().getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
+        SunriseSunsetCalculator calculator = getSunsetCalculator();
+        if (calculator != null)
+            return calculator.getOfficialSunsetCalendarForDate(Calendar.getInstance()).get(Calendar.HOUR_OF_DAY);
         else return null;
     }
 
@@ -374,7 +378,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 android.location.Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false));
                 sunsetCalculator = new SunriseSunsetCalculator(new Location(location.getLatitude(), location.getLongitude()), TimeZone.getDefault().getID());
-            } catch (NullPointerException ignored) {
+            } catch (NullPointerException | IllegalArgumentException ignored) {
             }
         }
 
