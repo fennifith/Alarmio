@@ -30,7 +30,7 @@ public abstract class BaseSoundChooserFragment extends BasePagerFragment impleme
         listener = null;
     }
 
-    abstract static class Instantiator extends ContextFragmentInstantiator {
+    public abstract static class Instantiator extends ContextFragmentInstantiator {
 
         private WeakReference<SoundChooserListener> listener;
 

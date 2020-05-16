@@ -95,6 +95,9 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.1.0'
 
+    // lifecycle / DI helpers
+    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
+
     // media dependencies
     implementation 'com.google.android.exoplayer:exoplayer-core:2.11.3'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.11.3'

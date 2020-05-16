@@ -171,7 +171,7 @@ public class HomeFragment extends BaseFragment {
                 .subscribe(integer -> {
                     menu.setMenuButtonColor(integer);
 
-                    int color = ContextCompat.getColor(getContext(), getAlarmio().getActivityTheme() == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
+                    int color = ContextCompat.getColor(getContext(), PreferenceData.THEME.getValue(getContext(), Alarmio.THEME_DAY_NIGHT) == Alarmio.THEME_AMOLED ? R.color.textColorPrimary : R.color.textColorPrimaryNight);
                     menu.getMenuButton().setColorFilter(color);
                     stopwatchFab.setColorFilter(color);
                     timerFab.setColorFilter(color);

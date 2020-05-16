@@ -25,12 +25,14 @@ import me.jfenn.alarmio.data.PreferenceData
 import me.jfenn.alarmio.data.SoundData
 import me.jfenn.alarmio.data.TimerData
 import me.jfenn.alarmio.dialogs.TimeChooserDialog
+import me.jfenn.alarmio.interfaces.SoundPlayer
 import me.jfenn.alarmio.services.SleepReminderService
 import me.jfenn.alarmio.utils.FormatUtils
 import me.jfenn.alarmio.utils.ImageUtils
 import me.jfenn.alarmio.utils.extensions.bind
 import me.jfenn.slideactionview.SlideActionListener
 import me.jfenn.slideactionview.SlideActionView
+import org.koin.android.ext.android.inject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -42,6 +44,7 @@ class AlarmActivity : AestheticActivity(), SlideActionListener {
     }
 
     private val alarmio: Alarmio by lazy { applicationContext as Alarmio }
+    private val player: SoundPlayer by inject()
 
     private val overlay: View? by bind(R.id.overlay)
     private val date: TextView? by bind(R.id.date)
@@ -50,9 +53,6 @@ class AlarmActivity : AestheticActivity(), SlideActionListener {
 
     private val vibrator: Vibrator? by lazy {
         getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    }
-    private val audioManager: AudioManager? by lazy {
-        getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
 
     private var isAlarm = false
@@ -65,11 +65,6 @@ class AlarmActivity : AestheticActivity(), SlideActionListener {
 
     private var isSlowWake = false
     private var slowWakeMillis: Long = 0
-
-    private var currentVolume = 0
-    private var minVolume = 0
-    private var originalVolume = 0
-    private var volumeRange = 0
 
     private val handler: Handler = Handler()
     private var runnable: Runnable? = null
@@ -115,17 +110,6 @@ class AlarmActivity : AestheticActivity(), SlideActionListener {
                 sound = timer!!.getSound()
         } else finish()
 
-        if (sound?.isSetVolumeSupported == false) audioManager?.let { audioManager ->
-            // Use the backup method if it is not supported
-            originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM)
-            if (isSlowWake) {
-                minVolume = if (Build.VERSION.SDK_INT >= 28) audioManager.getStreamMinVolume(AudioManager.STREAM_ALARM) else 0
-                volumeRange = originalVolume - minVolume
-                currentVolume = minVolume
-                audioManager.setStreamVolume(AudioManager.STREAM_ALARM, minVolume, 0)
-            }
-        }
-
         date?.text = FormatUtils.format(Date(), FormatUtils.FORMAT_DATE + ", " + FormatUtils.getShortFormat(this))
 
         triggerMillis = System.currentTimeMillis()
@@ -141,37 +125,32 @@ class AlarmActivity : AestheticActivity(), SlideActionListener {
                     else vibrator?.vibrate(500)
                 }
 
-                if (sound?.isPlaying(alarmio) == false)
-                    sound?.play(alarmio)
+                sound?.let { sound ->
+                    if (!player.isPlaying(sound))
+                        player.play(sound)
+                }
 
                 if (alarm != null && isSlowWake) {
-                    val slowWakeProgress = elapsedMillis.toFloat() / slowWakeMillis
-                    window.attributes.screenBrightness = slowWakeProgress.coerceIn(0.01f, 0.1f)
+                    val slowWakeProgress = (elapsedMillis.toFloat() / slowWakeMillis).coerceIn(0.01f, 1f)
 
+                    // set display brightness
+                    window.attributes.screenBrightness = slowWakeProgress
                     window.addFlags(WindowManager.LayoutParams.FLAGS_CHANGED)
-                    if (sound != null && sound!!.isSetVolumeSupported) {
-                        val newVolume = slowWakeProgress.coerceAtMost(1f) * (PreferenceData.MANUAL_VOLUME_SETTING.getValue<Int>(this@AlarmActivity) / 100f)
-                        sound?.setVolume(alarmio, newVolume)
-                    } else if (currentVolume < originalVolume) {
-                        // Backup volume setting behavior
-                        val newVolume = minVolume + (slowWakeProgress * volumeRange).coerceAtMost(originalVolume.toFloat()).toInt()
-                        if (newVolume != currentVolume) {
-                            audioManager?.setStreamVolume(AudioManager.STREAM_ALARM, newVolume, 0)
-                            currentVolume = newVolume
-                        }
-                    }
+
+                    // update ringtone volume
+                    player.setVolume(slowWakeProgress)
                 }
+
                 handler.postDelayed(this, 1000)
             }
         }
 
         handler.post(runnable)
-        sound?.play(alarmio)
 
         SleepReminderService.refreshSleepTime(alarmio)
 
         if (PreferenceData.RINGING_BACKGROUND_IMAGE.getValue(this))
-            ImageUtils.getBackgroundImage(findViewById<View>(R.id.background) as ImageView)
+            ImageUtils.getBackgroundImage(findViewById(R.id.background))
     }
 
     override fun onAttachedToWindow() {
@@ -192,11 +171,11 @@ class AlarmActivity : AestheticActivity(), SlideActionListener {
 
     private fun stopAnnoyingness() {
         runnable?.let { handler.removeCallbacks(it) }
-        if (sound?.isPlaying(alarmio) == true) {
-            sound?.stop(alarmio)
-            if (isSlowWake && sound?.isSetVolumeSupported == false) {
-                audioManager?.setStreamVolume(AudioManager.STREAM_ALARM, originalVolume, 0)
-            }
+        player.stop()
+
+        if (isSlowWake) {
+            // reset volume to initial value
+            player.setVolume(1f)
         }
     }
 

@@ -42,7 +42,7 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
     override fun bindViewHolder(holder: ViewHolder) {
         holder.themeSpinner.adapter = ArrayAdapter.createFromResource(holder.itemView.context, R.array.array_themes, R.layout.support_simple_spinner_dropdown_item)
 
-        val theme : Int = holder.alarmio?.activityTheme ?: Alarmio.THEME_DAY_NIGHT
+        val theme : Int = PreferenceData.THEME.getValue(holder.itemView.context)
         run {
             if (theme == Alarmio.THEME_DAY_NIGHT) View.VISIBLE else View.GONE
         }.let {
@@ -98,7 +98,7 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
         }
 
         holder.sunriseAutoSwitch.setOnCheckedChangeListener(null)
-        holder.sunriseAutoSwitch.isChecked = holder.alarmio?.isDayAuto ?: false
+        holder.sunriseAutoSwitch.isChecked = holder.alarmio?.isDayAuto() ?: false
         holder.sunriseAutoSwitch.setOnCheckedChangeListener { _, b ->
             PreferenceData.DAY_AUTO.setValue(holder.context, b)
 
@@ -107,18 +107,18 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
                 holder.sunriseAutoSwitch.isChecked = false
             } else {
                 holder.alarmio?.let { alarmio ->
-                    if (alarmio.sunrise == null) // test to check that location provider is actually available
+                    if (alarmio.getSunrise() == null) // test to check that location provider is actually available
                         Toast.makeText(alarmio, R.string.msg_null_location_provider, Toast.LENGTH_SHORT).show()
 
-                    listener.onSunriseChanged(holder.sunriseView, alarmio.dayStart * HOUR_LENGTH)
-                    listener.onSunsetChanged(holder.sunriseView, alarmio.dayEnd * HOUR_LENGTH)
+                    listener.onSunriseChanged(holder.sunriseView, alarmio.getDayStart() * HOUR_LENGTH)
+                    listener.onSunsetChanged(holder.sunriseView, alarmio.getDayEnd() * HOUR_LENGTH)
                 }
             }
         }
 
         holder.alarmio?.let { alarmio ->
-            listener.onSunriseChanged(holder.sunriseView, alarmio.dayStart * HOUR_LENGTH)
-            listener.onSunsetChanged(holder.sunriseView, alarmio.dayEnd * HOUR_LENGTH)
+            listener.onSunriseChanged(holder.sunriseView, alarmio.getDayStart() * HOUR_LENGTH)
+            listener.onSunsetChanged(holder.sunriseView, alarmio.getDayEnd() * HOUR_LENGTH)
         }
 
         holder.sunriseView.setListener(object : SunriseSunsetView.SunriseListener {
@@ -134,12 +134,12 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
         })
 
         holder.sunriseTextView.setOnClickListener { view ->
-            AestheticTimeSheetPickerDialog(view.context, holder.alarmio?.dayStart ?: 1, 0)
+            AestheticTimeSheetPickerDialog(view.context, holder.alarmio?.getDayStart() ?: 1, 0)
                     .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
                         override fun onSelect(dialog: PickerDialog<LinearTimePickerView>, view: LinearTimePickerView) {
                             holder.sunriseAutoSwitch.isChecked = false
                             holder.alarmio?.let { alarmio ->
-                                if (view.hourOfDay < alarmio.dayEnd)
+                                if (view.hourOfDay < alarmio.getDayEnd())
                                     listener.onSunriseChanged(holder.sunriseView, view.hourOfDay * HOUR_LENGTH)
                             }
                         }
@@ -150,12 +150,12 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
         }
 
         holder.sunsetTextView.setOnClickListener { view ->
-            AestheticTimeSheetPickerDialog(view.context, holder.alarmio?.dayEnd ?: 23, 0)
+            AestheticTimeSheetPickerDialog(view.context, holder.alarmio?.getDayEnd() ?: 23, 0)
                     .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
                         override fun onSelect(dialog: PickerDialog<LinearTimePickerView>, view: LinearTimePickerView) {
                             holder.sunriseAutoSwitch.isChecked = false
                             holder.alarmio?.let { alarmio ->
-                                if (view.hourOfDay > alarmio.dayStart)
+                                if (view.hourOfDay > alarmio.getDayStart())
                                     listener.onSunsetChanged(holder.sunriseView, view.hourOfDay * HOUR_LENGTH)
                             }
                         }

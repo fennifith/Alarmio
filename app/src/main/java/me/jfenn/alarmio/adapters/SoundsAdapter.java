@@ -19,6 +19,7 @@ import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.SoundData;
 import me.jfenn.alarmio.interfaces.SoundChooserListener;
+import me.jfenn.alarmio.interfaces.SoundPlayer;
 
 public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder> {
 
@@ -27,10 +28,12 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
     private int currentlyPlaying = -1;
 
     private SoundChooserListener listener;
+    private SoundPlayer player;
 
-    public SoundsAdapter(Alarmio alarmio, List<SoundData> sounds) {
+    public SoundsAdapter(Alarmio alarmio, List<SoundData> sounds, SoundPlayer player) {
         this.alarmio = alarmio;
         this.sounds = sounds;
+        this.player = player;
     }
 
     public void setListener(SoundChooserListener listener) {
@@ -60,17 +63,16 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
             holder.icon.setOnClickListener(v -> {
                 int position1 = holder.getAdapterPosition();
                 SoundData sound1 = sounds.get(position1 - 1);
-                if (sound1.isPlaying(alarmio) || currentlyPlaying == position1) {
-                    sound1.stop(alarmio);
+                if (player.isPlaying(sound1) || currentlyPlaying == position1) {
+                    player.stop();
                     currentlyPlaying = -1;
                 } else {
-                    sound1.preview(alarmio);
-
                     if (currentlyPlaying >= 0) {
-                        sounds.get(currentlyPlaying - 1).stop(alarmio);
+                        player.stop();
                         notifyItemChanged(currentlyPlaying);
                     }
 
+                    player.play(sound1);
                     currentlyPlaying = position1;
                 }
 
@@ -82,7 +84,7 @@ public class SoundsAdapter extends RecyclerView.Adapter<SoundsAdapter.ViewHolder
                     listener.onSoundChosen(sounds.get(holder.getAdapterPosition() - 1));
             });
 
-            setPlaying(holder, sound.isPlaying(alarmio), false);
+            setPlaying(holder, player.isPlaying(sound), false);
         }
     }
 

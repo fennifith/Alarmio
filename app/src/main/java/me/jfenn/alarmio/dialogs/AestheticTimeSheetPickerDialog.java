@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.afollestad.aesthetic.Aesthetic;
 
 import me.jfenn.alarmio.Alarmio;
+import me.jfenn.alarmio.data.PreferenceData;
 import me.jfenn.timedatepickers.dialogs.TimeSheetPickerDialog;
 
 public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
@@ -44,7 +45,7 @@ public class AestheticTimeSheetPickerDialog extends TimeSheetPickerDialog {
                 .take(1)
                 .subscribe(integer -> {
                     setSelectionColor(integer);
-                    setSelectionTextColor(((Alarmio) getContext().getApplicationContext()).getActivityTheme() == Alarmio.THEME_AMOLED ? Color.BLACK : Color.WHITE);
+                    setSelectionTextColor(PreferenceData.THEME.getValue(getContext(), Alarmio.THEME_DAY_NIGHT) == Alarmio.THEME_AMOLED ? Color.BLACK : Color.WHITE);
                 });
     }
 }

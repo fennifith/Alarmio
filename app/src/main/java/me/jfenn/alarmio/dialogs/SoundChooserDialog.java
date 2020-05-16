@@ -98,12 +98,4 @@ public class SoundChooserDialog extends DialogFragment implements SoundChooserLi
 
         dismiss();
     }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-
-        if (view != null)
-            ((Alarmio) view.getContext().getApplicationContext()).stopCurrentSound();
-    }
 }
