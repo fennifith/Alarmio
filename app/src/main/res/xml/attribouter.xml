@@ -131,6 +131,11 @@
         	login="pablomeza10" />
 
         <TranslatorWedge
+            name="Alejandro"
+            locales="es"
+            login="AndrOs-Vigo" />
+
+        <TranslatorWedge
             name="Vinicius R"
             blog="^https://github.com/Suburbanno"
             locales="pt"
