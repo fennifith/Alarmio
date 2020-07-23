@@ -62,6 +62,14 @@
         <item>AMOLED</item>
     </string-array>
 
+    <string name="day_sunday_abbr">S</string>
+    <string name="day_monday_abbr">M</string>
+    <string name="day_tuesday_abbr">D</string>
+    <string name="day_wednesday_abbr">M</string>
+    <string name="day_thursday_abbr">D</string>
+    <string name="day_friday_abbr">F</string>
+    <string name="day_saturday_abbr">S</string>
+
     <!-- untranslated strings -->
     <string name="title_alarm_next">%s from now.</string>
     <string name="msg_alarms_empty">You don\'t have any alarms set. Press the \'+\' button to create one.</string>
@@ -76,13 +84,9 @@
     <string name="title_files">Files</string>
     <string name="title_files_audio_files">Audio Files</string>
     <string name="title_files_add_audio">Choose File</string>
-    <string name="day_sunday_abbr">S</string>
-    <string name="day_monday_abbr">M</string>
-    <string name="day_tuesday_abbr">D</string>
-    <string name="day_wednesday_abbr">M</string>
-    <string name="day_thursday_abbr">D</string>
-    <string name="day_friday_abbr">F</string>
-    <string name="day_saturday_abbr">S</string>
     <string name="info_background_permissions_title">System Alerts / Background Permissions</string>
     <string name="info_background_permissions_body">Newer versions of Android are becoming increasingly unreliable at starting apps from the background without user interaction; with the introduction of Doze/App Standby in Android 6.0, the requirements for an app to be started are ambiguous and often device-specific.\n\nAs such, while it is not always a requirement for this app to function, it is highly recommended that you grant the System Overlays permission on the next page. This will grant Alarmio an exemption from Android\'s usual requirements for starting an app without user interaction, and allow it to function much more reliably.</string>
+    <string name="title_manual_volume">Manual Alarm Volume</string>
+    <string name="desc_manual_volume">Your device\'s alarm volume will be multiplied by this number. This will give your more precise control as some devices limit volume to device fixed number of steps.</string>
+    <string name="msg_null_location_provider">Alarmio is unable to find a location provider - this feature may not work correctly.</string>
 </resources>

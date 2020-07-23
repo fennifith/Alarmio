@@ -23,6 +23,7 @@ public enum PreferenceData {
     SLEEP_REMINDER_TIME(25200000L), //milliseconds
     SLOW_WAKE_UP(true),
     SLOW_WAKE_UP_TIME(300000L), //milliseconds
+    MANUAL_VOLUME_SETTING(100),
     ALARM_NAME("%d/ALARM_NAME", null),
     ALARM_TIME("%d/ALARM_TIME", (long) 0),
     ALARM_ENABLED("%d/ALARM_ENABLED", true),

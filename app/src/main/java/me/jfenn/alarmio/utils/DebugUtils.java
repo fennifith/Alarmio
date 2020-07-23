@@ -8,7 +8,6 @@ import me.jfenn.alarmio.Alarmio;
 public class DebugUtils {
 
     private static final String[] SETUP_TASKS = {
-            "me.jfenn.alarmio.utils.LeakCanaryTask",
             "me.jfenn.alarmio.utils.CrasherTask"
     };
 

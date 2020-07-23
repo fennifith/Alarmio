@@ -30,7 +30,7 @@ class BooleanPreferenceData(private val preference: PreferenceData, @StringRes p
         holder.description.setText(description)
         holder.toggle.setOnCheckedChangeListener(null)
 
-        holder.toggle.isChecked = preference.getValue(holder.itemView.context, false) ?: false
+        holder.toggle.isChecked = preference.getValue(holder.itemView.context) ?: false
         holder.toggle.setOnCheckedChangeListener { compoundButton, b -> preference.setValue(compoundButton.context, b) }
 
         Aesthetic.get()

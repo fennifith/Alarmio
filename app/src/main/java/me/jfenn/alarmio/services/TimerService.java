@@ -63,8 +63,13 @@ public class TimerService extends Service {
 
     @Nullable
     private Notification getNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_TIMERS, "Timers", NotificationManager.IMPORTANCE_LOW));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(Alarmio.NOTIFICATION_CHANNEL_TIMERS, "Timers", NotificationManager.IMPORTANCE_LOW);
+            channel.setSound(null, null);
+            channel.enableVibration(false);
+
+            notificationManager.createNotificationChannel(channel);
+        }
 
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         String string = "";
@@ -93,6 +98,8 @@ public class TimerService extends Service {
                 .setContentText("")
                 .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT))
                 .setStyle(inboxStyle)
+                .setSound(null)
+                .setVibrate(new long[]{0L})
                 .build();
     }
 
