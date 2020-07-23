@@ -435,6 +435,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
         val vibrateIndicator: ImageView = v.findViewById(R.id.vibrateIndicator)
 
         val alarms: List<AlarmData> = alarmio.alarms
+        val timers: List<TimerData> = alarmio.timers
 
         init {
             name.addTextChangedListener(object : TextWatcher {
@@ -448,7 +449,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
 
                 override fun afterTextChanged(editable: Editable) {
                     if (name.hasFocus()) // ignore .setText() calls
-                        alarms.getOrNull(adapterPosition)?.setName(alarmio, editable.toString())
+                        alarms.getOrNull(adapterPosition-timers.size)?.setName(alarmio, editable.toString())
                 }
             })
         }
