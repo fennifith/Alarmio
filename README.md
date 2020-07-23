@@ -76,6 +76,7 @@ _Contributors: feel free to create a PR to add/edit your listing here, as well a
 - [@quipri](https://github.com/quipri)
 - [@ajayyy](https://github.com/ajayyy) - [website](https://ajay.app/)
 - [@raboof](https://github.com/raboof) - [website](https://arnout.engelen.eu/)
+- [@Nulide](https://github.com/Nulide)
 
 ### Translators
 
