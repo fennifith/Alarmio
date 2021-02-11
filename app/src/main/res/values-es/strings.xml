@@ -1,6 +1,6 @@
 <resources>
     <string name="info_background_permissions_title">Alertas del Sistema / Permisos en Segundo Plano</string>
-    <string name="info_background_permissions_body">Las versiones más recientes de Android son cada vez menos fiables a la hora de iniciar aplicaciones desde el fondo sin la interacción del usuario; con la introducción de Doze/App Standby en Android 6.0, los requisitos para que una aplicación se inicie son ambiguos y a menudo específicos del dispositivo.\n\nPor lo tanto, aunque no siempre es un requisito para que esta aplicación funcione, se recomienda que se conceda el permiso Mostrar sobre otras apps del sistema en la siguiente página. Esto le otorgará a Alarmio una excepción de los requisitos habituales de Android para iniciar una aplicación sin la interacción del usuario, y le permitirá funcionar de manera mucho más fiable.</string>
+    <string name="info_background_permissions_body">Las versiones más recientes de Android son cada vez menos fiables a la hora de iniciar aplicaciones en segundo plano sin la interacción del usuario; con la introducción de Doze en Android 6.0, los requisitos para que una aplicación se inicie son ambiguos y a menudo específicos del dispositivo.\n\nPor lo tanto, aunque no siempre es un requisito para que esta aplicación funcione, se recomienda que se conceda el permiso \'Mostrar sobre otras aplicaciones\' en la siguiente página. Esto le otorgará a Alarmio una excepción en los requisitos habituales de Android para iniciar una aplicación sin la interacción del usuario, y le permitirá funcionar de manera mucho más fiable.</string>
 
     <string name="title_alarm">Alarma %d</string>
     <string name="title_alarm_next">%s a partir de ahora.</string>
@@ -19,7 +19,7 @@
     <string name="title_share_results">Compartir Resultados…</string>
     <string name="msg_delete_confirmation">¿Estás seguro que quieres eliminar %s?</string>
     <string name="title_delete">Eliminar</string>
-    <string name="title_start_timer">Inicio Temporizador</string>
+    <string name="title_start_timer">Iniciar Temporizador</string>
     <string name="title_auto">Automático</string>
     <string name="title_sunrise">Amanecer</string>
     <string name="title_sunset">Puesta de Sol</string>
@@ -29,7 +29,7 @@
     <string name="title_snooze">Posponer</string>
     <string name="title_alarms">Alarmas</string>
     <string name="title_settings">Ajustes</string>
-    <string name="title_ringtones">Ringtones</string>
+    <string name="title_ringtones">Melodías</string>
     <string name="word_day">día</string>
     <string name="word_days">días</string>
     <string name="word_minute">minuto</string>
@@ -42,33 +42,33 @@
     <string name="title_radio_test">Prueba</string>
     <string name="title_radio_create">Crear</string>
     <string name="msg_radio_create">Crear una nueva Radio</string>
-    <string name="msg_radio_url">Pega un \'.m3u8\' URL de Radio aquí…</string>
-    <string name="msg_radio_previous">Elija una Radio usada anteriormente</string>
+    <string name="msg_radio_url">Pega un enlace \'.m3u8\' para añadir la radio</string>
+    <string name="msg_radio_previous">Elige una radio usada anteriormente</string>
     <string name="title_radio_stop">Detener</string>
     <string name="title_radio">Radio</string>
-    <string name="title_time_zones">Zonas Horarias</string>
+    <string name="title_time_zones">Zonas horarias</string>
     <string name="title_behavior">Comportamiento</string>
-    <string name="title_default_alarm_ringtone">Tono Alarma</string>
-    <string name="title_default_timer_ringtone">Tono Temporizador</string>
-    <string name="title_sleep_reminder">Recordatorio de Sueño</string>
-    <string name="desc_sleep_reminder">Envía una notificación recordándote que te duermas a cierta hora antes de que suene la alarma si estás usando el teléfono.</string>
-    <string name="title_sleep_reminder_time">Tiempo del Recordatorio de Sueño</string>
+    <string name="title_default_alarm_ringtone">Tono de alarma</string>
+    <string name="title_default_timer_ringtone">Tono de temporizador</string>
+    <string name="title_sleep_reminder">Recordatorio para dormir</string>
+    <string name="desc_sleep_reminder">Muestra una notificación que te recuerda que debes irte a dormir un cierto tiempo antes de que suene la alarma si estás usando el teléfono.</string>
+    <string name="title_sleep_reminder_time">Tiempo del recordatorio para dormir</string>
     <string name="desc_sleep_reminder_time">%1$d horas antes de</string>
-    <string name="title_slow_wake_up">Despertar en Calma</string>
-    <string name="desc_slow_wake_up">Gradualmente aumenta el brillo y volumen cuando suena una alarma.</string>
-    <string name="title_slow_wake_up_time">Duración del Despertar en Calma</string>
-    <string name="title_about">Acerca de &amp; Licencias OSS</string>
-    <string name="title_choose_time_zone">Elija una Zona Horaria</string>
-    <string name="msg_sleep_reminder">Su próxima alarma sonará aproximadamente en %s a partir de ahora. Para obtener la cantidad de sueño especificada en ajustes, debes ir a la cama ahora.</string>
-    <string name="title_alarm_name">Nombre Alarma</string>
-    <string name="title_background_image">Imagen de Fondo</string>
-    <string name="title_ringing_background_image">Mostrar Imagen de Fondo en Alarmas/Temporizadores</string>
-    <string name="desc_ringing_background_image">Si mostrar la imagen de fondo cuando suena una alarma o un temporizador.</string>
-    <string name="msg_alarms_empty">No tienes ninguna alarma establecida. Presione el botón \'+\' para crear una.</string>
-    <string name="msg_time_zones_selected">%d Seleccionado</string>
+    <string name="title_slow_wake_up">Despertar suavemente</string>
+    <string name="desc_slow_wake_up">Aumenta gradualmente el brillo y el volumen cuando suena una alarma.</string>
+    <string name="title_slow_wake_up_time">Duración del despertar suave</string>
+    <string name="title_about">Acerca de Alarmio y licencias de Software Libre</string>
+    <string name="title_choose_time_zone">Elige una zona horaria</string>
+    <string name="msg_sleep_reminder">Tu próxima alarma sonará dentro de %s. Para poder dormir la cantidad de horas especificada en la configuración, debes irte a la cama ahora.</string>
+    <string name="title_alarm_name">Nombre de la alarma</string>
+    <string name="title_background_image">Imagen de fondo</string>
+    <string name="title_ringing_background_image">Mostrar imagen de fondo en alarmas y temporizadores</string>
+    <string name="desc_ringing_background_image">Si se muestra la imagen de fondo cuando suena una alarma o un temporizador.</string>
+    <string name="msg_alarms_empty">No tienes ninguna alarma configurada. Pulsa el botón \'+\' para crear una.</string>
+    <string name="msg_time_zones_selected">%d seleccionado</string>
     <string name="title_files">Archivos</string>
-    <string name="title_files_audio_files">Archivos de Audio</string>
-    <string name="title_files_add_audio">Elegir Archivo</string>
+    <string name="title_files_audio_files">Archivos de audio</string>
+    <string name="title_files_add_audio">Elegir archivo</string>
     <string-array name="array_themes">
         <item>Programado</item>
         <item>Claro</item>
@@ -76,19 +76,19 @@
         <item>AMOLED</item>
     </string-array>
 
-    <string name="msg_battery_optimizations_switch_enable">Enciende el interruptor junto a \"Alarmio\". Puede que tengas que desplazarte hacia abajo... mucho.</string>
-    <string name="title_ignore_battery_optimizations">Ignorar Optimizaciones de la Batería</string>
+    <string name="msg_battery_optimizations_switch_enable">Activa el interruptor junto a \'Alarmio\'. Es posible que tengas que desplazarte a lo largo de la pantalla.</string>
+    <string name="title_ignore_battery_optimizations">Ignorar optimizaciones de batería</string>
 
     <string name="day_sunday_abbr">D</string>
     <string name="day_monday_abbr">L</string>
     <string name="day_tuesday_abbr">M</string>
-    <string name="day_wednesday_abbr">M</string>
+    <string name="day_wednesday_abbr">X</string>
     <string name="day_thursday_abbr">J</string>
     <string name="day_friday_abbr">V</string>
     <string name="day_saturday_abbr">S</string>
 
     <!-- Untranslated strings -->
-    <string name="msg_null_location_provider">Alarmio is unable to find a location provider - this feature may not work correctly.</string>
-    <string name="title_manual_volume">Manual Alarm Volume</string>
-    <string name="desc_manual_volume">Your device\'s alarm volume will be multiplied by this number. This will give your more precise control as some devices limit device volume to a fixed number of steps.</string>
+    <string name="msg_null_location_provider">Alarmio no puede encontrar un proveedor de ubicación, es posible que esta función no funcione correctamente.</string>
+    <string name="title_manual_volume">Volumen de alarma manual</string>
+    <string name="desc_manual_volume">El volumen de la alarma se multiplicará por este número. Esto te dará un control más preciso ya que algunos dispositivos limitan el volumen del dispositivo a un número fijo de niveles.</string>
 </resources>
