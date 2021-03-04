@@ -31,8 +31,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Set up OpenJDK 1.8
-        uses: joschi/setup-jdk@v1
+        uses: joschi/setup-jdk@v2
         with:
-          java-version: 'openjdk8'
+          java-version: '8'
       - name: Build with Gradle
         run: ./gradlew test
