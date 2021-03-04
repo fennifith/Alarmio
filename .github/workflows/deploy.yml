@@ -13,9 +13,9 @@ jobs:
         with:
           ref: master
       - name: Set up OpenJDK 1.8
-        uses: joschi/setup-jdk@v1
+        uses: joschi/setup-jdk@v2
         with:
-          java-version: 'openjdk8'
+          java-version: '8'
       - name: Extract secrets
         env:
           SECRETS_KEY: ${{ secrets.SECRETS_KEY }}
