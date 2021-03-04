@@ -115,6 +115,7 @@
         <ContributorWedge hidden="true" login="ikanakova" />
         <ContributorWedge hidden="true" login="meskobalazs" />
         <ContributorWedge hidden="true" login="JortonMV" />
+        <ContributorWedge hidden="true" login="Marmo" />
 
     </ContributorsWedge>
     <TranslatorsWedge>
@@ -172,6 +173,11 @@
             locales="es"
             login="JortonMV" />
 
+        <TranslatorWedge
+            name="glirhuin"
+            blog="^https://github.com/Marmo"
+            locales="de"
+            login="Marmo" />
 
     </TranslatorsWedge>
     <LicensesWedge>
