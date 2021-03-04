@@ -87,6 +87,7 @@ _Contributors: feel free to create a PR to add/edit your listing here, as well a
 - [@FriederZi](https://github.com/FriederZi) (German)
 - [@pablomeza10](https://github.com/pablomeza10) (Spanish)
 - [@Suburbanno](https://github.com/Suburbanno) (Portuguese)
+- [@JortonMV](https://github.com/JortonMV) (Spanish)
 
 ## Related Work
 
