@@ -27,7 +27,7 @@ public class ImageUtils {
                 if (backgroundUrl.startsWith("content://")) {
                     String path = Uri.parse(backgroundUrl).getLastPathSegment();
                     if (path != null && path.contains(":"))
-                        path = "/storage/" + path.replaceFirst(":", "/");
+                        path = path.replaceFirst(".*:", "");
                     else path = Uri.parse(backgroundUrl).getPath();
 
                     //      "a haiku"
