@@ -1,0 +1,13 @@
+Alarmio ist ein einfacher Open Source Wecker. Alarmio versucht viele nützliche Funktionen einzubauen und sich dabei auf Designstandarts zu achten um die App schnell und intuitiv zu halten.
+
+<b>Funktionen:</b>
+
+<ul>
+<li>Stelle Wecker, Timer oder verwende die Stop Uhr</li>
+<li>Wöchentlich wiederholende Wecker</li>
+<li>Wähle einen Klingelton aus. Es werden installierte Töne als auch Internet Streams unterstützt.</li>
+<li>Benachrichtige dich rechtzeitig ins Bett zu gehen</li>
+<li>Graduelle Erhöhung der Helligkeit/Lautstärke zum angenehmen Aufwachen</li>
+<li>Wähle dein eigenes Hintergrundbild aus</li>
+<li>Light/Dark Themes. Können abhängig vom Sonnenaufgang und Sonnenuntergang aktiviert werden.</li>
+</ul>
