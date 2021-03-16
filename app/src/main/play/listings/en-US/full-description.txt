@@ -1,0 +1,13 @@
+Alarmio is a simple open source alarm clock which attempts to implement many useful features while following regular design standards to ensure that it is quick and intuitive to use.
+
+<b>Functionality:</b>
+
+<ul>
+<li>set alarms, timers, or use the built-in stopwatch</li>
+<li>repeat alarms on a weekly basis</li>
+<li>specify a ringtone from either installed sounds or an internet stream</li>
+<li>notify yourself to go to sleep a set time before your first alarm</li>
+<li>gradually increase brightness / volume to wake you up</li>
+<li>choose a custom header / background image to display</li>
+<li>light/dark themes, with a sunrise-sunset scheduling option</li>
+</ul>
