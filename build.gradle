@@ -5,23 +5,27 @@ buildscript {
     
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.triplet.gradle:play-publisher:2.5.0-SNAPSHOT'
+        classpath 'com.github.triplet.gradle:play-publisher:2.5.0'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://google.bintray.com/exoplayer/' }
+	maven { url 'https://dl.bintray.com/ekito/koin' }
     }
 }
 
