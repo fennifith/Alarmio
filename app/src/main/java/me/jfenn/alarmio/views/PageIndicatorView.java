@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.afollestad.aesthetic.Aesthetic;
@@ -157,8 +158,8 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
      */
     public void setViewPager(ViewPager viewPager) {
         viewPager.addOnPageChangeListener(this);
-        size = viewPager.getAdapter().getCount();
-        invalidate();
+        size = Math.min(viewPager.getAdapter().getCount(), 20);
+        requestLayout();
     }
 
     private static class IndicatorEngine {

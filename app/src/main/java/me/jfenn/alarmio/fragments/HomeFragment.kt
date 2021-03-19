@@ -227,7 +227,7 @@ class HomeFragment : BaseFragment() {
         val fragments: MutableList<FragmentInstantiator> = ArrayList<FragmentInstantiator>()
         fragments.add(ClockFragment.Instantiator(context, null))
         for (id in TimeZone.getAvailableIDs()) {
-            if (PreferenceData.TIME_ZONE_ENABLED.getSpecificValue<Boolean>(context, id)) fragments.add(ClockFragment.Instantiator(context, id))
+            if (PreferenceData.TIME_ZONE_ENABLED.getSpecificValue(context, id)) fragments.add(ClockFragment.Instantiator(context, id))
         }
 
         val timeAdapter = SimplePagerAdapter(context, childFragmentManager, *fragments.toTypedArray())
