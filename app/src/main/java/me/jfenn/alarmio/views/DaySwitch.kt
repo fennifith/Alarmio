@@ -11,7 +11,7 @@ import android.view.animation.DecelerateInterpolator
 import com.afollestad.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
-import me.jfenn.androidutils.DimenUtils
+import me.jfenn.androidutils.dpToPx
 
 class DaySwitch : View, View.OnClickListener, Subscribblable {
 
@@ -23,13 +23,13 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
 
     private var textPaint: Paint = Paint().apply {
         isAntiAlias = true
-        textSize = DimenUtils.dpToPx(18f).toFloat()
+        textSize = dpToPx(18f).toFloat()
         textAlign = Paint.Align.CENTER
     }
 
     private var clippedTextPaint: Paint = Paint().apply {
         isAntiAlias = true
-        textSize = DimenUtils.dpToPx(18f).toFloat()
+        textSize = dpToPx(18f).toFloat()
         textAlign = Paint.Align.CENTER
     }
 
@@ -130,7 +130,7 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
         text?.let { str ->
             // calculate text size to not extend past circle radius ( - 4dp for padding)
             val textWidth = textPaint.measureText(str)
-            val circleWidth = DimenUtils.dpToPx(32f)
+            val circleWidth = dpToPx(32f)
             if (textWidth > circleWidth) {
                 textPaint.textSize *= (circleWidth.toFloat() / textWidth)
                 clippedTextPaint.textSize = textPaint.textSize
@@ -140,7 +140,7 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
         }
 
         val circlePath = Path()
-        circlePath.addCircle((canvas.width / 2).toFloat(), (canvas.height / 2).toFloat(), checked * DimenUtils.dpToPx(18f), Path.Direction.CW)
+        circlePath.addCircle((canvas.width / 2).toFloat(), (canvas.height / 2).toFloat(), checked * dpToPx(18f), Path.Direction.CW)
         circlePath.close()
 
         canvas.drawPath(circlePath, accentPaint)

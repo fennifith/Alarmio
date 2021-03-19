@@ -37,7 +37,7 @@ import me.jfenn.alarmio.dialogs.SoundChooserDialog
 import me.jfenn.alarmio.utils.FormatUtils
 import me.jfenn.alarmio.views.DaySwitch
 import me.jfenn.alarmio.views.ProgressLineView
-import me.jfenn.androidutils.DimenUtils
+import me.jfenn.androidutils.dpToPx
 import me.jfenn.timedatepickers.dialogs.PickerDialog
 import me.jfenn.timedatepickers.views.LinearTimePickerView
 import java.util.*
@@ -227,8 +227,8 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                     }
 
             ValueAnimator.ofFloat(
-                    if (isExpanded) 0f else DimenUtils.dpToPx(2f).toFloat(),
-                    if (isExpanded) DimenUtils.dpToPx(2f).toFloat() else 0f
+                    if (isExpanded) 0f else dpToPx(2f).toFloat(),
+                    if (isExpanded) dpToPx(2f).toFloat() else 0f
             ).apply {
                 addUpdateListener { animation ->
                     (animation.animatedValue as? Float)?.let { elevation ->
@@ -239,7 +239,7 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
             }
         } else {
             holder.itemView.setBackgroundColor(if (isExpanded) colorForeground else Color.TRANSPARENT)
-            ViewCompat.setElevation(holder.itemView, (if (isExpanded) DimenUtils.dpToPx(2f) else 0).toFloat())
+            ViewCompat.setElevation(holder.itemView, (if (isExpanded) dpToPx(2f) else 0).toFloat())
         }
 
         holder.itemView.setOnClickListener {

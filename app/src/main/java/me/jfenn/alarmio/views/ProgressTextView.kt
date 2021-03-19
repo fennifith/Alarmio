@@ -13,7 +13,8 @@ import android.view.animation.LinearInterpolator
 import com.afollestad.aesthetic.Aesthetic
 import io.reactivex.disposables.Disposable
 import me.jfenn.alarmio.interfaces.Subscribblable
-import me.jfenn.androidutils.DimenUtils
+import me.jfenn.androidutils.dpToPx
+import me.jfenn.androidutils.spToPx
 
 /**
  * Display a progress circle with text in
@@ -25,7 +26,7 @@ class ProgressTextView : View, Subscribblable {
     private var maxProgress: Long = 0
     private var referenceProgress: Long = 0
     private var text: String? = null
-    private var padding: Int = DimenUtils.dpToPx(4f)
+    private var padding: Int = dpToPx(4f)
 
     private var linePaint: Paint = Paint().apply {
         isAntiAlias = true
@@ -50,7 +51,7 @@ class ProgressTextView : View, Subscribblable {
     private var textPaint: Paint = Paint().apply {
         isAntiAlias = true
         textAlign = Paint.Align.CENTER
-        textSize = DimenUtils.spToPx(34f).toFloat()
+        textSize = spToPx(34f).toFloat()
         isFakeBoldText = true
     }
 

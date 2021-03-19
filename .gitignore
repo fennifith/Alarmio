@@ -4,7 +4,12 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
+.settings/
+.project
+.classpath
 /build
 /captures
 .externalNativeBuild
 .idea/
+
+*.local.env

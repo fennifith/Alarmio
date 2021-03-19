@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.70'
+    ext.kotlin_version = '1.4.31'
     
     repositories {
         google()
@@ -14,7 +14,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.triplet.gradle:play-publisher:2.5.0'
+        classpath 'com.github.triplet.gradle:play-publisher:3.3.0'
     }
 }
 
@@ -25,7 +25,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://google.bintray.com/exoplayer/' }
-	maven { url 'https://dl.bintray.com/ekito/koin' }
+	    maven { url 'https://dl.bintray.com/ekito/koin' }
     }
 }
 
