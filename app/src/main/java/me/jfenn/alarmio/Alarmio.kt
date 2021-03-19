@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import androidx.room.Room
 import com.afollestad.aesthetic.Aesthetic
 import com.afollestad.aesthetic.AutoSwitchMode
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator
@@ -23,13 +24,16 @@ import me.jfenn.alarmio.data.AlarmData
 import me.jfenn.alarmio.data.PreferenceData
 import me.jfenn.alarmio.data.SoundData
 import me.jfenn.alarmio.data.TimerData
+import me.jfenn.alarmio.impl.AppDatabase
 import me.jfenn.alarmio.impl.SoundPlayerImpl
 import me.jfenn.alarmio.interfaces.SoundPlayer
 import me.jfenn.alarmio.services.SleepReminderService
 import me.jfenn.alarmio.services.TimerService
 import me.jfenn.alarmio.utils.DebugUtils
+import me.jfenn.alarmio.viewmodels.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import java.util.*
@@ -58,6 +62,12 @@ class Alarmio : MultiDexApplication() {
 
     private val appModule = module {
         single<SoundPlayer> { SoundPlayerImpl(androidContext()) }
+        single<AppDatabase> {
+            Room.databaseBuilder(androidContext(), AppDatabase::class.java, "alarmio")
+                    .build()
+        }
+
+        viewModel { HomeViewModel(get()) }
     }
 
     override fun onCreate() {

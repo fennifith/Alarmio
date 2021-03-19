@@ -31,14 +31,18 @@ import me.jfenn.alarmio.dialogs.AestheticTimeSheetPickerDialog
 import me.jfenn.alarmio.dialogs.TimerDialog
 import me.jfenn.alarmio.interfaces.FragmentInstantiator
 import me.jfenn.alarmio.utils.ImageUtils
+import me.jfenn.alarmio.viewmodels.HomeViewModel
 import me.jfenn.alarmio.views.PageIndicatorView
 import me.jfenn.androidutils.bind
 import me.jfenn.androidutils.getStatusBarHeight
 import me.jfenn.timedatepickers.dialogs.PickerDialog
 import me.jfenn.timedatepickers.views.LinearTimePickerView
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 class HomeFragment : BaseFragment() {
+
+    private val homeViewModel: HomeViewModel by sharedViewModel()
 
     private val viewPager: ViewPager? by bind(R.id.viewPager)
     private val tabLayout: TabLayout? by bind(R.id.tabLayout)
@@ -198,13 +202,23 @@ class HomeFragment : BaseFragment() {
         AestheticTimeSheetPickerDialog(view!!.context)
                 .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
                     override fun onSelect(dialog: PickerDialog<LinearTimePickerView>, view: LinearTimePickerView) {
-                        val manager: AlarmManager = view.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                        /* val manager: AlarmManager = view.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                         val alarm: AlarmData = alarmio!!.newAlarm()
                         alarm.time.set(Calendar.HOUR_OF_DAY, view.hourOfDay)
                         alarm.time.set(Calendar.MINUTE, view.minute)
                         alarm.setTime(alarmio, manager, alarm.time.timeInMillis)
                         alarm.setEnabled(context, manager, true)
-                        alarmio!!.onAlarmsChanged()
+                        alarmio!!.onAlarmsChanged()*/
+
+                        homeViewModel.createAlarm(me.jfenn.alarmio.data.alert.AlarmData(
+                                id = homeViewModel.alarms.value?.size ?: 0,
+                                isEnabled = false,
+                                name = null,
+                                time = Calendar.getInstance().apply {
+                                    set(Calendar.HOUR_OF_DAY, view.hourOfDay)
+                                    set(Calendar.MINUTE, view.minute)
+                                }
+                        ))
                     }
 
                     override fun onCancel(dialog: PickerDialog<LinearTimePickerView>) {}
