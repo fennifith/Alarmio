@@ -85,6 +85,6 @@
   <string name="day_saturday_abbr">星期六</string>
 
   <!-- untranslated strings -->
-  <string name="info_background_permissions_title">System Alerts / Background Permissions</string>
-  <string name="info_background_permissions_body">Newer versions of Android are becoming increasingly unreliable at starting apps from the background without user interaction; with the introduction of Doze/App Standby in Android 6.0, the requirements for an app to be started are ambiguous and often device-specific.\n\nAs such, while it is not always a requirement for this app to function, it is highly recommended that you grant the System Overlays permission on the next page. This will grant Alarmio an exemption from Android\'s usual requirements for starting an app without user interaction, and allow it to function much more reliably.</string>
+  <string name="info_background_permissions_title">系统闹钟/后台权限</string>
+  <string name="info_background_permissions_body">随着Android 6.0中Doze/App Standby的引入，对应用程序后台自启的要求变得模糊不清，而且往往不同设备有不同要求。\n\n因此，虽然这并不是这个应用程序运行的必要权限，但强烈建议你授予 屏幕叠加层 权限。Alarmio将免于遵守安卓系统对无需用户交互即可自启动的应用程序的常规要求，并使其更可靠地运行。</string>
 </resources>
