@@ -225,7 +225,7 @@ public class AlarmActivity extends AestheticActivity implements SlideActionListe
         if (sound != null && sound.isPlaying(alarmio)) {
             sound.stop(alarmio);
 
-            if (isSlowWake && !sound.isSetVolumeSupported()) {
+            if (audioManager != null && isSlowWake && !sound.isSetVolumeSupported()) {
                 audioManager.setStreamVolume(AudioManager.STREAM_ALARM, originalVolume, 0);
             }
         }
