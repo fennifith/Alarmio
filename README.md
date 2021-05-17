@@ -84,7 +84,7 @@ _Contributors: feel free to create a PR to add/edit your listing here, as well a
 - [@meskobalazs](https://github.com/meskobalazs) (Hungarian)
 - [@ikanakova](https://github.com/ikanakova) (Czech, Portuguese)
 - [@Larnicone](https://github.com/Larnicone) (French)
-- [@FriederZi](https://github.com/FriederZi) (German)
+- [@FriederZi](https://github.com/FriederZi), [@Jeinzi](https://github.com/Jeinzi) (German)
 - [@pablomeza10](https://github.com/pablomeza10) (Spanish)
 - [@Suburbanno](https://github.com/Suburbanno) (Portuguese)
 - [@JortonMV](https://github.com/JortonMV) (Spanish)
