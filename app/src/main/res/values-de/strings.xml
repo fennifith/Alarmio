@@ -1,5 +1,10 @@
 <resources>
+    <string name="info_background_permissions_title">Systembenachrichtigungen / Hintergrundberechtigungen</string>
+    <string name="info_background_permissions_body">Neue Versionen von Android werden immer unzuverlässiger darin, Apps im Hintergrund ohne Nutzerinteraktion zu starten; mit der Einführung von Doze und App Standby in Android 6.0 sind die Voraussetzungen zum Starten einer App uneindeutig und oft auch geräteabhängig geworden.\n\nUm die Funktion der App zu gewährleisten ist es deshalb äußerst empfehlenswert, auf der nächsten Seite die Erlaubnis zum Einblenden über anderen Apps zu erteilen, auch wenn das nicht immer zwingend erforderlich ist. Damit erhält Alarmio eine Ausnahme von Androids üblichen Anforderungen um Apps ohne Nutzerinteraktion zu starten, und wird es der App erlauben weitaus zuverlässiger zu arbeiten.
+    </string>
+    
     <string name="title_alarm">Alarm %d</string>
+    <string name="title_alarm_next">in %s.</string>
     <string name="title_none">Keiner</string>
     <string name="title_vibrate">Vibrieren</string>
     <string name="title_repeat">Wiederholen</string>
@@ -23,6 +28,11 @@
     <string name="title_appearance">Aussehen</string>
     <string name="title_sound_none">Keiner</string>
     <string name="title_snooze">Schlummern</string>
+    <string name="title_alarms">Alarme</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="title_ringtones">Klingeltöne</string>
+    <string name="word_day">Tag</string>
+    <string name="word_days">Tage</string>
     <string name="word_minute">Minute</string>
     <string name="word_minutes">Minuten</string>
     <string name="word_hour">Stunde</string>
@@ -33,7 +43,7 @@
     <string name="title_radio_test">Test</string>
     <string name="title_radio_create">Erstellen</string>
     <string name="msg_radio_create">Erstelle ein neues Radio</string>
-    <string name="msg_radio_url">Füge hier eine \'.m3u8\' Radio-URL ein...</string>
+    <string name="msg_radio_url">Füge hier eine \'.m3u8\' Radio-URL ein…</string>
     <string name="msg_radio_previous">Wähle ein zuvor benutztes Radio</string>
     <string name="title_radio_stop">Stop</string>
     <string name="title_radio">Radio</string>
@@ -48,30 +58,33 @@
     <string name="title_slow_wake_up">Langsames Aufwachen</string>
     <string name="desc_slow_wake_up">Erhöhe nach und nach Helligkeit und Lautstärke, wenn ein Alarm klingelt.</string>
     <string name="title_slow_wake_up_time">Dauer des langsamen Aufwachens</string>
-    <string name="title_about">Über &amp; OSS Lizensen</string>
+    <string name="title_about">Über &amp; OSS-Lizenzen</string>
     <string name="title_choose_time_zone">Wähle eine Zeitzone</string>
     <string name="msg_sleep_reminder">Dein nächster Alarm klingelt ungefähr in ungefähr %s. Um deine in den Einstellungen angegebene Menge an Schlaf zu bekommen, solltest du jetzt ins Bett gehen.</string>
     <string name="title_alarm_name">Name des Alarms</string>
     <string name="title_background_image">Hintergrundbild</string>
     <string name="title_ringing_background_image">Zeige Hintergrundbild bei Alarm und Timer</string>
     <string name="desc_ringing_background_image">Ob ein Hintergrundbild angezeigt werden soll, wenn ein Alarm oder Timer klingelt.</string>
+    <string name="msg_alarms_empty">Du hast keine Alarme definiert. Drücke \'+\', um einen Alarm zu erstellen.</string>
+    <string name="msg_time_zones_selected">%d ausgewählt</string>
+    <string name="title_files">Dateien</string>
+    <string name="title_files_audio_files">Audiodateien</string>
+    <string name="title_files_add_audio">Datei wählen</string>
     <string-array name="array_themes">
         <item>Zeitplan</item>
         <item>Tag</item>
         <item>Nacht</item>
         <item>AMOLED</item>
     </string-array>
-    <string name="title_alarm_next">in %s.</string>
-    <string name="msg_alarms_empty">Du hast keine Alarme definiert. Drücke \'+\', um einen Alarm zu erstellen.</string>
-    <string name="msg_time_zones_selected">%d ausgewählt</string>
-    <string name="word_day">Tag</string>
-    <string name="word_days">Tage</string>
-    <string name="title_alarms">Alarme</string>
-    <string name="title_settings">Einstellungen</string>
-    <string name="title_ringtones">Klingeltöne</string>
-    <string name="title_files">Dateien</string>
-    <string name="title_files_audio_files">Audiodateien</string>
-    <string name="title_files_add_audio">Datei wählen</string>
+
+    <string name="msg_battery_optimizations_switch_enable">Aktiviere den Schalter neben \"Alarmio\". Du musst eventuell nach unten scrollen… lange.</string>
+    <string name="title_ignore_battery_optimizations">Akkuoptimierungen ignorieren</string>
+
+    <string name="msg_null_location_provider">Alarmio erkennt keinen Ortungsdienst - diese Funktion wird möglicherweise nicht richtig funktionieren.</string>
+
+    <string name="title_manual_volume">Manuelle Lautstärke</string>
+    <string name="desc_manual_volume">Die Alarmlautstärke des Geräts wird mit dieser Zahl multipliziert. Dies gibt dir genauere Kontrolle, da manche Geräte die Lautstärke auf einige festgelegte Stufen begrenzen.</string>
+
     <string name="day_sunday_abbr">S</string>
     <string name="day_monday_abbr">M</string>
     <string name="day_tuesday_abbr">D</string>
@@ -79,13 +92,4 @@
     <string name="day_thursday_abbr">D</string>
     <string name="day_friday_abbr">F</string>
     <string name="day_saturday_abbr">S</string>
-
-    <!-- untranslated strings -->
-    <string name="msg_battery_optimizations_switch_enable">Turn on the switch next to \"Alarmio\". You may need to scroll down… a lot.</string>
-    <string name="title_ignore_battery_optimizations">Ignore Battery Optimizations</string>
-    <string name="info_background_permissions_title">System Alerts / Background Permissions</string>
-    <string name="info_background_permissions_body">Newer versions of Android are becoming increasingly unreliable at starting apps from the background without user interaction; with the introduction of Doze/App Standby in Android 6.0, the requirements for an app to be started are ambiguous and often device-specific.\n\nAs such, while it is not always a requirement for this app to function, it is highly recommended that you grant the System Overlays permission on the next page. This will grant Alarmio an exemption from Android\'s usual requirements for starting an app without user interaction, and allow it to function much more reliably.</string>
-    <string name="title_manual_volume">Manual Alarm Volume</string>
-    <string name="desc_manual_volume">Your device\'s alarm volume will be multiplied by this number. This will give your more precise control as some devices limit volume to device fixed number of steps.</string>
-    <string name="msg_null_location_provider">Alarmio is unable to find a location provider - this feature may not work correctly.</string>
 </resources>

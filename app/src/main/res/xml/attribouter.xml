@@ -178,6 +178,12 @@
             blog="^https://github.com/Marmo"
             locales="de"
             login="Marmo" />
+        
+        <TranslatorWedge
+            name="Julian Heinzel"
+            blog="^https://github.com/Jeinzi"
+            locales="de"
+            login="Jeinzi" />
 
     </TranslatorsWedge>
     <LicensesWedge>
