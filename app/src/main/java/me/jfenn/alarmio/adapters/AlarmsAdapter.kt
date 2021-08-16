@@ -447,8 +447,8 @@ class AlarmsAdapter(private val alarmio: Alarmio, private val recycler: Recycler
                 }
 
                 override fun afterTextChanged(editable: Editable) {
-                    alarms[adapterPosition].setName(alarmio, editable.toString())
-
+                    val alarmPosition = adapterPosition - alarmio.timers.size
+                    alarms[alarmPosition].setName(alarmio, editable.toString())
                 }
             })
         }
