@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name" translatable="false">Alarmio</string>
+
+    <string name="info_background_permissions_title">System advarsler / Baggrundstilladelser</string>
+    <string name="info_background_permissions_body">Nyere versioner af Android bliver mere og mere upålidelige til at starte apps op i baggrunden uden brugerinteraktion; med introduktionen af Doze/App Standby i Android 6.0 er kravene til en app, der skal startes, tvetydige og ofte enhedsspecifikke.\n\nOg derfor, mens det ikke altid er et krav for at denne app fungerer, anbefales det stærkt, at du giver systemoverlejringen tilladelse på næste side. Dette vil give Alarmio en undtagelse fra Androids sædvanlige krav til at starte en app uden brugerinteraktion, og lade den fungere meget mere pålideligt.</string>
+
+    <string name="title_alarm">Alarm %d</string>
+    <string name="title_alarm_next">%s fra nu.</string>
+    <string name="title_none">Ingen</string>
+    <string name="title_vibrate">Vibrér</string>
+    <string name="title_repeat">Gentag</string>
+    <string name="title_set_alarm">Alarm</string>
+    <string name="title_set_timer">Timer</string>
+    <string name="title_set_stopwatch">Stopur</string>
+    <string name="title_lap">Runde</string>
+    <string name="title_stopwatch">Stopur</string>
+    <string name="title_stopwatch_share">%s Stopur: %s</string>
+    <string name="title_lap_number" translatable="false">#%d</string>
+    <string name="title_time">Tid: %s</string>
+    <string name="title_lap_time">Runde: %s</string>
+    <string name="title_total_time">Total: %s</string>
+    <string name="title_share_results">Del resultater…</string>
+    <string name="msg_delete_confirmation">Er du sikker på at du vil slette %s?</string>
+    <string name="title_delete">Slet</string>
+    <string name="title_start_timer">Start timer</string>
+    <string name="title_auto">Auto</string>
+    <string name="title_sunrise">Solopgang</string>
+    <string name="title_sunset">Solnedgang</string>
+    <string name="title_theme">Tema</string>
+    <string name="title_appearance">Udseende</string>
+    <string name="title_sound_none">Ingen</string>
+    <string name="title_snooze">Udsæt</string>
+    <string name="title_alarms">Alarmer</string>
+    <string name="title_settings">Indstillinger</string>
+    <string name="title_ringtones">Ringetoner</string>
+    <string name="word_day">dag</string>
+    <string name="word_days">dage</string>
+    <string name="word_minute">minut</string>
+    <string name="word_minutes">minutter</string>
+    <string name="word_hour">time</string>
+    <string name="word_hours">timer</string>
+    <string name="word_join">og</string>
+    <string name="title_snooze_custom">Brugerdefineret…</string>
+    <string name="msg_snoozed_until">Udsæt indtil %s</string>
+    <string name="title_radio_test">Test</string>
+    <string name="title_radio_create">Opret</string>
+    <string name="msg_radio_create">Opret en ny radio</string>
+    <string name="msg_radio_url">Indsæt en \'.m3u8\' radio URL her…</string>
+    <string name="msg_radio_previous">Vælg en tidligere brugt radio</string>
+    <string name="title_radio_stop">Stop</string>
+    <string name="title_radio">Radio</string>
+    <string name="title_time_zones">Tidszoner</string>
+    <string name="title_behavior">Opførsel</string>
+    <string name="title_default_alarm_ringtone">Standard alarm ringetone</string>
+    <string name="title_default_timer_ringtone">Standard timer ringetone</string>
+    <string name="title_sleep_reminder">Søvnpåminder</string>
+    <string name="desc_sleep_reminder">Send en notifikation, der minder dig om at gå i seng på et specifikt tidspunkt, før din alarm ringer, hvis du bruger din telefon.</string>
+    <string name="title_sleep_reminder_time">Søvnpåminder tid</string>
+    <string name="desc_sleep_reminder_time">%1$d timer før</string>
+    <string name="title_slow_wake_up">Langsom opvækning</string>
+    <string name="desc_slow_wake_up">Øg gradvist lys- og lydstyrke når en alarm ringer.</string>
+    <string name="title_slow_wake_up_time">Langsom opvækning varighed</string>
+    <string name="title_about">Omkring &amp; OSS licenser</string>
+    <string name="title_choose_time_zone">Vælg en tidszone</string>
+    <string name="msg_sleep_reminder">Din næste alarm ringer ca. %s fra nu. For at få din specificerede mængde søvn, angivet i indstillingerne, skal du gå i seng nu.</string>
+    <string name="title_alarm_name">Alarm navn</string>
+    <string name="title_background_image">Baggrundsbillede</string>
+    <string name="title_ringing_background_image">Vis baggrundsbillede på alarmer/timere</string>
+    <string name="desc_ringing_background_image">Om du vil vise baggrundsbilledet, når en alarm eller timer ringer.</string>
+    <string name="msg_alarms_empty">Du har ikke sat nogen alarmer. Tryk på \'+\' knappen for at oprette en.</string>
+    <string name="msg_time_zones_selected">%d valgt</string>
+    <string name="title_files">Filer</string>
+    <string name="title_files_audio_files">Lydfiler</string>
+    <string name="title_files_add_audio">Vælg fil</string>
+    <string-array name="array_themes">
+        <item>Tidsplan</item>
+        <item>Dag</item>
+        <item>Nat</item>
+        <item>AMOLED</item>
+    </string-array>
+
+    <string name="msg_battery_optimizations_switch_enable">Tænd for kontakten ved siden af \"Alarmio\". Du skal muligvis rulle ned… Rigtig meget.</string>
+    <string name="title_ignore_battery_optimizations">Ignorér batterioptimeringer</string>
+
+    <string name="day_sunday_abbr">S</string>
+    <string name="day_monday_abbr">M</string>
+    <string name="day_tuesday_abbr">T</string>
+    <string name="day_wednesday_abbr">O</string>
+    <string name="day_thursday_abbr">T</string>
+    <string name="day_friday_abbr">F</string>
+    <string name="day_saturday_abbr">L</string>
+</resources>
