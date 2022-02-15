@@ -1,14 +1,14 @@
 <resources>
     <string name="info_background_permissions_title">Systembenachrichtigungen / Hintergrundberechtigungen</string>
-    <string name="info_background_permissions_body">Neue Versionen von Android werden immer unzuverlässiger darin, Apps im Hintergrund ohne Nutzerinteraktion zu starten; mit der Einführung von Doze und App Standby in Android 6.0 sind die Voraussetzungen zum Starten einer App uneindeutig und oft auch geräteabhängig geworden.\n\nUm die Funktion der App zu gewährleisten ist es deshalb äußerst empfehlenswert, auf der nächsten Seite die Erlaubnis zum Einblenden über anderen Apps zu erteilen, auch wenn das nicht immer zwingend erforderlich ist. Damit erhält Alarmio eine Ausnahme von Androids üblichen Anforderungen um Apps ohne Nutzerinteraktion zu starten, und wird es der App erlauben weitaus zuverlässiger zu arbeiten.
+    <string name="info_background_permissions_body">Neue Versionen von Android werden immer unzuverlässiger darin, Apps im Hintergrund ohne Nutzerinteraktion zu starten; mit der Einführung von "Doze" und "App Standby" in Android 6.0 sind die Voraussetzungen zum Starten einer App uneindeutig und oft auch geräteabhängig geworden.\n\nUm die Funktion der App zu gewährleisten ist es deshalb äußerst empfehlenswert, auf der nächsten Seite die Erlaubnis zum Einblenden über anderen Apps zu erteilen, auch wenn das nicht immer zwingend erforderlich ist. Damit erhält Alarmio eine Ausnahme von Androids üblichen Anforderungen um Apps ohne Nutzerinteraktion zu starten, und wird es der App erlauben weitaus zuverlässiger zu arbeiten.
     </string>
     
-    <string name="title_alarm">Alarm %d</string>
+    <string name="title_alarm">Wecker %d</string>
     <string name="title_alarm_next">in %s.</string>
     <string name="title_none">Keiner</string>
     <string name="title_vibrate">Vibrieren</string>
     <string name="title_repeat">Wiederholen</string>
-    <string name="title_set_alarm">Alarm</string>
+    <string name="title_set_alarm">Wecker</string>
     <string name="title_set_timer">Timer</string>
     <string name="title_set_stopwatch">Stoppuhr</string>
     <string name="title_lap">Runde</string>
@@ -28,7 +28,7 @@
     <string name="title_appearance">Aussehen</string>
     <string name="title_sound_none">Keiner</string>
     <string name="title_snooze">Schlummern</string>
-    <string name="title_alarms">Alarme</string>
+    <string name="title_alarms">Wecker</string>
     <string name="title_settings">Einstellungen</string>
     <string name="title_ringtones">Klingeltöne</string>
     <string name="word_day">Tag</string>
@@ -49,23 +49,23 @@
     <string name="title_radio">Radio</string>
     <string name="title_time_zones">Zeitzone</string>
     <string name="title_behavior">Verhalten</string>
-    <string name="title_default_alarm_ringtone">Standard Alarm-Klingelton</string>
+    <string name="title_default_alarm_ringtone">Standard Wecker-Klingelton</string>
     <string name="title_default_timer_ringtone">Standard Timer-Klingelton</string>
     <string name="title_sleep_reminder">Schlaf-Erinnerung</string>
     <string name="desc_sleep_reminder">Sende eine Benachrichtigung, die dich daran erinnert, zu einer bestimmten Zeit schlafen zu gehen bevor dein Wecker klingelt, wenn du am Handy bist.</string>
     <string name="title_sleep_reminder_time">Schlaf-Erinnerungs-Zeit</string>
     <string name="desc_sleep_reminder_time">%1$d Stunden vorher</string>
     <string name="title_slow_wake_up">Langsames Aufwachen</string>
-    <string name="desc_slow_wake_up">Erhöhe nach und nach Helligkeit und Lautstärke, wenn ein Alarm klingelt.</string>
+    <string name="desc_slow_wake_up">Erhöhe nach und nach Helligkeit und Lautstärke, wenn ein Wecker klingelt.</string>
     <string name="title_slow_wake_up_time">Dauer des langsamen Aufwachens</string>
     <string name="title_about">Über &amp; OSS-Lizenzen</string>
     <string name="title_choose_time_zone">Wähle eine Zeitzone</string>
-    <string name="msg_sleep_reminder">Dein nächster Alarm klingelt ungefähr in ungefähr %s. Um deine in den Einstellungen angegebene Menge an Schlaf zu bekommen, solltest du jetzt ins Bett gehen.</string>
-    <string name="title_alarm_name">Name des Alarms</string>
+    <string name="msg_sleep_reminder">Dein nächster Wecker klingelt ungefähr in ungefähr %s. Um deine in den Einstellungen angegebene Menge an Schlaf zu bekommen, solltest du jetzt ins Bett gehen.</string>
+    <string name="title_alarm_name">Name des Weckers</string>
     <string name="title_background_image">Hintergrundbild</string>
-    <string name="title_ringing_background_image">Zeige Hintergrundbild bei Alarm und Timer</string>
-    <string name="desc_ringing_background_image">Ob ein Hintergrundbild angezeigt werden soll, wenn ein Alarm oder Timer klingelt.</string>
-    <string name="msg_alarms_empty">Du hast keine Alarme definiert. Drücke \'+\', um einen Alarm zu erstellen.</string>
+    <string name="title_ringing_background_image">Zeige Hintergrundbild bei Wecker und Timer</string>
+    <string name="desc_ringing_background_image">Ob ein Hintergrundbild angezeigt werden soll, wenn ein Wecker oder Timer klingelt.</string>
+    <string name="msg_alarms_empty">Du hast keine Wecker definiert. Drücke \'+\', um einen Wecker zu erstellen.</string>
     <string name="msg_time_zones_selected">%d ausgewählt</string>
     <string name="title_files">Dateien</string>
     <string name="title_files_audio_files">Audiodateien</string>
@@ -83,7 +83,7 @@
     <string name="msg_null_location_provider">Alarmio erkennt keinen Ortungsdienst - diese Funktion wird möglicherweise nicht richtig funktionieren.</string>
 
     <string name="title_manual_volume">Manuelle Lautstärke</string>
-    <string name="desc_manual_volume">Die Alarmlautstärke des Geräts wird mit dieser Zahl multipliziert. Dies gibt dir genauere Kontrolle, da manche Geräte die Lautstärke auf einige festgelegte Stufen begrenzen.</string>
+    <string name="desc_manual_volume">Die Weckerlautstärke des Geräts wird mit dieser Zahl multipliziert. Dies gibt dir genauere Kontrolle, da manche Geräte die Lautstärke auf einige festgelegte Stufen begrenzen.</string>
 
     <string name="day_sunday_abbr">S</string>
     <string name="day_monday_abbr">M</string>
