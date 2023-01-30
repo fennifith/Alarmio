@@ -60,32 +60,36 @@ class ProgressTextView : View, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun subscribe() {
         colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe { integer ->
-                    linePaint.color = integer
-                    circlePaint.color = integer
-                    invalidate()
-                }
+            .colorAccent()
+            .subscribe { integer ->
+                linePaint.color = integer
+                circlePaint.color = integer
+                invalidate()
+            }
 
         textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe { integer ->
-                    textPaint.color = integer
-                    referenceCirclePaint.color = integer
-                    invalidate()
-                }
+            .textColorPrimary()
+            .subscribe { integer ->
+                textPaint.color = integer
+                referenceCirclePaint.color = integer
+                invalidate()
+            }
 
         textColorSecondarySubscription = Aesthetic.get()
-                .textColorSecondary()
-                .subscribe { integer ->
-                    backgroundPaint.color = integer
-                    backgroundPaint.alpha = 50
-                    invalidate()
-                }
+            .textColorSecondary()
+            .subscribe { integer ->
+                backgroundPaint.color = integer
+                backgroundPaint.alpha = 50
+                invalidate()
+            }
     }
 
     override fun unsubscribe() {
@@ -175,23 +179,54 @@ class ProgressTextView : View, Subscribblable {
     override fun onDraw(canvas: Canvas) {
         val size = Math.min(canvas.width, canvas.height)
         val sidePadding = padding * 3
-        canvas.drawCircle((size / 2).toFloat(), (size / 2).toFloat(), (size / 2 - sidePadding).toFloat(), if (maxProgress in 1..(progress - 1)) linePaint else backgroundPaint)
+        canvas.drawCircle(
+            (size / 2).toFloat(),
+            (size / 2).toFloat(),
+            (size / 2 - sidePadding).toFloat(),
+            if (maxProgress in 1..(progress - 1)) linePaint else backgroundPaint
+        )
 
         if (maxProgress > 0) {
             val angle = 360f * progress / maxProgress
             val referenceAngle = 360f * referenceProgress / maxProgress
 
             val path = Path()
-            path.arcTo(RectF(sidePadding.toFloat(), sidePadding.toFloat(), (size - sidePadding).toFloat(), (size - sidePadding).toFloat()), -90f, angle, true)
+            path.arcTo(
+                RectF(
+                    sidePadding.toFloat(),
+                    sidePadding.toFloat(),
+                    (size - sidePadding).toFloat(),
+                    (size - sidePadding).toFloat()
+                ), -90f, angle, true
+            )
             canvas.drawPath(path, linePaint)
 
-            canvas.drawCircle(size / 2 + Math.cos((angle - 90) * Math.PI / 180).toFloat() * (size / 2 - sidePadding), size / 2 + Math.sin((angle - 90) * Math.PI / 180).toFloat() * (size / 2 - sidePadding), (2 * padding).toFloat(), circlePaint)
+            canvas.drawCircle(
+                size / 2 + Math.cos((angle - 90) * Math.PI / 180)
+                    .toFloat() * (size / 2 - sidePadding),
+                size / 2 + Math.sin((angle - 90) * Math.PI / 180)
+                    .toFloat() * (size / 2 - sidePadding),
+                (2 * padding).toFloat(),
+                circlePaint
+            )
             if (referenceProgress != 0L)
-                canvas.drawCircle(size / 2 + Math.cos((referenceAngle - 90) * Math.PI / 180).toFloat() * (size / 2 - sidePadding), size / 2 + Math.sin((referenceAngle - 90) * Math.PI / 180).toFloat() * (size / 2 - sidePadding), (2 * padding).toFloat(), referenceCirclePaint)
+                canvas.drawCircle(
+                    size / 2 + Math.cos((referenceAngle - 90) * Math.PI / 180)
+                        .toFloat() * (size / 2 - sidePadding),
+                    size / 2 + Math.sin((referenceAngle - 90) * Math.PI / 180)
+                        .toFloat() * (size / 2 - sidePadding),
+                    (2 * padding).toFloat(),
+                    referenceCirclePaint
+                )
         }
 
         text?.let { str ->
-            canvas.drawText(str, (size / 2).toFloat(), size / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
+            canvas.drawText(
+                str,
+                (size / 2).toFloat(),
+                size / 2 - (textPaint.descent() + textPaint.ascent()) / 2,
+                textPaint
+            )
         }
     }
 

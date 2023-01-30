@@ -19,7 +19,11 @@ class AestheticSunriseView : SunriseSunsetView, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     init {
         isClickable = false
@@ -28,16 +32,16 @@ class AestheticSunriseView : SunriseSunsetView, Subscribblable {
 
     override fun subscribe() {
         textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe { integer ->
-                    sunsetColor = (200 shl 24) or (integer and 0x00FFFFFF)
-                    futureColor = (20 shl 24) or (integer and 0x00FFFFFF)
-                    postInvalidate()
-                }
+            .textColorPrimary()
+            .subscribe { integer ->
+                sunsetColor = (200 shl 24) or (integer and 0x00FFFFFF)
+                futureColor = (20 shl 24) or (integer and 0x00FFFFFF)
+                postInvalidate()
+            }
 
         colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe { integer -> sunriseColor = (200 shl 24) or (integer and 0x00FFFFFF) }
+            .colorAccent()
+            .subscribe { integer -> sunriseColor = (200 shl 24) or (integer and 0x00FFFFFF) }
     }
 
     override fun unsubscribe() {

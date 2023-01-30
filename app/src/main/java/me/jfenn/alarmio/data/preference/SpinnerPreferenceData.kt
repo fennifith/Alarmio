@@ -18,16 +18,27 @@ import me.jfenn.alarmio.data.PreferenceData
  * Allow the user to choose from one of a range
  * of items.
  */
-class SpinnerPreferenceData(private val preference: PreferenceData, private val title: Int, private val options: Int) : BasePreferenceData<SpinnerPreferenceData.ViewHolder>() {
+class SpinnerPreferenceData(
+    private val preference: PreferenceData,
+    private val title: Int,
+    private val options: Int
+) : BasePreferenceData<SpinnerPreferenceData.ViewHolder>() {
 
-    override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): BasePreferenceData.ViewHolder {
+    override fun getViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): BasePreferenceData.ViewHolder {
         return ViewHolder(inflater.inflate(R.layout.item_preference_spinner, parent, false))
     }
 
     @SuppressLint("CheckResult")
     override fun bindViewHolder(holder: ViewHolder) {
         holder.title.setText(title)
-        holder.spinner.adapter = ArrayAdapter.createFromResource(holder.itemView.context, options, R.layout.support_simple_spinner_dropdown_item)
+        holder.spinner.adapter = ArrayAdapter.createFromResource(
+            holder.itemView.context,
+            options,
+            R.layout.support_simple_spinner_dropdown_item
+        )
 
         preference.getValue<Int>(holder.itemView.context)?.let { value ->
             holder.spinner.setSelection(value)
@@ -42,18 +53,19 @@ class SpinnerPreferenceData(private val preference: PreferenceData, private val 
         }
 
         Aesthetic.get()
-                .textColorSecondary()
-                .take(1)
-                .subscribe { textColorSecondary ->
-                    holder.spinner.supportBackgroundTintList = ColorStateList.valueOf(textColorSecondary)
-                }
+            .textColorSecondary()
+            .take(1)
+            .subscribe { textColorSecondary ->
+                holder.spinner.supportBackgroundTintList =
+                    ColorStateList.valueOf(textColorSecondary)
+            }
 
         Aesthetic.get()
-                .colorCardViewBackground()
-                .take(1)
-                .subscribe { colorForeground ->
-                    holder.spinner.setPopupBackgroundDrawable(ColorDrawable(colorForeground))
-                }
+            .colorCardViewBackground()
+            .take(1)
+            .subscribe { colorForeground ->
+                holder.spinner.setPopupBackgroundDrawable(ColorDrawable(colorForeground))
+            }
     }
 
     /**

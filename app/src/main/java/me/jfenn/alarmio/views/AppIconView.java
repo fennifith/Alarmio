@@ -19,6 +19,7 @@ import android.view.animation.OvershootInterpolator;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.R;
 
 public class AppIconView extends View {

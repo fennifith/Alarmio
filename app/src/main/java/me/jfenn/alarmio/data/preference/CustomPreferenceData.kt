@@ -12,7 +12,8 @@ import me.jfenn.alarmio.R
  * and text value of a preference to a basic
  * item view.
  */
-abstract class CustomPreferenceData(private val name: Int) : BasePreferenceData<CustomPreferenceData.ViewHolder>() {
+abstract class CustomPreferenceData(private val name: Int) :
+    BasePreferenceData<CustomPreferenceData.ViewHolder>() {
 
     /**
      * Get the name of the current value of the preference.
@@ -24,7 +25,8 @@ abstract class CustomPreferenceData(private val name: Int) : BasePreferenceData<
      */
     abstract fun onClick(holder: ViewHolder)
 
-    override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder = ViewHolder(inflater.inflate(R.layout.item_preference_custom, parent, false))
+    override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder =
+        ViewHolder(inflater.inflate(R.layout.item_preference_custom, parent, false))
 
     override fun bindViewHolder(holder: ViewHolder) {
         holder.nameView.setText(name)

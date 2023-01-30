@@ -35,24 +35,28 @@ class ProgressLineView : View, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun subscribe() {
         colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe { integer ->
-                    linePaint.color = integer
-                    linePaint.alpha = 100
-                    postInvalidate()
-                }
+            .colorAccent()
+            .subscribe { integer ->
+                linePaint.color = integer
+                linePaint.alpha = 100
+                postInvalidate()
+            }
 
         textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe { integer ->
-                    backgroundPaint.color = integer
-                    backgroundPaint.alpha = 30
-                    postInvalidate()
-                }
+            .textColorPrimary()
+            .subscribe { integer ->
+                backgroundPaint.color = integer
+                backgroundPaint.alpha = 30
+                postInvalidate()
+            }
     }
 
     override fun unsubscribe() {

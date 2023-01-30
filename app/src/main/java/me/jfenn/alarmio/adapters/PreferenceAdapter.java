@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import me.jfenn.alarmio.data.preference.BasePreferenceData;
 
 public class PreferenceAdapter extends RecyclerView.Adapter<BasePreferenceData.ViewHolder> {

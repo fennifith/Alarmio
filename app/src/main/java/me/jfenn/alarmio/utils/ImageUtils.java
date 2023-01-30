@@ -15,7 +15,7 @@ public class ImageUtils {
      * Gets the current user-defined background image from SharedPreferences and applies
      * it to the passed view.
      *
-     * @param imageView         The ImageView to apply the background image to.
+     * @param imageView The ImageView to apply the background image to.
      */
     public static void getBackgroundImage(ImageView imageView) {
         String backgroundUrl = PreferenceData.BACKGROUND_IMAGE.getValue(imageView.getContext());
@@ -37,7 +37,8 @@ public class ImageUtils {
                     //          - james fenn, 2018
 
                     Glide.with(imageView.getContext()).load(new File(path)).into(imageView);
-                } else Glide.with(imageView.getContext()).load(Uri.parse(backgroundUrl)).into(imageView);
+                } else
+                    Glide.with(imageView.getContext()).load(Uri.parse(backgroundUrl)).into(imageView);
             } else Glide.with(imageView.getContext()).load(new File(backgroundUrl)).into(imageView);
         }
     }

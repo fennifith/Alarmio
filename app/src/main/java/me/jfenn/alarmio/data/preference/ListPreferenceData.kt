@@ -15,9 +15,13 @@ import com.afollestad.aesthetic.Aesthetic
 import me.jfenn.alarmio.R
 import me.jfenn.alarmio.data.PreferenceData
 
-abstract class ListPreferenceData(private val preference: PreferenceData, private val title: Int) : BasePreferenceData<ListPreferenceData.ViewHolder>() {
+abstract class ListPreferenceData(private val preference: PreferenceData, private val title: Int) :
+    BasePreferenceData<ListPreferenceData.ViewHolder>() {
 
-    internal abstract fun getAdapter(context: Context, items: Array<String>): RecyclerView.Adapter<*>
+    internal abstract fun getAdapter(
+        context: Context,
+        items: Array<String>
+    ): RecyclerView.Adapter<*>
 
     internal abstract fun requestAddItem(holder: ViewHolder)
 
@@ -39,12 +43,13 @@ abstract class ListPreferenceData(private val preference: PreferenceData, privat
         holder.remove.setOnClickListener { removeItem(holder) }
 
         Aesthetic.get()
-                .textColorPrimary()
-                .take(1)
-                .subscribe { colorPrimary ->
-                    holder.add.colorFilter = PorterDuffColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN)
-                    holder.remove.colorFilter = PorterDuffColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN)
-                }
+            .textColorPrimary()
+            .take(1)
+            .subscribe { colorPrimary ->
+                holder.add.colorFilter = PorterDuffColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN)
+                holder.remove.colorFilter =
+                    PorterDuffColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN)
+            }
     }
 
     fun getItems(context: Context): Array<String> {

@@ -33,15 +33,22 @@ const val HOUR_LENGTH = 3600000L
  */
 class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>() {
 
-    override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): BasePreferenceData.ViewHolder {
+    override fun getViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): BasePreferenceData.ViewHolder {
         return ViewHolder(inflater.inflate(R.layout.item_preference_theme, parent, false))
     }
 
     @SuppressLint("CheckResult")
     override fun bindViewHolder(holder: ViewHolder) {
-        holder.themeSpinner.adapter = ArrayAdapter.createFromResource(holder.itemView.context, R.array.array_themes, R.layout.support_simple_spinner_dropdown_item)
+        holder.themeSpinner.adapter = ArrayAdapter.createFromResource(
+            holder.itemView.context,
+            R.array.array_themes,
+            R.layout.support_simple_spinner_dropdown_item
+        )
 
-        val theme : Int = holder.alarmio?.activityTheme ?: Alarmio.THEME_DAY_NIGHT
+        val theme: Int = holder.alarmio?.activityTheme ?: Alarmio.THEME_DAY_NIGHT
         run {
             if (theme == Alarmio.THEME_DAY_NIGHT) View.VISIBLE else View.GONE
         }.let {
@@ -101,7 +108,11 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
         holder.sunriseAutoSwitch.setOnCheckedChangeListener { _, b ->
             PreferenceData.DAY_AUTO.setValue(holder.context, b)
 
-            if (b && ContextCompat.checkSelfPermission(holder.context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (b && ContextCompat.checkSelfPermission(
+                    holder.context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 holder.alarmio?.requestPermissions(Manifest.permission.ACCESS_COARSE_LOCATION)
                 holder.sunriseAutoSwitch.isChecked = false
             } else {
@@ -131,48 +142,61 @@ class ThemePreferenceData : BasePreferenceData<ThemePreferenceData.ViewHolder>()
 
         holder.sunriseTextView.setOnClickListener { view ->
             AestheticTimeSheetPickerDialog(view.context, holder.alarmio?.dayStart ?: 1, 0)
-                    .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
-                        override fun onSelect(dialog: PickerDialog<LinearTimePickerView>, view: LinearTimePickerView) {
-                            holder.sunriseAutoSwitch.isChecked = false
-                            holder.alarmio?.let { alarmio ->
-                                if (view.hourOfDay < alarmio.dayEnd)
-                                    listener.onSunriseChanged(holder.sunriseView, view.hourOfDay * HOUR_LENGTH)
-                            }
+                .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
+                    override fun onSelect(
+                        dialog: PickerDialog<LinearTimePickerView>,
+                        view: LinearTimePickerView
+                    ) {
+                        holder.sunriseAutoSwitch.isChecked = false
+                        holder.alarmio?.let { alarmio ->
+                            if (view.hourOfDay < alarmio.dayEnd)
+                                listener.onSunriseChanged(
+                                    holder.sunriseView,
+                                    view.hourOfDay * HOUR_LENGTH
+                                )
                         }
+                    }
 
-                        override fun onCancel(dialog: PickerDialog<LinearTimePickerView>) {}
-                    })
-                    .show()
+                    override fun onCancel(dialog: PickerDialog<LinearTimePickerView>) {}
+                })
+                .show()
         }
 
         holder.sunsetTextView.setOnClickListener { view ->
             AestheticTimeSheetPickerDialog(view.context, holder.alarmio?.dayEnd ?: 23, 0)
-                    .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
-                        override fun onSelect(dialog: PickerDialog<LinearTimePickerView>, view: LinearTimePickerView) {
-                            holder.sunriseAutoSwitch.isChecked = false
-                            holder.alarmio?.let { alarmio ->
-                                if (view.hourOfDay > alarmio.dayStart)
-                                    listener.onSunsetChanged(holder.sunriseView, view.hourOfDay * HOUR_LENGTH)
-                            }
+                .setListener(object : PickerDialog.OnSelectedListener<LinearTimePickerView> {
+                    override fun onSelect(
+                        dialog: PickerDialog<LinearTimePickerView>,
+                        view: LinearTimePickerView
+                    ) {
+                        holder.sunriseAutoSwitch.isChecked = false
+                        holder.alarmio?.let { alarmio ->
+                            if (view.hourOfDay > alarmio.dayStart)
+                                listener.onSunsetChanged(
+                                    holder.sunriseView,
+                                    view.hourOfDay * HOUR_LENGTH
+                                )
                         }
+                    }
 
-                        override fun onCancel(dialog: PickerDialog<LinearTimePickerView>) {}
-                    }).show()
+                    override fun onCancel(dialog: PickerDialog<LinearTimePickerView>) {}
+                }).show()
         }
 
         Aesthetic.get()
-                .textColorSecondary()
-                .take(1)
-                .subscribe { textColorSecondary ->
-                    holder.themeSpinner.supportBackgroundTintList = ColorStateList.valueOf(textColorSecondary)
-                }
+            .textColorSecondary()
+            .take(1)
+            .subscribe { textColorSecondary ->
+                holder.themeSpinner.supportBackgroundTintList =
+                    ColorStateList.valueOf(textColorSecondary)
+            }
 
         Aesthetic.get()
-                .colorCardViewBackground()
-                .take(1)
-                .subscribe { colorForeground ->
-                    holder.themeSpinner.setPopupBackgroundDrawable(ColorDrawable(colorForeground))
-                }
+            .colorCardViewBackground()
+            .take(1)
+            .subscribe { colorForeground ->
+                holder.themeSpinner.setPopupBackgroundDrawable(ColorDrawable(colorForeground))
+            }
     }
 
     /**

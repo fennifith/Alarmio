@@ -11,12 +11,14 @@ import me.jfenn.alarmio.dialogs.SoundChooserDialog
  * that can be recreated into a SoundData
  * object).
  */
-class RingtonePreferenceData(private val preference: PreferenceData, name: Int) : CustomPreferenceData(name) {
+class RingtonePreferenceData(private val preference: PreferenceData, name: Int) :
+    CustomPreferenceData(name) {
 
     override fun getValueName(holder: CustomPreferenceData.ViewHolder): String {
-        return preference.getValue(holder.context, "")?.let{ sound ->
+        return preference.getValue(holder.context, "")?.let { sound ->
             if (!sound.isEmpty())
-                SoundData.fromString(sound)?.name ?: holder.context.getString(R.string.title_sound_none)
+                SoundData.fromString(sound)?.name
+                    ?: holder.context.getString(R.string.title_sound_none)
             else null
         } ?: holder.context.getString(R.string.title_sound_none)
     }

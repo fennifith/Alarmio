@@ -5,6 +5,7 @@ import android.content.Context;
 import java.lang.ref.WeakReference;
 
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.data.SoundData;
 import me.jfenn.alarmio.fragments.BasePagerFragment;
 import me.jfenn.alarmio.interfaces.ContextFragmentInstantiator;

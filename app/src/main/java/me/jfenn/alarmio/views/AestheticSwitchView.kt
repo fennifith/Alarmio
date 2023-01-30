@@ -22,35 +22,56 @@ class AestheticSwitchView : SwitchCompat, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun subscribe() {
         colorAccentSubscription = Aesthetic.get().colorAccent()
-                .subscribe { integer ->
-                    val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
+            .subscribe { integer ->
+                val states = arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                )
 
-                    CompoundButtonCompat.setButtonTintList(this, ColorStateList(
+                CompoundButtonCompat.setButtonTintList(
+                    this, ColorStateList(
+                        states,
+                        intArrayOf(Color.argb(100, 128, 128, 128), integer)
+                    )
+                )
+
+                thumbDrawable?.let { drawable ->
+                    DrawableCompat.setTintList(
+                        DrawableCompat.wrap(drawable), ColorStateList(
                             states,
-                            intArrayOf(Color.argb(100, 128, 128, 128), integer)
-                    ))
-
-                    thumbDrawable?.let { drawable ->
-                        DrawableCompat.setTintList(DrawableCompat.wrap(drawable), ColorStateList(
-                                states,
-                                intArrayOf(Color.argb(255, 128, 128, 128), integer)
-                        ))
-                    }
-
-                    trackDrawable?.let { drawable ->
-                        DrawableCompat.setTintList(DrawableCompat.wrap(drawable), ColorStateList(
-                                states,
-                                intArrayOf(Color.argb(100, 128, 128, 128), Color.argb(100, Color.red(integer), Color.green(integer), Color.blue(integer)))
-                        ))
-                    }
+                            intArrayOf(Color.argb(255, 128, 128, 128), integer)
+                        )
+                    )
                 }
 
+                trackDrawable?.let { drawable ->
+                    DrawableCompat.setTintList(
+                        DrawableCompat.wrap(drawable), ColorStateList(
+                            states,
+                            intArrayOf(
+                                Color.argb(100, 128, 128, 128),
+                                Color.argb(
+                                    100,
+                                    Color.red(integer),
+                                    Color.green(integer),
+                                    Color.blue(integer)
+                                )
+                            )
+                        )
+                    )
+                }
+            }
+
         textColorPrimarySubscription = Aesthetic.get().textColorPrimary()
-                .subscribe { integer -> setTextColor(integer) }
+            .subscribe { integer -> setTextColor(integer) }
     }
 
     override fun unsubscribe() {

@@ -131,7 +131,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Create a new alarm, assigning it an unused preference id.
      *
-     * @return          The newly instantiated [AlarmData](./data/AlarmData).
+     * @return The newly instantiated [AlarmData](./data/AlarmData).
      */
     public AlarmData newAlarm() {
         AlarmData alarm = new AlarmData(alarms.size(), Calendar.getInstance());
@@ -144,7 +144,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Remove an alarm and all of its its preferences.
      *
-     * @param alarm     The alarm to be removed.
+     * @param alarm The alarm to be removed.
      */
     public void removeAlarm(AlarmData alarm) {
         alarm.onRemoved(this);
@@ -178,7 +178,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Create a new timer, assigning it an unused preference id.
      *
-     * @return          The newly instantiated [TimerData](./data/TimerData).
+     * @return The newly instantiated [TimerData](./data/TimerData).
      */
     public TimerData newTimer() {
         TimerData timer = new TimerData(timers.size());
@@ -190,7 +190,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Remove a timer and all of its preferences.
      *
-     * @param timer     The timer to be removed.
+     * @param timer The timer to be removed.
      */
     public void removeTimer(TimerData timer) {
         timer.onRemoved(this);
@@ -231,7 +231,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Get an instance of SharedPreferences.
      *
-     * @return          The instance of SharedPreferences being used by the application.
+     * @return The instance of SharedPreferences being used by the application.
      * @see [android.content.SharedPreferences Documentation](https://developer.android.com/reference/android/content/SharedPreferences)
      */
     public SharedPreferences getPrefs() {
@@ -296,7 +296,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Determine if the theme should be a night theme.
      *
-     * @return          True if the current theme is a night theme.
+     * @return True if the current theme is a night theme.
      */
     public boolean isNight() {
         int time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
@@ -309,7 +309,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
      * but rather one of Alarmio.THEME_DAY_NIGHT, Alarmio.THEME_DAY,
      * Alarmio.THEME_NIGHT, or Alarmio.THEME_AMOLED.
      *
-     * @return          The theme to be used for activites.
+     * @return The theme to be used for activites.
      */
     public int getActivityTheme() {
         return PreferenceData.THEME.getValue(this);
@@ -318,7 +318,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Determine if the sunrise/sunset stuff should occur automatically.
      *
-     * @return          True if the day/night stuff is automated.
+     * @return True if the day/night stuff is automated.
      */
     public boolean isDayAuto() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && (boolean) PreferenceData.DAY_AUTO.getValue(this);
@@ -364,7 +364,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
 
     /**
      * @return the current SunriseSunsetCalculator object, or null if it cannot
-     *         be instantiated.
+     * be instantiated.
      * @see [SunriseSunsetLib Repo](https://github.com/mikereedell/sunrisesunsetlib-java)
      */
     @Nullable
@@ -384,7 +384,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Determine if a ringtone is currently playing.
      *
-     * @return          True if a ringtone is currently playing.
+     * @return True if a ringtone is currently playing.
      */
     public boolean isRingtonePlaying() {
         return currentRingtone != null && currentRingtone.isPlaying();
@@ -393,7 +393,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Get the currently playing ringtone.
      *
-     * @return          The currently playing ringtone, or null.
+     * @return The currently playing ringtone, or null.
      */
     @Nullable
     public Ringtone getCurrentRingtone() {
@@ -412,7 +412,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Play a stream ringtone.
      *
-     * @param url       The URL of the stream to be passed to ExoPlayer.
+     * @param url The URL of the stream to be passed to ExoPlayer.
      * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
      */
     private void playStream(String url, String type, MediaSourceFactory factory) {
@@ -429,7 +429,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Play a stream ringtone.
      *
-     * @param url       The URL of the stream to be passed to ExoPlayer.
+     * @param url The URL of the stream to be passed to ExoPlayer.
      * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
      */
     public void playStream(String url, String type) {
@@ -439,8 +439,8 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Play a stream ringtone.
      *
-     * @param url           The URL of the stream to be passed to ExoPlayer.
-     * @param attributes    The attributes to play the stream with.
+     * @param url        The URL of the stream to be passed to ExoPlayer.
+     * @param attributes The attributes to play the stream with.
      * @see [ExoPlayer Repo](https://github.com/google/ExoPlayer)
      */
     public void playStream(String url, String type, AudioAttributes attributes) {
@@ -460,7 +460,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Sets the player volume to the given float.
      *
-     * @param volume            The volume between 0 and 1
+     * @param volume The volume between 0 and 1
      */
     public void setStreamVolume(float volume) {
         player.setVolume(volume);
@@ -469,9 +469,9 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
     /**
      * Determine if the passed url matches the stream that is currently playing.
      *
-     * @param url           The URL to match the current stream to.
-     * @return              True if the URL matches that of the currently playing
-     *                      stream.
+     * @param url The URL to match the current stream to.
+     * @return True if the URL matches that of the currently playing
+     * stream.
      */
     public boolean isPlayingStream(String url) {
         return currentStream != null && currentStream.equals(url);
@@ -520,7 +520,7 @@ public class Alarmio extends MultiDexApplication implements Player.EventListener
         switch (playbackState) {
             case Player.STATE_BUFFERING:
             case Player.STATE_READY:
-            // We are idle while switching from HLS to Progressive streaming
+                // We are idle while switching from HLS to Progressive streaming
             case Player.STATE_IDLE:
                 break;
             default:

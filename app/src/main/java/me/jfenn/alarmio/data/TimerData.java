@@ -9,6 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.receivers.TimerReceiver;
 
 public class TimerData implements Parcelable {
@@ -43,8 +44,8 @@ public class TimerData implements Parcelable {
     /**
      * Moves this TimerData's preferences to another "id".
      *
-     * @param id            The new id to be assigned
-     * @param context       An active context instance.
+     * @param id      The new id to be assigned
+     * @param context An active context instance.
      */
     public void onIdChanged(int id, Context context) {
         PreferenceData.TIMER_DURATION.setValue(context, duration, id);
@@ -60,7 +61,7 @@ public class TimerData implements Parcelable {
     /**
      * Removes this TimerData's preferences.
      *
-     * @param context       An active context instance.
+     * @param context An active context instance.
      */
     public void onRemoved(Context context) {
         cancel(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
@@ -73,7 +74,7 @@ public class TimerData implements Parcelable {
     /**
      * Decides if the Timer has been set or should be ignored.
      *
-     * @return              True if the timer should go off at some time in the future.
+     * @return True if the timer should go off at some time in the future.
      */
     public boolean isSet() {
         return endTime > System.currentTimeMillis();
@@ -83,7 +84,7 @@ public class TimerData implements Parcelable {
      * Get the remaining amount of milliseconds before the timer should go off. This
      * may return a negative number.
      *
-     * @return              The amount of milliseconds before the timer should go off.
+     * @return The amount of milliseconds before the timer should go off.
      */
     public long getRemainingMillis() {
         return Math.max(endTime - System.currentTimeMillis(), 0);
@@ -92,7 +93,7 @@ public class TimerData implements Parcelable {
     /**
      * The total length of the timer.
      *
-     * @return              The total length of the timer, in milliseconds.
+     * @return The total length of the timer, in milliseconds.
      */
     public long getDuration() {
         return duration;
@@ -101,8 +102,8 @@ public class TimerData implements Parcelable {
     /**
      * Set the duration of the timer.
      *
-     * @param duration      The total length of the timer, in milliseconds.
-     * @param context       An active Context instance.
+     * @param duration The total length of the timer, in milliseconds.
+     * @param context  An active Context instance.
      */
     public void setDuration(long duration, Context context) {
         this.duration = duration;
@@ -112,8 +113,8 @@ public class TimerData implements Parcelable {
     /**
      * Set whether the timer should vibrate when it goes off.
      *
-     * @param context       An active Context instance.
-     * @param isVibrate     Whether the timer should vibrate.
+     * @param context   An active Context instance.
+     * @param isVibrate Whether the timer should vibrate.
      */
     public void setVibrate(Context context, boolean isVibrate) {
         this.isVibrate = isVibrate;
@@ -123,8 +124,8 @@ public class TimerData implements Parcelable {
     /**
      * Return whether the timer has a sound or not.
      *
-     * @return              A boolean defining whether a sound has been set
-     *                      for the timer.
+     * @return A boolean defining whether a sound has been set
+     * for the timer.
      */
     public boolean hasSound() {
         return sound != null;
@@ -133,8 +134,8 @@ public class TimerData implements Parcelable {
     /**
      * Get the [SoundData](./SoundData) sound specified for the timer.
      *
-     * @return              An instance of SoundData describing the sound that
-     *                      the timer should make (or null).
+     * @return An instance of SoundData describing the sound that
+     * the timer should make (or null).
      */
     @Nullable
     public SoundData getSound() {
@@ -144,9 +145,9 @@ public class TimerData implements Parcelable {
     /**
      * Set the sound that the timer should make.
      *
-     * @param context       An active context instance.
-     * @param sound         A [SoundData](./SoundData) defining the sound that
-     *                      the timer should make.
+     * @param context An active context instance.
+     * @param sound   A [SoundData](./SoundData) defining the sound that
+     *                the timer should make.
      */
     public void setSound(Context context, SoundData sound) {
         this.sound = sound;
@@ -156,8 +157,8 @@ public class TimerData implements Parcelable {
     /**
      * Set the next time for the timer to ring.
      *
-     * @param context       An active context instance.
-     * @param manager       The AlarmManager to schedule the timer on.
+     * @param context An active context instance.
+     * @param manager The AlarmManager to schedule the timer on.
      */
     public void set(Context context, AlarmManager manager) {
         endTime = System.currentTimeMillis() + duration;
@@ -169,8 +170,8 @@ public class TimerData implements Parcelable {
     /**
      * Schedule a time for the alert to ring at.
      *
-     * @param context       An active context instance.
-     * @param manager       The AlarmManager to schedule the alert on.
+     * @param context An active context instance.
+     * @param manager The AlarmManager to schedule the alert on.
      */
     public void setAlarm(Context context, AlarmManager manager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -181,8 +182,8 @@ public class TimerData implements Parcelable {
     /**
      * Cancel the pending alert.
      *
-     * @param context       An active context instance.
-     * @param manager       The AlarmManager that the alert was scheduled on.
+     * @param context An active context instance.
+     * @param manager The AlarmManager that the alert was scheduled on.
      */
     public void cancel(Context context, AlarmManager manager) {
         endTime = 0;
@@ -194,8 +195,8 @@ public class TimerData implements Parcelable {
     /**
      * The intent to fire when the alert should ring.
      *
-     * @param context       An active context instance.
-     * @return              A PendingIntent that will open the alert screen.
+     * @param context An active context instance.
+     * @return A PendingIntent that will open the alert screen.
      */
     private PendingIntent getIntent(Context context) {
         Intent intent = new Intent(context, TimerReceiver.class);

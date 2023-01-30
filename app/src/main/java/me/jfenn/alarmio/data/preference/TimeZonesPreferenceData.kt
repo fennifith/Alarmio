@@ -10,7 +10,8 @@ import java.util.*
  * from multiple time zones (preference is a boolean,
  * should have a parameter for the zone id).
  */
-class TimeZonesPreferenceData(private val preference: PreferenceData, title: Int) : CustomPreferenceData(title) {
+class TimeZonesPreferenceData(private val preference: PreferenceData, title: Int) :
+    CustomPreferenceData(title) {
 
     override fun getValueName(holder: CustomPreferenceData.ViewHolder): String {
         var i = 0
@@ -19,7 +20,11 @@ class TimeZonesPreferenceData(private val preference: PreferenceData, title: Int
                 i++
         }
 
-        return String.format(Locale.getDefault(), holder.context.getString(R.string.msg_time_zones_selected), i)
+        return String.format(
+            Locale.getDefault(),
+            holder.context.getString(R.string.msg_time_zones_selected),
+            i
+        )
     }
 
     override fun onClick(holder: CustomPreferenceData.ViewHolder) {

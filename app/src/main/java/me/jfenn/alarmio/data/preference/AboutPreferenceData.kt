@@ -13,7 +13,7 @@ class AboutPreferenceData : CustomPreferenceData(R.string.title_about) {
 
     override fun onClick(holder: CustomPreferenceData.ViewHolder) {
         Attribouter.from(holder.context)
-                .withGitHubToken(BuildConfig.GITHUB_TOKEN)
-                .show()
+            .withGitHubToken(BuildConfig.GITHUB_TOKEN)
+            .show()
     }
 }

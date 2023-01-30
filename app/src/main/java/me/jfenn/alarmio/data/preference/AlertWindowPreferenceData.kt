@@ -32,7 +32,10 @@ import me.jfenn.alarmio.dialogs.AlertDialog
 @TargetApi(23)
 class AlertWindowPreferenceData : BasePreferenceData<AlertWindowPreferenceData.ViewHolder>() {
 
-    override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): BasePreferenceData.ViewHolder {
+    override fun getViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): BasePreferenceData.ViewHolder {
         return ViewHolder(inflater.inflate(R.layout.item_preference_boolean, parent, false))
     }
 
@@ -51,36 +54,53 @@ class AlertWindowPreferenceData : BasePreferenceData<AlertWindowPreferenceData.V
         }
 
         Aesthetic.get()
-                .colorAccent()
-                .take(1)
-                .subscribe { colorAccent ->
-                    Aesthetic.get()
-                            .textColorPrimary()
-                            .take(1)
-                            .subscribe { textColorPrimary ->
-                                CompoundButtonCompat.setButtonTintList(holder.toggle, ColorStateList(
-                                        arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked)),
-                                        intArrayOf(Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)), colorAccent)
-                                ))
+            .colorAccent()
+            .take(1)
+            .subscribe { colorAccent ->
+                Aesthetic.get()
+                    .textColorPrimary()
+                    .take(1)
+                    .subscribe { textColorPrimary ->
+                        CompoundButtonCompat.setButtonTintList(
+                            holder.toggle, ColorStateList(
+                                arrayOf(
+                                    intArrayOf(-android.R.attr.state_checked),
+                                    intArrayOf(android.R.attr.state_checked)
+                                ),
+                                intArrayOf(
+                                    Color.argb(
+                                        100,
+                                        Color.red(textColorPrimary),
+                                        Color.green(textColorPrimary),
+                                        Color.blue(textColorPrimary)
+                                    ), colorAccent
+                                )
+                            )
+                        )
 
-                                holder.toggle.setTextColor(textColorPrimary)
-                            }
-                }
+                        holder.toggle.setTextColor(textColorPrimary)
+                    }
+            }
     }
 
     private fun showAlert(holder: ViewHolder) {
         AlertDialog(holder.context)
-                .setTitle(holder.context.getString(R.string.info_background_permissions_title))
-                .setContent(holder.context.getString(R.string.info_background_permissions_body))
-                .setListener { _, ok ->
-                    if (ok)
-                        showActivity(holder.context)
-                }
-                .show()
+            .setTitle(holder.context.getString(R.string.info_background_permissions_title))
+            .setContent(holder.context.getString(R.string.info_background_permissions_body))
+            .setListener { _, ok ->
+                if (ok)
+                    showActivity(holder.context)
+            }
+            .show()
     }
 
     private fun showActivity(context: Context) {
-        context.startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.applicationContext.packageName}")))
+        context.startActivity(
+            Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:${context.applicationContext.packageName}")
+            )
+        )
     }
 
     /**

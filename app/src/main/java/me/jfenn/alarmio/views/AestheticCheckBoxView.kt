@@ -21,21 +21,28 @@ class AestheticCheckBoxView : AppCompatCheckBox, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun subscribe() {
         colorAccentSubscription = Aesthetic.get().colorAccent()
-                .subscribe { integer ->
-                    val colorStateList = ColorStateList(
-                            arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked)),
-                            intArrayOf(Color.argb(255, 128, 128, 128), integer)
-                    )
+            .subscribe { integer ->
+                val colorStateList = ColorStateList(
+                    arrayOf(
+                        intArrayOf(-android.R.attr.state_checked),
+                        intArrayOf(android.R.attr.state_checked)
+                    ),
+                    intArrayOf(Color.argb(255, 128, 128, 128), integer)
+                )
 
-                    CompoundButtonCompat.setButtonTintList(this, colorStateList)
-                }
+                CompoundButtonCompat.setButtonTintList(this, colorStateList)
+            }
 
         textColorPrimarySubscription = Aesthetic.get().textColorPrimary()
-                .subscribe { integer -> setTextColor(integer) }
+            .subscribe { integer -> setTextColor(integer) }
     }
 
     override fun unsubscribe() {

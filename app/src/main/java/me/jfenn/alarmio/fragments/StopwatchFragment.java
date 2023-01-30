@@ -21,6 +21,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+
 import io.reactivex.disposables.Disposable;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.services.StopwatchService;

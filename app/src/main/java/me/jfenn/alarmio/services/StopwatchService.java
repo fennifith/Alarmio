@@ -20,6 +20,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.activities.MainActivity;
@@ -174,8 +175,8 @@ public class StopwatchService extends Service {
     /**
      * Get a notification to send to the user for the current time.
      *
-     * @param time      A formatted string defining the current time on the stopwatch.
-     * @return          A notification to use for this stopwatch.
+     * @param time A formatted string defining the current time on the stopwatch.
+     * @return A notification to use for this stopwatch.
      */
     private Notification getNotification(String time) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)

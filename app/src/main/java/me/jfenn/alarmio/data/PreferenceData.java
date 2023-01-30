@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.Alarmio;
 
 public enum PreferenceData {

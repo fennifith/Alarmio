@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.activities.MainActivity;
 import me.jfenn.alarmio.receivers.AlarmReceiver;
@@ -48,8 +49,8 @@ public class AlarmData implements Parcelable {
     /**
      * Moves this AlarmData's preferences to another "id".
      *
-     * @param id            The new id to be assigned
-     * @param context       An active context instance.
+     * @param id      The new id to be assigned
+     * @param context An active context instance.
      */
     public void onIdChanged(int id, Context context) {
         PreferenceData.ALARM_NAME.setValue(context, getName(context), id);
@@ -70,7 +71,7 @@ public class AlarmData implements Parcelable {
     /**
      * Removes this AlarmData's preferences.
      *
-     * @param context       An active context instance.
+     * @param context An active context instance.
      */
     public void onRemoved(Context context) {
         cancel(context, (AlarmManager) context.getSystemService(Context.ALARM_SERVICE));
@@ -89,8 +90,8 @@ public class AlarmData implements Parcelable {
      * Returns the user-defined "name" of the alarm, defaulting to
      * "Alarm (1..)" if unset.
      *
-     * @param context       An active context instance.
-     * @return              The alarm name, as a string.
+     * @param context An active context instance.
+     * @return The alarm name, as a string.
      */
     public String getName(Context context) {
         if (name != null)
@@ -102,7 +103,7 @@ public class AlarmData implements Parcelable {
      * Returns whether the alarm should repeat on a set interval
      * or not.
      *
-     * @return              If repeat is enabled for this alarm.
+     * @return If repeat is enabled for this alarm.
      */
     public boolean isRepeat() {
         for (boolean day : days) {
@@ -116,8 +117,8 @@ public class AlarmData implements Parcelable {
     /**
      * Sets the user-defined "name" of the alarm.
      *
-     * @param context       An active context instance.
-     * @param name          The new name to be set.
+     * @param context An active context instance.
+     * @param name    The new name to be set.
      */
     public void setName(Context context, String name) {
         this.name = name;
@@ -127,12 +128,12 @@ public class AlarmData implements Parcelable {
     /**
      * Change the scheduled alarm time.
      *
-     * @param context       An active context instance.
-     * @param manager       An AlarmManager to schedule the alarm on.
-     * @param timeMillis    The UNIX time (in milliseconds) that the alarm should ring at.
-     *                      This is independent to days; if the time correlates to 9:30 on
-     *                      a Tuesday when the alarm should only repeat on Wednesdays and
-     *                      Thursdays, then the alarm will next ring at 9:30 on Wednesday.
+     * @param context    An active context instance.
+     * @param manager    An AlarmManager to schedule the alarm on.
+     * @param timeMillis The UNIX time (in milliseconds) that the alarm should ring at.
+     *                   This is independent to days; if the time correlates to 9:30 on
+     *                   a Tuesday when the alarm should only repeat on Wednesdays and
+     *                   Thursdays, then the alarm will next ring at 9:30 on Wednesday.
      */
     public void setTime(Context context, AlarmManager manager, long timeMillis) {
         time.setTimeInMillis(timeMillis);
@@ -144,9 +145,9 @@ public class AlarmData implements Parcelable {
     /**
      * Set whether the alarm is enabled.
      *
-     * @param context       An active context instance.
-     * @param manager       An AlarmManager to schedule the alarm on.
-     * @param isEnabled     Whether the alarm is enabled.
+     * @param context   An active context instance.
+     * @param manager   An AlarmManager to schedule the alarm on.
+     * @param isEnabled Whether the alarm is enabled.
      */
     public void setEnabled(Context context, AlarmManager manager, boolean isEnabled) {
         this.isEnabled = isEnabled;
@@ -161,9 +162,9 @@ public class AlarmData implements Parcelable {
      * no days are specified, the alarm will act as a one-time alert
      * and will not repeat.
      *
-     * @param context       An active context instance.
-     * @param days          A boolean array, with a length of 7 (seven days of the week)
-     *                      specifying whether repeat is enabled for that day.
+     * @param context An active context instance.
+     * @param days    A boolean array, with a length of 7 (seven days of the week)
+     *                specifying whether repeat is enabled for that day.
      */
     public void setDays(Context context, boolean[] days) {
         this.days = days;
@@ -176,8 +177,8 @@ public class AlarmData implements Parcelable {
     /**
      * Set whether the alarm should vibrate.
      *
-     * @param context       An active context instance.
-     * @param isVibrate     Whether the alarm should vibrate.
+     * @param context   An active context instance.
+     * @param isVibrate Whether the alarm should vibrate.
      */
     public void setVibrate(Context context, boolean isVibrate) {
         this.isVibrate = isVibrate;
@@ -187,8 +188,8 @@ public class AlarmData implements Parcelable {
     /**
      * Return whether the alarm has a sound or not.
      *
-     * @return              A boolean defining whether a sound has been set
-     *                      for the alarm.
+     * @return A boolean defining whether a sound has been set
+     * for the alarm.
      */
     public boolean hasSound() {
         return sound != null;
@@ -197,8 +198,8 @@ public class AlarmData implements Parcelable {
     /**
      * Get the [SoundData](./SoundData) sound specified for the alarm.
      *
-     * @return              An instance of SoundData describing the sound that
-     *                      the alarm should make (or null).
+     * @return An instance of SoundData describing the sound that
+     * the alarm should make (or null).
      */
     @Nullable
     public SoundData getSound() {
@@ -209,9 +210,9 @@ public class AlarmData implements Parcelable {
     /**
      * Set the sound that the alarm should make.
      *
-     * @param context       An active context instance.
-     * @param sound         A [SoundData](./SoundData) defining the sound that
-     *                      the alarm should make.
+     * @param context An active context instance.
+     * @param sound   A [SoundData](./SoundData) defining the sound that
+     *                the alarm should make.
      */
     public void setSound(Context context, @Nullable SoundData sound) {
         this.sound = sound;
@@ -221,8 +222,8 @@ public class AlarmData implements Parcelable {
     /**
      * Get the next time that the alarm should wring.
      *
-     * @return              A Calendar object defining the next time that the alarm should ring at.
-     * @see                 [java.util.Calendar Documentation](https://developer.android.com/reference/java/util/Calendar)
+     * @return A Calendar object defining the next time that the alarm should ring at.
+     * @see [java.util.Calendar Documentation](https://developer.android.com/reference/java/util/Calendar)
      */
     @Nullable
     public Calendar getNext() {
@@ -259,10 +260,10 @@ public class AlarmData implements Parcelable {
     /**
      * Set the next time for the alarm to ring.
      *
-     * @param context       An active context instance.
-     * @param manager       The AlarmManager to schedule the alarm on.
-     * @return              The next [Date](https://developer.android.com/reference/java/util/Date)
-     *                      at which the alarm will ring.
+     * @param context An active context instance.
+     * @param manager The AlarmManager to schedule the alarm on.
+     * @return The next [Date](https://developer.android.com/reference/java/util/Date)
+     * at which the alarm will ring.
      */
     public Date set(Context context, AlarmManager manager) {
         Calendar nextTime = getNext();
@@ -273,9 +274,9 @@ public class AlarmData implements Parcelable {
     /**
      * Schedule a time for the alarm to ring at.
      *
-     * @param context       An active context instance.
-     * @param manager       The AlarmManager to schedule the alarm on.
-     * @param timeMillis    A UNIX timestamp specifying the next time for the alarm to ring.
+     * @param context    An active context instance.
+     * @param manager    The AlarmManager to schedule the alarm on.
+     * @param timeMillis A UNIX timestamp specifying the next time for the alarm to ring.
      */
     private void setAlarm(Context context, AlarmManager manager, long timeMillis) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -307,8 +308,8 @@ public class AlarmData implements Parcelable {
     /**
      * Cancel the next time for the alarm to ring.
      *
-     * @param context       An active context instance.
-     * @param manager       The AlarmManager that the alarm was scheduled on.
+     * @param context An active context instance.
+     * @param manager The AlarmManager that the alarm was scheduled on.
      */
     public void cancel(Context context, AlarmManager manager) {
         manager.cancel(getIntent(context));
@@ -323,8 +324,8 @@ public class AlarmData implements Parcelable {
     /**
      * The intent to fire when the alarm should ring.
      *
-     * @param context       An active context instance.
-     * @return              A PendingIntent that will open the alert screen.
+     * @param context An active context instance.
+     * @return A PendingIntent that will open the alert screen.
      */
     private PendingIntent getIntent(Context context) {
         Intent intent = new Intent(context, AlarmReceiver.class);

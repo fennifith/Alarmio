@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
@@ -111,9 +112,9 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
      * Return a fragment to display the content provided by
      * the passed intent.
      *
-     * @param intent    The intent passed to the activity.
-     * @return          An instantiated fragment corresponding
-     *                  to the passed intent.
+     * @param intent The intent passed to the activity.
+     * @return An instantiated fragment corresponding
+     * to the passed intent.
      */
     @Nullable
     private BaseFragment createFragmentFor(Intent intent) {
@@ -160,18 +161,18 @@ public class MainActivity extends AestheticActivity implements FragmentManager.O
      * a higher priority than any fragment that is currently
      * open.
      *
-     * @param intent    The intent passed to the activity.
-     * @return          True if a fragment should be replaced
-     *                  with the action that this intent entails.
+     * @param intent The intent passed to the activity.
+     * @return True if a fragment should be replaced
+     * with the action that this intent entails.
      */
     private boolean isActionableIntent(Intent intent) {
         return intent.hasExtra(EXTRA_FRAGMENT)
                 || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                        && (AlarmClock.ACTION_SHOW_ALARMS.equals(intent.getAction())
-                        || AlarmClock.ACTION_SET_TIMER.equals(intent.getAction()))
+                && (AlarmClock.ACTION_SHOW_ALARMS.equals(intent.getAction())
+                || AlarmClock.ACTION_SET_TIMER.equals(intent.getAction()))
                 || AlarmClock.ACTION_SET_ALARM.equals(intent.getAction())
                 || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                        && (AlarmClock.ACTION_SHOW_TIMERS.equals(intent.getAction()))));
+                && (AlarmClock.ACTION_SHOW_TIMERS.equals(intent.getAction()))));
 
     }
 

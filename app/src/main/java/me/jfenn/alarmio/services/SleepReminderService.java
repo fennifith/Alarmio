@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+
 import me.jfenn.alarmio.Alarmio;
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.AlarmData;
@@ -95,9 +96,9 @@ public class SleepReminderService extends Service {
     /**
      * Get a sleepy alarm. Well, get the next alarm that should trigger a sleep alert.
      *
-     * @param alarmio       The active Application instance.
-     * @return              The next [AlarmData](../data/AlarmData) that should trigger a
-     *                      sleep alert, or null if there isn't one.
+     * @param alarmio The active Application instance.
+     * @return The next [AlarmData](../data/AlarmData) that should trigger a
+     * sleep alert, or null if there isn't one.
      */
     @Nullable
     public static AlarmData getSleepyAlarm(Alarmio alarmio) {
@@ -118,8 +119,8 @@ public class SleepReminderService extends Service {
     /**
      * Get the next scheduled [AlarmData](../data/AlarmData) that will ring.
      *
-     * @param alarmio       The active Application instance.
-     * @return              The next AlarmData that will wake the user up.
+     * @param alarmio The active Application instance.
+     * @return The next AlarmData that will wake the user up.
      */
     @Nullable
     public static AlarmData getNextWakeAlarm(Alarmio alarmio) {
@@ -156,7 +157,7 @@ public class SleepReminderService extends Service {
      * unexpectedly leaped forwards. This will start the service if there is a
      * [sleepy alarm](#getsleepyalarm) present.
      *
-     * @param context       An active context instance.
+     * @param context An active context instance.
      */
     public static void refreshSleepTime(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && ContextCompat.checkSelfPermission(context, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED)

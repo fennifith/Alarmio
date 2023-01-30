@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.views.AppIconView;
 

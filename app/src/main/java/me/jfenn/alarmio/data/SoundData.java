@@ -52,7 +52,7 @@ public class SoundData {
      * [Alarmio](../Alarmio) class, which will store the currently playing sound
      * until it is stopped or cancelled.
      *
-     * @param alarmio           The active Application instance.
+     * @param alarmio The active Application instance.
      */
     public void play(Alarmio alarmio) {
         if (type.equals(TYPE_RINGTONE) && url.startsWith("content://")) {
@@ -69,8 +69,8 @@ public class SoundData {
         } else {
             alarmio.playStream(url, type,
                     new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
-                    .setUsage(C.USAGE_ALARM)
-                    .build());
+                            .setUsage(C.USAGE_ALARM)
+                            .build());
         }
     }
 
@@ -79,7 +79,7 @@ public class SoundData {
      * if the sound is a ringtone; if it is a stream, then all streams will be stopped,
      * regardless of whether this sound is in fact the currently playing stream or not.
      *
-     * @param alarmio           The active Application instance.
+     * @param alarmio The active Application instance.
      */
     public void stop(Alarmio alarmio) {
         if (ringtone != null)
@@ -90,7 +90,7 @@ public class SoundData {
     /**
      * Preview the sound on the "media" volume channel.
      *
-     * @param alarmio           The active Application instance.
+     * @param alarmio The active Application instance.
      */
     public void preview(Alarmio alarmio) {
         if (url.startsWith("content://")) {
@@ -107,16 +107,16 @@ public class SoundData {
         } else {
             alarmio.playStream(url, type,
                     new com.google.android.exoplayer2.audio.AudioAttributes.Builder()
-                    .setUsage(C.USAGE_ALARM)
-                    .build());
+                            .setUsage(C.USAGE_ALARM)
+                            .build());
         }
     }
 
     /**
      * Decide whether the sound is currently playing or not.
      *
-     * @param alarmio           The active Application instance.
-     * @return                  True if "this" sound is playing.
+     * @param alarmio The active Application instance.
+     * @return True if "this" sound is playing.
      */
     public boolean isPlaying(Alarmio alarmio) {
         if (ringtone != null)
@@ -127,8 +127,8 @@ public class SoundData {
     /**
      * Sets the player volume to the given float.
      *
-     * @param alarmio           The active Application instance.
-     * @param volume            The volume between 0 and 1
+     * @param alarmio The active Application instance.
+     * @param volume  The volume between 0 and 1
      */
     public void setVolume(Alarmio alarmio, float volume) {
         if (ringtone != null)
@@ -154,7 +154,7 @@ public class SoundData {
      * Returns an identifier string that can be used to recreate this
      * SoundDate class.
      *
-     * @return                  A non-null identifier string.
+     * @return A non-null identifier string.
      */
     @Override
     public String toString() {
@@ -165,8 +165,8 @@ public class SoundData {
      * Construct a new instance of SoundData from an identifier string which was
      * (hopefully) created by [toString](#tostring).
      *
-     * @param string            A non-null identifier string.
-     * @return                  A recreated SoundData instance.
+     * @param string A non-null identifier string.
+     * @return A recreated SoundData instance.
      */
     @Nullable
     public static SoundData fromString(String string) {
@@ -183,8 +183,8 @@ public class SoundData {
     /**
      * Decide if two SoundDatas are equal.
      *
-     * @param obj               The object to compare to.
-     * @return                  True if the SoundDatas contain the same sound.
+     * @param obj The object to compare to.
+     * @return True if the SoundDatas contain the same sound.
      */
     @Override
     public boolean equals(Object obj) {

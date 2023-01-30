@@ -50,7 +50,8 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
                         ValueAnimator.ofFloat(0f, 1f)
                     else ValueAnimator.ofFloat(1f, 0f)
                 }.apply {
-                    interpolator = if (isChecked) DecelerateInterpolator() else AnticipateOvershootInterpolator()
+                    interpolator =
+                        if (isChecked) DecelerateInterpolator() else AnticipateOvershootInterpolator()
                     addUpdateListener { valueAnimator ->
                         checked = valueAnimator.animatedValue as? Float ?: 0f
                         invalidate()
@@ -68,7 +69,11 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     init {
         setOnClickListener(this)
@@ -85,27 +90,27 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
 
     override fun subscribe() {
         colorAccentSubscription = Aesthetic.get()
-                .colorAccent()
-                .subscribe { integer ->
-                    accentPaint.color = integer
-                    invalidate()
-                }
+            .colorAccent()
+            .subscribe { integer ->
+                accentPaint.color = integer
+                invalidate()
+            }
 
         textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe { integer ->
-                    textColorPrimary = integer
-                    textPaint.color = integer
-                    invalidate()
-                }
+            .textColorPrimary()
+            .subscribe { integer ->
+                textColorPrimary = integer
+                textPaint.color = integer
+                invalidate()
+            }
 
         textColorPrimaryInverseSubscription = Aesthetic.get()
-                .textColorPrimaryInverse()
-                .subscribe { integer ->
-                    textColorPrimaryInverse = integer
-                    clippedTextPaint.color = integer
-                    invalidate()
-                }
+            .textColorPrimaryInverse()
+            .subscribe { integer ->
+                textColorPrimaryInverse = integer
+                clippedTextPaint.color = integer
+                invalidate()
+            }
     }
 
     override fun unsubscribe() {
@@ -136,19 +141,39 @@ class DaySwitch : View, View.OnClickListener, Subscribblable {
                 clippedTextPaint.textSize = textPaint.textSize
             }
 
-            canvas.drawText(str, (canvas.width / 2).toFloat(), canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
+            canvas.drawText(
+                str,
+                (canvas.width / 2).toFloat(),
+                canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2,
+                textPaint
+            )
         }
 
         val circlePath = Path()
-        circlePath.addCircle((canvas.width / 2).toFloat(), (canvas.height / 2).toFloat(), checked * DimenUtils.dpToPx(18f), Path.Direction.CW)
+        circlePath.addCircle(
+            (canvas.width / 2).toFloat(),
+            (canvas.height / 2).toFloat(),
+            checked * DimenUtils.dpToPx(18f),
+            Path.Direction.CW
+        )
         circlePath.close()
 
         canvas.drawPath(circlePath, accentPaint)
 
         text?.let { str ->
-            canvas.drawText(str, (canvas.width / 2).toFloat(), canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
+            canvas.drawText(
+                str,
+                (canvas.width / 2).toFloat(),
+                canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2,
+                textPaint
+            )
             canvas.clipPath(circlePath)
-            canvas.drawText(str, (canvas.width / 2).toFloat(), canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, clippedTextPaint)
+            canvas.drawText(
+                str,
+                (canvas.width / 2).toFloat(),
+                canvas.height / 2 - (textPaint.descent() + textPaint.ascent()) / 2,
+                clippedTextPaint
+            )
         }
     }
 

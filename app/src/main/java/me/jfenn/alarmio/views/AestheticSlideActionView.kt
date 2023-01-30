@@ -18,21 +18,25 @@ class AestheticSlideActionView : SlideActionView, Subscribblable {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun subscribe() {
         textColorPrimarySubscription = Aesthetic.get()
-                .textColorPrimary()
-                .subscribe { integer ->
-                    touchHandleColor = integer
-                    outlineColor = integer
-                    iconColor = integer
-                    postInvalidate()
-                }
+            .textColorPrimary()
+            .subscribe { integer ->
+                touchHandleColor = integer
+                outlineColor = integer
+                iconColor = integer
+                postInvalidate()
+            }
 
         textColorPrimaryInverseSubscription = Aesthetic.get()
-                .textColorPrimaryInverse()
-                .subscribe { integer -> setBackgroundColor((100 shl 24) or (integer and 0x00ffffff)) }
+            .textColorPrimaryInverse()
+            .subscribe { integer -> setBackgroundColor((100 shl 24) or (integer and 0x00ffffff)) }
     }
 
     override fun unsubscribe() {

@@ -10,7 +10,8 @@ import me.jfenn.alarmio.data.PreferenceData
  * an image from a file (the resulting preference
  * contains a valid image path / URI).
  */
-class ImageFilePreferenceData(private val preference: PreferenceData, name: Int) : CustomPreferenceData(name) {
+class ImageFilePreferenceData(private val preference: PreferenceData, name: Int) :
+    CustomPreferenceData(name) {
 
     override fun getValueName(holder: CustomPreferenceData.ViewHolder): String = ""
 

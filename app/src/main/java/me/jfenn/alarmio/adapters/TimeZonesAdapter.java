@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.recyclerview.widget.RecyclerView;
+
 import me.jfenn.alarmio.R;
 import me.jfenn.alarmio.data.PreferenceData;
 

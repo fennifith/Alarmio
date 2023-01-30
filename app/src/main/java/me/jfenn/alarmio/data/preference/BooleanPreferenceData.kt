@@ -18,9 +18,16 @@ import me.jfenn.alarmio.data.PreferenceData
  * Allow the user to choose from a simple boolean
  * using a switch item view.
  */
-class BooleanPreferenceData(private val preference: PreferenceData, @StringRes private val title: Int, @StringRes private val description: Int) : BasePreferenceData<BooleanPreferenceData.ViewHolder>() {
+class BooleanPreferenceData(
+    private val preference: PreferenceData,
+    @StringRes private val title: Int,
+    @StringRes private val description: Int
+) : BasePreferenceData<BooleanPreferenceData.ViewHolder>() {
 
-    override fun getViewHolder(inflater: LayoutInflater, parent: ViewGroup): BasePreferenceData.ViewHolder {
+    override fun getViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): BasePreferenceData.ViewHolder {
         return ViewHolder(inflater.inflate(R.layout.item_preference_boolean, parent, false))
     }
 
@@ -31,24 +38,41 @@ class BooleanPreferenceData(private val preference: PreferenceData, @StringRes p
         holder.toggle.setOnCheckedChangeListener(null)
 
         holder.toggle.isChecked = preference.getValue(holder.itemView.context, false) ?: false
-        holder.toggle.setOnCheckedChangeListener { compoundButton, b -> preference.setValue(compoundButton.context, b) }
+        holder.toggle.setOnCheckedChangeListener { compoundButton, b ->
+            preference.setValue(
+                compoundButton.context,
+                b
+            )
+        }
 
         Aesthetic.get()
-                .colorAccent()
-                .take(1)
-                .subscribe { colorAccent ->
-                    Aesthetic.get()
-                            .textColorPrimary()
-                            .take(1)
-                            .subscribe { textColorPrimary ->
-                                CompoundButtonCompat.setButtonTintList(holder.toggle, ColorStateList(
-                                        arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked)),
-                                        intArrayOf(Color.argb(100, Color.red(textColorPrimary), Color.green(textColorPrimary), Color.blue(textColorPrimary)), colorAccent)
-                                ))
+            .colorAccent()
+            .take(1)
+            .subscribe { colorAccent ->
+                Aesthetic.get()
+                    .textColorPrimary()
+                    .take(1)
+                    .subscribe { textColorPrimary ->
+                        CompoundButtonCompat.setButtonTintList(
+                            holder.toggle, ColorStateList(
+                                arrayOf(
+                                    intArrayOf(-android.R.attr.state_checked),
+                                    intArrayOf(android.R.attr.state_checked)
+                                ),
+                                intArrayOf(
+                                    Color.argb(
+                                        100,
+                                        Color.red(textColorPrimary),
+                                        Color.green(textColorPrimary),
+                                        Color.blue(textColorPrimary)
+                                    ), colorAccent
+                                )
+                            )
+                        )
 
-                                holder.toggle.setTextColor(textColorPrimary)
-                            }
-                }
+                        holder.toggle.setTextColor(textColorPrimary)
+                    }
+            }
     }
 
     /**

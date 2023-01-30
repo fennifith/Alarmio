@@ -115,7 +115,6 @@ public class FileSoundChooserFragment extends BaseSoundChooserFragment {
     }
 
 
-
     @Override
     public String getTitle(Context context) {
         return context.getString(R.string.title_files);
